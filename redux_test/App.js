@@ -168,10 +168,11 @@ export function MyDrawer() {
 export default function App() {
   return (
     <NavigationContainer>
-      <MyDrawer />
+      {/* <MyDrawer /> */}
       {/* <OutstandingDetailTab /> */}
       {/* <Login />? */}
       {/* <Dummy /> */}
+      <Login />
     </NavigationContainer>
     // <Login />
     // <Dummy/>

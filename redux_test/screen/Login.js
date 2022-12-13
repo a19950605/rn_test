@@ -78,7 +78,7 @@ const Login = () => {
               }
             })
           }>
-          Login / 登入
+          Login 登入
         </Button>
       </View>
       {/*
