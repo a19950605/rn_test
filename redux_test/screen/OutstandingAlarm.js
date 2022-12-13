@@ -41,281 +41,90 @@
 
 // export default OutstandingAlarm;
 
-import React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import {useNavigation} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+import React, {useEffect, useState} from 'react';
+import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
 // import { Feather } from "@expo/vector-icons";
 // import { Ionicons } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
+import {ScrollView} from 'react-native-gesture-handler';
+import OutstandingAlarmCard from './OutstandingAlarmCard';
+import OutstandingAlarmCard2 from './OutstandingAlarmCard2';
+import OutstandingDetailTab from './OutstandingDetailTab';
 
 const OutstandingAlarm = () => {
+  const Stack = createStackNavigator();
+
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="OuterStanding Alarm"
+        component={OutstandingAlarmSub}
+      />
+      <Stack.Screen name="Details" component={OutstandingDetailTab} />
+    </Stack.Navigator>
+  );
+};
+const OutstandingAlarmSub = () => {
+  const navigation = useNavigation();
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    let token =
+      'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdnJJZCI6IjIiLCJqdGkiOiIxNjcwOTI1NTMxMzI4In0.w2TNQk_PhnEI4Y2ysykui_tc2OZpkFbS_qbEORn2zJxY7aaWeCbUSWXOalUKQ1EpvVLSsM306nUXOVk9osVyJQ';
+    var requestOptions = {
+      method: 'GET',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': token,
+      },
+    };
+    fetch('https://gis2.ectrak.com.hk:8900/api/v2/alarms', requestOptions)
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        //  console.log(result);
+        // return result;
+        setData(result);
+      })
+      .catch(error => console.log('error', error));
+  }, []);
+  console.log('outStandand alarm');
   return (
     <View>
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
+          flexDirection: 'row',
+          justifyContent: 'space-between',
           padding: 10,
-        }}
-      >
+        }}>
         <View
           style={{
-            borderColor: "blue",
+            borderColor: 'blue',
             borderWidth: 1,
             borderRadius: 2,
             padding: 10,
-            flexDirection: "row",
-          }}
-        >
-     
-          <Text style={{ color: "blue" }}>2022-12-06 12:26:43</Text>
+            flexDirection: 'row',
+          }}>
+          <Text style={{color: 'blue'}}>2022-12-06 12:26:43</Text>
         </View>
-        <View style={{ padding: 5 }}>
-        </View>
+        <View style={{padding: 5}}></View>
       </View>
-      <ScrollView style={{marginBottom:60}}>
-        <View>
-          <View
-            style={{
-              backgroundColor: "green",
-              marginLeft: 5,
-              marginRight: 5,
-              padding: 10,
-            }}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Alarm ID:{" "}
-              </Text>
-              <Text>408</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>Type: </Text>
-              <Text>Lamp Fault</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Controller ID:{" "}
-              </Text>
-              <Text>C001</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>RFL: </Text>
-              <Text>KT/R1/001</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Triggered Datetime:{" "}
-              </Text>
-              <Text>2022-12-06 11:35:44</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Status:{" "}
-              </Text>
-              <Text>Active</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              marginLeft: 5,
-              marginRight: 5,
-              justifyContent: "space-around",
-              backgroundColor: "lightgreen",
-              marginBottom: 2,
-            }}
-          >
-            <View>
-              <Text style={{ padding: 10, color: "blue" }}>Details</Text>
-            </View>
-            <View>
-              <Text style={{ padding: 10, color: "blue" }}>ACK</Text>
-            </View>
-          </View>
-        </View>
+      <View style={{marginBottom: 60}}>
+        <FlatList
+          data={data}
+          renderItem={props => (
+            <OutstandingAlarmCard {...props} navigation={navigation} />
+          )}
+          keyExtractor={item => item.id}
+        />
 
-        <View>
-          <View
-            style={{
-              backgroundColor: "red",
-              marginLeft: 5,
-              marginRight: 5,
-              padding: 10,
-            }}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Alarm ID:{" "}
-              </Text>
-              <Text>408</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>Type: </Text>
-              <Text>Lamp Fault</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Controller ID:{" "}
-              </Text>
-              <Text>C001</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>RFL: </Text>
-              <Text>KT/R1/001</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Triggered Datetime:{" "}
-              </Text>
-              <Text>2022-12-06 11:35:44</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Status:{" "}
-              </Text>
-              <Text>Active</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              marginLeft: 5,
-              marginRight: 5,
-              justifyContent: "space-around",
-              backgroundColor: "pink",
-              marginBottom: 2,
-            }}
-          >
-            <View>
-              <Text style={{ padding: 10, color: "blue" }}>Details</Text>
-            </View>
-            <View>
-              <Text style={{ padding: 10, color: "blue" }}>ACK</Text>
-            </View>
-          </View>
-        </View>
-
-        <View>
-          <View
-            style={{
-              backgroundColor: "green",
-              marginLeft: 5,
-              marginRight: 5,
-              padding: 10,
-            }}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Alarm ID:{" "}
-              </Text>
-              <Text>408</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>Type: </Text>
-              <Text>Lamp Fault</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Controller ID:{" "}
-              </Text>
-              <Text>C001</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>RFL: </Text>
-              <Text>KT/R1/001</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Triggered Datetime:{" "}
-              </Text>
-              <Text>2022-12-06 11:35:44</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Status:{" "}
-              </Text>
-              <Text>Active</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              marginLeft: 5,
-              marginRight: 5,
-              justifyContent: "space-around",
-              backgroundColor: "lightgreen",
-              marginBottom: 2,
-            }}
-          >
-            <View>
-              <Text style={{ padding: 10, color: "blue" }}>Details</Text>
-            </View>
-            <View>
-              <Text style={{ padding: 10, color: "blue" }}>ACK</Text>
-            </View>
-          </View>
-        </View>
-        <View>
-          <View
-            style={{
-              backgroundColor: "green",
-              marginLeft: 5,
-              marginRight: 5,
-              padding: 10,
-            }}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Alarm ID:{" "}
-              </Text>
-              <Text>408</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>Type: </Text>
-              <Text>Lamp Fault</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Controller ID:{" "}
-              </Text>
-              <Text>C001</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>RFL: </Text>
-              <Text>KT/R1/001</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Triggered Datetime:{" "}
-              </Text>
-              <Text>2022-12-06 11:35:44</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>
-                Status:{" "}
-              </Text>
-              <Text>Active</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              marginLeft: 5,
-              marginRight: 5,
-              justifyContent: "space-around",
-              backgroundColor: "lightgreen",
-              marginBottom: 2,
-            }}
-          >
-            <View>
-              <Text style={{ padding: 10, color: "blue" }}>Details</Text>
-            </View>
-            <View>
-              <Text  style={{padding:10,color:'blue'}}>ACK</Text>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
+        {/* <OutstandingAlarmCard />
+        <OutstandingAlarmCard2 />
+      */}
+      </View>
     </View>
   );
 };

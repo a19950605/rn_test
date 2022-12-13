@@ -1,48 +1,44 @@
 import React from 'react';
+
 import {Text, View, StyleSheet, Button} from 'react-native';
 //monitoring
-import {TouchableOpacity} from 'react-native-gesture-handler';
-
-const OutstandingAlarmCard = props => {
-  //green card
-  //console.log(props.item);
-
+const OutstandingAlarmCard2 = props => {
   return (
     <View>
       <View
         style={{
-          backgroundColor: 'green',
+          backgroundColor: 'red',
           marginLeft: 5,
           marginRight: 5,
           padding: 10,
         }}>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>Alarm ID: </Text>
-          <Text>{props.item.id || ''}</Text>
+          <Text>{props.id}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>Type: </Text>
-          <Text>{props.item.alarmType || ''}</Text>
+          <Text>Lamp Fault</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>
             Controller ID:{' '}
           </Text>
-          <Text>{props.item.controllerCode || ''}</Text>
+          <Text>C001</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>RFL: </Text>
-          <Text>1</Text>
+          <Text>KT/R1/001</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>
             Triggered Datetime:{' '}
           </Text>
-          <Text>{props.item.dtCreate || ''}</Text>
+          <Text>2022-12-06 11:35:44</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>Status: </Text>
-          <Text>{props.item.status || ''}</Text>
+          <Text>Active</Text>
         </View>
       </View>
       <View
@@ -51,26 +47,14 @@ const OutstandingAlarmCard = props => {
           marginLeft: 5,
           marginRight: 5,
           justifyContent: 'space-around',
-          backgroundColor: 'lightgreen',
+          backgroundColor: 'pink',
           marginBottom: 2,
         }}>
         <View>
-          <Text
-            style={{padding: 10, color: 'blue'}}
-            onPress={() => {
-              props.navigation.navigate('Details');
-            }}>
-            Details
-          </Text>
+          <Text style={{padding: 10, color: 'blue'}}>Details</Text>
         </View>
         <View>
-          <Text
-            style={{padding: 10, color: 'blue'}}
-            onPress={() => {
-              alert(props.item.id);
-            }}>
-            ACK
-          </Text>
+          <Text style={{padding: 10, color: 'blue'}}>ACK</Text>
         </View>
       </View>
     </View>
@@ -95,4 +79,4 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgreen',
   },
 });
-export default OutstandingAlarmCard;
+export default OutstandingAlarmCard2;

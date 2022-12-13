@@ -54,6 +54,7 @@ function EventLog() {
     //     return result;
     //   })
     //   .catch(error => console.log('error', error));
+
     fetch(
       'https://gis2.ectrak.com.hk:8900/api/v2/options/usernameAsOptions',
       requestOptions,

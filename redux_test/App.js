@@ -16,6 +16,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import Monitoring from './screen/Monitoring';
 import AlarmHistory from './screen/AlarmHistory';
@@ -27,6 +28,7 @@ import Form from './screen/Form';
 import {auth, listEventLog} from './apiList';
 import Login from './screen/Login';
 import Dummy from './screen/dummy';
+import OutstandingDetailTab from './screen/OutstandingDetailTab';
 
 //import RNFetchBlob from "rn-fetch-blob";
 
@@ -89,6 +91,7 @@ function CustomDrawerContent(props) {
 }
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 export function MyDrawer() {
   console.log('init');
@@ -165,14 +168,15 @@ export function MyDrawer() {
 export default function App() {
   return (
     <NavigationContainer>
-      {/* <MyDrawer /> */}
-      <Login />
+      <MyDrawer />
+      {/* <OutstandingDetailTab /> */}
+      {/* <Login />? */}
+      {/* <Dummy /> */}
     </NavigationContainer>
     // <Login />
     // <Dummy/>
   );
 }
-
 const styles = StyleSheet.create({
   sideMenuProfileIcon: {
     resizeMode: 'center',
