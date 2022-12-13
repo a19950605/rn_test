@@ -19,14 +19,14 @@ const Login = () => {
   };
   return (
     <View style={{flex: 1, alignItems: 'center', paddingTop: '50%'}}>
-              <View style={{flexDirection:'row'}}>
-              <Image
+      <View style={{flexDirection: 'row'}}>
+        <Image
           source={{
             uri: 'https://static.wikia.nocookie.net/logopedia/images/1/16/120724090720-MTR-Corporation-logo.png',
           }}
-          style={{width:100,height:80}}
+          style={{width: 100, height: 80}}
         />
-      <Text style={{fontSize: 50}}> eRFL</Text>
+        <Text style={{fontSize: 50}}> eRFL</Text>
       </View>
 
       <View
@@ -38,6 +38,7 @@ const Login = () => {
           marginBottom: 15,
         }}>
         <TextInput
+          theme={{colors: {primary: 'darkred'}}}
           style={{width: '85%', backgroundColor: 'transparent'}}
           label="username/用戶名"
           value={username}
@@ -54,6 +55,7 @@ const Login = () => {
           marginBottom: 15,
         }}>
         <TextInput
+          theme={{colors: {primary: 'darkred'}}}
           style={{width: '85%', backgroundColor: 'transparent'}}
           label="password/密碼"
           value={pw}
@@ -71,14 +73,15 @@ const Login = () => {
               console.log('json');
               console.log(res);
               setToken1(JSON.parse(res));
-              if(token1){
-                alert('true')
+              if (token1) {
+                alert('true');
               }
             })
           }>
           Login / 登入
         </Button>
       </View>
+      {/*
       <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         <Button
           style={{backgroundColor: 'black'}}
@@ -90,6 +93,7 @@ const Login = () => {
           token print
         </Button>
       </View>
+        */}
     </View>
   );
 };

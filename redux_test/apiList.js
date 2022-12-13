@@ -20,10 +20,13 @@ const auth = (username, password) => {
     .catch(error => console.log('error', error));
 };
 
-async function listEventLog(input_obj, token) {
+function listEventLog(input_obj, token) {
   const {username, funcName, fromTime, toTime} = input_obj;
   var formdata = new FormData();
+
   console.log(input_obj);
+  console.log(token);
+
   formdata.append('userName', username);
   formdata.append('funcName', funcName);
   formdata.append('fromTime', fromTime);
@@ -37,11 +40,20 @@ async function listEventLog(input_obj, token) {
     redirect: 'follow',
   };
 
-  fetch('https://gis2.ectrak.com.hk:8900/api/data/eventlog', requestOptions)
+  return fetch(
+    'https://gis2.ectrak.com.hk:8900/api/data/eventlog',
+    requestOptions,
+  )
     .then(response => {
+      console.log('response');
+      console.log(response.json());
       return response.json();
+    })
+    .then(result => {
+      console.log('result');
+      console.log(result);
+      return result;
     })
     .catch(error => console.log('error', error));
 }
-
 export {auth, listEventLog};

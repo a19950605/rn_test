@@ -155,7 +155,6 @@ export function MyDrawer() {
         <Drawer.Screen name="Event Log" component={EventLog} />
         <Drawer.Screen name="Outstanding Alarm" component={OutstandingAlarm} />
         <Drawer.Screen name="Alarm History" component={AlarmHistory} />
-
         <Drawer.Screen name="Notifications" component={Notifications} />
         <Drawer.Screen name="Form" component={Form} />
       </Drawer.Navigator>
@@ -165,10 +164,11 @@ export function MyDrawer() {
 
 export default function App() {
   return (
-    // <NavigationContainer>
-    //   <MyDrawer />
-    // </NavigationContainer>
-    <Login />
+    <NavigationContainer>
+      {/* <MyDrawer /> */}
+      <Login />
+    </NavigationContainer>
+    // <Login />
     // <Dummy/>
   );
 }
