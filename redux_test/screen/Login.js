@@ -19,7 +19,16 @@ const Login = () => {
   };
   return (
     <View style={{flex: 1, alignItems: 'center', paddingTop: '50%'}}>
-      <Text style={{fontSize: 50}}>eRFL{token1?.Token}</Text>
+              <View style={{flexDirection:'row'}}>
+              <Image
+          source={{
+            uri: 'https://static.wikia.nocookie.net/logopedia/images/1/16/120724090720-MTR-Corporation-logo.png',
+          }}
+          style={{width:100,height:80}}
+        />
+      <Text style={{fontSize: 50}}> eRFL</Text>
+      </View>
+
       <View
         style={{
           flexDirection: 'row',
@@ -62,9 +71,23 @@ const Login = () => {
               console.log('json');
               console.log(res);
               setToken1(JSON.parse(res));
+              if(token1){
+                alert('true')
+              }
             })
           }>
           Login / 登入
+        </Button>
+      </View>
+      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <Button
+          style={{backgroundColor: 'black'}}
+          mode="contained"
+          type="containedd"
+          onPress={() =>
+            console.log(token1.Token)
+          }>
+          token print
         </Button>
       </View>
     </View>

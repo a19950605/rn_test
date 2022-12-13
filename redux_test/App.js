@@ -26,6 +26,7 @@ import OutstandingAlarm from './screen/OutstandingAlarm';
 import Form from './screen/Form';
 import {auth, listEventLog} from './apiList';
 import Login from './screen/Login';
+import Dummy from './screen/dummy';
 
 //import RNFetchBlob from "rn-fetch-blob";
 
@@ -168,6 +169,7 @@ export default function App() {
     //   <MyDrawer />
     // </NavigationContainer>
     <Login />
+    // <Dummy/>
   );
 }
 
