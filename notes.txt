@@ -1,0 +1,64 @@
+api integration notes
+**erfl monitoring
+showing RFL ID,RFL,EPIC,gRouP,STATUS AS OF,ERFL READLINESS AND STATUS( 
+
+
+*click detail show detail status assignment
+-detail(controller id, device id , rfl(cant update), relay channel index(dropdown 1,2,3) status(active,maintenance,isolated)
+
+assignment (not today,maybe tmr)
+
+event log
+list and export csv
+filter(username:All ,triggered time, function:all/userloginlog/alarm)
+
+**outstanding alarm  
+list 
+detail(alarmid, type(lamp fault) controller id,rfl,status,TRIGGER TIME) 
+acknowledgement( ALERT(CONFIRM CANCEL))
+STATUS CLEARED
+**alarm history
+EXPORT30 DAY CSV
+
+SHOW HISTORY(CLEARED)
+DETAIL BUTTON(SHOW DETAIL/ACK)
+
+useraccount management
+list account(accound id ,displaname,username,role,status)
+add form(username,displayname,staffid, role(sysadm,cu,asu,ru,ma),password,passwordconfirmation remkars,status active,disable)
+detail(with tab detail and permission)(show the above info)v
+
+detail(detail tab, permission)
+username,
+display name
+staff id,
+role,
+change password
+password confirmation
+remarks
+status(active)
+
+permission
+system admin(sysadmin)
+function id/function/permission
+
+role management
+list role
+add role (tab deTail and permission)
+detail(display name,code,remarks,status(active,disable)
+PERMISSION (function id,function,permission)
+
+SETTING
+
+password
+current pw,
+new password
+pw 2
+
+lang (中,英)
+
+system check
+list(name last complete assign, type:task status)
+value:(date)
+
+sys param (list/update)

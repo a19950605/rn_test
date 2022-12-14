@@ -6,7 +6,7 @@ import {TextInput} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import {auth} from '../apiList';
 
-const Login = () => {
+const Login = props => {
   const [username, setUsername] = React.useState('');
   const [pw, setPw] = React.useState('');
   const [token1, setToken1] = useState();
@@ -76,24 +76,30 @@ const Login = () => {
               if (token1) {
                 alert('true');
               }
+              console.log(token1);
+              props.tokenRecord(JSON.parse(res));
             })
           }>
           Login 登入
         </Button>
       </View>
-      {/*
-      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+
+      {/* <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         <Button
           style={{backgroundColor: 'black'}}
           mode="contained"
           type="containedd"
-          onPress={() =>
-            console.log(token1.Token)
-          }>
+          onPress={() => {
+            console.log('token1');
+            console.log(token1);
+            console.log('token1.token');
+            console.log(token1.Token);
+            console.log('token1.errorMsg');
+            console.log(token1.errorMsg);
+          }}>
           token print
         </Button>
-      </View>
-        */}
+      </View> */}
     </View>
   );
 };

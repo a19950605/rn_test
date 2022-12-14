@@ -49,9 +49,11 @@ import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
 // import { Feather } from "@expo/vector-icons";
 // import { Ionicons } from "@expo/vector-icons";
 import {ScrollView} from 'react-native-gesture-handler';
+import {getToken} from '../helper';
 import OutstandingAlarmCard from './OutstandingAlarmCard';
 import OutstandingAlarmCard2 from './OutstandingAlarmCard2';
 import OutstandingDetailTab from './OutstandingDetailTab';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OutstandingAlarm = () => {
   const Stack = createStackNavigator();
@@ -69,28 +71,38 @@ const OutstandingAlarm = () => {
 const OutstandingAlarmSub = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
+  const [token, setToken] = useState('');
   useEffect(() => {
-    let token =
-      'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdnJJZCI6IjIiLCJqdGkiOiIxNjcwOTI1NTMxMzI4In0.w2TNQk_PhnEI4Y2ysykui_tc2OZpkFbS_qbEORn2zJxY7aaWeCbUSWXOalUKQ1EpvVLSsM306nUXOVk9osVyJQ';
-    var requestOptions = {
-      method: 'GET',
-      headers: {
-        // Accept: '*',
-        // 'Content-Type': 'application/json',
-        'X-Token': token,
-      },
-    };
-    fetch('https://gis2.ectrak.com.hk:8900/api/v2/alarms', requestOptions)
-      .then(response => {
-        return response.json();
-      })
-      .then(result => {
-        //  console.log(result);
-        // return result;
-        setData(result);
-      })
-      .catch(error => console.log('error', error));
+    async function getData() {
+      return await AsyncStorage.getItem('@token').then(res => {
+        console.log('tokentest');
+        console.log(res);
+        setToken(res);
+        return res;
+      });
+    }
+    getData().then(res => {
+      var requestOptions = {
+        method: 'GET',
+        headers: {
+          // Accept: '*',
+          // 'Content-Type': 'application/json',
+          'X-Token': res,
+        },
+      };
+      fetch('https://gis2.ectrak.com.hk:8900/api/v2/alarms', requestOptions)
+        .then(response => {
+          return response.json();
+        })
+        .then(result => {
+          //  console.log(result);
+          // return result;
+          setData(result);
+        })
+        .catch(error => console.log('error1', error));
+    });
   }, []);
+
   console.log('outStandand alarm');
   return (
     <View>

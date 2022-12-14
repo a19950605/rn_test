@@ -58,7 +58,7 @@ const OutstandingAlarmCard = props => {
           <Text
             style={{padding: 10, color: 'blue'}}
             onPress={() => {
-              props.navigation.navigate('Details');
+              props.navigation.navigate('Details', props.item);
             }}>
             Details
           </Text>

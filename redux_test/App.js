@@ -17,7 +17,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
-
+import {setTokenHelper, getToken, removeToken} from './helper';
 import Monitoring from './screen/Monitoring';
 import AlarmHistory from './screen/AlarmHistory';
 import Assignment from './screen/Assignment';
@@ -29,6 +29,7 @@ import {auth, listEventLog} from './apiList';
 import Login from './screen/Login';
 import Dummy from './screen/dummy';
 import OutstandingDetailTab from './screen/OutstandingDetailTab';
+import PasswordSetting from './screen/SettingScreen/PasswordSetting';
 
 //import RNFetchBlob from "rn-fetch-blob";
 
@@ -158,6 +159,9 @@ export function MyDrawer() {
         <Drawer.Screen name="Event Log" component={EventLog} />
         <Drawer.Screen name="Outstanding Alarm" component={OutstandingAlarm} />
         <Drawer.Screen name="Alarm History" component={AlarmHistory} />
+
+        <Drawer.Screen name="Change Password" component={PasswordSetting} />
+
         <Drawer.Screen name="Notifications" component={Notifications} />
         <Drawer.Screen name="Form" component={Form} />
       </Drawer.Navigator>
@@ -166,13 +170,19 @@ export function MyDrawer() {
 }
 
 export default function App() {
+  const [token, setToken] = useState();
+  useEffect(() => {
+    if (token?.Token) {
+      setTokenHelper(token?.Token);
+    }
+  }, [token]);
   return (
     <NavigationContainer>
       {/* <MyDrawer /> */}
       {/* <OutstandingDetailTab /> */}
       {/* <Login />? */}
       {/* <Dummy /> */}
-      <Login />
+      {token?.Token ? <MyDrawer /> : <Login tokenRecord={setToken} />}
     </NavigationContainer>
     // <Login />
     // <Dummy/>

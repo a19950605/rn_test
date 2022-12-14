@@ -1,15 +1,30 @@
-import {AsyncStorageStatic} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const getToken = () => {
-  AsyncStorageStatic.getToken('token');
+const getToken = async () => {
+  try {
+    const value = await AsyncStorage.getItem('@token');
+    console.log('gettoken');
+    console.log(value);
+    return value;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
-const removeToken = () => {
-  AsyncStorageStatic.removeItem('token');
+const removeToken = async () => {
+  try {
+    await AsyncStorage.removeItem('@token');
+  } catch (e) {
+    console.log(e);
+  }
 };
 
-const setToken = token => {
-  AsyncStorageStatic.setItem('token', token);
+const setTokenHelper = async token => {
+  try {
+    await AsyncStorage.setItem('@token', token);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
-export {getToken, removeToken, setToken};
+export {getToken, removeToken, setTokenHelper};
