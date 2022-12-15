@@ -145,6 +145,7 @@ export function MyDrawer() {
           headerStyle: {
             backgroundColor: '#000000', //Set Header color
           },
+
           drawerActiveTintColor: 'red',
           activeBackgroundColor: 'white',
           inactiveTintColor: 'black',

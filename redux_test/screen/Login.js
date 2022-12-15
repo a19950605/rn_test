@@ -73,8 +73,8 @@ const Login = props => {
               console.log('json');
               console.log(res);
               setToken1(JSON.parse(res));
-              if (token1) {
-                alert('true');
+              if (!token1) {
+                alert('Login failed');
               }
               console.log(token1);
               props.tokenRecord(JSON.parse(res));

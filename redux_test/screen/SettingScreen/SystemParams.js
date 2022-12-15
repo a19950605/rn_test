@@ -17,3 +17,5 @@ const SystemParams = () => {
     </View>
   );
 };
+
+export default SystemParams;
