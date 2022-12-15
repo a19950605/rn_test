@@ -30,6 +30,8 @@ import Login from './screen/Login';
 import Dummy from './screen/dummy';
 import OutstandingDetailTab from './screen/OutstandingDetailTab';
 import PasswordSetting from './screen/SettingScreen/PasswordSetting';
+import MonitoringTest from './screen/MonitoringTest';
+import MonitoringTab from './screen/MonitoringTab';
 
 //import RNFetchBlob from "rn-fetch-blob";
 
@@ -162,7 +164,8 @@ export function MyDrawer() {
         <Drawer.Screen name="Alarm History" component={AlarmHistory} />
 
         <Drawer.Screen name="Change Password" component={PasswordSetting} />
-
+        <Drawer.Screen name="Monitoring test" component={MonitoringTest} />
+        <Drawer.Screen name="mon tab" component={MonitoringTab} />
         <Drawer.Screen name="Notifications" component={Notifications} />
         <Drawer.Screen name="Form" component={Form} />
       </Drawer.Navigator>
