@@ -1,14 +1,58 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Tab, Text, TabView} from '@rneui/themed';
 import {Input, Icon} from '@rneui/themed';
 
 import {View, StyleSheet, Button} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import StatusTab from './components/monitoring/StatusTab';
+import Assignment from './Assignment';
+import AssignmentDetail from './components/monitoring/AssignmentDetail';
+import LastControlDetail from './components/monitoring/LastControlDetail';
+import HistoryTab from './components/monitoring/HistoryTab';
+import Alarm from './components/monitoring/Alarm';
+import MonitoringDetailTab from './components/monitoring/MonitoringDetailTab';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MonitoringTab = () => {
   const [index, setIndex] = React.useState(0);
   const [text, setText] = React.useState('');
+  const [token, setToken] = useState('');
+  const [data, setData] = useState('');
+  useEffect(() => {
+    async function getData() {
+      return await AsyncStorage.getItem('@token').then(res => {
+        console.log('tokentest');
+        console.log(res);
+        setToken(res);
+        return res;
+      });
+    }
+
+    getData().then(token => {
+      var requestOptions = {
+        method: 'GET',
+        headers: {
+          // Accept: '*',
+          // 'Content-Type': 'application/json',
+          'X-Token': token,
+        },
+      };
+      //hardcode the id at this moment
+      fetch(`https://gis2.ectrak.com.hk:8900/api/v2/device/1`, requestOptions)
+        .then(response => {
+          return response.json();
+        })
+        .then(result => {
+          //  console.log(result);
+          // return result;
+          //   setData(result);
+          console.log(result);
+          setData(result);
+        })
+        .catch(error => console.log('error1', error));
+    });
+  }, []);
+
   return (
     <>
       <Tab
@@ -62,137 +106,25 @@ const MonitoringTab = () => {
       </Tab>
       <TabView value={index} onChange={setIndex} animationType="spring">
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <View style={{padding: 10}}>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
-              <Icon
-                name="monitor"
-                size={24}
-                color="black"
-                style={{padding: 10, justifyContent: 'center'}}
-              />
-              <TextInput
-                editable={false}
-                selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
-                label="Controller ID"
-                value=""
-                onChangeText={text => setText(text)}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
-              <Icon
-                name="hash"
-                size={24}
-                color="black"
-                type="feather"
-                style={{padding: 10}}
-              />
-              <TextInput
-                editable={false}
-                selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
-                label="Device ID"
-                value=""
-                onChangeText={text => setText(text)}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
-              <Icon
-                name="location-pin"
-                size={24}
-                color="black"
-                type="material"
-                style={{padding: 10}}
-              />
-              <TextInput
-                editable={false}
-                selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
-                label="RFL"
-                value=""
-                onChangeText={text => setText(text)}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
-              <Icon
-                name="call-split"
-                size={24}
-                color="black"
-                type="material"
-                style={{padding: 10}}
-              />
-              <TextInput
-                editable={false}
-                selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
-                label="Relay Channel Index"
-                value=""
-                onChangeText={text => setText(text)}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
-              <Icon
-                name="play"
-                size={24}
-                color="black"
-                type="fontisto"
-                style={{padding: 10}}
-              />
-              <TextInput
-                editable={false}
-                selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
-                label="Status"
-                value=""
-                onChangeText={text => setText(text)}
-              />
-            </View>
-          </View>
+          <MonitoringDetailTab data={data} />
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
           <StatusTab />
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <Text h1>Assignment</Text>
+          <AssignmentDetail />
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <Text h1>Last Control</Text>
+          <LastControlDetail data={data} />
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
           <Text h1>Location</Text>
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <Text h1>History</Text>
+          <HistoryTab deviceID={1} />
+        </TabView.Item>
+        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+          <Alarm />
         </TabView.Item>
       </TabView>
     </>

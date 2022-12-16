@@ -38,7 +38,6 @@ const OutstandingAlarmSub = () => {
         return res;
       });
     }
-
     getData().then(res => {
       var requestOptions = {
         method: 'GET',

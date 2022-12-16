@@ -33,6 +33,10 @@ import PasswordSetting from './screen/SettingScreen/PasswordSetting';
 import MonitoringTest from './screen/MonitoringTest';
 import MonitoringTab from './screen/MonitoringTab';
 
+import Moment from 'react-moment';
+import 'moment-timezone';
+import ImageUploadTest from './screen/ImageUploadTest';
+
 //import RNFetchBlob from "rn-fetch-blob";
 
 function Feed({navigation}) {
@@ -166,6 +170,8 @@ export function MyDrawer() {
         <Drawer.Screen name="Change Password" component={PasswordSetting} />
         <Drawer.Screen name="Monitoring test" component={MonitoringTest} />
         <Drawer.Screen name="mon tab" component={MonitoringTab} />
+        <Drawer.Screen name="image upload test" component={ImageUploadTest} />
+
         <Drawer.Screen name="Notifications" component={Notifications} />
         <Drawer.Screen name="Form" component={Form} />
       </Drawer.Navigator>
