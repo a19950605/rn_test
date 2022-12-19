@@ -1,0 +1,38 @@
+todo today
+
+react image upload (pin?) 
+tablet view       (research at noon) not now
+double header     (research at noon)
+filter function   (home/tomorrow)
+
+
+ui style
+
+\
+
+
+image picker - around 1hr30min
+-pick image 
+-save as object
+-preview
+
+image picker
+
+double header -  done
+-use the same header
+
+try to put monitoring together
+
+
+table view    - maybe 3 hour??  (remain to tomorrow)
+-reform the ui
+
+redux test
+
+captureImage
+
+https://aboutreact.com/example-of-image-picker-in-react-native/
+
+image upload
+
+https://stackoverflow.com/questions/72051294/react-native-flexbox-adjustment-for-landscape-orientation
