@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
 
-import {View, Text, SafeAreaView, Image, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  StyleSheet,
+  useWindowDimensions,
+} from 'react-native';
 import {Input, Icon} from '@rneui/themed';
 import {TextInput} from 'react-native-paper';
 import {Button} from 'react-native-paper';
@@ -10,6 +17,8 @@ const Login = props => {
   const [username, setUsername] = React.useState('');
   const [pw, setPw] = React.useState('');
   const [token1, setToken1] = useState();
+  const {height, width} = useWindowDimensions();
+  const isLandscapeMode = width > height ? true : false;
 
   const saveToken = (username, pw) => {
     auth(username, pw).then(res => {
@@ -17,8 +26,17 @@ const Login = props => {
       console.log(res);
     });
   };
+  console.log('');
+  console.log('height' + height);
+  console.log('width' + width);
+  console.log('islandscapemode' + isLandscapeMode);
   return (
-    <View style={{flex: 1, alignItems: 'center', paddingTop: '50%'}}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        paddingTop: isLandscapeMode ? '20%' : '50%',
+      }}>
       <View style={{flexDirection: 'row'}}>
         <Image
           source={{

@@ -8,8 +8,13 @@ import {
   StyleSheet,
   Platform,
   StatusBar,
+  TouchableOpacity,
 } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  getFocusedRouteNameFromRoute,
+  DrawerActions,
+} from '@react-navigation/native';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -36,6 +41,9 @@ import MonitoringTab from './screen/MonitoringTab';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import ImageUploadTest from './screen/ImageUploadTest';
+import {Icon} from '@rneui/themed';
+
+import {useNavigation} from '@react-navigation/native';
 
 //import RNFetchBlob from "rn-fetch-blob";
 
@@ -101,61 +109,77 @@ const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 export function MyDrawer() {
+  const navigation = useNavigation();
   console.log('init');
   //auth("wilson2022","R4QB10DD");
   //  listEventLog({username:'wilson2022',funcName:'Userloginlog',fromTime:'20221212',toTime:'20221212'},"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdnJJZCI6IjIiLCJqdGkiOiIxNjcwODM1ODY4NzE4In0.lqGUbA9zVGVCnH3CB_v_cYR06OuM8A0Z-kVmBAEnwdZP25pDJNPa9mI0DBNBMsAysEKTyS_bX3kHY1OI2HfaBA"
   //  )
   const [loginToken, setLoginToken] = useState('');
 
-  //   useEffect(()=>{
-  //     var formdata = new FormData();
-  // formdata.append("username", "wilson2022");
-  // formdata.append("password", "R4QB10DD");
-
-  // var requestOptions = {
-  //   method: 'POST',
-  //   body: formdata,
-  //   redirect: 'follow'
-  // };
-
-  // fetch("https://gis2.ectrak.com.hk:8900/api/auth", requestOptions)
-  //   .then(response => response.text())
-  //   .then(result => console.log(result))
-  //   .catch(error => console.log('error', error));
-
-  // /*
-  //   RNFetchBlob.fetch('POST', 'https://gis2.ectrak.com.hk:8900/api/auth', {
-  //     'Content-Type' : 'multipart/form-data',
-  //   }, [
-  //     // element with property `filename` will be transformed into `file` in form data
-  //     { username : 'wilson2022', password : 'R4QB10DD'},
-  //    ,
-  //   ]).then((resp) => {
-  //     console.log(resp)
-  //   }).catch((err) => {
-  //     console.log(err)
-  //   })*/
-  //   {/*
-  //     axios.post('https://gis2.ectrak.com.hk:8900/api/auth',{
-  //     username:'wilson2022',
-  //     password:'R4QB10DD'
-  //     }).then(data=>console.log(data)).catch(e=>{console.log(e.toJSON())})*/}
-  //   },[])
   return (
     <>
       {/* style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}*/}
       <Drawer.Navigator
         useLegacyImplementation
-        screenOptions={{
-          headerTintColor: '#FFFFFF',
-          headerStyle: {
-            backgroundColor: '#000000', //Set Header color
-          },
+        screenOptions={({route}) => {
+          const routeName =
+            getFocusedRouteNameFromRoute(route) ?? 'OutstandingAlarmSub';
 
-          drawerActiveTintColor: 'red',
-          activeBackgroundColor: 'white',
-          inactiveTintColor: 'black',
-          inactiveBackgroundColor: 'white',
+          let headerTitle;
+          let isDetail = false;
+          switch (routeName) {
+            case 'OutstandingAlarmSub':
+              headerTitle = 'Outandstanding Alarm';
+              isDetail = false;
+              break;
+            case 'OutstandingDetailTab':
+              headerTitle = 'Detail.';
+              isDetail = true;
+              break;
+          }
+          console.log('header title');
+          console.log(headerTitle);
+          console.log(headerTitle == 'OutstandingDetailTab');
+          return {
+            headerTitle,
+            headerShown: true,
+            headerTintColor: '#FFFFFF',
+            headerStyle: {
+              backgroundColor: '#000000', //Set Header color
+            },
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  {
+                    !isDetail
+                      ? navigation.dispatch(DrawerActions.openDrawer())
+                      : navigation.goBack();
+                  }
+                }}>
+                {!isDetail ? (
+                  <Icon
+                    name="menu"
+                    size={24}
+                    color="white"
+                    type="material-community"
+                    style={{padding: 10}}
+                  />
+                ) : (
+                  <Icon
+                    name="arrow-back"
+                    size={24}
+                    color="white"
+                    type="material"
+                    style={{padding: 10}}
+                  />
+                )}
+              </TouchableOpacity>
+            ),
+            drawerActiveTintColor: 'red',
+            activeBackgroundColor: 'white',
+            inactiveTintColor: 'black',
+            inactiveBackgroundColor: 'white',
+          };
         }}
         style={{
           paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,

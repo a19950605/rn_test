@@ -14,14 +14,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OutstandingAlarm = () => {
   const Stack = createStackNavigator();
-
+  const test = createAlarmCard();
   return (
-    <Stack.Navigator screenOptions={{headerTitle: 'test', headerShown: false}}>
+    <Stack.Navigator
+      screenOptions={{headerTitle: 'OutstandingAlarmSub', headerShown: false}}>
       <Stack.Screen
-        name="OuterStanding Alarm"
+        name="OutstandingAlarmSub"
         component={OutstandingAlarmSub}
       />
-      <Stack.Screen name="Details" component={OutstandingDetailTab} />
+      <Stack.Screen
+        name="OutstandingDetailTab"
+        component={OutstandingDetailTab}
+      />
     </Stack.Navigator>
   );
 };
@@ -60,7 +64,7 @@ const OutstandingAlarmSub = () => {
     });
   }, []);
 
-  console.log('outStandand alarm');
+  // console.log('outStandand alarm');
   return (
     <View>
       <View
