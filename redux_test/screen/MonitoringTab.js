@@ -12,8 +12,10 @@ import HistoryTab from './components/monitoring/HistoryTab';
 import Alarm from './components/monitoring/Alarm';
 import MonitoringDetailTab from './components/monitoring/MonitoringDetailTab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {set} from 'react-native-reanimated';
 
-const MonitoringTab = () => {
+const MonitoringTab = props => {
+  console.log('monitoring tab1');
   const [index, setIndex] = React.useState(0);
   const [text, setText] = React.useState('');
   const [token, setToken] = useState('');
@@ -38,7 +40,10 @@ const MonitoringTab = () => {
         },
       };
       //hardcode the id at this moment
-      fetch(`https://gis2.ectrak.com.hk:8900/api/v2/device/1`, requestOptions)
+      fetch(
+        `https://gis2.ectrak.com.hk:8900/api/v2/device/${props.route.params.id}`,
+        requestOptions,
+      )
         .then(response => {
           return response.json();
         })
@@ -51,7 +56,7 @@ const MonitoringTab = () => {
         })
         .catch(error => console.log('error1', error));
     });
-  }, []);
+  }, [props?.route?.params?.id]);
 
   return (
     <>
