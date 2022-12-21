@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Moment from 'react-moment';
+//import Moment from 'react-moment';
 
 const HistoryTab = ({deviceID}) => {
   console.log(deviceID);
@@ -43,7 +43,7 @@ const HistoryTab = ({deviceID}) => {
         })
         .catch(error => console.log('error1', error));
     });
-  }, []);
+  }, [deviceID]);
   return (
     <View style={{flex: 1, padding: 10}}>
       <View>

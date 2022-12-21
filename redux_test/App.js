@@ -38,8 +38,8 @@ import PasswordSetting from './screen/SettingScreen/PasswordSetting';
 import MonitoringTest from './screen/MonitoringTest';
 import MonitoringTab from './screen/MonitoringTab';
 
-import Moment from 'react-moment';
-import 'moment-timezone';
+//import Moment from 'react-moment';
+//import 'moment-timezone';
 import ImageUploadTest from './screen/ImageUploadTest';
 import {Icon} from '@rneui/themed';
 
