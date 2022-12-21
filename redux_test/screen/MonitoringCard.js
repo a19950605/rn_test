@@ -47,7 +47,13 @@ const MonitoringCard = props => {
           marginBottom: 2,
         }}>
         <View>
-          <Text style={{padding: 10, color: 'blue'}}>Details</Text>
+          <Text
+            style={{padding: 10, color: 'blue'}}
+            onPress={() => {
+              props.navigation.navigate('MonitoringDetail', props.item);
+            }}>
+            Details
+          </Text>
         </View>
         <View>
           <Text style={{padding: 10, color: 'blue'}}>Control</Text>

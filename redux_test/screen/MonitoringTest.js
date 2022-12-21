@@ -1,44 +1,38 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Monitoring from './Monitoring';
 import MonitoringCard from './MonitoringCard';
 import {useNavigation} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import MonitoringDetail from './components/monitoring/MonitoringDetail';
+import MonitoringTab from './MonitoringTab';
+import MonitoringCreate from './MonitoringCreate';
 
 const MonitoringTest = () => {
+  const Stack = createStackNavigator();
+  return (
+    <Stack.Navigator
+      screenOptions={{headerTitle: 'eRFL Monitoring', headerShown: false}}>
+      <Stack.Screen name="MonitoringTestSub" component={MonitoringTestSub} />
+      <Stack.Screen name="MonitoringDetail" component={MonitoringTab} />
+      <Stack.Screen name="Create Monitoring" component={MonitoringCreate} />
+    </Stack.Navigator>
+  );
+};
+
+const MonitoringTestSub = () => {
   const navigation = useNavigation();
+
   const [data, setData] = useState([]);
   useEffect(() => {}, []);
-
-  /**
-   *refresh every 30 S OR CLICK
-   *RFL ID=>DEVICE ID
-   *RFL = CODE
-   *EPIC
-   *GROUP
-    status as of:time
-   erfl readliness:  two status
-   status (lamp,health, conn, power ,relay)
-
-   click detail
-   detail tab 
-   (details) controller id, device id(1-4), rfl ,relay channel index(dropdown 0-3)
-   status (ACTIVE MAINTENANC ISOLATED)
-   
-   status tab (show icon status in detail)(health status, controller conn status,
-    power status, lamp status,prev lamp statuss, relay channel status)
-    
-    assignment tab  (GROUP,EPIC,CP,ASSIGNED DATE, ETMS START TIME, ETMS FIN TIME)
-    LAST CONTROL TAB (LAST CONTROL BY:sysadmin , LAST CONtRoL ACtiON: Off(Success), Last Control Datetime: 2022-12-06 XXX)
-   
-    location TAB (image location add pin)
-    history TAB(SHOW COMMAND ID,USER,action,datetime)
-    ALARM (show outstanding alarm by rfl: same as outstanding alarm)
-
-    ADD BUTTON ->RFL NEW (DETAILS, LOCATION)
-    -Controller ID, Device ID, RFL, Relay Channel Index
-
-    */
 
   useEffect(() => {
     async function getData() {
@@ -80,6 +74,34 @@ const MonitoringTest = () => {
   console.log(data);
   return (
     <View style={{flex: 1, padding: 5}}>
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity
+          style={{
+            borderColor: 'blue',
+            borderWidth: 1,
+            borderRadius: 2,
+            padding: 10,
+            flexDirection: 'row',
+            marginRight: 5,
+          }}
+          onPress={() => {
+            navigation.navigate('Create Monitoring');
+          }}>
+          <Text style={{color: 'blue'}}>Add</Text>
+        </TouchableOpacity>
+        <View
+          style={{
+            borderColor: 'blue',
+            borderWidth: 1,
+            borderRadius: 2,
+            padding: 10,
+            flexDirection: 'row',
+          }}>
+          <Text style={{color: 'blue'}}>2022-12-06 12:26:43</Text>
+        </View>
+      </View>
+      <View style={{padding: 5}}></View>
+
       <FlatList
         data={data}
         renderItem={props => (

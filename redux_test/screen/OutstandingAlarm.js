@@ -14,7 +14,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OutstandingAlarm = () => {
   const Stack = createStackNavigator();
-  const test = createAlarmCard();
   return (
     <Stack.Navigator
       screenOptions={{headerTitle: 'OutstandingAlarmSub', headerShown: false}}>

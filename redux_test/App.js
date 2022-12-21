@@ -44,6 +44,7 @@ import ImageUploadTest from './screen/ImageUploadTest';
 import {Icon} from '@rneui/themed';
 
 import {useNavigation} from '@react-navigation/native';
+import TableView from './screen/components/TableView';
 
 //import RNFetchBlob from "rn-fetch-blob";
 
@@ -122,9 +123,10 @@ export function MyDrawer() {
       <Drawer.Navigator
         useLegacyImplementation
         screenOptions={({route}) => {
-          const routeName =
-            getFocusedRouteNameFromRoute(route) ?? 'OutstandingAlarmSub';
+          const routeName = getFocusedRouteNameFromRoute(route);
 
+          console.log('route name');
+          console.log(routeName);
           let headerTitle;
           let isDetail = false;
           switch (routeName) {
@@ -136,7 +138,16 @@ export function MyDrawer() {
               headerTitle = 'Detail.';
               isDetail = true;
               break;
+            case 'MonitoringDetail':
+              headerTitle = 'Monitoring Detail';
+              isDetail = true;
+              break;
+            case 'Create Monitoring':
+              headerTitle = 'Create Monitoring';
+              isDetail = true;
+              break;
           }
+
           console.log('header title');
           console.log(headerTitle);
           console.log(headerTitle == 'OutstandingDetailTab');
@@ -190,13 +201,11 @@ export function MyDrawer() {
         <Drawer.Screen name="Event Log" component={EventLog} />
         <Drawer.Screen name="Outstanding Alarm" component={OutstandingAlarm} />
         <Drawer.Screen name="Alarm History" component={AlarmHistory} />
-
         <Drawer.Screen name="Change Password" component={PasswordSetting} />
         <Drawer.Screen name="Monitoring test" component={MonitoringTest} />
         <Drawer.Screen name="mon tab" component={MonitoringTab} />
         <Drawer.Screen name="image upload test" component={ImageUploadTest} />
-
-        <Drawer.Screen name="Notifications" component={Notifications} />
+        <Drawer.Screen name="Table View" component={TableView} />
         <Drawer.Screen name="Form" component={Form} />
       </Drawer.Navigator>
     </>
