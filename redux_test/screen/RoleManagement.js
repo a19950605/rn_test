@@ -1,9 +1,87 @@
-import { View, Text, Button ,SafeAreaView,Image,StyleSheet} from 'react-native';
+import React, {useState, useEffect} from 'react';
+
+import {
+  View,
+  Text,
+  Button,
+  SafeAreaView,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function RoleManagement() {
+  async function getData() {
+    return await AsyncStorage.getItem('@token').then(res => {
+      console.log('tokentest');
+      console.log(res);
+      return res;
+    });
+  }
+
+  useEffect(() => {
+    // getData().then(res => {
+    //   var requestOptions = {
+    //     method: 'GET',
+    //     headers: {
+    //       // Accept: '*',
+    //       // 'Content-Type': 'application/json',
+    //       'X-Token': res,
+    //     },
+    //   };
+    //   fetch(
+    //     'https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission',
+    //     requestOptions,
+    //   )
+    //     .then(response => {
+    //       return response.json();
+    //     })
+    //     .then(result => {
+    //       console.log(result);
+    //       // return result;
+    //       // setData(result);
+    //     })
+    //     .catch(error => console.log('error1', error));
+    // });
+  }, []);
+
+  const getOneRolePermission = id => {
+    getData().then(res => {
+      var requestOptions = {
+        method: 'GET',
+        headers: {
+          // Accept: '*',
+          // 'Content-Type': 'application/json',
+          'X-Token': res,
+        },
+      };
+      fetch(
+        `https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission/${id}`,
+        requestOptions,
+      )
+        .then(response => {
+          return response.json();
+        })
+        .then(result => {
+          console.log(result);
+          // return result;
+          // setData(result);
+        })
+        .catch(error => console.log('error1', error));
+    });
+  };
+  //list row
+
+  //create display name,code remarks status permission
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>RoleManagement</Text>
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <TouchableOpacity
+        onPress={() => {
+          getOneRolePermission(1);
+        }}>
+        <Text>111</Text>
+      </TouchableOpacity>
     </View>
   );
 }

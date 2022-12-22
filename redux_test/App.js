@@ -45,6 +45,8 @@ import {Icon} from '@rneui/themed';
 
 import {useNavigation} from '@react-navigation/native';
 import TableView from './screen/components/TableView';
+import UserAccountManagement from './screen/UserAccountManagement';
+import RoleManagement from './screen/RoleManagement';
 
 //import RNFetchBlob from "rn-fetch-blob";
 
@@ -93,14 +95,14 @@ function CustomDrawerContent(props) {
             activeBackgroundColor: '#000000',
           }}
         />
-        <DrawerItem
+        {/* <DrawerItem
           label="Close drawer"
           onPress={() => props.navigation.closeDrawer()}
         />
         <DrawerItem
           label="Toggle drawer"
           onPress={() => props.navigation.toggleDrawer()}
-        />
+        /> */}
       </DrawerContentScrollView>
     </SafeAreaView>
   );
@@ -204,9 +206,15 @@ export function MyDrawer() {
         <Drawer.Screen name="Change Password" component={PasswordSetting} />
         <Drawer.Screen name="Monitoring test" component={MonitoringTest} />
         <Drawer.Screen name="mon tab" component={MonitoringTab} />
+        <Drawer.Screen name="Role management" component={RoleManagement} />
+
         <Drawer.Screen name="image upload test" component={ImageUploadTest} />
-        <Drawer.Screen name="Table View" component={TableView} />
-        <Drawer.Screen name="Form" component={Form} />
+        <Drawer.Screen
+          name="User Account Management"
+          component={UserAccountManagement}
+        />
+        {/* <Drawer.Screen name="Table View" component={TableView} /> */}
+        {/* <Drawer.Screen name="Form" component={Form} /> */}
       </Drawer.Navigator>
     </>
   );

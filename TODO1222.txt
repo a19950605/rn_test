@@ -1,0 +1,25 @@
+style checking and task
+password
+-missing form validation
+-save button style
+other setting parts should be finish very fast()
+
+role management
+(not difficult (the most difficult part on CHECKBOX LOGIC)  if (other are checked, the top one will be checked,if top one unchecked, then unchecked others)
+
+user account management (very easy) use the existing material and change the api
+
+outstanding alarm (差ack同background color)同alarm history(EXPORT CSV)
+
+EVENT LOG  (EXPORT CSV) (EASY)
+
+
+
+ERFL ASSIGNMENT (SKIP)
+
+
+5190 1886 5504 6292
+
+CHAU Weng Un 
+06/26
+CVC 888
