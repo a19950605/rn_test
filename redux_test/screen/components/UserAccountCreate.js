@@ -1,9 +1,15 @@
 import React, {useState} from 'react';
 import {Input, Icon} from '@rneui/themed';
 
-import {View, StyleSheet, Button, TouchableOpacity, Text} from 'react-native';
-import {TextInput, Menu} from 'react-native-paper';
+import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
 const UserAccountCreate = () => {
+  const [visible, setVisible] = React.useState(false);
+
+  const openMenu = () => setVisible(true);
+
+  const closeMenu = () => setVisible(false);
+
   //user name
   //displayname
   //staffid
