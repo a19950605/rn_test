@@ -148,6 +148,13 @@ export function MyDrawer() {
               headerTitle = 'Create Monitoring';
               isDetail = true;
               break;
+            case 'UserAccountDetail':
+              headerTitle = 'User Account Detail';
+              isDetail = true;
+              break;
+            case 'Create user':
+              headerTitle = 'Account new';
+              isDetail = true;
           }
 
           console.log('header title');
