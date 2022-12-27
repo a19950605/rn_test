@@ -101,7 +101,6 @@ const UserAccountCreate = () => {
               value={''}
               onChangeText={''}
             />
-            <MyComponent />
           </View>
           <View
             style={{

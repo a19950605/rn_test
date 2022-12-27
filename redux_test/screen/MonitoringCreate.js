@@ -27,6 +27,7 @@ const MonitoringCreate = () => {
     fetch(url).then(async response => {
       const contentType = response.headers.get('content-type');
       const blob = await response.blob();
+      // eslint-disable-next-line no-undef
       const file1 = new File([blob], fileName, {contentType});
       console.log('file test');
       setFile(file1);
