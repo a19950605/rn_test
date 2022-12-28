@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {ReactNativeZoomableView} from '@openspacelabs/react-native-zoomable-view';
 
 import {
   View,
@@ -10,6 +11,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MarkerImage from 'react-native-marker-image';
 
 function RoleManagement() {
   async function getData() {
@@ -75,7 +77,7 @@ function RoleManagement() {
 
   //create display name,code remarks status permission
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{flex: 1}}>
       <TouchableOpacity
         onPress={() => {
           getOneRolePermission(1);

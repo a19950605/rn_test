@@ -13,6 +13,8 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {ReactNativeZoomableView} from '@openspacelabs/react-native-zoomable-view';
+import MarkerImage from 'react-native-marker-image';
 
 const ImageUploadTest = () => {
   const [filePath, setFilePath] = useState({});
@@ -95,30 +97,46 @@ const ImageUploadTest = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
+      <View style={{borderWidth: 5, flexShrink: 1, height: 600, width: '100%'}}>
+        <ReactNativeZoomableView
+          maxZoom={2}
+          minZoom={0.5}
+          zoomStep={0.5}
+          contentWidth={300}
+          contentHeight={150}
+          initialZoom={1}
+          panBoundaryPadding={50}
+          bindToBorders={true}
+          style={{
+            padding: 10,
+          }}>
+          <MarkerImage
+            image={require('../assets/test.jpg')}
+            markerImage={require('../assets/test.jpg')}
+            markerSize={50}
+            onChange={data => console.log(data)}
+          />
+        </ReactNativeZoomableView>
+      </View>
       <View style={styles.container}>
         {/* <Image
             source={{
               uri: 'data:image/jpeg;base64,' + filePath.data,
             }}
             style={styles.imageStyle}
-          /> */}
-        <Text>{JSON.stringify(filePath)}</Text>
-<<<<<<< HEAD
-        <Text>{filePath[0]?.uri}</Text>
-        <Image source={{uri: filePath[0]?.uri}} style={styles.imageStyle} />
-        <Text style={styles.textStyle}>{filePath?.assets?.uri}</Text>
-
-=======
+                <Text>{JSON.stringify(filePath)}</Text>
         <Text>{filePath?.uri}</Text>
-        <Image source={{uri: filePath[0]?.uri}} style={styles.imageStyle} />
         <Text style={styles.textStyle}>{filePath[0]?.uri}</Text>
->>>>>>> e60457883e9ed0af8196befb8cfaa5f6af3563f2
+
+          /> */}
+
         <TouchableOpacity
           activeOpacity={0.5}
           style={styles.buttonStyle}
           onPress={() => chooseFile('photo')}>
           <Text style={styles.textStyle}>Choose Image</Text>
         </TouchableOpacity>
+        <Image source={{uri: filePath[0]?.uri}} style={styles.imageStyle} />
       </View>
     </SafeAreaView>
   );
@@ -145,7 +163,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
     padding: 5,
-    marginVertical: 10,
     width: 250,
   },
   imageStyle: {
