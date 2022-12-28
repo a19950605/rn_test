@@ -106,11 +106,8 @@ const ImageUploadTest = () => {
             style={styles.imageStyle}
           /> */}
         <Text>{JSON.stringify(filePath)}</Text>
-        <Text>{filePath?.uri}</Text>
-        <Image
-          source={{uri: filePath?.assets?.uri}}
-          style={styles.imageStyle}
-        />
+        <Text>{filePath[0]?.uri}</Text>
+        <Image source={{uri: filePath[0]?.uri}} style={styles.imageStyle} />
         <Text style={styles.textStyle}>{filePath?.assets?.uri}</Text>
 
         <TouchableOpacity
