@@ -1,25 +1,26 @@
-style checking and task
-password
--missing form validation
--save button style
-other setting parts should be finish very fast()
+monitoring detail
+filter
 
-role management
-(not difficult (the most difficult part on CHECKBOX LOGIC)  if (other are checked, the top one will be checked,if top one unchecked, then unchecked others)
+status
+-health status,controller connection status,power status, lamp status, previous lamp status, relay channel status
 
-user account management (very easy) use the existing material and change the api
 
-outstanding alarm (差ack同background color)同alarm history(EXPORT CSV)
-
-EVENT LOG  (EXPORT CSV) (EASY)
+erfl refresh and warning icon
 
 
 
-ERFL ASSIGNMENT (SKIP)
 
 
-5190 1886 5504 6292
+差
+ROLE MANAGEMENT
+MONITORING PIN
 
-CHAU Weng Un 
-06/26
-CVC 888
+STYLE 
+EVENT LOG
+
+FALSE ALARM (ACK/DETAILS同ACK TAB)
+
+
+FILTER
+
+tabletｖｉｅｗ

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Tab, Text, TabView} from '@rneui/themed';
 import {Input, Icon} from '@rneui/themed';
 
-import {View, StyleSheet, Button} from 'react-native';
+import {View, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import StatusTab from './components/monitoring/StatusTab';
 import Assignment from './Assignment';
@@ -29,7 +29,6 @@ const MonitoringTab = props => {
         return res;
       });
     }
-
     getData().then(token => {
       var requestOptions = {
         method: 'GET',
@@ -132,6 +131,61 @@ const MonitoringTab = props => {
           <Alarm />
         </TabView.Item>
       </TabView>
+
+      <View
+        style={{
+          backgroundColor: 'white',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          padding: 20,
+        }}>
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderColor: 'red',
+            borderWidth: 1,
+            borderRadius: 5,
+            padding: 10,
+            marginRight: 5,
+          }}
+          onPress={() => {
+            alert('hello' + JSON.stringify(form));
+            createNewRecord();
+          }}>
+          <Icon
+            name="md-save-sharp"
+            type="ionicon"
+            size={24}
+            color="red"
+            style={{justifyContent: 'center', paddingRight: 5}}
+          />
+          <Text style={{color: 'red'}}> Delete</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderColor: 'green',
+            borderWidth: 1,
+            borderRadius: 5,
+            padding: 10,
+          }}
+          onPress={() => {
+            alert('hello' + JSON.stringify(form));
+            createNewRecord();
+          }}>
+          <Icon
+            name="md-save-sharp"
+            type="ionicon"
+            size={24}
+            color="green"
+            style={{justifyContent: 'center', paddingRight: 5}}
+          />
+          <Text style={{color: 'green'}}> Save</Text>
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
