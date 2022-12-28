@@ -7,6 +7,7 @@ import {Input, Icon} from '@rneui/themed';
 
 import MonitoringCreateTab from './components/monitoring/MonitoringCreateTab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ImageUploadTest from './ImageUploadTest';
 
 const MonitoringCreate = () => {
   const [index, setIndex] = useState(0);
@@ -122,7 +123,8 @@ const MonitoringCreate = () => {
           <MonitoringCreateTab setForm={setForm} form={form} />
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <Text h1>Location</Text>
+          {/* <Text h1>Location</Text> */}
+          <ImageUploadTest />
         </TabView.Item>
       </TabView>
       <View

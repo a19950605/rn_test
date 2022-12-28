@@ -1,128 +1,15 @@
 import React, {useState} from 'react';
 import {Input, Icon} from '@rneui/themed';
 
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  Pressable,
-} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
 
-const UserAccountCreate = () => {
-  const [menu1, setMenu1] = useState(false);
-  const [menu2, setMenu2] = useState(false);
-
+const Uabak = () => {
   //user name
   //displayname
   //staffid
   //role (dropdown) default text first password, password confirmation remarks
   //status  active disabled
-
-  //role
-  const RoleDropDown = ({close}) => {
-    const [visible, setVisible] = React.useState(false);
-
-    const openMenu = () => setVisible(true);
-
-    const closeMenu = () => setVisible(false);
-
-    return (
-      <View
-        style={{
-          backgroundColor: 'white',
-          position: 'absolute',
-          zIndex: 999,
-          width: '86%',
-          left: 41,
-          top: -10,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-
-          elevation: 5,
-        }}>
-        <Menu.Item
-          onPress={() => {
-            close(false);
-          }}
-          title="System Admin(SYSADM)"
-        />
-        <Menu.Item
-          onPress={() => {
-            close(false);
-          }}
-          title="RFL Control (CU)"
-        />
-        <Menu.Item
-          onPress={() => {
-            close(false);
-          }}
-          title="RFL Assignment (ASU)"
-        />
-        <Menu.Item
-          onPress={() => {
-            close(false);
-          }}
-          title="Readonly User(RU)"
-        />
-        <Menu.Item
-          onPress={() => {
-            close(false);
-          }}
-          title="RFL Maintainer (MA)"
-        />
-      </View>
-    );
-  };
-
-  //status
-  const StatusDropDown = ({close}) => {
-    const [visible, setVisible] = React.useState(false);
-
-    const openMenu = () => setVisible(true);
-
-    const closeMenu = () => setVisible(false);
-
-    return (
-      <View
-        style={{
-          backgroundColor: 'white',
-          position: 'absolute',
-          zIndex: 999,
-          width: '86%',
-          left: 41,
-          bottom: -40,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-
-          elevation: 5,
-        }}>
-        <Menu.Item
-          onPress={() => {
-            close(false);
-          }}
-          title="Active"
-        />
-        <Menu.Item
-          onPress={() => {
-            close(false);
-          }}
-          title="Disabled"
-        />
-      </View>
-    );
-  };
   return (
     <Provider>
       <View style={{backgroundColor: 'white', flex: 1}}>
@@ -162,7 +49,6 @@ const UserAccountCreate = () => {
               type="feather"
               style={{padding: 10}}
             />
-
             <TextInput
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
@@ -207,23 +93,14 @@ const UserAccountCreate = () => {
               type="fontisto"
               style={{padding: 10}}
             />
-            <Pressable
-              style={{width: '100%'}}
-              onPress={() => {
-                setMenu1(!menu1);
-                setMenu2(false);
-              }}>
-              <TextInput
-                editable={false}
-                selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
-                label="Role"
-                value={''}
-                onChangeText={''}
-              />
-            </Pressable>
+            <TextInput
+              selectTextOnFocus={false}
+              style={{width: '85%', backgroundColor: 'transparent'}}
+              label="Role"
+              value={''}
+              onChangeText={''}
+            />
           </View>
-          <View>{menu1 && <RoleDropDown close={setMenu1} />}</View>
           <View
             style={{
               flexDirection: 'row',
@@ -290,37 +167,27 @@ const UserAccountCreate = () => {
               onChangeText={''}
             />
           </View>
-          <Pressable
-            onPress={() => {
-              setMenu2(!menu2);
-              setMenu1(false);
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '100%',
+              alignItems: 'center',
+              marginBottom: 15,
             }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
-              <Icon
-                name="play"
-                size={24}
-                color="black"
-                type="fontisto"
-                style={{padding: 10}}
-              />
-              <TextInput
-                editable={false}
-                selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
-                label="Status"
-                value={''}
-                onChangeText={''}
-              />
-            </View>
-          </Pressable>
-          <View style={{zIndex: 999}}>
-            {menu2 && <StatusDropDown close={setMenu2} />}
+            <Icon
+              name="play"
+              size={24}
+              color="black"
+              type="fontisto"
+              style={{padding: 10}}
+            />
+            <TextInput
+              selectTextOnFocus={false}
+              style={{width: '85%', backgroundColor: 'transparent'}}
+              label="Status"
+              value={''}
+              onChangeText={''}
+            />
           </View>
           <View
             style={{
@@ -329,9 +196,8 @@ const UserAccountCreate = () => {
               alignItems: 'center',
               justifyContent: 'flex-end',
               padding: 20,
-              zIndex: 1,
             }}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -351,7 +217,7 @@ const UserAccountCreate = () => {
                 style={{justifyContent: 'center', paddingRight: 5}}
               />
               <Text style={{color: 'green'}}> Save</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>
@@ -359,4 +225,4 @@ const UserAccountCreate = () => {
   );
 };
 
-export default UserAccountCreate;
+export default Uabak;

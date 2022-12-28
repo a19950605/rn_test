@@ -121,7 +121,7 @@ const UserAccountManagementTest = () => {
   //   console.log('data test');
   //   console.log(data);
   return (
-    <View style={{flex: 1, padding: 5}}>
+    <View style={{flex: 1, padding: 5, backgroundColor: 'white'}}>
       <View
         style={{
           flexDirection: 'row',
@@ -153,12 +153,6 @@ const UserAccountManagementTest = () => {
         />
       </View>
 
-      <TouchableOpacity
-        onPress={() => {
-          userDetail(21);
-        }}>
-        <Text>test</Text>
-      </TouchableOpacity>
       <FlatList
         data={data}
         renderItem={props => (

@@ -12,6 +12,119 @@ const MonitoringCreateTab = ({setForm, form}) => {
   const [relayChannelIdx, setRelayChannelIdx] = useState(); //0-3
   const [status, setStatus] = useState(); //active maintenanace
   const [menu1, setMenu1] = useState(false);
+  const [menu2, setMenu2] = useState(false);
+  const StatusDropDown = ({close}) => {
+    const [visible, setVisible] = React.useState(false);
+
+    const openMenu = () => setVisible(true);
+
+    const closeMenu = () => setVisible(false);
+
+    return (
+      <View
+        style={{
+          backgroundColor: 'white',
+          position: 'absolute',
+          zIndex: 999,
+          width: '86%',
+          left: 41,
+          top: -10,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+
+          elevation: 5,
+        }}>
+        <Menu.Item
+          onPress={() => {
+            setStatus('ACTIVE');
+            setForm({...form, status: status});
+            close(false);
+          }}
+          title="Active"
+        />
+        <Menu.Item
+          onPress={() => {
+            setStatus('DISABLED');
+            setForm({...form, status: status});
+            close(false);
+          }}
+          title="Maintenance"
+        />
+      </View>
+    );
+  };
+  const MyComponent = ({
+    close,
+    relayChannelIdx,
+    setRelayChannelIdx,
+    setForm,
+  }) => {
+    const [visible, setVisible] = React.useState(false);
+
+    const openMenu = () => setVisible(true);
+
+    const closeMenu = () => setVisible(false);
+
+    return (
+      <View
+        style={{
+          backgroundColor: 'white',
+          position: 'absolute',
+          zIndex: 999,
+          width: '86%',
+          left: 41,
+          top: -10,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+
+          elevation: 5,
+        }}>
+        <Menu.Item
+          onPress={() => {
+            setRelayChannelIdx(0);
+            setForm({...form, relayChannelIdx: relayChannelIdx});
+            close(false);
+          }}
+          title="0"
+        />
+        <Menu.Item
+          onPress={() => {
+            setRelayChannelIdx(1);
+            setForm({...form, relayChannelIdx: relayChannelIdx});
+            close(false);
+          }}
+          title="1"
+        />
+        <Menu.Item
+          onPress={() => {
+            setRelayChannelIdx(2);
+            setForm({...form, relayChannelIdx: relayChannelIdx});
+            close(false);
+          }}
+          title="2"
+        />
+        <Menu.Item
+          onPress={() => {
+            setRelayChannelIdx(3);
+            setForm({...form, relayChannelIdx: relayChannelIdx});
+            close(false);
+          }}
+          title="3"
+        />
+      </View>
+    );
+  };
+
   return (
     <Provider>
       <View style={{padding: 10}}>
@@ -80,7 +193,6 @@ const MonitoringCreateTab = ({setForm, form}) => {
           />
           <TextInput
             selectTextOnFocus={false}
-            editable={false}
             style={{width: '85%', backgroundColor: 'transparent'}}
             label="RFL"
             value={rfl}
@@ -104,10 +216,12 @@ const MonitoringCreateTab = ({setForm, form}) => {
             type="material"
             style={{padding: 10}}
           />
+
           <Pressable
             style={{width: '100%'}}
             onPress={() => {
               setMenu1(!menu1);
+              setMenu2(false);
             }}>
             <TextInput
               editable={false}
@@ -122,86 +236,54 @@ const MonitoringCreateTab = ({setForm, form}) => {
             />
           </Pressable>
         </View>
-        <View>{menu1 && <MyComponent close={setMenu1} />}</View>
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '100%',
-            alignItems: 'center',
-            marginBottom: 15,
-          }}>
-          <Icon
-            name="play"
-            size={24}
-            color="black"
-            type="fontisto"
-            style={{padding: 10}}
-          />
-          <TextInput
-            selectTextOnFocus={false}
-            style={{width: '85%', backgroundColor: 'transparent'}}
-            label="Status"
-            value={status}
-            onChangeText={status => {
-              setStatus(status);
-              setForm({...form, status: status});
-            }}
-          />
+        <View>
+          {menu1 && (
+            <MyComponent
+              close={setMenu1}
+              relayChannelIdx={relayChannelIdx}
+              setRelayChannelIdx={setRelayChannelIdx}
+              setForm={setForm}
+              form={form}
+            />
+          )}
         </View>
+        <Pressable
+          style={{width: '100%'}}
+          onPress={() => {
+            setMenu2(!menu2);
+            setMenu1(false);
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '100%',
+              alignItems: 'center',
+              marginBottom: 15,
+            }}>
+            <Icon
+              name="play"
+              size={24}
+              color="black"
+              type="fontisto"
+              style={{padding: 10}}
+            />
+            <TextInput
+              editable={false}
+              selectTextOnFocus={false}
+              style={{width: '85%', backgroundColor: 'transparent'}}
+              label="Status"
+              value={status}
+              onChangeText={status => {
+                setStatus(status);
+                setForm({...form, status: status});
+              }}
+            />
+          </View>
+        </Pressable>
+
+        <View>{menu2 && <StatusDropDown close={setMenu2} />}</View>
       </View>
     </Provider>
-  );
-};
-
-const MyComponent = ({close}) => {
-  const [visible, setVisible] = React.useState(false);
-
-  const openMenu = () => setVisible(true);
-
-  const closeMenu = () => setVisible(false);
-
-  return (
-    <View
-      style={{
-        backgroundColor: 'green',
-        position: 'absolute',
-        zIndex: 999,
-        width: '86%',
-        left: 41,
-        top: -20,
-      }}>
-      <Menu.Item
-        leadingIcon="redo"
-        onPress={() => {
-          close(false);
-        }}
-        title="Redo"
-      />
-      <Menu.Item
-        leadingIcon="undo"
-        onPress={() => {
-          close(false);
-        }}
-        title="Undo"
-      />
-      <Menu.Item
-        leadingIcon="content-cut"
-        onPress={() => {
-          close(false);
-        }}
-        title="Cut"
-        disabled
-      />
-      <Menu.Item
-        leadingIcon="content-copy"
-        onPress={() => {
-          close(false);
-        }}
-        title="Copy"
-        disabled
-      />
-      <Menu.Item leadingIcon="content-paste" onPress={() => {}} title="Paste" />
-    </View>
   );
 };
 

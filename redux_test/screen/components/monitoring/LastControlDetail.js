@@ -34,7 +34,7 @@ const LastControlDetail = props => {
           selectTextOnFocus={false}
           style={{width: '85%', backgroundColor: 'transparent'}}
           label="Last Control By"
-          value={props?.data?.lastCmd?.usernameCreate || ''}
+          value={''}
           onChangeText={text => setText(text)}
         />
       </View>
@@ -57,12 +57,7 @@ const LastControlDetail = props => {
           selectTextOnFocus={false}
           style={{width: '85%', backgroundColor: 'transparent'}}
           label="Last Control Action"
-          value={
-            props?.data?.lastCmd?.lampCmd +
-              '(' +
-              props?.data?.lastCmd?.status +
-              ')' || ''
-          }
+          value={''}
           onChangeText={text => setText(text)}
         />
       </View>
@@ -86,7 +81,7 @@ const LastControlDetail = props => {
           selectTextOnFocus={false}
           style={{width: '85%', backgroundColor: 'transparent'}}
           label="Last Control Datetime"
-          value={props?.data?.lastCmd?.dtCreate}
+          value={''}
           onChangeText={text => setText(text)}
         />
       </View>

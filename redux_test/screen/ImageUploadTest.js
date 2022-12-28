@@ -95,9 +95,6 @@ const ImageUploadTest = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Text style={styles.titleText}>
-        Example of Image Picker in React Native
-      </Text>
       <View style={styles.container}>
         {/* <Image
             source={{
@@ -106,10 +103,16 @@ const ImageUploadTest = () => {
             style={styles.imageStyle}
           /> */}
         <Text>{JSON.stringify(filePath)}</Text>
+<<<<<<< HEAD
         <Text>{filePath[0]?.uri}</Text>
         <Image source={{uri: filePath[0]?.uri}} style={styles.imageStyle} />
         <Text style={styles.textStyle}>{filePath?.assets?.uri}</Text>
 
+=======
+        <Text>{filePath?.uri}</Text>
+        <Image source={{uri: filePath[0]?.uri}} style={styles.imageStyle} />
+        <Text style={styles.textStyle}>{filePath[0]?.uri}</Text>
+>>>>>>> e60457883e9ed0af8196befb8cfaa5f6af3563f2
         <TouchableOpacity
           activeOpacity={0.5}
           style={styles.buttonStyle}
