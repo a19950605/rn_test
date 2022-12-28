@@ -105,6 +105,7 @@ const ImageUploadTest = () => {
         <Text>{JSON.stringify(filePath)}</Text>
         <Text>{filePath?.uri}</Text>
         <Image source={{uri: filePath[0]?.uri}} style={styles.imageStyle} />
+
         <Text style={styles.textStyle}>{filePath[0]?.uri}</Text>
         <TouchableOpacity
           activeOpacity={0.5}

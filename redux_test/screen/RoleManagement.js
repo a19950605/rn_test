@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import ImageMarker from 'react-native-marker-image';
+import ReactNativeZoomableView from '@openspacelabs/react-native-zoomable-view/src/ReactNativeZoomableView';
 
 import {
   View,
@@ -75,13 +77,31 @@ function RoleManagement() {
 
   //create display name,code remarks status permission
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{flex: 1}}>
       <TouchableOpacity
         onPress={() => {
           getOneRolePermission(1);
         }}>
-        <Text>111</Text>
+        <Text>1112</Text>
       </TouchableOpacity>
+      <ReactNativeZoomableView
+        maxZoom={1.5}
+        minZoom={0.5}
+        zoomStep={0.5}
+        initialZoom={1}
+        bindToBorders={true}
+        onZoomAfter={this.logOutZoomState}
+        style={{
+          padding: 10,
+          backgroundColor: 'red',
+        }}>
+        <ImageMarker
+          image={require('../assets/test.jpg')}
+          markerImage={require('../assets/location-pin-icon-on-transparent-pin-vector-20942049.jpg')}
+          markerSize={50}
+          onChange={data => console.log(data)}
+        />
+      </ReactNativeZoomableView>
     </View>
   );
 }
