@@ -12,12 +12,18 @@ import ImageUploadTest from './ImageUploadTest';
 const MonitoringCreate = () => {
   const [index, setIndex] = useState(0);
   const [text, setText] = useState('');
+  const [imgX, setImgX] = useState(0);
+  const [imgY, setImgY] = useState(0);
+  const [lampX, setLampX] = useState(0);
+  const [lampY, setLampY] = useState(0);
+  const [uri, setUri] = useState('');
+
   const [form, setForm] = useState({
     controllerId: '',
     deviceId: '',
     rfl: '',
     relayChannelIdx: '',
-    status: '',
+    status: 'ACTIVE',
   });
   const [file, setFile] = useState();
   useEffect(() => {
@@ -52,18 +58,18 @@ const MonitoringCreate = () => {
     formdata.append('controllerCode', form.controllerId);
     formdata.append('code', form.rfl);
 
-    formdata.append('controllerDeviceId', form.deviceId);
-    formdata.append('lampPositionY', 50);
-    formdata.append('lampPositionX', 50);
-    formdata.append('imageW', 20);
-    formdata.append('imageH', 50);
-    formdata.append('relayChannelIdx', form.relayChannelIdx);
+    formdata.append('controllerDeviceId', parseInt(form.deviceId));
+    formdata.append('lampPositionY', lampX);
+    formdata.append('lampPositionX', lampY);
+    formdata.append('imageW', imgX);
+    formdata.append('imageH', imgY);
+    formdata.append('relayChannelIdx', parseInt(form.relayChannelIdx));
     formdata.append('xxoo', {
-      uri: url,
+      uri: uri,
       type: 'image/jpeg',
       name: 'xxoo',
     });
-    formdata.append('status', form.status);
+    formdata.append('status', 'ACTIVE');
 
     getData().then(res => {
       //set form first
@@ -84,7 +90,7 @@ const MonitoringCreate = () => {
         .then(result => {
           //  console.log(result);
           // return result;
-          console.log('result');
+          console.log('submit result');
           console.log(result);
         })
         .catch(error => console.log('error1', error));
@@ -124,7 +130,14 @@ const MonitoringCreate = () => {
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
           {/* <Text h1>Location</Text> */}
-          <ImageUploadTest />
+          <ImageUploadTest
+            setImgX={setImgX}
+            setImgY={setImgY}
+            setLampX={setLampX}
+            setLampY={setLampY}
+            setUri={setUri}
+            uri={uri}
+          />
         </TabView.Item>
       </TabView>
       <View
@@ -145,7 +158,20 @@ const MonitoringCreate = () => {
             padding: 10,
           }}
           onPress={() => {
-            alert('hello' + JSON.stringify(form));
+            alert('hello' + JSON.stringify(form) + 'test' + uri + imgX + imgY);
+            console.log('request body');
+            console.log(JSON.stringify(form));
+            console.log(
+              'imgX;' +
+                imgX +
+                ' imgy: ' +
+                imgY +
+                ' lampX ' +
+                lampX +
+                ' lampy ' +
+                lampY,
+            );
+
             createNewRecord();
           }}>
           <Icon

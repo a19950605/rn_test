@@ -27,7 +27,6 @@ const MonitoringTest = () => {
     </Stack.Navigator>
   );
 };
-
 const MonitoringTestSub = () => {
   const navigation = useNavigation();
 

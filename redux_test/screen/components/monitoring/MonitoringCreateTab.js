@@ -170,9 +170,9 @@ const MonitoringCreateTab = ({setForm, form}) => {
             selectTextOnFocus={false}
             style={{width: '85%', backgroundColor: 'transparent'}}
             label="Device ID"
-            value={deviceId}
+            value={deviceId?.toString()}
             onChangeText={deviceId => {
-              setDeviceId(deviceId);
+              setDeviceId(parseInt(deviceId));
               setForm({...form, deviceId: deviceId});
             }}
           />
@@ -228,7 +228,7 @@ const MonitoringCreateTab = ({setForm, form}) => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Relay Channel Index"
-              value={relayChannelIdx}
+              value={relayChannelIdx?.toString()}
               onChangeText={relayChannelIdx => {
                 setRelayChannelIdx(relayChannelIdx);
                 setForm({...form, relayChannelIdx: relayChannelIdx});

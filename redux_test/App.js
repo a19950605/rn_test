@@ -155,6 +155,9 @@ export function MyDrawer() {
             case 'Create user':
               headerTitle = 'Account new';
               isDetail = true;
+            case 'RoleDetail':
+              headerTitle = 'Role Detail';
+              isDetail = true;
           }
 
           console.log('header title');

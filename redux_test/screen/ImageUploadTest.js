@@ -16,7 +16,14 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {ReactNativeZoomableView} from '@openspacelabs/react-native-zoomable-view';
 import MarkerImage from 'react-native-marker-image';
 
-const ImageUploadTest = () => {
+const ImageUploadTest = ({
+  setImgX,
+  setImgY,
+  setLampX,
+  setLampY,
+  setUri,
+  uri,
+}) => {
   const [filePath, setFilePath] = useState({});
 
   const requestCameraPermission = async () => {
@@ -89,9 +96,15 @@ const ImageUploadTest = () => {
       console.log('type -> ', response.type);
       console.log('fileName -> ', response.fileName);
       setFilePath(response.assets);
-      console.log(response.assets);
+      console.log(response.assets[0].uri);
       console.log('testing response upload');
       console.log(filePath);
+      // console.log(filePath[0]);
+      // console.log(filePath[0].uri);
+      console.log(setUri);
+      setUri(response.assets[0].uri);
+      console.log('setted uri');
+      console.log(uri);
     });
   };
 
@@ -111,10 +124,16 @@ const ImageUploadTest = () => {
             padding: 10,
           }}>
           <MarkerImage
-            image={require('../assets/test.jpg')}
-            markerImage={require('../assets/test.jpg')}
+            image={!uri ? require('../assets/test.jpg') : {uri: uri}}
+            markerImage={require('../assets/location-pin-icon-on-transparent-pin-vector-20942049.jpg')}
             markerSize={50}
-            onChange={data => console.log(data)}
+            onChange={data => {
+              console.log(data);
+              setImgX(parseInt(data.originImage.width));
+              setImgY(parseInt(data.originImage.height));
+              setLampX(parseInt(data.originImage.marker.x));
+              setLampY(parseInt(data.originImage.marker.y));
+            }}
           />
         </ReactNativeZoomableView>
       </View>

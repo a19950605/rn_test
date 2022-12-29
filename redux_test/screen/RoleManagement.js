@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {ReactNativeZoomableView} from '@openspacelabs/react-native-zoomable-view';
 
 import {
   View,
@@ -9,11 +8,29 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import MarkerImage from 'react-native-marker-image';
+import RoleListItem from './components/role/RoleListItem';
+import {createStackNavigator} from '@react-navigation/stack';
+import RoleDetailTab from './components/role/RoleDetailTab';
+import {useNavigation} from '@react-navigation/native';
 
-function RoleManagement() {
+const RoleManagement = () => {
+  const Stack = createStackNavigator();
+  return (
+    <Stack.Navigator
+      screenOptions={{headerTitle: 'Role Management', headerShown: false}}>
+      <Stack.Screen name="MonitoringTestSub" component={RoleManagementTest} />
+      <Stack.Screen name="RoleDetail" component={RoleDetailTab} />
+      {/* <Stack.Screen name="Create user" component={UserAccountCreate} /> */}
+    </Stack.Navigator>
+  );
+};
+function RoleManagementTest() {
+  const navigation = useNavigation();
+
+  const [data, setData] = useState();
   async function getData() {
     return await AsyncStorage.getItem('@token').then(res => {
       console.log('tokentest');
@@ -23,30 +40,32 @@ function RoleManagement() {
   }
 
   useEffect(() => {
-    // getData().then(res => {
-    //   var requestOptions = {
-    //     method: 'GET',
-    //     headers: {
-    //       // Accept: '*',
-    //       // 'Content-Type': 'application/json',
-    //       'X-Token': res,
-    //     },
-    //   };
-    //   fetch(
-    //     'https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission',
-    //     requestOptions,
-    //   )
-    //     .then(response => {
-    //       return response.json();
-    //     })
-    //     .then(result => {
-    //       console.log(result);
-    //       // return result;
-    //       // setData(result);
-    //     })
-    //     .catch(error => console.log('error1', error));
-    // });
+    getData().then(res => {
+      var requestOptions = {
+        method: 'GET',
+        headers: {
+          // Accept: '*',
+          // 'Content-Type': 'application/json',
+          'X-Token': res,
+        },
+      };
+      fetch(
+        'https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission',
+        requestOptions,
+      )
+        .then(response => {
+          return response.json();
+        })
+        .then(result => {
+          // return result;
+          // setData(result);
+          setData(result?.content);
+        })
+        .catch(error => console.log('error1', error));
+    });
   }, []);
+  console.log('role permission test');
+  console.log(data);
 
   const getOneRolePermission = id => {
     getData().then(res => {
@@ -84,24 +103,12 @@ function RoleManagement() {
         }}>
         <Text>1112</Text>
       </TouchableOpacity>
-      <ReactNativeZoomableView
-        maxZoom={1.5}
-        minZoom={0.5}
-        zoomStep={0.5}
-        initialZoom={1}
-        bindToBorders={true}
-        onZoomAfter={this.logOutZoomState}
-        style={{
-          padding: 10,
-          backgroundColor: 'red',
-        }}>
-        <ImageMarker
-          image={require('../assets/test.jpg')}
-          markerImage={require('../assets/location-pin-icon-on-transparent-pin-vector-20942049.jpg')}
-          markerSize={50}
-          onChange={data => console.log(data)}
-        />
-      </ReactNativeZoomableView>
+      <FlatList
+        data={data}
+        renderItem={props => (
+          <RoleListItem {...props} navigation={navigation} />
+        )}
+      />
     </View>
   );
 }

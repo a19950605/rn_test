@@ -12,15 +12,17 @@ erfl refresh and warning icon
 
 
 差
-ROLE MANAGEMENT
-MONITORING PIN
-
-STYLE 
-EVENT LOG
-
-FALSE ALARM (ACK/DETAILS同ACK TAB)
 
 
-FILTER
 
-tabletｖｉｅｗ
+EVENT LOG (0.5hr)
+
+FALSE ALARM (ACK/DETAILS同ACK TAB) (1.5 hr)
+
+FILTER (home)
+
+tablet view  (1hr)
+
+redux login   
+
+7-8 hrs
