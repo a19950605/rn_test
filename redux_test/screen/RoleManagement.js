@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import ImageMarker from 'react-native-marker-image';
-import ReactNativeZoomableView from '@openspacelabs/react-native-zoomable-view/src/ReactNativeZoomableView';
+import {ReactNativeZoomableView} from '@openspacelabs/react-native-zoomable-view';
 
 import {
   View,
@@ -12,6 +11,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MarkerImage from 'react-native-marker-image';
 
 function RoleManagement() {
   async function getData() {
