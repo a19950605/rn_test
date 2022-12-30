@@ -7,7 +7,6 @@ import {TextInput} from 'react-native-paper';
 
 const MonitoringDetailTab = props => {
   console.log('inside monitor tab');
-  console.log(props);
 
   return (
     <View style={{padding: 10}}>

@@ -5,7 +5,17 @@ import {Input, Icon} from '@rneui/themed';
 import {View, StyleSheet, Button} from 'react-native';
 import {TextInput} from 'react-native-paper';
 
-const StatusTab = () => {
+const StatusTab = props => {
+  console.log('inside status tab');
+  console.log(props);
+
+  console.log(props?.data?.device?.activeAlarms); //health status ==alarm
+  console.log(props?.data?.device?.connectionStatus); //
+  console.log(props?.data?.device?.dtKeepalive);
+  console.log(props?.data?.device?.dtPrevLampStatus);
+  console.log(props?.data?.device?.prevLampStatus);
+  console.log(props?.data?.device?.relayChannel);
+  console.log(props?.data?.device?.status);
   return (
     <View style={{padding: 10}}>
       <View>
@@ -57,8 +67,8 @@ const StatusTab = () => {
           editable={false}
           selectTextOnFocus={false}
           style={{width: '85%', backgroundColor: 'transparent'}}
-          label="Device ID"
-          value=""
+          label="Controller Connection Status"
+          value={props?.data?.device?.connectionStatus || ''}
           onChangeText={text => setText(text)}
         />
       </View>
@@ -80,8 +90,8 @@ const StatusTab = () => {
           editable={false}
           selectTextOnFocus={false}
           style={{width: '85%', backgroundColor: 'transparent'}}
-          label="RFL"
-          value=""
+          label="Power Status"
+          value={props?.data?.device?.batteryStatus || ''}
           onChangeText={text => setText(text)}
         />
       </View>
@@ -103,8 +113,12 @@ const StatusTab = () => {
           editable={false}
           selectTextOnFocus={false}
           style={{width: '85%', backgroundColor: 'transparent'}}
-          label="Relay Channel Index"
-          value=""
+          label="Lamp Status"
+          value={
+            props?.data?.device?.lampStatus == 'OFF'
+              ? 'UNKNOWN'
+              : props?.data?.device?.lampStatus
+          }
           onChangeText={text => setText(text)}
         />
       </View>
@@ -126,8 +140,8 @@ const StatusTab = () => {
           editable={false}
           selectTextOnFocus={false}
           style={{width: '85%', backgroundColor: 'transparent'}}
-          label="Status"
-          value=""
+          label="Previous Lamp Status"
+          value={props?.data?.device?.prevLampStatus || ''}
           onChangeText={text => setText(text)}
         />
       </View>

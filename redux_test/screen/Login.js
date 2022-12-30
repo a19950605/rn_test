@@ -12,8 +12,20 @@ import {Input, Icon} from '@rneui/themed';
 import {TextInput} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import {auth} from '../apiList';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = props => {
+  async function removeItemValue(key) {
+    try {
+      await AsyncStorage.removeItem(key);
+      return true;
+    } catch (exception) {
+      return false;
+    }
+  }
+  useEffect(() => {
+    removeItemValue('@token');
+  }, []);
   const [username, setUsername] = React.useState('');
   const [pw, setPw] = React.useState('');
   const [token1, setToken1] = useState();

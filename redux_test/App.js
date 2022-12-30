@@ -71,6 +71,14 @@ function Notifications() {
 function CustomDrawerContent(props) {
   const BASE_PATH = 'https://upload.wikimedia.org/wikipedia/en/b/b9/';
   const proileImage = 'HK_MTR_logo.svg';
+  async function removeItemValue(key) {
+    try {
+      await AsyncStorage.removeItem(key);
+      return true;
+    } catch (exception) {
+      return false;
+    }
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -103,6 +111,7 @@ function CustomDrawerContent(props) {
           label="Toggle drawer"
           onPress={() => props.navigation.toggleDrawer()}
         /> */}
+        <DrawerItem label="Log out" onPress={() => removeItemValue('@token')} />
       </DrawerContentScrollView>
     </SafeAreaView>
   );
@@ -208,13 +217,14 @@ export function MyDrawer() {
           paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         }}
         drawerContent={props => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="eRFL Monitoring" component={Monitoring} />
+        <Drawer.Screen name="eRFL MonitoringT" component={Monitoring} />
+
+        <Drawer.Screen name="eRFL Monitoring" component={MonitoringTest} />
         <Drawer.Screen name="eRFL Assignment" component={Assignment} />
         <Drawer.Screen name="Event Log" component={EventLog} />
         <Drawer.Screen name="Outstanding Alarm" component={OutstandingAlarm} />
         <Drawer.Screen name="Alarm History" component={AlarmHistory} />
         <Drawer.Screen name="Change Password" component={PasswordSetting} />
-        <Drawer.Screen name="Monitoring test" component={MonitoringTest} />
         <Drawer.Screen name="mon tab" component={MonitoringTab} />
         <Drawer.Screen name="Role management" component={RoleManagement} />
 

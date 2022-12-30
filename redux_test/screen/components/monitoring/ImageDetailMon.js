@@ -1,69 +1,18 @@
 import React, {useState} from 'react';
-import {Tab, Text, TabView} from '@rneui/themed';
-import {Input, Icon} from '@rneui/themed';
-
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Image,
-  Platform,
-  PermissionsAndroid,
-} from 'react-native';
-import {TextInput} from 'react-native-paper';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {ReactNativeZoomableView} from '@openspacelabs/react-native-zoomable-view';
 import MarkerImage from 'react-native-marker-image';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-const ImageUploadTest = ({
-  setImgX,
-  setImgY,
-  setLampX,
-  setLampY,
-  setUri,
-  uri,
-}) => {
+const ImageDetailMon = () => {
   const [filePath, setFilePath] = useState({});
-
-  const requestCameraPermission = async () => {
-    if (Platform.OS === 'android') {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.CAMERA,
-          {
-            title: 'Camera Permission',
-            message: 'App needs camera permission',
-          },
-        );
-        // If CAMERA Permission is granted
-        return granted === PermissionsAndroid.RESULTS.GRANTED;
-      } catch (err) {
-        console.warn(err);
-        return false;
-      }
-    } else return true;
-  };
-
-  const requestExternalWritePermission = async () => {
-    if (Platform.OS === 'android') {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-          {
-            title: 'External Storage Write Permission',
-            message: 'App needs write permission',
-          },
-        );
-        // If WRITE_EXTERNAL_STORAGE Permission is granted
-        return granted === PermissionsAndroid.RESULTS.GRANTED;
-      } catch (err) {
-        console.warn(err);
-        alert('Write permission err', err);
-      }
-      return false;
-    } else return true;
-  };
 
   const chooseFile = type => {
     let options = {
@@ -101,10 +50,6 @@ const ImageUploadTest = ({
       console.log(filePath);
       // console.log(filePath[0]);
       // console.log(filePath[0].uri);
-      console.log(setUri);
-      setUri(response.assets[0].uri);
-      console.log('setted uri');
-      console.log(uri);
     });
   };
 
@@ -124,15 +69,12 @@ const ImageUploadTest = ({
             padding: 10,
           }}>
           <MarkerImage
-            image={!uri ? require('../assets/test.jpg') : {uri: uri}}
-            markerImage={require('../assets/location-pin-icon-on-transparent-pin-vector-20942049.jpg')}
+            image={require('../../../assets/test.jpg')}
+            markerImage={require('../../../assets/location-pin-icon-on-transparent-pin-vector-20942049.jpg')}
             markerSize={50}
+            markerPosition={{x: 250, y: 200}}
             onChange={data => {
               console.log(data);
-              setImgX(parseInt(data.originImage.width));
-              setImgY(parseInt(data.originImage.height));
-              setLampX(parseInt(data.originImage.marker.x));
-              setLampY(parseInt(data.originImage.marker.y));
             }}
           />
         </ReactNativeZoomableView>
@@ -155,12 +97,11 @@ const ImageUploadTest = ({
           onPress={() => chooseFile('photo')}>
           <Text style={styles.textStyle}>Choose Image</Text>
         </TouchableOpacity>
-        <Image source={{uri: filePath[0]?.uri}} style={styles.imageStyle} />
+        {/* <Image source={{uri: filePath[0]?.uri}} style={styles.imageStyle} /> */}
       </View>
     </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -192,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ImageUploadTest;
+export default ImageDetailMon;

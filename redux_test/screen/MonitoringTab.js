@@ -3,16 +3,14 @@ import {Tab, Text, TabView} from '@rneui/themed';
 import {Input, Icon} from '@rneui/themed';
 
 import {View, StyleSheet, Button, TouchableOpacity} from 'react-native';
-import {TextInput} from 'react-native-paper';
 import StatusTab from './components/monitoring/StatusTab';
-import Assignment from './Assignment';
 import AssignmentDetail from './components/monitoring/AssignmentDetail';
 import LastControlDetail from './components/monitoring/LastControlDetail';
 import HistoryTab from './components/monitoring/HistoryTab';
 import Alarm from './components/monitoring/Alarm';
 import MonitoringDetailTab from './components/monitoring/MonitoringDetailTab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {set} from 'react-native-reanimated';
+import ImageDetailMon from './components/monitoring/ImageDetailMon';
 
 const MonitoringTab = props => {
   console.log('monitoring tab1');
@@ -50,12 +48,13 @@ const MonitoringTab = props => {
           //  console.log(result);
           // return result;
           //   setData(result);
+          console.log('device tst121');
           console.log(result);
           setData(result);
         })
         .catch(error => console.log('error1', error));
     });
-  }, [props?.route?.params?.id]);
+  }, []);
 
   return (
     <>
@@ -80,32 +79,32 @@ const MonitoringTab = props => {
         <Tab.Item
           title="Status"
           titleStyle={{fontSize: 12}}
-          icon={{name: 'rowing'}}
+          icon={{name: 'insert-chart', type: 'material'}}
         />
         <Tab.Item
           title="Assignment"
           titleStyle={{fontSize: 12}}
-          icon={{name: 'rowing'}}
+          icon={{name: 'clipboard-text', type: 'material-community'}}
         />
         <Tab.Item
           title="Last Control"
           titleStyle={{fontSize: 12}}
-          icon={{name: 'rowing'}}
+          icon={{name: 'toggle-switch-off', type: 'material-community'}}
         />
         <Tab.Item
           title="Location"
           titleStyle={{fontSize: 12}}
-          icon={{name: 'rowing'}}
+          icon={{name: 'map', type: 'material'}}
         />
         <Tab.Item
           title="History"
           titleStyle={{fontSize: 12}}
-          icon={{name: 'rowing'}}
+          icon={{name: 'history'}}
         />
         <Tab.Item
           title="Alarm"
           titleStyle={{fontSize: 12}}
-          icon={{name: 'rowing'}}
+          icon={{name: 'alert', type: 'material-community'}}
         />
       </Tab>
       <TabView value={index} onChange={setIndex} animationType="spring">
@@ -113,7 +112,7 @@ const MonitoringTab = props => {
           <MonitoringDetailTab data={data} />
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <StatusTab />
+          <StatusTab data={data} />
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
           <AssignmentDetail />
@@ -122,7 +121,7 @@ const MonitoringTab = props => {
           <LastControlDetail data={data} />
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <Text h1>Location</Text>
+          <ImageDetailMon />
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
           <HistoryTab deviceID={1} />

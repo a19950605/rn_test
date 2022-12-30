@@ -15,6 +15,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import MonitoringDetail from './components/monitoring/MonitoringDetail';
 import MonitoringTab from './MonitoringTab';
 import MonitoringCreate from './MonitoringCreate';
+import {Icon} from '@rneui/themed';
 
 const MonitoringTest = () => {
   const Stack = createStackNavigator();
@@ -72,7 +73,7 @@ const MonitoringTestSub = () => {
   console.log('monitoring test data');
   console.log(data);
   return (
-    <View style={{flex: 1, padding: 5}}>
+    <View style={{flex: 1, padding: 5, backgroundColor: 'white'}}>
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
           style={{
@@ -82,25 +83,33 @@ const MonitoringTestSub = () => {
             padding: 10,
             flexDirection: 'row',
             marginRight: 5,
+            alignItems: 'center',
           }}
           onPress={() => {
             navigation.navigate('Create Monitoring');
           }}>
+          <Icon
+            name="add-box"
+            size={24}
+            color="blue"
+            type="material"
+            style={{paddingRight: 5}}
+          />
           <Text style={{color: 'blue'}}>Add</Text>
         </TouchableOpacity>
-        <View
+        <TouchableOpacity
           style={{
             borderColor: 'blue',
             borderWidth: 1,
             borderRadius: 2,
             padding: 10,
             flexDirection: 'row',
+            alignItems: 'center',
           }}>
           <Text style={{color: 'blue'}}>2022-12-06 12:26:43</Text>
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={{padding: 5}}></View>
-
       <FlatList
         data={data}
         renderItem={props => (

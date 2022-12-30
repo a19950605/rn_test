@@ -5,13 +5,13 @@ import {Checkbox} from 'react-native-paper';
 
 const RoleDetailPermission = props => {
   console.log('RoleDetailPermission');
-  console.log(props.data.teamUsers);
+  console.log(props?.data?.teamUsers);
   const [data1, setData1] = useState();
   const [checked, setChecked] = React.useState(false);
   const [allChecked, setAllChecked] = useState(false);
   const [selectedId, setSelectedId] = useState([]);
   useEffect(() => {
-    setData1(props.data.teamUsers);
+    setData1(props?.data?.teamUsers);
   }, []);
   useEffect(() => {
     if (data.length == selectedId.length) {

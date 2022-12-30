@@ -21,8 +21,5 @@ FALSE ALARM (ACK/DETAILS同ACK TAB) (1.5 hr)
 
 FILTER (home)
 
-tablet view  (1hr)
-
-redux login   
-
-7-8 hrs
+tablet view  (1hr) **
+monitoring

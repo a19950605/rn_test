@@ -13,7 +13,8 @@ import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
 const UserAccountCreate = () => {
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
-
+  const [role, setRole] = useState();
+  const [status, setStatus] = useState();
   //user name
   //displayname
   //staffid
@@ -21,7 +22,7 @@ const UserAccountCreate = () => {
   //status  active disabled
 
   //role
-  const RoleDropDown = ({close}) => {
+  const RoleDropDown = ({close, setRole}) => {
     const [visible, setVisible] = React.useState(false);
 
     const openMenu = () => setVisible(true);
@@ -49,30 +50,39 @@ const UserAccountCreate = () => {
         }}>
         <Menu.Item
           onPress={() => {
+            setRole('System Admin(SYSADM)');
             close(false);
           }}
           title="System Admin(SYSADM)"
         />
         <Menu.Item
           onPress={() => {
+            setRole('RFL Control (CU)');
+
             close(false);
           }}
           title="RFL Control (CU)"
         />
         <Menu.Item
           onPress={() => {
+            setRole('RFL Assignment (ASU)');
+
             close(false);
           }}
           title="RFL Assignment (ASU)"
         />
         <Menu.Item
           onPress={() => {
+            setRole('Readonly User(RU)');
+
             close(false);
           }}
           title="Readonly User(RU)"
         />
         <Menu.Item
           onPress={() => {
+            setRole('RFL Maintainer (MA)');
+
             close(false);
           }}
           title="RFL Maintainer (MA)"
@@ -80,9 +90,8 @@ const UserAccountCreate = () => {
       </View>
     );
   };
-
   //status
-  const StatusDropDown = ({close}) => {
+  const StatusDropDown = ({close, setStatus}) => {
     const [visible, setVisible] = React.useState(false);
 
     const openMenu = () => setVisible(true);
@@ -110,12 +119,14 @@ const UserAccountCreate = () => {
         }}>
         <Menu.Item
           onPress={() => {
+            setStatus('Active');
             close(false);
           }}
           title="Active"
         />
         <Menu.Item
           onPress={() => {
+            setStatus('Disabled');
             close(false);
           }}
           title="Disabled"
@@ -218,12 +229,14 @@ const UserAccountCreate = () => {
                 selectTextOnFocus={false}
                 style={{width: '85%', backgroundColor: 'transparent'}}
                 label="Role"
-                value={''}
+                value={role}
                 onChangeText={''}
               />
             </Pressable>
           </View>
-          <View>{menu1 && <RoleDropDown close={setMenu1} />}</View>
+          <View>
+            {menu1 && <RoleDropDown close={setMenu1} setRole={setRole} />}
+          </View>
           <View
             style={{
               flexDirection: 'row',
@@ -314,13 +327,13 @@ const UserAccountCreate = () => {
                 selectTextOnFocus={false}
                 style={{width: '85%', backgroundColor: 'transparent'}}
                 label="Status"
-                value={''}
+                value={status}
                 onChangeText={''}
               />
             </View>
           </Pressable>
           <View style={{zIndex: 999}}>
-            {menu2 && <StatusDropDown close={setMenu2} />}
+            {menu2 && <StatusDropDown close={setMenu2} setStatus={setStatus} />}
           </View>
           <View
             style={{

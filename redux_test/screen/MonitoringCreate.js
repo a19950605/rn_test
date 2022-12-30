@@ -115,12 +115,16 @@ const MonitoringCreate = () => {
         <Tab.Item
           title="Details"
           titleStyle={{fontSize: 12, color: 'black'}}
-          icon={{name: 'rowing', color: 'black'}}
+          icon={{
+            name: 'clipboard-text',
+            color: 'black',
+            type: 'material-community',
+          }}
         />
         <Tab.Item
           title="Location"
           titleStyle={{fontSize: 12, color: 'black'}}
-          icon={{name: 'rowing', color: 'black'}}
+          icon={{name: 'map', color: 'black', type: 'material'}}
         />
       </Tab>
 
