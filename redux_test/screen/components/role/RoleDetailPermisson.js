@@ -26,7 +26,7 @@ const RoleDetailPermission = props => {
     {id: 3, function: 'user man', permissions: 'delete'},
   ];
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       <Checkbox
         status={checked ? 'checked' : 'unchecked'}
         onPress={() => {

@@ -16,20 +16,24 @@ const OutstandingDetailTab = props => {
       <Tab
         value={index}
         onChange={e => setIndex(e)}
-        indicatorStyle={{
+        containerStyle={{
           backgroundColor: 'white',
+          color: 'black',
+        }}
+        indicatorStyle={{
+          backgroundColor: 'red',
           height: 3,
         }}
-        variant="primary">
+        variant="default">
         <Tab.Item
           title="Details"
-          titleStyle={{fontSize: 12}}
-          icon={{name: 'rowing', color: 'white'}}
+          titleStyle={{fontSize: 12, color: 'black'}}
+          icon={{name: 'rowing', color: 'black'}}
         />
         <Tab.Item
           title="Acknowledgement"
-          titleStyle={{fontSize: 12}}
-          icon={{name: 'rowing', color: 'white'}}
+          titleStyle={{fontSize: 12, color: 'black'}}
+          icon={{name: 'rowing', color: 'black'}}
         />
       </Tab>
 
@@ -178,7 +182,7 @@ const OutstandingDetailTab = props => {
           </View>
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <Text h1>Favorite</Text>
+          <AcknowledgementTab />
         </TabView.Item>
       </TabView>
     </>
@@ -187,8 +191,36 @@ const OutstandingDetailTab = props => {
 
 const AcknowledgementTab = () => {
   return (
-    <View>
-      <Text></Text>
+    <View style={{flex: 1, padding: 10}}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Icon
+          name="alarm"
+          size={26}
+          color="red"
+          type="material-community"
+          style={{padding: 10}}
+        />
+        <View
+          style={{
+            padding: 15,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+            elevation: 5,
+            width: '85%',
+            backgroundColor: '#faf9f7',
+          }}>
+          <Text style={{fontWeight: 'bold'}}>
+            Occurred@ 2023-01-02 22:48:50
+          </Text>
+          <Text>Type: Connection Lost</Text>
+          <Text>RFL: HEHE/99</Text>
+        </View>
+      </View>
     </View>
   );
 };

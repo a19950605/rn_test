@@ -82,6 +82,7 @@ const RoleDetailTab = props => {
         .catch(error => console.log('error1', error));
     });
   };
+
   return (
     <>
       <Tab
