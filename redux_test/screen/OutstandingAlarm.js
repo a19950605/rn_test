@@ -57,7 +57,7 @@ const OutstandingAlarmSub = () => {
         .then(result => {
           //  console.log(result);
           // return result;
-          setData(result);
+          setData(result?.reverse());
         })
         .catch(error => console.log('error1', error));
     });

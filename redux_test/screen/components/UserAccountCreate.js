@@ -9,12 +9,12 @@ import {
   Pressable,
 } from 'react-native';
 import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const UserAccountCreate = () => {
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
   const [role, setRole] = useState();
-  const [status, setStatus] = useState();
   //user name
   //displayname
   //staffid
@@ -22,6 +22,56 @@ const UserAccountCreate = () => {
   //status  active disabled
 
   //role
+  async function getData() {
+    return await AsyncStorage.getItem('@token').then(res => {
+      console.log('tokentest');
+      console.log(res);
+      return res;
+    });
+  }
+  const [status, setStatus] = useState();
+  const [username, setUsername] = useState();
+  const [displayName, setDisplayName] = useState();
+  const [password, setPassword] = useState();
+  const [staffNo, setStaffNo] = useState();
+  const createUser = () => {
+    var formdata = new FormData();
+    let formStatus = 'ACTIVE';
+    if (status == 'Active') {
+      formStatus = 'ACTIVE';
+    } else {
+      formStatus = 'DISABLE';
+    }
+    formdata.append('status', formStatus);
+    formdata.append('username', username);
+    formdata.append('displayName', displayName);
+    formdata.append('password', password);
+    formdata.append('staffNo', staffNo);
+
+    getData().then(res => {
+      var requestOptions = {
+        method: 'POST',
+        headers: {
+          // Accept: '*',
+          // 'Content-Type': 'application/json',
+          'X-Token': res,
+        },
+        body: formdata,
+      };
+      fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
+        .then(response => {
+          return response.json();
+        })
+        .then(result => {
+          //   console.log(result);
+          // return result;
+          console.log('create user test');
+          console.log(result);
+        })
+        .catch(error => console.log('error1', error));
+    });
+  };
+
   const RoleDropDown = ({close, setRole}) => {
     const [visible, setVisible] = React.useState(false);
 
@@ -155,8 +205,8 @@ const UserAccountCreate = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Username"
-              value={''}
-              onChangeText={''}
+              value={username}
+              onChangeText={username => setUsername(username)}
             />
           </View>
           <View
@@ -178,8 +228,8 @@ const UserAccountCreate = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Display name"
-              value={''}
-              onChangeText={''}
+              value={displayName}
+              onChangeText={displayName => setDisplayName(displayName)}
             />
           </View>
           <View
@@ -200,8 +250,8 @@ const UserAccountCreate = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Staff ID"
-              value={''}
-              onChangeText={''}
+              value={staffNo}
+              onChangeText={staffNo => setStaffNo(staffNo)}
             />
           </View>
           <View
@@ -255,8 +305,8 @@ const UserAccountCreate = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Password"
-              value={''}
-              onChangeText={''}
+              value={password}
+              onChangeText={password => setPassword(password)}
             />
           </View>
           <View
@@ -354,7 +404,11 @@ const UserAccountCreate = () => {
                 padding: 10,
               }}
               onPress={() => {
-                alert('hello');
+                //  alert('hello');
+                alert(
+                  'msg' + username + displayName + password + status + staffNo,
+                );
+                createUser();
               }}>
               <Icon
                 name="md-save-sharp"

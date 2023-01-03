@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {listEventLog} from '../apiList';
@@ -33,10 +34,10 @@ function EventLog() {
     let token =
       'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdnJJZCI6IjIiLCJqdGkiOiIxNjcwOTA1MDU1MTc0In0.kK_-WJ-yoaGYmqSbR5od8d-JDN0XP57CDyUSTVrokadN0n5CnAVFHqHA5zGDwF0KryRXJdP4kxULoCt9MNYOxg';
     var formdata = new FormData();
-    formdata.append('userName', 'wilson2022');
-    formdata.append('funcName', 'Userloginlog');
-    formdata.append('fromTime', '20221227');
-    formdata.append('toTime', '20221227');
+    formdata.append('userName', '');
+    formdata.append('funcName', '');
+    formdata.append('fromTime', '20230101');
+    formdata.append('toTime', '20230101');
 
     //listEventLog(body_obj, token);
     // .then(res => {
@@ -83,8 +84,29 @@ function EventLog() {
   }, []);
 
   return (
-    <View style={{flex: 1}}>
-      <Text>{}export current result to csv</Text>
+    <View style={{flex: 1, backgroundColor: 'white', padding: 2}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          padding: 5,
+          alignItems: 'center',
+        }}>
+        <TouchableOpacity
+          style={{
+            borderColor: 'blue',
+            borderWidth: 1,
+            borderRadius: 2,
+            padding: 10,
+            flexDirection: 'row',
+            marginRight: 5,
+            alignItems: 'center',
+          }}>
+          <Text style={{color: 'blue'}}>export current result to csv</Text>
+        </TouchableOpacity>
+
+        <Text>filter</Text>
+      </View>
       <FlatList data={data} renderItem={props => <EventLogCard {...props} />} />
     </View>
   );
@@ -95,11 +117,45 @@ const EventLogCard = props => {
 
   return (
     <View style={{borderColor: 'gray', borderWidth: 0.2, padding: 10}}>
-      <Text>User {props?.item?.username}</Text>
-      <Text>Datetime {props?.item?.dt}</Text>
-      <Text>Function {props?.item?.func}</Text>
-      <Text>Type {props?.item?.type}</Text>
-      <Text>Data </Text>
+      <View style={{flexDirection: 'row'}}>
+        <Text style={{color: 'black', fontWeight: 'bold'}}>User: </Text>
+
+        <Text style={{color: 'black'}}> {props?.item?.username}</Text>
+      </View>
+      <View style={{flexDirection: 'row'}}>
+        <Text style={{color: 'black', fontWeight: 'bold'}}>Datetime: </Text>
+        <Text style={{color: 'black'}}> {props?.item?.time}</Text>
+      </View>
+      <View style={{flexDirection: 'row'}}>
+        <Text style={{color: 'black', fontWeight: 'bold'}}>Function: </Text>
+        <Text style={{color: 'black'}}> {props?.item?.func}</Text>
+      </View>
+      <View style={{flexDirection: 'row'}}>
+        <Text style={{color: 'black', fontWeight: 'bold'}}>Type: </Text>
+        <View>
+          <Text style={{color: 'black'}}> {props?.item?.type}</Text>
+
+          <Text style={{color: 'black', width: '70%'}}>
+            {props?.item?.dest.split(' ')[0] +
+              props?.item?.dest.split(' ')[1] +
+              props?.item?.dest.split(' ')[2] +
+              props?.item?.dest.split(' ')[3]}
+          </Text>
+        </View>
+      </View>
+      <View style={{flexDirection: 'row'}}>
+        <Text style={{color: 'black', fontWeight: 'bold'}}>Data: </Text>
+        <View>
+          <Text style={{color: 'black', width: '70%'}}>
+            {props?.item?.dest.split(' ')[4] +
+              props?.item?.dest.split(' ')[5] +
+              props?.item?.dest.split(' ')[6] +
+              props?.item?.dest.split(' ')[7] +
+              props?.item?.dest.split(' ')[8] +
+              props?.item?.dest.split(' ')[9]}
+          </Text>
+        </View>
+      </View>
     </View>
   );
 };

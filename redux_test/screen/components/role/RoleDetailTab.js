@@ -15,7 +15,8 @@ const RoleDetailTab = props => {
   const [data, setData] = useState();
   const [index, setIndex] = useState(0);
   useEffect(() => {
-    getOneRolePermission(props?.route?.params?.id);
+    //  getOneRolePermission(props?.route?.params?.id);
+    getRoleAsOptions();
   }, []);
 
   async function getData() {
@@ -45,7 +46,36 @@ const RoleDetailTab = props => {
         })
         .then(result => {
           console.log('getOneRolePermission');
+          console.log(result?.detail?.permissions);
+          // return result;
+          setData(result);
+        })
+        .catch(error => console.log('error1', error));
+    });
+  };
 
+  //api/v2/options/rolesAsOptions
+
+  const getRoleAsOptions = id => {
+    getData().then(res => {
+      var requestOptions = {
+        method: 'GET',
+        headers: {
+          // Accept: '*',
+          // 'Content-Type': 'application/json',
+          'X-Token': res,
+        },
+      };
+      fetch(
+        `https://gis2.ectrak.com.hk:8900/api/userFuncPermissions`,
+        requestOptions,
+      )
+        .then(response => {
+          return response.json();
+        })
+        .then(result => {
+          console.log('get role as option');
+          console.log(result);
           // return result;
           setData(result);
         })

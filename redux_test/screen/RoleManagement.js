@@ -59,13 +59,13 @@ function RoleManagementTest() {
         .then(result => {
           // return result;
           // setData(result);
+          console.log('role management');
+          console.log(result);
           setData(result?.content);
         })
         .catch(error => console.log('error1', error));
     });
   }, []);
-  console.log('role permission test');
-  console.log(data);
 
   const getOneRolePermission = id => {
     getData().then(res => {

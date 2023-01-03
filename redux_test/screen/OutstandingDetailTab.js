@@ -185,4 +185,11 @@ const OutstandingDetailTab = props => {
   );
 };
 
+const AcknowledgementTab = () => {
+  return (
+    <View>
+      <Text></Text>
+    </View>
+  );
+};
 export default OutstandingDetailTab;
