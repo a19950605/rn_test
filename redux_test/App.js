@@ -59,15 +59,6 @@ function Feed({navigation}) {
     </View>
   );
 }
-
-function Notifications() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Notifications Screen</Text>
-    </View>
-  );
-}
-
 function CustomDrawerContent(props) {
   const BASE_PATH = 'https://upload.wikimedia.org/wikipedia/en/b/b9/';
   const proileImage = 'HK_MTR_logo.svg';
@@ -164,9 +155,15 @@ export function MyDrawer() {
             case 'Create user':
               headerTitle = 'Account new';
               isDetail = true;
+              break;
             case 'RoleDetail':
               headerTitle = 'Role Detail';
               isDetail = true;
+              break;
+            case 'RoleCreate':
+              headerTitle = '';
+              isDetail = true;
+              break;
           }
 
           console.log('header title');

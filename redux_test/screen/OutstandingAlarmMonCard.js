@@ -26,7 +26,7 @@ const OutstandingAlarmMonCard = props => {
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>
-            Controller ID:{' '}
+            Controller ID:
           </Text>
           <Text>{props.item.controllerCode || ''}</Text>
         </View>
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
+
   btns: {
     alignItems: 'center',
     padding: '20',
@@ -67,4 +68,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgreen',
   },
 });
+
 export default OutstandingAlarmMonCard;

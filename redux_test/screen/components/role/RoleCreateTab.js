@@ -8,24 +8,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Tab, TabView} from '@rneui/themed';
+import {Icon, Tab, TabView} from '@rneui/themed';
 import RoleDetailPermission from './RoleDetailPermisson';
-
-const RoleDetailTab = props => {
-  const [data, setData] = useState();
-  const [listData, setListData] = useState();
-  const [selectedData, setSelectedData] = useState();
+import RoleCreateForm from './RoleCreateForm';
+import RolePermission from './RolePermssion';
+const RoleCreateTab = () => {
   const [index, setIndex] = useState(0);
-  useEffect(() => {
-    getOneRolePermission(props?.route?.params?.id); //checked option
-    getRoleAsOptions();
-
-    /**
-     * [{"code": "SYSUSR_U", "displayName": "Modify", "icon": "fas fa-edit", "id": 4, "type": "AC"}, {"code": "SYSUSR_C", "displayName": "Create", "icon": "fas fa-plus-square", "id": 2, "type": "AC"}]
-     *
-     */
-  }, []);
-
+  const [listData, setListData] = useState([]);
   async function getData() {
     return await AsyncStorage.getItem('@token').then(res => {
       console.log('tokentest');
@@ -33,37 +22,6 @@ const RoleDetailTab = props => {
       return res;
     });
   }
-  const getOneRolePermission = id => {
-    getData().then(res => {
-      var requestOptions = {
-        method: 'GET',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': res,
-        },
-      };
-      fetch(
-        `https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission/${id}`,
-        requestOptions,
-      )
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          //these are checked optionsa
-          console.log('getOneRolePermission');
-          console.log(result?.detail?.permissions);
-          // return result;
-          // setData(result);
-          setSelectedData(result?.detail?.permissions);
-        })
-        .catch(error => console.log('error1', error));
-    });
-  };
-
-  //api/v2/options/rolesAsOptions
-
   const getRoleAsOptions = () => {
     getData().then(res => {
       var requestOptions = {
@@ -100,6 +58,9 @@ const RoleDetailTab = props => {
         .catch(error => console.log('error1', error));
     });
   };
+  useEffect(() => {
+    getRoleAsOptions();
+  }, []);
 
   return (
     <>
@@ -129,18 +90,48 @@ const RoleDetailTab = props => {
       </Tab>
       <TabView value={index} onChange={setIndex} animationType="spring">
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <Text>Detail</Text>
+          <RoleCreateForm />
         </TabView.Item>
         <TabView.Item
           style={{backgroundColor: 'white', width: '100%', height: '100%'}}>
-          <RoleDetailPermission
-            setSelectedData={setSelectedData}
-            selectedData={selectedData}
-            listData={listData}
-          />
+          {/* <RoleDetailPermission
+       
+      /> */}
+          <RolePermission listData={listData} />
         </TabView.Item>
       </TabView>
+      <View
+        style={{
+          backgroundColor: 'white',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          padding: 20,
+        }}>
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderColor: 'green',
+            borderWidth: 1,
+            borderRadius: 5,
+            padding: 10,
+          }}
+          onPress={() => {
+            alert('hello');
+          }}>
+          <Icon
+            name="md-save-sharp"
+            type="ionicon"
+            size={24}
+            color="green"
+            style={{justifyContent: 'center', paddingRight: 5}}
+          />
+          <Text style={{color: 'green'}}> Save</Text>
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
-export default RoleDetailTab;
+
+export default RoleCreateTab;

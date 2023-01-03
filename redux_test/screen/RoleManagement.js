@@ -15,6 +15,8 @@ import RoleListItem from './components/role/RoleListItem';
 import {createStackNavigator} from '@react-navigation/stack';
 import RoleDetailTab from './components/role/RoleDetailTab';
 import {useNavigation} from '@react-navigation/native';
+import {Icon} from '@rneui/themed';
+import RoleCreateTab from './components/role/RoleCreateTab';
 
 const RoleManagement = () => {
   const Stack = createStackNavigator();
@@ -23,6 +25,8 @@ const RoleManagement = () => {
       screenOptions={{headerTitle: 'Role Management', headerShown: false}}>
       <Stack.Screen name="MonitoringTestSub" component={RoleManagementTest} />
       <Stack.Screen name="RoleDetail" component={RoleDetailTab} />
+      <Stack.Screen name="RoleCreate" component={RoleCreateTab} />
+
       {/* <Stack.Screen name="Create user" component={UserAccountCreate} /> */}
     </Stack.Navigator>
   );
@@ -60,7 +64,7 @@ function RoleManagementTest() {
           // return result;
           // setData(result);
           console.log('role management');
-          console.log(result);
+          // console.log(result);
           setData(result?.content);
         })
         .catch(error => console.log('error1', error));
@@ -97,12 +101,38 @@ function RoleManagementTest() {
   //create display name,code remarks status permission
   return (
     <View style={{flex: 1}}>
-      <TouchableOpacity
-        onPress={() => {
-          getOneRolePermission(1);
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: 5,
         }}>
-        <Text>1112</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            // navigation.navigate('Create user');
+            navigation.navigate('RoleCreate');
+          }}>
+          <View
+            style={{
+              borderColor: 'blue',
+              borderWidth: 1,
+              borderRadius: 5,
+              padding: 10,
+              flexDirection: 'row',
+              marginRight: 5,
+            }}>
+            <Text style={{color: 'blue'}}>Add</Text>
+          </View>
+        </TouchableOpacity>
+        <Icon
+          name="filter"
+          size={24}
+          color="black"
+          type="ionicon"
+          style={{padding: 10}}
+        />
+      </View>
       <FlatList
         data={data}
         renderItem={props => (

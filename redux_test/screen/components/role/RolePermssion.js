@@ -3,29 +3,14 @@ import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import {Tab, Text, TabView} from '@rneui/themed';
 import {Checkbox} from 'react-native-paper';
 
-const RoleDetailPermission = props => {
+const RolePermission = props => {
   console.log('RoleDetailPermission');
   // console.log(props?.listData);
-  console.log(props.selectedData);
   const [data1, setData1] = useState();
 
   const [checked, setChecked] = React.useState(false);
   const [allChecked, setAllChecked] = useState(false);
   const [selectedId, setSelectedId] = useState([]);
-
-  useEffect(() => {
-    props?.selectedData?.map(p => {
-      console.log('looping p');
-      console.log(p);
-      console.log('pid');
-      console.log(p.id);
-      setSelectedId(old => [...old, p.id]);
-    });
-
-    console.log('selectedid');
-    console.log(selectedId);
-    console.log(props?.selectedData);
-  }, [props?.selectedData]);
 
   useEffect(() => {
     if (props?.listData?.length == selectedId.length) {
@@ -126,4 +111,4 @@ const RoleCheckItem = props => {
   );
 };
 
-export default RoleDetailPermission;
+export default RolePermission;
