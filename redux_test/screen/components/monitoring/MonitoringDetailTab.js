@@ -24,6 +24,7 @@ const MonitoringDetailTab = props => {
           alignItems: 'center',
           marginBottom: 15,
         }}>
+          
         <Icon
           name="monitor"
           size={24}

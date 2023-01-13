@@ -32,6 +32,7 @@ const OutstandingAlarmSub = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [token, setToken] = useState('');
+  const test = () => {};
   useEffect(() => {
     async function getData() {
       return await AsyncStorage.getItem('@token').then(res => {

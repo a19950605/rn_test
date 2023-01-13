@@ -34,51 +34,14 @@ const UserAccountCreate = () => {
   const [displayName, setDisplayName] = useState();
   const [password, setPassword] = useState();
   const [staffNo, setStaffNo] = useState();
-  const createUser = () => {
-    var formdata = new FormData();
-    let formStatus = 'ACTIVE';
-    if (status == 'Active') {
-      formStatus = 'ACTIVE';
-    } else {
-      formStatus = 'DISABLE';
-    }
-    formdata.append('status', formStatus);
-    formdata.append('username', username);
-    formdata.append('displayName', displayName);
-    formdata.append('password', password);
-    formdata.append('staffNo', staffNo);
-
-    getData().then(res => {
-      var requestOptions = {
-        method: 'POST',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': res,
-        },
-        body: formdata,
-      };
-      fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          //   console.log(result);
-          // return result;
-          console.log('create user test');
-          console.log(result);
-        })
-        .catch(error => console.log('error1', error));
-    });
-  };
-
+ 
   const RoleDropDown = ({close, setRole}) => {
     const [visible, setVisible] = React.useState(false);
 
     const openMenu = () => setVisible(true);
 
     const closeMenu = () => setVisible(false);
-
+ 
     return (
       <View
         style={{
