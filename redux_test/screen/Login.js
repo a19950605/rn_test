@@ -23,6 +23,7 @@ const Login = props => {
       return false;
     }
   }
+
   useEffect(() => {
     removeItemValue('@token');
   }, []);
@@ -38,7 +39,6 @@ const Login = props => {
       console.log(res);
     });
   };
-  console.log('');
   console.log('height' + height);
   console.log('width' + width);
   console.log('islandscapemode' + isLandscapeMode);

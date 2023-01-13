@@ -1,0 +1,99 @@
+eRFL bugs
+-redux setup
+-error message 
+-tablet view fix
+-bug check
+-update every 30second
+-expand menu 
+-form validation
+-remove inline css
+-loading
+-hardcode api
+-filter !!!
+
+checklist
+*general
+-token expiration(get response status
+-redux login
+-general message component
+-
+-
+
+*erfl monitoring
+-api load with progress bar
+-circle size too large
+-filter icon action
+-filter and date picker
+
+**detail screen
+-detail tab too slow
+-save and delete button
+-detail screen detail page dropdown
+-location(image--- set image) image upload button icon
+-history ui and filter
+-alarm get specific id from list
+
+**create screen
+-ui
+-flow
+-error message on form(validation)
+
+*user account management
+
+*index
+-filter
+-add icon
+-search
+
+*detail screen
+-missing data on details tab
+-permission tab listing wrong data and missing sorting filter
+
+*create screen
+-default value of dropdown
+-form validation
+
+
+*role management
+
+*index
+-add icon
+-filter button
+-search icon and action
+*detail screen
+(checkbox inf loop)
+-performance issues
+
+*create
+-role management create
+
+*event log 
+-data style
+-csv download
+-filter
+-search
+
+*false alarm 
+
+*Outstanding alarm
+*index
+-list ui
+-button ui
+-filter and search
+-active->red ,resumed green,  acknowledge ->white(without ack)
+
+*alarm history
+-status =  cleared
+-export csv
+
+
+not yet start
+-erfl assignment
+-relay
+
+*setting(shoulbe 
+-language change
+-system check
+-system params
+
+<--><--.-->cf

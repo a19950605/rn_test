@@ -35,11 +35,6 @@ const RoleDetailPermission = props => {
     }
   }, [selectedId]);
 
-  let data = [
-    {id: 5, function: 'user man', permissions: 'delete'},
-    {id: 4, function: 'user man', permissions: 'delete'},
-    {id: 3, function: 'user man', permissions: 'delete'},
-  ];
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <Checkbox
