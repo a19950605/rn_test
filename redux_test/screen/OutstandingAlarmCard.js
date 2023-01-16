@@ -29,9 +29,7 @@ const OutstandingAlarmCard = props => {
           padding: 10,
         }}>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{color: titleColor, fontWeight: 'bold'}}>
-            Alarm ID:{' '}
-          </Text>
+          <Text style={{color: titleColor, fontWeight: 'bold'}}>Alarm ID:</Text>
           <Text>{props.item.id || ''}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
