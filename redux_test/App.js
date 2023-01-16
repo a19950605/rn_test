@@ -48,7 +48,9 @@ import TableView from './screen/components/TableView';
 import UserAccountManagement from './screen/UserAccountManagement';
 import RoleManagement from './screen/RoleManagement';
 
-//import RNFetchBlob from "rn-fetch-blob";
+import {store} from './store';
+import {Provider} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 function Feed({navigation}) {
   return (
@@ -59,6 +61,7 @@ function Feed({navigation}) {
     </View>
   );
 }
+
 function CustomDrawerContent(props) {
   const BASE_PATH = 'https://upload.wikimedia.org/wikipedia/en/b/b9/';
   const proileImage = 'HK_MTR_logo.svg';
@@ -239,6 +242,8 @@ export function MyDrawer() {
 
 export default function App() {
   const [token, setToken] = useState();
+  const userToken = useSelector(state => state.login.userToken?.Token);
+
   useEffect(() => {
     if (token?.Token) {
       setTokenHelper(token?.Token);
@@ -252,8 +257,6 @@ export default function App() {
       {/* <Dummy /> */}
       {token?.Token ? <MyDrawer /> : <Login tokenRecord={setToken} />}
     </NavigationContainer>
-    // <Login />
-    // <Dummy/>
   );
 }
 const styles = StyleSheet.create({

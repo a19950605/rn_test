@@ -13,8 +13,13 @@ import {TextInput} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import {auth} from '../apiList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector, useDispatch} from 'react-redux';
+import {signin, signout} from '../features/login/loginSlice';
 
 const Login = props => {
+  const dispatch = useDispatch();
+  const userToken = useSelector(state => state.login.userToken?.Token);
+
   async function removeItemValue(key) {
     try {
       await AsyncStorage.removeItem(key);
@@ -39,9 +44,9 @@ const Login = props => {
       console.log(res);
     });
   };
-  let comp_tst=()=>{
-    console.log('hello world')
-  }
+  let comp_tst = () => {
+    console.log('hello world');
+  };
   console.log('height' + height);
   console.log('width' + width);
   console.log('islandscapemode' + isLandscapeMode);
@@ -109,14 +114,19 @@ const Login = props => {
               if (!token1) {
                 alert('Login failed');
               }
-              console.log(token1);
-              props.tokenRecord(JSON.parse(res));
+
+              dispatch(signin(JSON.parse(res)));
+              // console.log(token1);
+              // props.tokenRecord(JSON.parse(res));
             })
           }>
           Login 登入
         </Button>
       </View>
 
+      <View>
+        <Text>userToken:{userToken || ''}</Text>
+      </View>
       {/* <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         <Button
           style={{backgroundColor: 'black'}}
