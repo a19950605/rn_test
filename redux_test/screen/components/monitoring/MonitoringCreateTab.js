@@ -2,10 +2,17 @@ import React, {useState} from 'react';
 import {Input, Icon} from '@rneui/themed';
 
 import {View, StyleSheet, Pressable, Text} from 'react-native';
-import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
+import {
+  TextInput,
+  Button,
+  Menu,
+  Divider,
+  Provider,
+  HelperText,
+} from 'react-native-paper';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const MonitoringCreateTab = ({setForm, form}) => {
+const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
   const [controllerId, setControllerId] = useState(); // T002
   const [deviceId, setDeviceId] = useState(); // Eg 1-4
   const [rfl, setRfl] = useState(); // TE/ST/123
@@ -14,12 +21,6 @@ const MonitoringCreateTab = ({setForm, form}) => {
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
   const StatusDropDown = ({close}) => {
-    const [visible, setVisible] = React.useState(false);
-
-    const openMenu = () => setVisible(true);
-
-    const closeMenu = () => setVisible(false);
-
     return (
       <View
         style={{
@@ -141,16 +142,24 @@ const MonitoringCreateTab = ({setForm, form}) => {
             color="black"
             style={{padding: 10, justifyContent: 'center'}}
           />
-          <TextInput
-            selectTextOnFocus={false}
-            style={{width: '85%', backgroundColor: 'transparent'}}
-            label="Controller ID"
-            value={controllerId}
-            onChangeText={controllerId => {
-              setControllerId(controllerId);
-              setForm({...form, controllerId: controllerId});
-            }}
-          />
+          <View style={{width: '100%'}}>
+            <TextInput
+              selectTextOnFocus={false}
+              style={{width: '85%', backgroundColor: 'transparent'}}
+              label="Controller ID"
+              value={controllerId}
+              onChangeText={controllerId => {
+                setControllerId(controllerId);
+                setForm({...form, controllerId: controllerId});
+              }}
+            />
+            <HelperText
+              type="error"
+              visible={controllerId == null && isSubmit}
+              style={{marginBottom: -30}}>
+              Controller ID is invalid!
+            </HelperText>
+          </View>
         </View>
         <View
           style={{
@@ -166,16 +175,24 @@ const MonitoringCreateTab = ({setForm, form}) => {
             type="feather"
             style={{padding: 10}}
           />
-          <TextInput
-            selectTextOnFocus={false}
-            style={{width: '85%', backgroundColor: 'transparent'}}
-            label="Device ID"
-            value={deviceId?.toString()}
-            onChangeText={deviceId => {
-              setDeviceId(parseInt(deviceId));
-              setForm({...form, deviceId: deviceId});
-            }}
-          />
+          <View style={{width: '100%'}}>
+            <TextInput
+              selectTextOnFocus={false}
+              style={{width: '85%', backgroundColor: 'transparent'}}
+              label="Device ID"
+              value={deviceId}
+              onChangeText={deviceId => {
+                setDeviceId(parseInt(deviceId));
+                setForm({...form, deviceId: deviceId});
+              }}
+            />
+            <HelperText
+              type="error"
+              visible={deviceId == null && isSubmit}
+              style={{marginBottom: -30}}>
+              Device ID is missing
+            </HelperText>
+          </View>
         </View>
         <View
           style={{
@@ -191,16 +208,25 @@ const MonitoringCreateTab = ({setForm, form}) => {
             type="material"
             style={{padding: 10}}
           />
-          <TextInput
-            selectTextOnFocus={false}
-            style={{width: '85%', backgroundColor: 'transparent'}}
-            label="RFL"
-            value={rfl}
-            onChangeText={rfl => {
-              setRfl(rfl);
-              setForm({...form, rfl: rfl});
-            }}
-          />
+          <View style={{width: '100%'}}>
+            <TextInput
+              selectTextOnFocus={false}
+              style={{width: '85%', backgroundColor: 'transparent'}}
+              label="RFL"
+              value={rfl}
+              onChangeText={rfl => {
+                setRfl(rfl);
+                setForm({...form, rfl: rfl});
+              }}
+            />
+
+            <HelperText
+              type="error"
+              visible={rfl == null && isSubmit}
+              style={{marginBottom: -30}}>
+              RFL is missing
+            </HelperText>
+          </View>
         </View>
         <View
           style={{

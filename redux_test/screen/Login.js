@@ -112,9 +112,9 @@ const Login = props => {
               console.log(res);
               setToken1(JSON.parse(res));
               if (!token1) {
-                alert('Login failed');
+                console.log('hl');
+                //alert('Login failed');
               }
-
               dispatch(signin(JSON.parse(res)));
               // console.log(token1);
               // props.tokenRecord(JSON.parse(res));

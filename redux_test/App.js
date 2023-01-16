@@ -51,6 +51,7 @@ import RoleManagement from './screen/RoleManagement';
 import {store} from './store';
 import {Provider} from 'react-redux';
 import {useSelector, useDispatch} from 'react-redux';
+import {signout} from './features/login/loginSlice';
 
 function Feed({navigation}) {
   return (
@@ -73,6 +74,7 @@ function CustomDrawerContent(props) {
       return false;
     }
   }
+  const dispatch = useDispatch();
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -105,7 +107,7 @@ function CustomDrawerContent(props) {
           label="Toggle drawer"
           onPress={() => props.navigation.toggleDrawer()}
         /> */}
-        <DrawerItem label="Log out" onPress={() => removeItemValue('@token')} />
+        <DrawerItem label="Log out" onPress={() => dispatch(signout())} />
       </DrawerContentScrollView>
     </SafeAreaView>
   );
@@ -207,6 +209,22 @@ export function MyDrawer() {
                 )}
               </TouchableOpacity>
             ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  {
+                    console.log('hello');
+                  }
+                }}>
+                <Icon
+                  name="search"
+                  size={24}
+                  color="white"
+                  type="material"
+                  style={{padding: 10}}
+                />
+              </TouchableOpacity>
+            ),
             drawerActiveTintColor: 'red',
             activeBackgroundColor: 'white',
             inactiveTintColor: 'black',
@@ -217,7 +235,7 @@ export function MyDrawer() {
           paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         }}
         drawerContent={props => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="eRFL MonitoringT" component={Monitoring} />
+        {/* <Drawer.Screen name="eRFL MonitoringT" component={Monitoring} /> */}
 
         <Drawer.Screen name="eRFL Monitoring" component={MonitoringTest} />
         <Drawer.Screen name="eRFL Assignment" component={Assignment} />
@@ -251,11 +269,7 @@ export default function App() {
   }, [token]);
   return (
     <NavigationContainer>
-      {/* <MyDrawer /> */}
-      {/* <OutstandingDetailTab /> */}
-      {/* <Login />? */}
-      {/* <Dummy /> */}
-      {token?.Token ? <MyDrawer /> : <Login tokenRecord={setToken} />}
+      {userToken ? <MyDrawer /> : <Login />}
     </NavigationContainer>
   );
 }

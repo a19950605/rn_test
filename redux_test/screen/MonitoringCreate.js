@@ -8,6 +8,7 @@ import {Input, Icon} from '@rneui/themed';
 import MonitoringCreateTab from './components/monitoring/MonitoringCreateTab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageUploadTest from './ImageUploadTest';
+import {useSelector} from 'react-redux';
 
 const MonitoringCreate = () => {
   const [index, setIndex] = useState(0);
@@ -17,6 +18,8 @@ const MonitoringCreate = () => {
   const [lampX, setLampX] = useState(0);
   const [lampY, setLampY] = useState(0);
   const [uri, setUri] = useState('');
+  const [isSubmit, setIsSubmit] = useState(false);
+  const userToken = useSelector(state => state.login.userToken?.Token);
 
   const [form, setForm] = useState({
     controllerId: '',
@@ -50,10 +53,7 @@ const MonitoringCreate = () => {
     });
   }
   //   //formdata.append("xxoo", fileInput.files[0], "/C:/Users/stoneroad/Pictures/test.jpg");
-  const createNewRecord = () => {
-    const url =
-      'https://cdn.shopify.com/s/files/1/0234/8017/2591/products/young-man-in-bright-fashion_925x_f7029e2b-80f0-4a40-a87b-834b9a283c39.jpg?v=1572867553';
-
+  const createNewRecord = token => {
     var formdata = new FormData();
     formdata.append('controllerCode', form.controllerId);
     formdata.append('code', form.rfl);
@@ -71,30 +71,28 @@ const MonitoringCreate = () => {
     });
     formdata.append('status', 'ACTIVE');
 
-    getData().then(res => {
-      //set form first
+    //set form first
 
-      var requestOptions = {
-        method: 'POST',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': res,
-        },
-        body: formdata,
-      };
-      fetch('https://gis2.ectrak.com.hk:8900/api/v2/device', requestOptions)
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          //  console.log(result);
-          // return result;
-          console.log('submit result');
-          console.log(result);
-        })
-        .catch(error => console.log('error1', error));
-    });
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': token,
+      },
+      body: formdata,
+    };
+    fetch('https://gis2.ectrak.com.hk:8900/api/v2/device', requestOptions)
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        //  console.log(result);
+        // return result;
+        console.log('submit result');
+        console.log(result);
+      })
+      .catch(error => console.log('error1', error));
   };
 
   return (
@@ -130,7 +128,11 @@ const MonitoringCreate = () => {
 
       <TabView value={index} onChange={setIndex} animationType="spring">
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <MonitoringCreateTab setForm={setForm} form={form} />
+          <MonitoringCreateTab
+            setForm={setForm}
+            form={form}
+            isSubmit={isSubmit}
+          />
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
           {/* <Text h1>Location</Text> */}
@@ -175,8 +177,8 @@ const MonitoringCreate = () => {
                 ' lampy ' +
                 lampY,
             );
-
-            createNewRecord();
+            setIsSubmit(true);
+            //createNewRecord(userToken);
           }}>
           <Icon
             name="md-save-sharp"

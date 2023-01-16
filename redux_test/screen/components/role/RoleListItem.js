@@ -29,7 +29,7 @@ const RoleListItem = props => {
 
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'black', fontWeight: 'bold'}}>
-            Display Name:{' '}
+            Display Name:
           </Text>
           <Text style={{color: 'black'}}>{props?.item?.displayName}</Text>
         </View>
