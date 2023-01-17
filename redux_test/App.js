@@ -53,16 +53,6 @@ import {Provider} from 'react-redux';
 import {useSelector, useDispatch} from 'react-redux';
 import {signout} from './features/login/loginSlice';
 
-function Feed({navigation}) {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Feed Screen</Text>
-      <Button title="Open drawer" onPress={() => navigation.openDrawer()} />
-      <Button title="Toggle drawer" onPress={() => navigation.toggleDrawer()} />
-    </View>
-  );
-}
-
 function CustomDrawerContent(props) {
   const BASE_PATH = 'https://upload.wikimedia.org/wikipedia/en/b/b9/';
   const proileImage = 'HK_MTR_logo.svg';
@@ -213,7 +203,7 @@ export function MyDrawer() {
               <TouchableOpacity
                 onPress={() => {
                   {
-                    console.log('hello');
+                    alert('hello');
                   }
                 }}>
                 <Icon

@@ -26,6 +26,7 @@ const MonitoringTab = props => {
   const [token, setToken] = useState('');
   const [data, setData] = useState('');
   const userToken = useSelector(state => state.login.userToken?.Token);
+  const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({
     controllerId: '',
     deviceId: '',
@@ -86,7 +87,7 @@ const MonitoringTab = props => {
           alert('update fail: ' + responseCode + '\n' + result?.errorMsg);
         }
       })
-      .catch(error => console.log('error1', error));
+      .catch(error => console.log('error13', error));
   };
 
   useEffect(() => {
@@ -114,156 +115,167 @@ const MonitoringTab = props => {
         console.log(result);
         setData(result);
 
-        setForm({
-          controllerId: data?.device?.controllerCode,
-          deviceId: data?.device?.controllerDeviceId,
-          rfl: data?.device?.code,
-          relayChannelIdx: data?.device?.relayChannel?.channelIdx || '',
-          status: 'ACTIVE',
-        });
+        setLoading(false);
       })
-      .catch(error => console.log('error1', error));
+      .catch(error => console.log('error14', error));
   }, []);
 
+  useEffect(() => {
+    setForm({
+      controllerId: data?.device?.controllerCode,
+      deviceId: data?.device?.controllerDeviceId,
+      rfl: data?.device?.code,
+      relayChannelIdx: data?.device?.relayChannel?.channelIdx || '',
+      status: 'ACTIVE',
+    });
+  }, [data]);
   return (
     <>
-      <Tab
-        value={index}
-        scrollable={true}
-        onChange={e => setIndex(e)}
-        containerStyle={{
-          backgroundColor: 'white',
-          color: 'black',
-        }}
-        indicatorStyle={{
-          backgroundColor: 'red',
-          height: 3,
-        }}
-        variant="default">
-        <Tab.Item
-          title="Details"
-          titleStyle={{fontSize: 12}}
-          icon={{name: 'clipboard-text', type: 'material-community'}}
-        />
-        <Tab.Item
-          title="Status"
-          titleStyle={{fontSize: 12}}
-          icon={{name: 'insert-chart', type: 'material'}}
-        />
-        <Tab.Item
-          title="Assignment"
-          titleStyle={{fontSize: 12}}
-          icon={{name: 'clipboard-text', type: 'material-community'}}
-        />
-        <Tab.Item
-          title="Last Control"
-          titleStyle={{fontSize: 12}}
-          icon={{name: 'toggle-switch-off', type: 'material-community'}}
-        />
-        <Tab.Item
-          title="Location"
-          titleStyle={{fontSize: 12}}
-          icon={{name: 'map', type: 'material'}}
-        />
-        <Tab.Item
-          title="History"
-          titleStyle={{fontSize: 12}}
-          icon={{name: 'history'}}
-        />
-        <Tab.Item
-          title="Alarm"
-          titleStyle={{fontSize: 12}}
-          icon={{name: 'alert', type: 'material-community'}}
-        />
-      </Tab>
-      <TabView value={index} onChange={setIndex} animationType="spring">
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <MonitoringDetailTab data={data} form={form} setForm={setForm} />
-        </TabView.Item>
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <StatusTab data={data} />
-        </TabView.Item>
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <AssignmentDetail />
-        </TabView.Item>
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <LastControlDetail data={data} />
-        </TabView.Item>
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <ImageDetailMon />
-        </TabView.Item>
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <HistoryTab deviceID={1} />
-        </TabView.Item>
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <Alarm />
-        </TabView.Item>
-      </TabView>
+      {loading ? (
+        ''
+      ) : (
+        <>
+          <Tab
+            value={index}
+            scrollable={true}
+            onChange={e => setIndex(e)}
+            containerStyle={{
+              backgroundColor: 'white',
+              color: 'black',
+            }}
+            indicatorStyle={{
+              backgroundColor: 'red',
+              height: 3,
+            }}
+            variant="default">
+            <Tab.Item
+              title="Details"
+              titleStyle={{fontSize: 12}}
+              icon={{name: 'clipboard-text', type: 'material-community'}}
+            />
+            <Tab.Item
+              title="Status"
+              titleStyle={{fontSize: 12}}
+              icon={{name: 'insert-chart', type: 'material'}}
+            />
+            <Tab.Item
+              title="Assignment"
+              titleStyle={{fontSize: 12}}
+              icon={{name: 'clipboard-text', type: 'material-community'}}
+            />
+            <Tab.Item
+              title="Last Control"
+              titleStyle={{fontSize: 12}}
+              icon={{name: 'toggle-switch-off', type: 'material-community'}}
+            />
+            <Tab.Item
+              title="Location"
+              titleStyle={{fontSize: 12}}
+              icon={{name: 'map', type: 'material'}}
+            />
+            <Tab.Item
+              title="History"
+              titleStyle={{fontSize: 12}}
+              icon={{name: 'history'}}
+            />
+            <Tab.Item
+              title="Alarm"
+              titleStyle={{fontSize: 12}}
+              icon={{name: 'alert', type: 'material-community'}}
+            />
+          </Tab>
+          <TabView value={index} onChange={setIndex} animationType="spring">
+            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+              <MonitoringDetailTab data={data} form={form} setForm={setForm} />
+            </TabView.Item>
+            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+              <StatusTab data={data} />
+            </TabView.Item>
+            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+              <AssignmentDetail />
+            </TabView.Item>
+            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+              <LastControlDetail data={data} />
+            </TabView.Item>
+            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+              <ImageDetailMon />
+            </TabView.Item>
+            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+              <HistoryTab deviceID={1} />
+            </TabView.Item>
+            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+              <Alarm />
+            </TabView.Item>
+          </TabView>
 
-      <View
-        style={{
-          backgroundColor: 'white',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          padding: 20,
-        }}>
-        <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            borderColor: 'red',
-            borderWidth: 1,
-            borderRadius: 5,
-            padding: 10,
-            marginRight: 5,
-          }}
-          onPress={() => {
-            deleteConfirm();
-          }}>
-          <Icon
-            name="md-save-sharp"
-            type="ionicon"
-            size={24}
-            color="red"
-            style={{justifyContent: 'center', paddingRight: 5}}
-          />
-          <Text style={{color: 'red'}}> Delete</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            borderColor: 'green',
-            borderWidth: 1,
-            borderRadius: 5,
-            padding: 10,
-          }}
-          onPress={() => {
-            console.log('request body');
-            console.log(JSON.stringify(form));
-            if (
-              uri == '' ||
-              form.deviceId == '' ||
-              form.controllerId == '' ||
-              form.rfl == '' ||
-              form.relayChannelIdx == ''
-            ) {
-              alert('you have missing something' + uri + JSON.stringify(form));
-            } else {
-              updateRecord(userToken);
-            }
-          }}>
-          <Icon
-            name="md-save-sharp"
-            type="ionicon"
-            size={24}
-            color="green"
-            style={{justifyContent: 'center', paddingRight: 5}}
-          />
-          <Text style={{color: 'green'}}> Save</Text>
-        </TouchableOpacity>
-      </View>
+          <View
+            style={{
+              backgroundColor: 'white',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              padding: 20,
+            }}>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderColor: 'red',
+                borderWidth: 1,
+                borderRadius: 5,
+                padding: 10,
+                marginRight: 5,
+              }}
+              onPress={() => {
+                deleteConfirm();
+              }}>
+              <Icon
+                name="md-save-sharp"
+                type="ionicon"
+                size={24}
+                color="red"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+              <Text style={{color: 'red'}}> Delete</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderColor: 'green',
+                borderWidth: 1,
+                borderRadius: 5,
+                padding: 10,
+              }}
+              onPress={() => {
+                console.log('request body');
+                console.log(JSON.stringify(form));
+                if (
+                  uri == '' ||
+                  form.deviceId == '' ||
+                  form.controllerId == '' ||
+                  form.rfl == '' ||
+                  form.relayChannelIdx == ''
+                ) {
+                  alert(
+                    'you have missing something' + uri + JSON.stringify(form),
+                  );
+                } else {
+                  updateRecord(userToken);
+                }
+              }}>
+              <Icon
+                name="md-save-sharp"
+                type="ionicon"
+                size={24}
+                color="green"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+              <Text style={{color: 'green'}}> Save</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </>
   );
 };

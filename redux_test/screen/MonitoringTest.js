@@ -112,7 +112,7 @@ const MonitoringTestSub = () => {
         setData(result);
         setLoading(false);
       })
-      .catch(error => console.log('error1', error.status));
+      .catch(error => console.log('error12', error.status));
   }, [filterDesc, filterField, loading]);
 
   console.log('monitoring test data');

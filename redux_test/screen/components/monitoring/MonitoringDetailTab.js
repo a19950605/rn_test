@@ -9,6 +9,8 @@ import {Pressable} from 'react-native';
 const MonitoringDetailTab = ({setForm, form, data}) => {
   console.log('inside monitor tab');
   console.log(data);
+  console.log('tab controller tab');
+  console.log(data?.device?.controllerCode);
   const [controllerId, setControllerId] = useState(); // T002
   const [deviceId, setDeviceId] = useState(); // Eg 1-4
   const [rfl, setRfl] = useState(); // TE/ST/123
@@ -16,13 +18,14 @@ const MonitoringDetailTab = ({setForm, form, data}) => {
   const [status, setStatus] = useState(); //active maintenanace
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     setControllerId(data?.device?.controllerCode || '');
     setDeviceId(JSON.stringify(data?.device?.controllerDeviceId) || '');
     setRfl(data?.device?.code);
     setRelayChannelIdx(JSON.stringify(data?.device?.relayChannel?.channelIdx));
     setStatus(data?.device?.status);
+    setLoading(false);
   }, []);
 
   const StatusDropDown = ({close}) => {
@@ -134,134 +137,12 @@ const MonitoringDetailTab = ({setForm, form, data}) => {
 
   return (
     <Provider>
-      <View style={{padding: 10}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '100%',
-            alignItems: 'center',
-            marginBottom: 15,
-          }}>
-          <Icon
-            name="monitor"
-            size={24}
-            color="black"
-            style={{padding: 10, justifyContent: 'center'}}
-          />
-          <TextInput
-            editable={true}
-            selectTextOnFocus={false}
-            style={{width: '85%', backgroundColor: 'transparent'}}
-            label="Controller ID"
-            value={controllerId}
-            onChangeText={controllerId => {
-              setControllerId(controllerId);
-              setForm({...form, controllerId: controllerId});
-            }}
-          />
+      {loading ? (
+        <View style={{padding: 10}}>
+          <Text>loading</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '100%',
-            alignItems: 'center',
-            marginBottom: 15,
-          }}>
-          <Icon
-            name="hash"
-            size={24}
-            color="black"
-            type="feather"
-            style={{padding: 10}}
-          />
-          <TextInput
-            editable={true}
-            selectTextOnFocus={false}
-            style={{width: '85%', backgroundColor: 'transparent'}}
-            label="Device ID"
-            value={deviceId}
-            onChangeText={deviceId => {
-              setDeviceId(parseInt(deviceId));
-              setForm({...form, deviceId: deviceId});
-            }}
-          />
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '100%',
-            alignItems: 'center',
-            marginBottom: 15,
-          }}>
-          <Icon
-            name="location-pin"
-            size={24}
-            color="black"
-            type="material"
-            style={{padding: 10}}
-          />
-          <TextInput
-            editable={true}
-            selectTextOnFocus={false}
-            style={{width: '85%', backgroundColor: 'transparent'}}
-            label="RFL"
-            value={rfl}
-            onChangeText={rfl => {
-              setRfl(rfl);
-              setForm({...form, rfl: rfl});
-            }}
-          />
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '100%',
-            alignItems: 'center',
-            marginBottom: 15,
-          }}>
-          <Icon
-            name="call-split"
-            size={24}
-            color="black"
-            type="material"
-            style={{padding: 10}}
-          />
-          <Pressable
-            style={{width: '100%'}}
-            onPress={() => {
-              setMenu1(!menu1);
-              setMenu2(false);
-            }}>
-            <TextInput
-              editable={false}
-              selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
-              label="Relay Channel Index"
-              value={relayChannelIdx?.toString()}
-              onChangeText={relayChannelIdx => {
-                setRelayChannelIdx(relayChannelIdx);
-                setForm({...form, relayChannelIdx: relayChannelIdx});
-              }}
-            />
-          </Pressable>
-        </View>
-        <View>
-          {menu1 && (
-            <MyComponent
-              close={setMenu1}
-              relayChannelIdx={relayChannelIdx}
-              setRelayChannelIdx={setRelayChannelIdx}
-              setForm={setForm}
-              form={form}
-            />
-          )}
-        </View>
-        <Pressable
-          style={{width: '100%'}}
-          onPress={() => {
-            setMenu2(!menu2);
-            setMenu1(false);
-          }}>
+      ) : (
+        <View style={{padding: 10}}>
           <View
             style={{
               flexDirection: 'row',
@@ -270,28 +151,156 @@ const MonitoringDetailTab = ({setForm, form, data}) => {
               marginBottom: 15,
             }}>
             <Icon
-              name="play"
+              name="monitor"
               size={24}
               color="black"
-              type="fontisto"
-              style={{padding: 10}}
+              style={{padding: 10, justifyContent: 'center'}}
             />
             <TextInput
-              editable={false}
+              editable={true}
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
-              label="Status"
-              value={status}
-              onChangeText={status => {
-                setStatus(status);
-                setForm({...form, status: status});
+              label="Controller ID"
+              value={controllerId}
+              onChangeText={controllerId => {
+                setControllerId(controllerId);
+                setForm({...form, controllerId: controllerId});
               }}
             />
           </View>
-        </Pressable>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '100%',
+              alignItems: 'center',
+              marginBottom: 15,
+            }}>
+            <Icon
+              name="hash"
+              size={24}
+              color="black"
+              type="feather"
+              style={{padding: 10}}
+            />
+            <TextInput
+              editable={true}
+              selectTextOnFocus={false}
+              style={{width: '85%', backgroundColor: 'transparent'}}
+              label="Device ID"
+              value={deviceId}
+              onChangeText={deviceId => {
+                setDeviceId(parseInt(deviceId));
+                setForm({...form, deviceId: deviceId});
+              }}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '100%',
+              alignItems: 'center',
+              marginBottom: 15,
+            }}>
+            <Icon
+              name="location-pin"
+              size={24}
+              color="black"
+              type="material"
+              style={{padding: 10}}
+            />
+            <TextInput
+              editable={true}
+              selectTextOnFocus={false}
+              style={{width: '85%', backgroundColor: 'transparent'}}
+              label="RFL"
+              value={rfl}
+              onChangeText={rfl => {
+                setRfl(rfl);
+                setForm({...form, rfl: rfl});
+              }}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '100%',
+              alignItems: 'center',
+              marginBottom: 15,
+            }}>
+            <Icon
+              name="call-split"
+              size={24}
+              color="black"
+              type="material"
+              style={{padding: 10}}
+            />
+            <Pressable
+              style={{width: '100%'}}
+              onPress={() => {
+                setMenu1(!menu1);
+                setMenu2(false);
+              }}>
+              <TextInput
+                editable={false}
+                selectTextOnFocus={false}
+                style={{width: '85%', backgroundColor: 'transparent'}}
+                label="Relay Channel Index"
+                value={relayChannelIdx?.toString()}
+                onChangeText={relayChannelIdx => {
+                  setRelayChannelIdx(relayChannelIdx);
+                  setForm({...form, relayChannelIdx: relayChannelIdx});
+                }}
+              />
+            </Pressable>
+          </View>
+          <View>
+            {menu1 && (
+              <MyComponent
+                close={setMenu1}
+                relayChannelIdx={relayChannelIdx}
+                setRelayChannelIdx={setRelayChannelIdx}
+                setForm={setForm}
+                form={form}
+              />
+            )}
+          </View>
+          <Pressable
+            style={{width: '100%'}}
+            onPress={() => {
+              setMenu2(!menu2);
+              setMenu1(false);
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                alignItems: 'center',
+                marginBottom: 15,
+              }}>
+              <Icon
+                name="play"
+                size={24}
+                color="black"
+                type="fontisto"
+                style={{padding: 10}}
+              />
+              <TextInput
+                editable={false}
+                selectTextOnFocus={false}
+                style={{width: '85%', backgroundColor: 'transparent'}}
+                label="Status"
+                value={status}
+                onChangeText={status => {
+                  setStatus(status);
+                  setForm({...form, status: status});
+                }}
+              />
+            </View>
+          </Pressable>
 
-        <View>{menu2 && <StatusDropDown close={setMenu2} />}</View>
-      </View>
+          <View>{menu2 && <StatusDropDown close={setMenu2} />}</View>
+        </View>
+      )}
     </Provider>
   );
 };
