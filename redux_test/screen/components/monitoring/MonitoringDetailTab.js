@@ -10,13 +10,6 @@ const MonitoringDetailTab = props => {
 
   return (
     <View style={{padding: 10}}>
-      <View>
-        <Text>api: Get:: /api/v2/device/deviceid 23</Text>
-        <Text>
-          controllerid =controllercode, device id= controllerDeviceId ,rfl=code
-          relay channel index= relaychannel id? status: lamp status?
-        </Text>
-      </View>
       <View
         style={{
           flexDirection: 'row',
@@ -24,7 +17,6 @@ const MonitoringDetailTab = props => {
           alignItems: 'center',
           marginBottom: 15,
         }}>
-          
         <Icon
           name="monitor"
           size={24}

@@ -123,26 +123,6 @@ const Login = props => {
           Login 登入
         </Button>
       </View>
-
-      <View>
-        <Text>userToken:{userToken || ''}</Text>
-      </View>
-      {/* <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-        <Button
-          style={{backgroundColor: 'black'}}
-          mode="contained"
-          type="containedd"
-          onPress={() => {
-            console.log('token1');
-            console.log(token1);
-            console.log('token1.token');
-            console.log(token1.Token);
-            console.log('token1.errorMsg');
-            console.log(token1.errorMsg);
-          }}>
-          token print
-        </Button>
-      </View> */}
     </View>
   );
 };

@@ -149,11 +149,36 @@ const MonitoringTestSub = () => {
         <Menu.Item
           onPress={() => {
             setFilterDesc(!filterDesc);
+            setFilterField('rfl');
+            close(false);
+          }}
+          title="rfl"
+        />
+
+        <Menu.Item
+          onPress={() => {
+            setFilterDesc(!filterDesc);
             setFilterField('epic');
 
             close(false);
           }}
           title="EPIC"
+        />
+        <Menu.Item
+          onPress={() => {
+            setFilterDesc(!filterDesc);
+            setFilterField('Group');
+            close(false);
+          }}
+          title="Group"
+        />
+        <Menu.Item
+          onPress={() => {
+            setFilterDesc(!filterDesc);
+            setFilterField('statusasof');
+            close(false);
+          }}
+          title="Status As Of"
         />
       </View>
     );

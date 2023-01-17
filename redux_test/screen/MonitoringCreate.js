@@ -9,7 +9,7 @@ import MonitoringCreateTab from './components/monitoring/MonitoringCreateTab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageUploadTest from './ImageUploadTest';
 import {useSelector} from 'react-redux';
-
+import {useNavigation} from '@react-navigation/native';
 const MonitoringCreate = () => {
   const [index, setIndex] = useState(0);
   const [text, setText] = useState('');
@@ -21,6 +21,8 @@ const MonitoringCreate = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const userToken = useSelector(state => state.login.userToken?.Token);
 
+  const navigation = useNavigation();
+  const [responseCode, setResponseCode] = useState();
   const [form, setForm] = useState({
     controllerId: '',
     deviceId: '',
@@ -45,13 +47,6 @@ const MonitoringCreate = () => {
     });
   }, []);
 
-  async function getData() {
-    return await AsyncStorage.getItem('@token').then(res => {
-      console.log('tokentest');
-      console.log(res);
-      return res;
-    });
-  }
   //   //formdata.append("xxoo", fileInput.files[0], "/C:/Users/stoneroad/Pictures/test.jpg");
   const createNewRecord = token => {
     var formdata = new FormData();
@@ -63,14 +58,15 @@ const MonitoringCreate = () => {
     formdata.append('lampPositionX', lampY);
     formdata.append('imageW', imgX);
     formdata.append('imageH', imgY);
-    formdata.append('relayChannelIdx', parseInt(form.relayChannelIdx));
+    formdata.append('relayChannelIdx', form.relayChannelIdx);
     formdata.append('xxoo', {
       uri: uri,
       type: 'image/jpeg',
       name: 'xxoo',
     });
     formdata.append('status', 'ACTIVE');
-
+    console.log('relaychidx');
+    console.log(form.relayChannelIdx);
     //set form first
 
     var requestOptions = {
@@ -84,6 +80,8 @@ const MonitoringCreate = () => {
     };
     fetch('https://gis2.ectrak.com.hk:8900/api/v2/device', requestOptions)
       .then(response => {
+        setResponseCode(response.status);
+
         return response.json();
       })
       .then(result => {
@@ -91,6 +89,13 @@ const MonitoringCreate = () => {
         // return result;
         console.log('submit result');
         console.log(result);
+
+        if (responseCode == 200) {
+          alert('create success' + result?.id);
+          navigation.navigate('MonitoringTestSub');
+        } else {
+          alert('create fail: ' + responseCode + '\n' + result?.errorMsg);
+        }
       })
       .catch(error => console.log('error1', error));
   };
@@ -164,21 +169,20 @@ const MonitoringCreate = () => {
             padding: 10,
           }}
           onPress={() => {
-            alert('hello' + JSON.stringify(form) + 'test' + uri + imgX + imgY);
             console.log('request body');
             console.log(JSON.stringify(form));
-            console.log(
-              'imgX;' +
-                imgX +
-                ' imgy: ' +
-                imgY +
-                ' lampX ' +
-                lampX +
-                ' lampy ' +
-                lampY,
-            );
             setIsSubmit(true);
-            //createNewRecord(userToken);
+            if (
+              uri == '' ||
+              form.deviceId == '' ||
+              form.relayChannelIdx == '' ||
+              form.rfl == '' ||
+              form.relayChannelIdx == ''
+            ) {
+              alert('you have missing something' + uri + JSON.stringify(form));
+            } else {
+              createNewRecord(userToken);
+            }
           }}>
           <Icon
             name="md-save-sharp"
