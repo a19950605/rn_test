@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TouchableOpacity} from 'react-native';
+import {Icon} from '@rneui/themed';
 //import Moment from 'react-moment';
 
 const HistoryTab = ({deviceID}) => {
@@ -46,23 +48,25 @@ const HistoryTab = ({deviceID}) => {
   }, [deviceID]);
   return (
     <View style={{flex: 1, padding: 10}}>
-      <View>
-        <Text>GET:: /api/v2/device/deviceID/cmdHistory</Text>
-        <Text>command id = id/assignmentId</Text>
-        <Text>user= usernameCreate</Text>
-        <Text>action :lampcmd</Text>
-        <Text>date time =Dtcreate</Text>
-      </View>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
+          alignItems: 'center',
         }}>
         <View>
           <Text>Last 30 Day record</Text>
         </View>
         <View>
-          <Text>filter</Text>
+          <TouchableOpacity>
+            <Icon
+              name="filter"
+              size={24}
+              color="black"
+              type="ionicon"
+              style={{padding: 10}}
+            />
+          </TouchableOpacity>
         </View>
       </View>
       {/** History list */}

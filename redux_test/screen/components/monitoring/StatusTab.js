@@ -18,14 +18,6 @@ const StatusTab = props => {
   console.log(props?.data?.device?.status);
   return (
     <View style={{padding: 10}}>
-      <View>
-        <Text>
-          health status:"healthStatus", controller connection status:"", power
-          status:"batteryStatus", lamp status:"lampstatus",previous lamp
-          status:prevLampStatus, relay channel
-          status:'relaychannel.channelstatus'
-        </Text>
-      </View>
       <View
         style={{
           flexDirection: 'row',

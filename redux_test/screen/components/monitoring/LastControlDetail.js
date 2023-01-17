@@ -9,12 +9,6 @@ const LastControlDetail = props => {
   console.log(props?.data?.lastCmd);
   return (
     <View style={{padding: 10}}>
-      <View>
-        <Text>
-          Last Control by:sysadmin, last control action:off(success), last
-          control datetime:2022-1206
-        </Text>
-      </View>
       <View
         style={{
           flexDirection: 'row',

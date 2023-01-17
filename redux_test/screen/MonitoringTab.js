@@ -11,49 +11,118 @@ import Alarm from './components/monitoring/Alarm';
 import MonitoringDetailTab from './components/monitoring/MonitoringDetailTab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageDetailMon from './components/monitoring/ImageDetailMon';
+import {useSelector} from 'react-redux';
+import {Alert} from 'react-native';
 
 const MonitoringTab = props => {
   console.log('monitoring tab1');
+  const [imgX, setImgX] = useState(0);
+  const [imgY, setImgY] = useState(0);
+  const [lampX, setLampX] = useState(0);
+  const [lampY, setLampY] = useState(0);
+  const [uri, setUri] = useState('');
   const [index, setIndex] = React.useState(0);
   const [text, setText] = React.useState('');
   const [token, setToken] = useState('');
   const [data, setData] = useState('');
-  useEffect(() => {
-    async function getData() {
-      return await AsyncStorage.getItem('@token').then(res => {
-        console.log('tokentest');
-        console.log(res);
-        setToken(res);
-        return res;
-      });
-    }
-    getData().then(token => {
-      var requestOptions = {
-        method: 'GET',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': token,
-        },
-      };
-      //hardcode the id at this moment
-      fetch(
-        `https://gis2.ectrak.com.hk:8900/api/v2/device/${props.route.params.id}`,
-        requestOptions,
-      )
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          //  console.log(result);
-          // return result;
-          //   setData(result);
-          console.log('device tst121');
-          console.log(result);
-          setData(result);
-        })
-        .catch(error => console.log('error1', error));
+  const userToken = useSelector(state => state.login.userToken?.Token);
+  const [form, setForm] = useState({
+    controllerId: '',
+    deviceId: '',
+    rfl: '',
+    relayChannelIdx: '',
+    status: 'ACTIVE',
+  });
+
+  const updateRecord = token => {
+    var formdata = new FormData();
+    formdata.append('controllerCode', form.controllerId);
+    formdata.append('code', form.rfl);
+
+    formdata.append('controllerDeviceId', parseInt(form.deviceId));
+    formdata.append('lampPositionY', lampX);
+    formdata.append('lampPositionX', lampY);
+    formdata.append('imageW', imgX);
+    formdata.append('imageH', imgY);
+    formdata.append('relayChannelIdx', form.relayChannelIdx);
+    formdata.append('xxoo', {
+      uri: uri,
+      type: 'image/jpeg',
+      name: 'xxoo',
     });
+    formdata.append('status', 'ACTIVE');
+    console.log('relaychidx');
+    console.log(form.relayChannelIdx);
+    //set form first
+
+    var requestOptions = {
+      method: 'PUT',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': token,
+      },
+      body: formdata,
+    };
+    fetch(
+      `https://gis2.ectrak.com.hk:8900/api/v2/device/${props.route.params.id}`,
+      requestOptions,
+    )
+      .then(response => {
+        setResponseCode(response.status);
+
+        return response.json();
+      })
+      .then(result => {
+        //  console.log(result);
+        // return result;
+        console.log('submit result');
+        console.log(result);
+
+        if (responseCode == 200) {
+          alert('update success' + result?.id);
+          navigation.navigate('MonitoringTestSub');
+        } else {
+          alert('update fail: ' + responseCode + '\n' + result?.errorMsg);
+        }
+      })
+      .catch(error => console.log('error1', error));
+  };
+
+  useEffect(() => {
+    var requestOptions = {
+      method: 'GET',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+    };
+    //hardcode the id at this moment
+    fetch(
+      `https://gis2.ectrak.com.hk:8900/api/v2/device/${props.route.params.id}`,
+      requestOptions,
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        //  console.log(result);
+        // return result;
+        //   setData(result);
+        console.log('device tst121');
+        console.log(result);
+        setData(result);
+
+        setForm({
+          controllerId: data?.device?.controllerCode,
+          deviceId: data?.device?.controllerDeviceId,
+          rfl: data?.device?.code,
+          relayChannelIdx: data?.device?.relayChannel?.channelIdx || '',
+          status: 'ACTIVE',
+        });
+      })
+      .catch(error => console.log('error1', error));
   }, []);
 
   return (
@@ -109,7 +178,7 @@ const MonitoringTab = props => {
       </Tab>
       <TabView value={index} onChange={setIndex} animationType="spring">
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <MonitoringDetailTab data={data} />
+          <MonitoringDetailTab data={data} form={form} setForm={setForm} />
         </TabView.Item>
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
           <StatusTab data={data} />
@@ -150,8 +219,7 @@ const MonitoringTab = props => {
             marginRight: 5,
           }}
           onPress={() => {
-            alert('hello' + JSON.stringify(form));
-            createNewRecord();
+            deleteConfirm();
           }}>
           <Icon
             name="md-save-sharp"
@@ -172,8 +240,19 @@ const MonitoringTab = props => {
             padding: 10,
           }}
           onPress={() => {
-            alert('hello' + JSON.stringify(form));
-            createNewRecord();
+            console.log('request body');
+            console.log(JSON.stringify(form));
+            if (
+              uri == '' ||
+              form.deviceId == '' ||
+              form.controllerId == '' ||
+              form.rfl == '' ||
+              form.relayChannelIdx == ''
+            ) {
+              alert('you have missing something' + uri + JSON.stringify(form));
+            } else {
+              updateRecord(userToken);
+            }
           }}>
           <Icon
             name="md-save-sharp"
@@ -189,4 +268,20 @@ const MonitoringTab = props => {
   );
 };
 
+const deleteConfirm = () => {
+  return Alert.alert('Delete', 'Are you sure you want to remove this record?', [
+    // The "Yes" button
+    {
+      text: 'Yes',
+      onPress: () => {
+        alert('deleted');
+      },
+    },
+    // The "No" button
+    // Does nothing but dismiss the dialog when tapped
+    {
+      text: 'No',
+    },
+  ]);
+};
 export default MonitoringTab;

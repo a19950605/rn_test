@@ -6,10 +6,10 @@ import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
 // import { Feather } from "@expo/vector-icons";
 // import { Ionicons } from "@expo/vector-icons";
 import {ScrollView} from 'react-native-gesture-handler';
-import {getToken} from '../helper';
-import OutstandingAlarmCard from './OutstandingAlarmCard';
-import OutstandingAlarmCard2 from './OutstandingAlarmCard2';
-import OutstandingDetailTab from './OutstandingDetailTab';
+import {getToken} from '../../helper';
+import OutstandingAlarmCard from '../OutstandingAlarmCard';
+import OutstandingAlarmCard2 from '../OutstandingAlarmCard2';
+import OutstandingDetailTab from '../OutstandingDetailTab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OutstandingAlarm = () => {

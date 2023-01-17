@@ -27,7 +27,7 @@ import Monitoring from './screen/Monitoring';
 import AlarmHistory from './screen/AlarmHistory';
 import Assignment from './screen/Assignment';
 import EventLog from './screen/EventLog';
-import OutstandingAlarm from './screen/OutstandingAlarm';
+import OutstandingAlarm from './screen/OutstandingAlarm/OutstandingAlarm';
 
 import Form from './screen/Form';
 import {auth, listEventLog} from './apiList';

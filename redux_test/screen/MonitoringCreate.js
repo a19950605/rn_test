@@ -30,22 +30,6 @@ const MonitoringCreate = () => {
     relayChannelIdx: '',
     status: 'ACTIVE',
   });
-  const [file, setFile] = useState();
-  useEffect(() => {
-    const url =
-      'https://cdn.shopify.com/s/files/1/0234/8017/2591/products/young-man-in-bright-fashion_925x_f7029e2b-80f0-4a40-a87b-834b9a283c39.jpg?v=1572867553';
-    const fileName = 'myFile.jpg';
-
-    fetch(url).then(async response => {
-      const contentType = response.headers.get('content-type');
-      const blob = await response.blob();
-      // eslint-disable-next-line no-undef
-      const file1 = new File([blob], fileName, {contentType});
-      console.log('file test');
-      setFile(file1);
-      console.log(file);
-    });
-  }, []);
 
   //   //formdata.append("xxoo", fileInput.files[0], "/C:/Users/stoneroad/Pictures/test.jpg");
   const createNewRecord = token => {
