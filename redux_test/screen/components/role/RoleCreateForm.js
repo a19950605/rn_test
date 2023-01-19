@@ -10,58 +10,18 @@ import {
 } from 'react-native';
 import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector} from 'react-redux';
 
-async function getData() {
-  return await AsyncStorage.getItem('@token').then(res => {
-    console.log('tokentest');
-    console.log(res);
-    return res;
-  });
-}
-
-const createUser = () => {
-  var formdata = new FormData();
-  let formStatus = 'ACTIVE';
-  if (status == 'Active') {
-    formStatus = 'ACTIVE';
-  } else {
-    formStatus = 'DISABLE';
-  }
-  formdata.append('status', 'formStatus');
-  formdata.append('username', 'username');
-  formdata.append('displayName', 'displayName');
-  formdata.append('password', 'password');
-  formdata.append('staffNo', 'staffNo');
-
-  getData().then(res => {
-    var requestOptions = {
-      method: 'POST',
-      headers: {
-        // Accept: '*',
-        // 'Content-Type': 'application/json',
-        'X-Token': res,
-      },
-      body: formdata,
-    };
-    fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
-      .then(response => {
-        return response.json();
-      })
-      .then(result => {
-        //   console.log(result);
-        // return result;
-        console.log('create user test');
-        console.log(result);
-      })
-      .catch(error => console.log('error1', error));
-  });
-};
 const RoleCreateForm = () => {
+  const userToken = useSelector(state => state.login.userToken?.Token);
+  //permission,status,code,rmks,displayName
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
-  const [status, setStatus] = useState('Active');
+  const [status, setStatus] = useState('ACTIVE');
   const [displayName, setDisplayName] = useState();
   const [code, setCode] = useState();
+
+  const [rmks, setRmks] = useState('');
   const [remarks, setRemarks] = useState();
   const StatusDropDown = ({close, setStatus}) => {
     const [visible, setVisible] = React.useState(false);
@@ -153,8 +113,8 @@ const RoleCreateForm = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Code"
-              value={''}
-              onChangeText={''}
+              value={code}
+              onChangeText={code => setCode(code)}
             />
           </View>
           <View
@@ -175,8 +135,8 @@ const RoleCreateForm = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Remarks"
-              value={''}
-              onChangeText={''}
+              value={rmks}
+              onChangeText={rmks => setRmks(rmks)}
             />
           </View>
           <Pressable
@@ -203,7 +163,7 @@ const RoleCreateForm = () => {
                 style={{width: '85%', backgroundColor: 'transparent'}}
                 label="Status"
                 value={status}
-                onChangeText={''}
+                onChangeText={status => setStatus(status)}
               />
             </View>
           </Pressable>

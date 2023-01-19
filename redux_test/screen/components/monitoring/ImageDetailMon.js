@@ -11,7 +11,14 @@ import {
   View,
 } from 'react-native';
 
-const ImageDetailMon = () => {
+const ImageDetailMon = ({
+  setImgX,
+  setImgY,
+  setLampX,
+  setLampY,
+  setUri,
+  uri,
+}) => {
   const [filePath, setFilePath] = useState({});
 
   const chooseFile = type => {
@@ -50,6 +57,10 @@ const ImageDetailMon = () => {
       console.log(filePath);
       // console.log(filePath[0]);
       // console.log(filePath[0].uri);
+      console.log(setUri);
+      setUri(response.assets[0].uri);
+      console.log('setted uri');
+      console.log(uri);
     });
   };
 
@@ -69,12 +80,16 @@ const ImageDetailMon = () => {
             padding: 10,
           }}>
           <MarkerImage
-            image={require('../../../assets/test.jpg')}
+            image={!uri ? require('../../../assets/test.jpg') : {uri: uri}}
             markerImage={require('../../../assets/location-pin-icon-on-transparent-pin-vector-20942049.jpg')}
             markerSize={50}
             markerPosition={{x: 250, y: 200}}
             onChange={data => {
               console.log(data);
+              setImgX(parseInt(data.originImage.width));
+              setImgY(parseInt(data.originImage.height));
+              setLampX(parseInt(data.originImage.marker.x));
+              setLampY(parseInt(data.originImage.marker.y));
             }}
           />
         </ReactNativeZoomableView>

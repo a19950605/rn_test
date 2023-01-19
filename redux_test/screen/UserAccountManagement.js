@@ -14,6 +14,7 @@ import UserAccountCard from './components/UserAccountCard';
 import {createStackNavigator} from '@react-navigation/stack';
 import UserAccountDetailTab from './components/UserAccountDetailTab';
 import UserAccountCreate from './components/UserAccountCreate';
+import {useSelector} from 'react-redux';
 
 const UserAccountManagement = () => {
   const Stack = createStackNavigator();
@@ -31,93 +32,29 @@ const UserAccountManagementTest = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [token, setToken] = useState('');
+  const userToken = useSelector(state => state.login.userToken?.Token);
 
-  async function getData() {
-    return await AsyncStorage.getItem('@token').then(res => {
-      console.log('tokentest');
-      console.log(res);
-      setToken(res);
-      return res;
-    });
-  }
   useEffect(() => {
-    getData().then(res => {
-      var requestOptions = {
-        method: 'GET',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': res,
-        },
-      };
-      fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          //   console.log(result);
-          // return result;
-          setData(result?.content);
-        })
-        .catch(error => console.log('error1', error));
-    });
+    var requestOptions = {
+      method: 'GET',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+    };
+    fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        //   console.log(result);
+        // return result;
+        setData(result?.content);
+      })
+      .catch(error => console.log('error1', error));
   }, []);
-  const createUser = () => {
-    var formdata = new FormData();
-    formdata.append('status', 'ACTIVE');
-    formdata.append('username', 'wilson2022t');
-    formdata.append('displayName', 'wilson test');
-    formdata.append('password', 'R4QB10DD');
-    formdata.append('staffNo', '12222');
 
-    getData().then(res => {
-      var requestOptions = {
-        method: 'POST',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': res,
-        },
-        body: formdata,
-      };
-      fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          //   console.log(result);
-          // return result;
-          setData(result);
-        })
-        .catch(error => console.log('error1', error));
-    });
-  };
-
-  const userDetail = id => {
-    getData().then(res => {
-      var requestOptions = {
-        method: 'GET',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': res,
-        },
-      };
-      fetch(
-        `https://gis2.ectrak.com.hk:8900/api/system/user/${id}`,
-        requestOptions,
-      )
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          console.log(result);
-          // return result;
-          //setData(result);
-        })
-        .catch(error => console.log('error1', error));
-    });
-  };
   //   console.log('data test');
   //   console.log(data);
   return (
@@ -163,6 +100,5 @@ const UserAccountManagementTest = () => {
     </View>
   );
 };
-//this component should be move mou
 
 export default UserAccountManagement;

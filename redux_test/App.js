@@ -52,6 +52,9 @@ import {store} from './store';
 import {Provider} from 'react-redux';
 import {useSelector, useDispatch} from 'react-redux';
 import {signout} from './features/login/loginSlice';
+import {Alert} from 'react-native';
+import {Modal} from 'react-native';
+import SysParams from './screen/SystemParams/SysParams';
 
 function CustomDrawerContent(props) {
   const BASE_PATH = 'https://upload.wikimedia.org/wikipedia/en/b/b9/';
@@ -65,7 +68,22 @@ function CustomDrawerContent(props) {
     }
   }
   const dispatch = useDispatch();
-
+  const logoutConfirm = () => {
+    return Alert.alert('Logout', 'Confirm to logout?', [
+      // The "Yes" button
+      {
+        text: 'Confirm',
+        onPress: () => {
+          dispatch(signout());
+        },
+      },
+      // The "No" button
+      // Does nothing but dismiss the dialog when tapped
+      {
+        text: 'Cancel',
+      },
+    ]);
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{backgroundColor: 'black', padding: 10}}>
@@ -97,7 +115,7 @@ function CustomDrawerContent(props) {
           label="Toggle drawer"
           onPress={() => props.navigation.toggleDrawer()}
         /> */}
-        <DrawerItem label="Log out" onPress={() => dispatch(signout())} />
+        <DrawerItem label="Log out" onPress={() => logoutConfirm()} />
       </DrawerContentScrollView>
     </SafeAreaView>
   );
@@ -203,7 +221,8 @@ export function MyDrawer() {
               <TouchableOpacity
                 onPress={() => {
                   {
-                    alert('hello');
+                    console.log('hello');
+                    // alert('hello');
                   }
                 }}>
                 <Icon
@@ -228,19 +247,18 @@ export function MyDrawer() {
         {/* <Drawer.Screen name="eRFL MonitoringT" component={Monitoring} /> */}
 
         <Drawer.Screen name="eRFL Monitoring" component={MonitoringTest} />
-        <Drawer.Screen name="eRFL Assignment" component={Assignment} />
+        {/* <Drawer.Screen name="eRFL Assignment" component={Assignment} /> */}
         <Drawer.Screen name="Event Log" component={EventLog} />
         <Drawer.Screen name="Outstanding Alarm" component={OutstandingAlarm} />
         <Drawer.Screen name="Alarm History" component={AlarmHistory} />
-        <Drawer.Screen name="Change Password" component={PasswordSetting} />
-        <Drawer.Screen name="mon tab" component={MonitoringTab} />
-        <Drawer.Screen name="Role management" component={RoleManagement} />
-
-        <Drawer.Screen name="image upload test" component={ImageUploadTest} />
         <Drawer.Screen
           name="User Account Management"
           component={UserAccountManagement}
         />
+        <Drawer.Screen name="Role management" component={RoleManagement} />
+        <Drawer.Screen name="Change Password" component={PasswordSetting} />
+        <Drawer.Screen name="System Parameters" component={SysParams} />
+
         {/* <Drawer.Screen name="Table View" component={TableView} /> */}
         {/* <Drawer.Screen name="Form" component={Form} /> */}
       </Drawer.Navigator>

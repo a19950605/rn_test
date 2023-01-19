@@ -17,13 +17,14 @@ import RoleDetailTab from './components/role/RoleDetailTab';
 import {useNavigation} from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
 import RoleCreateTab from './components/role/RoleCreateTab';
+import {useSelector} from 'react-redux';
 
 const RoleManagement = () => {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator
       screenOptions={{headerTitle: 'Role Management', headerShown: false}}>
-      <Stack.Screen name="MonitoringTestSub" component={RoleManagementTest} />
+      <Stack.Screen name="RoleManagement" component={RoleManagementTest} />
       <Stack.Screen name="RoleDetail" component={RoleDetailTab} />
       <Stack.Screen name="RoleCreate" component={RoleCreateTab} />
 
@@ -35,40 +36,32 @@ function RoleManagementTest() {
   const navigation = useNavigation();
 
   const [data, setData] = useState();
-  async function getData() {
-    return await AsyncStorage.getItem('@token').then(res => {
-      console.log('tokentest');
-      console.log(res);
-      return res;
-    });
-  }
+  const userToken = useSelector(state => state.login.userToken?.Token);
 
   useEffect(() => {
-    getData().then(res => {
-      var requestOptions = {
-        method: 'GET',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': res,
-        },
-      };
-      fetch(
-        'https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission',
-        requestOptions,
-      )
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          // return result;
-          // setData(result);
-          console.log('role management');
-          // console.log(result);
-          setData(result?.content);
-        })
-        .catch(error => console.log('error1', error));
-    });
+    var requestOptions = {
+      method: 'GET',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+    };
+    fetch(
+      'https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission',
+      requestOptions,
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        // return result;
+        // setData(result);
+        console.log('role management');
+        // console.log(result);
+        setData(result?.content);
+      })
+      .catch(error => console.log('error1', error));
   }, []);
 
   const getOneRolePermission = id => {

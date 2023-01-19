@@ -33,7 +33,7 @@ const MonitoringCard = props => {
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'black', fontWeight: 'bold'}}>
-            eRFL Readlines:{' '}
+            eRFL Readlines:
           </Text>
           <Text
             style={

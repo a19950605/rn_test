@@ -5,12 +5,16 @@ import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
 // import { Feather } from "@expo/vector-icons";
 // import { Ionicons } from "@expo/vector-icons";
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {getToken} from '../../helper';
 import OutstandingAlarmCard from '../OutstandingAlarmCard';
 import OutstandingAlarmCard2 from '../OutstandingAlarmCard2';
 import OutstandingDetailTab from '../OutstandingDetailTab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector} from 'react-redux';
+import {Icon} from '@rneui/themed';
+import {useWindowDimensions} from 'react-native';
+import TableTest2 from '../components/TableTest2';
 
 const OutstandingAlarm = () => {
   const Stack = createStackNavigator();
@@ -32,36 +36,30 @@ const OutstandingAlarmSub = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [token, setToken] = useState('');
-  const test = () => {};
+  const userToken = useSelector(state => state.login.userToken?.Token);
+
+  const {height, width} = useWindowDimensions();
+  const isLandscapeMode = width > height ? true : false;
+
   useEffect(() => {
-    async function getData() {
-      return await AsyncStorage.getItem('@token').then(res => {
-        console.log('tokentest');
-        console.log(res);
-        setToken(res);
-        return res;
-      });
-    }
-    getData().then(res => {
-      var requestOptions = {
-        method: 'GET',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': res,
-        },
-      };
-      fetch('https://gis2.ectrak.com.hk:8900/api/v2/alarms', requestOptions)
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          //  console.log(result);
-          // return result;
-          setData(result?.reverse());
-        })
-        .catch(error => console.log('error1', error));
-    });
+    var requestOptions = {
+      method: 'GET',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+    };
+    fetch('https://gis2.ectrak.com.hk:8900/api/v2/alarms', requestOptions)
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        //  console.log(result);
+        // return result;
+        setData(result?.reverse());
+      })
+      .catch(error => console.log('error1', error));
   }, []);
 
   // console.log('outStandand alarm');
@@ -73,7 +71,7 @@ const OutstandingAlarmSub = () => {
           justifyContent: 'space-between',
           padding: 10,
         }}>
-        <View
+        <TouchableOpacity
           style={{
             borderColor: 'blue',
             borderWidth: 1,
@@ -82,18 +80,29 @@ const OutstandingAlarmSub = () => {
             flexDirection: 'row',
           }}>
           <Text style={{color: 'blue'}}>2022-12-06 12:26:43</Text>
-        </View>
-        <View style={{padding: 5}}></View>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Icon
+            name="filter"
+            size={24}
+            color="black"
+            type="ionicon"
+            style={{padding: 10}}
+          />
+        </TouchableOpacity>
       </View>
-      <View style={{marginBottom: 60}}>
-        <FlatList
-          data={data}
-          renderItem={props => (
-            <OutstandingAlarmCard {...props} navigation={navigation} />
-          )}
-          keyExtractor={item => item.id}
-        />
-
+      <View style={{marginBottom: 60, padding: isLandscapeMode ? 5 : 0}}>
+        {isLandscapeMode ? (
+          <TableTest2 data={data} />
+        ) : (
+          <FlatList
+            data={data}
+            renderItem={props => (
+              <OutstandingAlarmCard {...props} navigation={navigation} />
+            )}
+            keyExtractor={item => item.id}
+          />
+        )}
         {/* <OutstandingAlarmCard />
         <OutstandingAlarmCard2 />
       */}

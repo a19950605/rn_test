@@ -13,17 +13,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageDetailMon from './components/monitoring/ImageDetailMon';
 import {useSelector} from 'react-redux';
 import {Alert} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const MonitoringTab = props => {
   console.log('monitoring tab1');
+  const navigation = useNavigation();
+
   const [imgX, setImgX] = useState(0);
   const [imgY, setImgY] = useState(0);
   const [lampX, setLampX] = useState(0);
   const [lampY, setLampY] = useState(0);
   const [uri, setUri] = useState('');
   const [index, setIndex] = React.useState(0);
-  const [text, setText] = React.useState('');
-  const [token, setToken] = useState('');
+  const [responseCode, setResponseCode] = useState();
+
   const [data, setData] = useState('');
   const userToken = useSelector(state => state.login.userToken?.Token);
   const [loading, setLoading] = useState(true);
@@ -89,7 +92,59 @@ const MonitoringTab = props => {
       })
       .catch(error => console.log('error13', error));
   };
+  const deleteConfirm = token => {
+    return Alert.alert(
+      'Delete',
+      'Are you sure you want to remove this record?',
+      [
+        // The "Yes" button
+        {
+          text: 'Yes',
+          onPress: () => {
+            deleteRecord(token);
+          },
+        },
+        // The "No" button
+        // Does nothing but dismiss the dialog when tapped
+        {
+          text: 'No',
+        },
+      ],
+    );
+  };
+  const deleteRecord = token => {
+    var requestOptions = {
+      method: 'DELETE',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': token,
+      },
+    };
+    fetch(
+      `https://gis2.ectrak.com.hk:8900/api/v2/device/${props.route.params.id}`,
+      requestOptions,
+    )
+      .then(response => {
+        setResponseCode(response.status);
 
+        return response.json();
+      })
+      .then(result => {
+        //  console.log(result);
+        // return result;
+        console.log('submit result');
+        console.log(result);
+
+        if (responseCode == 200) {
+          alert('delete success' + result?.id);
+          navigation.navigate('MonitoringTestSub');
+        } else {
+          alert('delete fail: ' + responseCode + '\n' + result?.errorMsg);
+        }
+      })
+      .catch(error => console.log('error1Z', error));
+  };
   useEffect(() => {
     var requestOptions = {
       method: 'GET',
@@ -198,7 +253,14 @@ const MonitoringTab = props => {
               <LastControlDetail data={data} />
             </TabView.Item>
             <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-              <ImageDetailMon />
+              <ImageDetailMon
+                setImgX={setImgX}
+                setImgY={setImgY}
+                setLampX={setLampX}
+                setLampY={setLampY}
+                setUri={setUri}
+                uri={uri}
+              />
             </TabView.Item>
             <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
               <HistoryTab deviceID={1} />
@@ -227,7 +289,7 @@ const MonitoringTab = props => {
                 marginRight: 5,
               }}
               onPress={() => {
-                deleteConfirm();
+                deleteConfirm(userToken);
               }}>
               <Icon
                 name="md-save-sharp"
@@ -280,20 +342,4 @@ const MonitoringTab = props => {
   );
 };
 
-const deleteConfirm = () => {
-  return Alert.alert('Delete', 'Are you sure you want to remove this record?', [
-    // The "Yes" button
-    {
-      text: 'Yes',
-      onPress: () => {
-        alert('deleted');
-      },
-    },
-    // The "No" button
-    // Does nothing but dismiss the dialog when tapped
-    {
-      text: 'No',
-    },
-  ]);
-};
 export default MonitoringTab;

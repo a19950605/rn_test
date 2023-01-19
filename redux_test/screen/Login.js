@@ -44,9 +44,6 @@ const Login = props => {
       console.log(res);
     });
   };
-  let comp_tst = () => {
-    console.log('hello world');
-  };
   console.log('height' + height);
   console.log('width' + width);
   console.log('islandscapemode' + isLandscapeMode);

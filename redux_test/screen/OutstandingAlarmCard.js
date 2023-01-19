@@ -44,7 +44,7 @@ const OutstandingAlarmCard = props => {
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: titleColor, fontWeight: 'bold'}}>RFL: </Text>
-          <Text>1</Text>
+          <Text>{props?.item?.code || ''}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: titleColor, fontWeight: 'bold'}}>

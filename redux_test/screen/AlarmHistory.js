@@ -41,11 +41,12 @@
 
 // export default OutstandingAlarm;
 
+import {Icon} from '@rneui/themed';
 import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
 // import { Feather } from "@expo/vector-icons";
 // import { Ionicons } from "@expo/vector-icons";
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import OutstandingAlarmCard from './OutstandingAlarmCard';
 import OutstandingAlarmCard2 from './OutstandingAlarmCard2';
 
@@ -86,10 +87,10 @@ const AlarmHistory = () => {
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-end',
           padding: 10,
         }}>
-        <View
+        <TouchableOpacity
           style={{
             borderColor: 'blue',
             borderWidth: 1,
@@ -97,9 +98,17 @@ const AlarmHistory = () => {
             padding: 10,
             flexDirection: 'row',
           }}>
-          <Text style={{color: 'blue'}}>2022-12-06 12:26:43</Text>
-        </View>
-        <View style={{padding: 5}}></View>
+          <Text style={{color: 'blue'}}>Export 30 day csv</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Icon
+            name="filter"
+            size={24}
+            color="black"
+            type="ionicon"
+            style={{padding: 10}}
+          />
+        </TouchableOpacity>
       </View>
       <View style={{marginBottom: 60}}>
         <FlatList

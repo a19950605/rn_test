@@ -12,51 +12,53 @@ import {Icon, Tab, TabView} from '@rneui/themed';
 import RoleDetailPermission from './RoleDetailPermisson';
 import RoleCreateForm from './RoleCreateForm';
 import RolePermission from './RolePermssion';
+import {useSelector} from 'react-redux';
+
 const RoleCreateTab = () => {
   const [index, setIndex] = useState(0);
+  const [code, setCode] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [rmks, setRmks] = useState('');
+  const [status, setStatus] = useState();
+  //permission,status,code,rmks,displayName
   const [listData, setListData] = useState([]);
-  async function getData() {
-    return await AsyncStorage.getItem('@token').then(res => {
-      console.log('tokentest');
-      console.log(res);
-      return res;
-    });
-  }
+  const [permission, setPermission] = useState([]);
+
+  const userToken = useSelector(state => state.login.userToken?.Token);
+
   const getRoleAsOptions = () => {
-    getData().then(res => {
-      var requestOptions = {
-        method: 'GET',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': res,
-        },
-      };
-      fetch(
-        `https://gis2.ectrak.com.hk:8900/api/userFuncPermissions`,
-        requestOptions,
-      )
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          console.log('get role as option');
-          //console.log(result.func[0].permissions); //5,4,2,3
-          //console.log(result.func[1].permissions); //9,7,8,6
-          //  console.log(result.func[2].permissions);
-          console.log(result.func[8].permissions);
-          let temp_arr = [];
-          result?.func?.map(per => {
-            temp_arr = temp_arr.concat(per.permissions);
-          });
-          // console.log('temp_arr');
-          // console.log(temp_arr);
-          // console.log(temp_arr.length);
-          // return result;
-          setListData(temp_arr);
-        })
-        .catch(error => console.log('error1', error));
-    });
+    var requestOptions = {
+      method: 'GET',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+    };
+    fetch(
+      `https://gis2.ectrak.com.hk:8900/api/userFuncPermissions`,
+      requestOptions,
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        console.log('get role as option');
+        //console.log(result.func[0].permissions); //5,4,2,3
+        //console.log(result.func[1].permissions); //9,7,8,6
+        //  console.log(result.func[2].permissions);
+        console.log(result.func[8].permissions);
+        let temp_arr = [];
+        result?.func?.map(per => {
+          temp_arr = temp_arr.concat(per.permissions);
+        });
+        // console.log('temp_arr');
+        // console.log(temp_arr);
+        // console.log(temp_arr.length);
+        // return result;
+        setListData(temp_arr);
+      })
+      .catch(error => console.log('error1', error));
   };
   useEffect(() => {
     getRoleAsOptions();
@@ -65,6 +67,7 @@ const RoleCreateTab = () => {
   return (
     <>
       <Tab
+        style={{backgroundColor: 'white', padding: 2}}
         value={index}
         scrollable={true}
         onChange={e => setIndex(e)}
@@ -97,7 +100,7 @@ const RoleCreateTab = () => {
           {/* <RoleDetailPermission
        
       /> */}
-          <RolePermission listData={listData} />
+          <RolePermission listData={listData} setPermission={setPermission} />
         </TabView.Item>
       </TabView>
       <View
@@ -118,7 +121,7 @@ const RoleCreateTab = () => {
             padding: 10,
           }}
           onPress={() => {
-            alert('hello');
+            alert('hello' + permission);
           }}>
           <Icon
             name="md-save-sharp"
@@ -134,4 +137,44 @@ const RoleCreateTab = () => {
   );
 };
 
+const createRole = (token, form, navigation) => {
+  var formdata = new FormData();
+  formdata.append('teamId', 1);
+  //code displayname rmks
+  formdata.append('permissionIds', form?.permission);
+  formdata.append('status', form?.status || 'STATUS');
+  formdata.append('code', form?.code);
+  formdata.append('rmks', form?.rmks);
+  formdata.append('displayName', form?.displayName);
+
+  var requestOptions = {
+    method: 'POST',
+    headers: {
+      // Accept: '*',
+      // 'Content-Type': 'application/json',
+      'X-Token': token,
+    },
+    body: formdata,
+  };
+
+  fetch(
+    'https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission',
+    requestOptions,
+  )
+    .then(response => {
+      if (response.status == 200) {
+        alert('create success');
+        navigation.navigate('RoleManagement');
+      } else {
+        alert('create fail');
+      }
+
+      return response.json();
+    })
+    .then(result => {
+      console.log(result);
+      // return result;
+    })
+    .catch(error => console.log('error1', error));
+};
 export default RoleCreateTab;

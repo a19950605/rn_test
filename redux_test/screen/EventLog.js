@@ -12,75 +12,73 @@ import {
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {listEventLog} from '../apiList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector} from 'react-redux';
+import {Icon} from '@rneui/themed';
+import {useWindowDimensions} from 'react-native';
+import EventLogTable from './EventLogTable';
+
+import {useGetEventLogQuery} from '../features/api/apiSlice';
 
 function EventLog() {
+  const userToken = useSelector(state => state.login.userToken?.Token);
+
   const [eventLogData, setEventLogData] = useState([]);
   const [data, setData] = useState();
-  async function getData() {
-    return await AsyncStorage.getItem('@token').then(res => {
-      console.log('tokentest');
-      console.log(res);
-      return res;
-    });
+
+  const {height, width} = useWindowDimensions();
+  const isLandscapeMode = width > height ? true : false;
+
+  const {
+    data: eventLogs,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetEventLogQuery();
+
+  if (isLoading) {
+    console.log('redux event log loading');
+  } else if (isSuccess) {
+    console.log(eventLogs);
+  } else if (isError) {
+    console.log('get event log error');
   }
+
   useEffect(() => {
-    //let mounted = true;
-    let body_obj = {
-      username: 'wilson2022',
-      funcName: 'Userloginlog',
-      fromTime: '20221212',
-      toTime: '20221212',
-    };
-    let token =
-      'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdnJJZCI6IjIiLCJqdGkiOiIxNjcwOTA1MDU1MTc0In0.kK_-WJ-yoaGYmqSbR5od8d-JDN0XP57CDyUSTVrokadN0n5CnAVFHqHA5zGDwF0KryRXJdP4kxULoCt9MNYOxg';
     var formdata = new FormData();
     formdata.append('userName', '');
     formdata.append('funcName', '');
-    formdata.append('fromTime', '20230101');
-    formdata.append('toTime', '20230101');
+    formdata.append('fromTime', '20230118');
+    formdata.append('toTime', '20230118');
 
     //listEventLog(body_obj, token);
     // .then(res => {
     //   console.log('json');
     //   console.log(res);
     // });
-    getData().then(res => {
-      var requestOptions = {
-        method: 'POST',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': res,
-        },
-        body: formdata,
-      };
-      fetch('https://gis2.ectrak.com.hk:8900/api/data/eventlog', requestOptions)
-        .then(response => {
-          console.log('response');
 
-          return response.json();
-        })
-        .then(result => {
-          console.log('result');
-          console.log(result);
-          setData(result);
-          return result;
-        })
-        .catch(error => console.log('error', error));
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+      body: formdata,
+    };
+    fetch('https://gis2.ectrak.com.hk:8900/api/data/eventlog', requestOptions)
+      .then(response => {
+        console.log('response');
 
-      // fetch(
-      //   'https://gis2.ectrak.com.hk:8900/api/v2/options/usernameAsOptions',
-      //   requestOptions,
-      // )
-      //   .then(response => {
-      //     return response.json();
-      //   })
-      //   .then(result => {
-      //     console.log(result);
-      //     return result;
-      //   })
-      //   .catch(error => console.log('error', error));
-    });
+        return response.json();
+      })
+      .then(result => {
+        console.log('result');
+        console.log(result);
+        setData(result);
+        return result;
+      })
+      .catch(error => console.log('error', error));
   }, []);
 
   return (
@@ -105,16 +103,29 @@ function EventLog() {
           <Text style={{color: 'blue'}}>export current result to csv</Text>
         </TouchableOpacity>
 
-        <Text>filter</Text>
+        <TouchableOpacity>
+          <Icon
+            name="filter"
+            size={24}
+            color="black"
+            type="ionicon"
+            style={{padding: 10}}
+          />
+        </TouchableOpacity>
       </View>
-      <FlatList data={data} renderItem={props => <EventLogCard {...props} />} />
+      {isLandscapeMode ? (
+        <EventLogTable data={data} />
+      ) : (
+        <FlatList
+          data={data}
+          renderItem={props => <EventLogCard {...props} />}
+        />
+      )}
     </View>
   );
 }
 
 const EventLogCard = props => {
-  console.log(props);
-
   return (
     <View style={{borderColor: 'gray', borderWidth: 0.2, padding: 10}}>
       <View style={{flexDirection: 'row'}}>

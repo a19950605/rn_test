@@ -6,7 +6,7 @@ import {Checkbox} from 'react-native-paper';
 const RoleDetailPermission = props => {
   console.log('RoleDetailPermission');
   // console.log(props?.listData);
-  console.log(props.selectedData);
+  // console.log(props.selectedData);
   const [data1, setData1] = useState();
 
   const [checked, setChecked] = React.useState(false);
@@ -14,6 +14,7 @@ const RoleDetailPermission = props => {
   const [selectedId, setSelectedId] = useState([]);
 
   useEffect(() => {
+    console.log('setting looping p');
     props?.selectedData?.map(p => {
       console.log('looping p');
       console.log(p);
@@ -21,16 +22,21 @@ const RoleDetailPermission = props => {
       console.log(p.id);
       setSelectedId(old => [...old, p.id]);
     });
-
     console.log('selectedid');
     console.log(selectedId);
     console.log(props?.selectedData);
-  }, [props?.selectedData]);
-
+  }, []);
+  //props?.selectedData
   useEffect(() => {
     if (props?.listData?.length == selectedId.length) {
+      console.log('checked all true');
+      console.log(props?.listData?.length);
+      console.log(selectedId.length);
       setChecked(true);
     } else {
+      console.log('checked all false');
+      console.log(props?.listData?.length);
+      console.log(selectedId.length);
       setChecked(false);
     }
   }, [selectedId]);
@@ -40,18 +46,22 @@ const RoleDetailPermission = props => {
       <Checkbox
         status={checked ? 'checked' : 'unchecked'}
         onPress={() => {
+          console.log('testing check0');
           if (props?.listData?.length == selectedId.length) {
+            console.log('checkpoint1');
             //  setChecked(false);
             setSelectedId([]);
           } else {
             //  setChecked(true);
-
+            console.log('checkpoint2');
             let selectedArr = [];
             props?.listData.map(d => {
               selectedArr.push(d.id);
             });
-            // console.log('selected arr');
-            // console.log(selectedArr);
+            console.log('selected arr');
+            console.log(selectedArr.length);
+            console.log(props?.listData?.length);
+            console.log(selectedArr);
             setSelectedId(selectedArr);
           }
         }}
@@ -82,7 +92,7 @@ const RoleCheckItem = props => {
     } else {
       setChecked1(false);
     }
-  }, [props]);
+  }, []);
   useEffect(() => {
     checked1
       ? props.selectedId.includes(props?.item?.id) == false
@@ -114,6 +124,8 @@ const RoleCheckItem = props => {
       <Checkbox
         status={checked1 ? 'checked' : 'unchecked'}
         onPress={() => {
+          console.log('testing check1');
+
           setChecked1(!checked1);
         }}
       />

@@ -22,7 +22,7 @@ const OutstandingAlarmCard2 = props => {
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>
-            Controller ID:{' '}
+            Controller ID:
           </Text>
           <Text>C001</Text>
         </View>
@@ -32,7 +32,7 @@ const OutstandingAlarmCard2 = props => {
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>
-            Triggered Datetime:{' '}
+            Triggered Datetime:
           </Text>
           <Text>2022-12-06 11:35:44</Text>
         </View>

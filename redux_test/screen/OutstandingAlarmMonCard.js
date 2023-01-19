@@ -36,7 +36,7 @@ const OutstandingAlarmMonCard = props => {
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>
-            Triggered Datetime:{' '}
+            Triggered Datetime:
           </Text>
           <Text>{props.item.dtCreate || ''}</Text>
         </View>

@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  useWindowDimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Monitoring from './Monitoring';
@@ -26,6 +27,11 @@ import {
   Provider,
   HelperText,
 } from 'react-native-paper';
+import {useIsFocused} from '@react-navigation/native';
+
+import TableTest2 from './components/TableTest2';
+import TableTest from './TableTest';
+import {Modal} from 'react-native';
 const MonitoringTest = () => {
   const Stack = createStackNavigator();
   return (
@@ -38,6 +44,8 @@ const MonitoringTest = () => {
   );
 };
 const MonitoringTestSub = () => {
+  const {height, width} = useWindowDimensions();
+  const isLandscapeMode = width > height ? true : false;
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -47,6 +55,8 @@ const MonitoringTestSub = () => {
   const [filterDesc, setFilterDesc] = useState(false);
   const [filterField, setFilterField] = useState('');
   const [showFilter, setShowFilter] = useState(false);
+  console.log('islandscapemode' + isLandscapeMode);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     setInterval(function () {
@@ -113,7 +123,7 @@ const MonitoringTestSub = () => {
         setLoading(false);
       })
       .catch(error => console.log('error12', error.status));
-  }, [filterDesc, filterField, loading]);
+  }, [loading, isFocused]);
 
   console.log('monitoring test data');
   console.log(data);
@@ -238,6 +248,9 @@ const MonitoringTestSub = () => {
               style={{padding: 10}}
             />
           </TouchableOpacity>
+          <TouchableOpacity>
+            <Text></Text>
+          </TouchableOpacity>
         </View>
         {showFilter && <SortDropDown close={setShowFilter} />}
       </View>
@@ -246,6 +259,8 @@ const MonitoringTestSub = () => {
 
       {loading ? (
         <Text>loading</Text>
+      ) : isLandscapeMode ? (
+        <TableTest data={data} navigation={navigation} />
       ) : (
         <FlatList
           data={data}

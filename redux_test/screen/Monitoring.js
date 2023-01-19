@@ -106,7 +106,7 @@ const Monitoring = () => {
             }}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Alarm ID:{' '}
+                Alarm ID:
               </Text>
               <Text>408</Text>
             </View>
@@ -116,7 +116,7 @@ const Monitoring = () => {
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Controller ID:{' '}
+                Controller ID:
               </Text>
               <Text>C001</Text>
             </View>
@@ -126,7 +126,7 @@ const Monitoring = () => {
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Triggered Datetime:{' '}
+                Triggered Datetime:
               </Text>
               <Text>2022-12-06 11:35:44</Text>
             </View>
@@ -163,7 +163,7 @@ const Monitoring = () => {
             }}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Alarm ID:{' '}
+                Alarm ID:
               </Text>
               <Text>408</Text>
             </View>
@@ -173,7 +173,7 @@ const Monitoring = () => {
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Controller ID:{' '}
+                Controller ID:
               </Text>
               <Text>C001</Text>
             </View>
@@ -183,7 +183,7 @@ const Monitoring = () => {
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Triggered Datetime:{' '}
+                Triggered Datetime:
               </Text>
               <Text>2022-12-06 11:35:44</Text>
             </View>
@@ -220,7 +220,7 @@ const Monitoring = () => {
             }}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Alarm ID:{' '}
+                Alarm ID:
               </Text>
               <Text>408</Text>
             </View>
@@ -230,7 +230,7 @@ const Monitoring = () => {
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Controller ID:{' '}
+                Controller ID:
               </Text>
               <Text>C001</Text>
             </View>
@@ -240,7 +240,7 @@ const Monitoring = () => {
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Triggered Datetime:{' '}
+                Triggered Datetime:
               </Text>
               <Text>2022-12-06 11:35:44</Text>
             </View>
@@ -276,7 +276,7 @@ const Monitoring = () => {
             }}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Alarm ID:{' '}
+                Alarm ID:
               </Text>
               <Text>408</Text>
             </View>
@@ -286,7 +286,7 @@ const Monitoring = () => {
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Controller ID:{' '}
+                Controller ID:
               </Text>
               <Text>C001</Text>
             </View>
@@ -296,7 +296,7 @@ const Monitoring = () => {
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Triggered Datetime:{' '}
+                Triggered Datetime:
               </Text>
               <Text>2022-12-06 11:35:44</Text>
             </View>
@@ -332,7 +332,7 @@ const Monitoring = () => {
             }}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Alarm ID:{' '}
+                Alarm ID:
               </Text>
               <Text>408</Text>
             </View>
@@ -342,7 +342,7 @@ const Monitoring = () => {
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Controller ID:{' '}
+                Controller ID:
               </Text>
               <Text>C001</Text>
             </View>
@@ -352,7 +352,7 @@ const Monitoring = () => {
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black', fontWeight: 'bold'}}>
-                Triggered Datetime:{' '}
+                Triggered Datetime:
               </Text>
               <Text>2022-12-06 11:35:44</Text>
             </View>

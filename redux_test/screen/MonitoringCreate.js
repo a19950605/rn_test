@@ -159,7 +159,7 @@ const MonitoringCreate = () => {
             if (
               uri == '' ||
               form.deviceId == '' ||
-              form.relayChannelIdx == '' ||
+              form.controllerId == '' ||
               form.rfl == '' ||
               form.relayChannelIdx == ''
             ) {

@@ -9,39 +9,26 @@ import {
   Pressable,
 } from 'react-native';
 import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 const UserAccountCreate = () => {
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
   const [role, setRole] = useState();
-  //user name
-  //displayname
-  //staffid
-  //role (dropdown) default text first password, password confirmation remarks
-  //status  active disabled
+  const userToken = useSelector(state => state.login.userToken?.Token);
+  const navigation = useNavigation();
 
-  //role
-  async function getData() {
-    return await AsyncStorage.getItem('@token').then(res => {
-      console.log('tokentest');
-      console.log(res);
-      return res;
-    });
-  }
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState('ACTIVE');
   const [username, setUsername] = useState();
   const [displayName, setDisplayName] = useState();
   const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+
   const [staffNo, setStaffNo] = useState();
- 
   const RoleDropDown = ({close, setRole}) => {
     const [visible, setVisible] = React.useState(false);
 
-    const openMenu = () => setVisible(true);
-
-    const closeMenu = () => setVisible(false);
- 
     return (
       <View
         style={{
@@ -107,10 +94,6 @@ const UserAccountCreate = () => {
   const StatusDropDown = ({close, setStatus}) => {
     const [visible, setVisible] = React.useState(false);
 
-    const openMenu = () => setVisible(true);
-
-    const closeMenu = () => setVisible(false);
-
     return (
       <View
         style={{
@@ -132,14 +115,14 @@ const UserAccountCreate = () => {
         }}>
         <Menu.Item
           onPress={() => {
-            setStatus('Active');
+            setStatus('ACTIVE');
             close(false);
           }}
-          title="Active"
+          title="ACTIVE"
         />
         <Menu.Item
           onPress={() => {
-            setStatus('Disabled');
+            setStatus('DISABLE');
             close(false);
           }}
           title="Disabled"
@@ -290,8 +273,10 @@ const UserAccountCreate = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Password Confirmation"
-              value={''}
-              onChangeText={''}
+              value={confirmPassword}
+              onChangeText={confirmPassword =>
+                setConfirmPassword(confirmPassword)
+              }
             />
           </View>
           <View
@@ -368,10 +353,21 @@ const UserAccountCreate = () => {
               }}
               onPress={() => {
                 //  alert('hello');
-                alert(
-                  'msg' + username + displayName + password + status + staffNo,
-                );
-                createUser();
+                if (password != confirmPassword) {
+                  alert('password not match');
+                } else {
+                  createUser(
+                    userToken,
+                    {
+                      status,
+                      username,
+                      displayName,
+                      password,
+                      staffNo,
+                    },
+                    navigation,
+                  );
+                }
               }}>
               <Icon
                 name="md-save-sharp"
@@ -387,6 +383,41 @@ const UserAccountCreate = () => {
       </View>
     </Provider>
   );
+};
+
+const createUser = (token, form, navigation) => {
+  var formdata = new FormData();
+  formdata.append('status', form?.status || '');
+  formdata.append('username', form?.username || '');
+  formdata.append('displayName', form?.displayName || '');
+  formdata.append('password', form?.password || '');
+  formdata.append('staffNo', form?.staffNo || '');
+
+  var requestOptions = {
+    method: 'POST',
+    headers: {
+      // Accept: '*',
+      // 'Content-Type': 'application/json',
+      'X-Token': token,
+    },
+    body: formdata,
+  };
+  fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
+    .then(response => {
+      if (response.status == 200) {
+        alert('create success');
+        navigation.navigate('UserAccount');
+      } else {
+        alert('create fail');
+      }
+
+      return response.json();
+    })
+    .then(result => {
+      console.log(result);
+      // return result;
+    })
+    .catch(error => console.log('error1', error));
 };
 
 export default UserAccountCreate;

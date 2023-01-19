@@ -18,6 +18,7 @@ const RolePermission = props => {
     } else {
       setChecked(false);
     }
+    props?.setPermission(selectedId);
   }, [selectedId]);
 
   let data = [
@@ -25,6 +26,7 @@ const RolePermission = props => {
     {id: 4, function: 'user man', permissions: 'delete'},
     {id: 3, function: 'user man', permissions: 'delete'},
   ];
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <Checkbox

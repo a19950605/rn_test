@@ -55,7 +55,7 @@ const UserAccountCard = props => {
           flexDirection: 'row',
         }}
         onPress={() => {
-          props.navigation.navigate('UserAccountDetail');
+          props.navigation.navigate('UserAccountDetail', props?.item);
         }}>
         <Text style={{color: 'blue'}}>Details</Text>
       </TouchableOpacity>

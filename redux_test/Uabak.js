@@ -1,15 +1,47 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Input, Icon} from '@rneui/themed';
 
 import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
 
-const Uabak = () => {
+const Uabak = ({userData}) => {
   //user name
   //displayname
   //staffid
   //role (dropdown) default text first password, password confirmation remarks
   //status  active disabled
+  const [username, setUsername] = useState();
+  const [displayName, setDisplayName] = useState();
+  const [staffNo, setStaffNo] = useState();
+  const [role, setRole] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [rmks, setRmks] = useState();
+  const [status, setStatus] = useState();
+  console.log('user data');
+  console.log(userData?.detail?.roles);
+  // userData?.detail?.displayName;
+  // userData?.detail?.username;
+  // userData?.detail?.staffNo;
+  // userData?.detail?.rmks;
+  // userData?.detail?.status;
+  //userData?.detail?.roles
+  // console.log(userData);
+
+  useEffect(() => {
+    setUsername(userData?.detail?.username);
+    setDisplayName(userData?.detail?.displayName);
+    setStaffNo(userData?.detail?.staffNo);
+    setRmks(userData?.detail?.rmks);
+    setStatus(userData?.detail?.status);
+    setRole(
+      userData?.detail?.roles[0]?.displayName +
+        '(' +
+        userData?.detail?.roles[0]?.code +
+        ')',
+    );
+  }, []);
+
   return (
     <Provider>
       <View style={{backgroundColor: 'white', flex: 1}}>
@@ -28,11 +60,12 @@ const Uabak = () => {
               style={{padding: 10, justifyContent: 'center'}}
             />
             <TextInput
+              editable={false}
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Username"
-              value={''}
-              onChangeText={''}
+              value={username}
+              onChangeText={username => setUsername(username)}
             />
           </View>
           <View
@@ -53,8 +86,8 @@ const Uabak = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Display name"
-              value={''}
-              onChangeText={''}
+              value={displayName}
+              onChangeText={displayName => setDisplayName(displayName)}
             />
           </View>
           <View
@@ -72,11 +105,12 @@ const Uabak = () => {
               style={{padding: 10}}
             />
             <TextInput
+              editable={false}
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Staff ID"
-              value={''}
-              onChangeText={''}
+              value={staffNo}
+              onChangeText={staffNo => setStaffNo(staffNo)}
             />
           </View>
           <View
@@ -97,8 +131,8 @@ const Uabak = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Role"
-              value={''}
-              onChangeText={''}
+              value={role}
+              onChangeText={role => setRole(role)}
             />
           </View>
           <View
@@ -119,8 +153,8 @@ const Uabak = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Password"
-              value={''}
-              onChangeText={''}
+              value={password}
+              onChangeText={password => setPassword(password)}
             />
           </View>
           <View
@@ -141,8 +175,10 @@ const Uabak = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Password Confirmation"
-              value={''}
-              onChangeText={''}
+              value={confirmPassword}
+              onChangeText={confirmPassword =>
+                setConfirmPassword(confirmPassword)
+              }
             />
           </View>
           <View
@@ -163,8 +199,8 @@ const Uabak = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Remarks"
-              value={''}
-              onChangeText={''}
+              value={rmks}
+              onChangeText={rmks => setRmks(rmks)}
             />
           </View>
           <View
@@ -185,8 +221,8 @@ const Uabak = () => {
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Status"
-              value={''}
-              onChangeText={''}
+              value={status}
+              onChangeText={status => setStatus(status)}
             />
           </View>
           <View
@@ -197,7 +233,29 @@ const Uabak = () => {
               justifyContent: 'flex-end',
               padding: 20,
             }}>
-            {/* <TouchableOpacity
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderColor: 'red',
+                borderWidth: 1,
+                borderRadius: 5,
+                padding: 10,
+                marginRight: 5,
+              }}
+              onPress={() => {
+                alert('123');
+              }}>
+              <Icon
+                name="md-save-sharp"
+                type="ionicon"
+                size={24}
+                color="red"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+              <Text style={{color: 'red'}}> Delete</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -207,7 +265,7 @@ const Uabak = () => {
                 padding: 10,
               }}
               onPress={() => {
-                alert('hello');
+                alert('request body');
               }}>
               <Icon
                 name="md-save-sharp"
@@ -217,7 +275,7 @@ const Uabak = () => {
                 style={{justifyContent: 'center', paddingRight: 5}}
               />
               <Text style={{color: 'green'}}> Save</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </View>
       </View>
