@@ -169,7 +169,6 @@ const UserAccountCreate = () => {
               type="feather"
               style={{padding: 10}}
             />
-
             <TextInput
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}

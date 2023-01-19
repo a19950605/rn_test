@@ -52,4 +52,4 @@ https://dev.to/kylessg/improving-your-react-native-application-performance-with-
 
 https://redux.js.org/tutorials/essentials/part-7-rtk-query-basics
 https://pjchender.dev/react/redux-rtk-query/
-
+https://stackoverflow.com/questions/63606571/reload-screen-on-goback-react-native/63610063#63610063
