@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
+
+import {createDrawerNavigator} from '@react-navigation/drawer';
+
 import {
   View,
-  Text,
-  Button,
   SafeAreaView,
   Image,
   StyleSheet,
@@ -11,7 +12,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {
-  NavigationContainer,
   getFocusedRouteNameFromRoute,
   DrawerActions,
 } from '@react-navigation/native';
@@ -22,87 +22,18 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
-import {setTokenHelper} from './helper';
-import AlarmHistory from './screen/AlarmHistory';
-import EventLog from './screen/EventLog';
-import OutstandingAlarm from './screen/OutstandingAlarm/OutstandingAlarm';
-
-import Login from './screen/Login';
-import PasswordSetting from './screen/SettingScreen/PasswordSetting';
-import MonitoringTest from './screen/MonitoringTest';
-
-//import Moment from 'react-moment';
-//import 'moment-timezone';
-import {Icon} from '@rneui/themed';
-
-import {useNavigation} from '@react-navigation/native';
-import UserAccountManagement from './screen/UserAccountManagement';
-import RoleManagement from './screen/RoleManagement';
-
-import {useSelector, useDispatch} from 'react-redux';
-import {signout} from './features/login/loginSlice';
+import SysParams from '../screen/SystemParams/SysParams';
+import PasswordSetting from '../screen/SettingScreen/PasswordSetting';
+import RoleManagement from '../screen/RoleManagement';
+import UserAccountManagement from '../screen/UserAccountManagement';
+import AlarmHistory from '../screen/AlarmHistory';
+import MonitoringTest from '../screen/MonitoringTest';
+import EventLog from '../screen/EventLog';
+import OutstandingAlarm from '../screen/OutstandingAlarm/OutstandingAlarm';
+import {useDispatch} from 'react-redux';
 import {Alert} from 'react-native';
-import SysParams from './screen/SystemParams/SysParams';
-import {MonitoringNav} from './navigation/MonitoringNav';
-import {userDrawer} from './navigation/UserDrawer';
-
-function CustomDrawerContent(props) {
-  const dispatch = useDispatch();
-  const logoutConfirm = () => {
-    return Alert.alert('Logout', 'Confirm to logout?', [
-      // The "Yes" button
-      {
-        text: 'Confirm',
-        onPress: () => {
-          dispatch(signout());
-        },
-      },
-      // The "No" button
-      // Does nothing but dismiss the dialog when tapped
-      {
-        text: 'Cancel',
-      },
-    ]);
-  };
-  return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{backgroundColor: 'black', padding: 10}}>
-        <Image
-          source={{
-            uri: 'https://static.wikia.nocookie.net/logopedia/images/1/16/120724090720-MTR-Corporation-logo.png',
-          }}
-          style={styles.sideMenuProfileIcon}
-        />
-      </View>
-      <DrawerContentScrollView
-        {...props}
-        contentOptions={{
-          activeTintColor: '#fd9c12',
-          activeBackgroundColor: '#000000',
-        }}>
-        <DrawerItemList
-          {...props}
-          contentOptions={{
-            activeTintColor: '#fd9c12',
-            activeBackgroundColor: '#000000',
-          }}
-        />
-        {/* <DrawerItem
-          label="Close drawer"
-          onPress={() => props.navigation.closeDrawer()}
-        />
-        <DrawerItem
-          label="Toggle drawer"
-          onPress={() => props.navigation.toggleDrawer()}
-        /> */}
-        <DrawerItem label="Log out" onPress={() => logoutConfirm()} />
-      </DrawerContentScrollView>
-    </SafeAreaView>
-  );
-}
 
 const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
 
 export function MyDrawer() {
   const navigation = useNavigation();
@@ -110,8 +41,6 @@ export function MyDrawer() {
   //auth("wilson2022","R4QB10DD");
   //  listEventLog({username:'wilson2022',funcName:'Userloginlog',fromTime:'20221212',toTime:'20221212'},"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdnJJZCI6IjIiLCJqdGkiOiIxNjcwODM1ODY4NzE4In0.lqGUbA9zVGVCnH3CB_v_cYR06OuM8A0Z-kVmBAEnwdZP25pDJNPa9mI0DBNBMsAysEKTyS_bX3kHY1OI2HfaBA"
   //  )
-  const [loginToken, setLoginToken] = useState('');
-
   return (
     <>
       {/* style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}*/}
@@ -228,10 +157,13 @@ export function MyDrawer() {
         <Drawer.Screen name="Outstanding Alarm" component={OutstandingAlarm} />
 
         <Drawer.Screen name="Event Log" component={EventLog} />
-        <Drawer.Screen name="eRFL Monitoring" component={MonitoringNav} />
+        <Drawer.Screen name="eRFL Monitoring" component={MonitoringTest} />
         {/* <Drawer.Screen name="eRFL Assignment" component={Assignment} /> */}
         <Drawer.Screen name="Alarm History" component={AlarmHistory} />
-        <Drawer.Screen name="User Account Management" component={userDrawer} />
+        <Drawer.Screen
+          name="User Account Management"
+          component={UserAccountManagement}
+        />
         <Drawer.Screen name="Role management" component={RoleManagement} />
         <Drawer.Screen name="Change Password" component={PasswordSetting} />
         <Drawer.Screen name="System Parameters" component={SysParams} />
@@ -243,21 +175,61 @@ export function MyDrawer() {
   );
 }
 
-export default function App() {
-  const [token, setToken] = useState();
-  const userToken = useSelector(state => state.login.userToken?.Token);
-
-  useEffect(() => {
-    if (token?.Token) {
-      setTokenHelper(token?.Token);
-    }
-  }, [token]);
+function CustomDrawerContent(props) {
+  const dispatch = useDispatch();
+  const logoutConfirm = () => {
+    return Alert.alert('Logout', 'Confirm to logout?', [
+      // The "Yes" button
+      {
+        text: 'Confirm',
+        onPress: () => {
+          dispatch(signout());
+        },
+      },
+      // The "No" button
+      // Does nothing but dismiss the dialog when tapped
+      {
+        text: 'Cancel',
+      },
+    ]);
+  };
   return (
-    <NavigationContainer>
-      {userToken ? <MyDrawer /> : <Login />}
-    </NavigationContainer>
+    <SafeAreaView style={{flex: 1}}>
+      <View style={{backgroundColor: 'black', padding: 10}}>
+        <Image
+          source={{
+            uri: 'https://static.wikia.nocookie.net/logopedia/images/1/16/120724090720-MTR-Corporation-logo.png',
+          }}
+          style={styles.sideMenuProfileIcon}
+        />
+      </View>
+      <DrawerContentScrollView
+        {...props}
+        contentOptions={{
+          activeTintColor: '#fd9c12',
+          activeBackgroundColor: '#000000',
+        }}>
+        <DrawerItemList
+          {...props}
+          contentOptions={{
+            activeTintColor: '#fd9c12',
+            activeBackgroundColor: '#000000',
+          }}
+        />
+        {/* <DrawerItem
+            label="Close drawer"
+            onPress={() => props.navigation.closeDrawer()}
+          />
+          <DrawerItem
+            label="Toggle drawer"
+            onPress={() => props.navigation.toggleDrawer()}
+          /> */}
+        <DrawerItem label="Log out" onPress={() => logoutConfirm()} />
+      </DrawerContentScrollView>
+    </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   sideMenuProfileIcon: {
     resizeMode: 'center',

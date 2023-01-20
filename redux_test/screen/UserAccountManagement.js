@@ -17,22 +17,20 @@ import UserAccountCreate from './components/UserAccountCreate';
 import {useSelector} from 'react-redux';
 import {useGetUsersQuery} from '../features/api/userApiSlice';
 
-const UserAccountManagement = () => {
-  const Stack = createStackNavigator();
-  return (
-    <Stack.Navigator
-      screenOptions={{headerTitle: 'eRFL Monitoring', headerShown: false}}>
-      <Stack.Screen name="UserAccount" component={UserAccountManagementTest} />
-      <Stack.Screen name="UserAccountDetail" component={UserAccountDetailTab} />
-      <Stack.Screen name="Create user" component={UserAccountCreate} />
-    </Stack.Navigator>
-  );
-};
+// const UserAccountManagement = () => {
+//   const Stack = createStackNavigator();
+//   return (
+//     <Stack.Navigator
+//       screenOptions={{headerTitle: 'eRFL Monitoring', headerShown: false}}>
+//       <Stack.Screen name="UserAccount" component={UserAccountManagementTest} />
+//       <Stack.Screen name="UserAccountDetail" component={UserAccountDetailTab} />
+//       <Stack.Screen name="Create user" component={UserAccountCreate} />
+//     </Stack.Navigator>
+//   );
+// };
 
-const UserAccountManagementTest = () => {
+const UserAccountManagement = () => {
   const navigation = useNavigation();
-  const [data, setData] = useState([]);
-  const [token, setToken] = useState('');
   const userToken = useSelector(state => state.login.userToken?.Token);
 
   const {

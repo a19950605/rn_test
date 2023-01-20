@@ -2,48 +2,33 @@ import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
-  StyleSheet,
-  Image,
   FlatList,
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Monitoring from './Monitoring';
+
 import MonitoringCard from './MonitoringCard';
 import {useNavigation} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import MonitoringDetail from './components/monitoring/MonitoringDetail';
-import MonitoringTab from './MonitoringTab';
-import MonitoringCreate from './MonitoringCreate';
+
 import {Icon} from '@rneui/themed';
 import {useSelector, useDispatch} from 'react-redux';
 import {signout} from '../features/login/loginSlice';
-import {
-  TextInput,
-  Button,
-  Menu,
-  Divider,
-  Provider,
-  HelperText,
-} from 'react-native-paper';
+import {Menu} from 'react-native-paper';
 import {useIsFocused} from '@react-navigation/native';
 
-import TableTest2 from './components/TableTest2';
 import TableTest from './TableTest';
-import {Modal} from 'react-native';
+// const MonitoringTest = () => {
+//   const Stack = createStackNavigator();
+//   return (
+//     <Stack.Navigator
+//       screenOptions={{headerTitle: 'eRFL Monitoring', headerShown: false}}>
+//       <Stack.Screen name="MonitoringTestSub" component={MonitoringTestSub} />
+//       <Stack.Screen name="MonitoringDetail" component={MonitoringTab} />
+//       <Stack.Screen name="Create Monitoring" component={MonitoringCreate} />
+//     </Stack.Navigator>
+//   );
+// };
 const MonitoringTest = () => {
-  const Stack = createStackNavigator();
-  return (
-    <Stack.Navigator
-      screenOptions={{headerTitle: 'eRFL Monitoring', headerShown: false}}>
-      <Stack.Screen name="MonitoringTestSub" component={MonitoringTestSub} />
-      <Stack.Screen name="MonitoringDetail" component={MonitoringTab} />
-      <Stack.Screen name="Create Monitoring" component={MonitoringCreate} />
-    </Stack.Navigator>
-  );
-};
-const MonitoringTestSub = () => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
   const navigation = useNavigation();
