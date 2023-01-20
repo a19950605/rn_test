@@ -5,16 +5,18 @@ export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({baseUrl: 'https://gis2.ectrak.com.hk:8900/api/'}),
   endpoints: builder => ({
-    getEventLog: builder.query({
-      query: token => ({
+    getEventLog: builder.mutation({
+      query: ({userToken, formdata}) => ({
         url: 'data/eventlog',
-        method: 'GET',
+        method: 'POST',
         headers: {
-          'X-Token': token,
+          'X-Token': userToken,
+          'Content-type': 'application/json;',
+          Accept: '*',
         },
+        body: formdata,
       }),
     }),
   }),
 });
-
-export const {useGetEventLogQuery} = apiSlice;
+export const {useGetEventLogMutation} = apiSlice;

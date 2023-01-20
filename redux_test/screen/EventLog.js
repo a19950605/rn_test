@@ -17,7 +17,7 @@ import {Icon} from '@rneui/themed';
 import {useWindowDimensions} from 'react-native';
 import EventLogTable from './EventLogTable';
 
-import {useGetEventLogQuery} from '../features/api/apiSlice';
+import {useGetEventLogMutation} from '../features/api/apiSlice';
 
 function EventLog() {
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -28,57 +28,57 @@ function EventLog() {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
 
-  const {
-    data: eventLogs,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetEventLogQuery();
+  let formdata = new FormData();
+  formdata.append('userName', '');
+  formdata.append('funcName', '');
+  formdata.append('fromTime', '20230118');
+  formdata.append('toTime', '20230118');
 
-  if (isLoading) {
-    console.log('redux event log loading');
-  } else if (isSuccess) {
-    console.log(eventLogs);
-  } else if (isError) {
-    console.log('get event log error');
+  const [getEventLog, response, isLoading] = useGetEventLogMutation();
+  const [loading, setLoading] = useState(true);
+
+  if (loading) {
+    getEventLog({userToken, formdata})
+      .unwrap()
+      .then(data => {
+        console.log('get alarm');
+        consosle.log(data);
+        console.log(response);
+      })
+      .then(error => {
+        console.log(error);
+        console.log(response);
+      });
+    setLoading(false);
   }
 
   useEffect(() => {
-    var formdata = new FormData();
-    formdata.append('userName', '');
-    formdata.append('funcName', '');
-    formdata.append('fromTime', '20230118');
-    formdata.append('toTime', '20230118');
-
     //listEventLog(body_obj, token);
     // .then(res => {
     //   console.log('json');
     //   console.log(res);
     // });
-
-    var requestOptions = {
-      method: 'POST',
-      headers: {
-        // Accept: '*',
-        // 'Content-Type': 'application/json',
-        'X-Token': userToken,
-      },
-      body: formdata,
-    };
-    fetch('https://gis2.ectrak.com.hk:8900/api/data/eventlog', requestOptions)
-      .then(response => {
-        console.log('response');
-
-        return response.json();
-      })
-      .then(result => {
-        console.log('result');
-        console.log(result);
-        setData(result);
-        return result;
-      })
-      .catch(error => console.log('error', error));
+    // var requestOptions = {
+    //   method: 'POST',
+    //   headers: {
+    //     // Accept: '*',
+    //     // 'Content-Type': 'application/json',
+    //     'X-Token': userToken,
+    //   },
+    //   body: formdata,
+    // };
+    // fetch('https://gis2.ectrak.com.hk:8900/api/data/eventlog', requestOptions)
+    //   .then(response => {
+    //     console.log('response');
+    //     return response.json();
+    //   })
+    //   .then(result => {
+    //     console.log('result');
+    //     console.log(result);
+    //     setData(result);
+    //     return result;
+    //   })
+    //   .catch(error => console.log('error', error));
   }, []);
 
   return (

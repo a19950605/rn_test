@@ -11,6 +11,7 @@ import {
 import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {useCreateUserMutation} from '../../features/api/userApiSlice';
 
 const UserAccountCreate = () => {
   const [menu1, setMenu1] = useState(false);
@@ -28,6 +29,7 @@ const UserAccountCreate = () => {
   const [staffNo, setStaffNo] = useState();
   const RoleDropDown = ({close, setRole}) => {
     const [visible, setVisible] = React.useState(false);
+    const [createUser, response] = useCreateUserMutation();
 
     return (
       <View
@@ -392,31 +394,37 @@ const createUser = (token, form, navigation) => {
   formdata.append('password', form?.password || '');
   formdata.append('staffNo', form?.staffNo || '');
 
-  var requestOptions = {
-    method: 'POST',
-    headers: {
-      // Accept: '*',
-      // 'Content-Type': 'application/json',
-      'X-Token': token,
-    },
-    body: formdata,
-  };
-  fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
-    .then(response => {
-      if (response.status == 200) {
-        alert('create success');
-        navigation.navigate('UserAccount');
-      } else {
-        alert('create fail');
-      }
+  createUser({token, formData})
+    .unwrap()
+    .then(() => {})
+    .then(error => {
+      console.log(error);
+    });
+  // var requestOptions = {
+  //   method: 'POST',
+  //   headers: {
+  //     // Accept: '*',
+  //     // 'Content-Type': 'application/json',
+  //     'X-Token': token,
+  //   },
+  //   body: formdata,
+  // };
+  // fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
+  //   .then(response => {
+  //     if (response.status == 200) {
+  //       alert('create success');
+  //       navigation.navigate('UserAccount');
+  //     } else {
+  //       alert('create fail');
+  //     }
 
-      return response.json();
-    })
-    .then(result => {
-      console.log(result);
-      // return result;
-    })
-    .catch(error => console.log('error1', error));
+  //     return response.json();
+  //   })
+  //   .then(result => {
+  //     console.log(result);
+  //     // return result;
+  //   })
+  //   .catch(error => console.log('error1', error));
 };
 
 export default UserAccountCreate;

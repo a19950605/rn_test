@@ -15,7 +15,7 @@ import {useSelector} from 'react-redux';
 import {Icon} from '@rneui/themed';
 import {useWindowDimensions} from 'react-native';
 import TableTest2 from '../components/TableTest2';
-
+import {useGetOutStandingAlarmQuery} from '../../features/api/alarmApiSlice';
 const OutstandingAlarm = () => {
   const Stack = createStackNavigator();
   return (
@@ -41,25 +41,41 @@ const OutstandingAlarmSub = () => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
 
+  const {
+    data: alarms,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetOutStandingAlarmQuery(userToken);
+
+  if (isLoading) {
+    console.log('redux event log loading');
+  } else if (isSuccess) {
+    // setData(eventLogs);
+  } else if (isError) {
+    console.log('get event log error');
+    console.log(error);
+  }
   useEffect(() => {
-    var requestOptions = {
-      method: 'GET',
-      headers: {
-        // Accept: '*',
-        // 'Content-Type': 'application/json',
-        'X-Token': userToken,
-      },
-    };
-    fetch('https://gis2.ectrak.com.hk:8900/api/v2/alarms', requestOptions)
-      .then(response => {
-        return response.json();
-      })
-      .then(result => {
-        //  console.log(result);
-        // return result;
-        setData(result?.reverse());
-      })
-      .catch(error => console.log('error1', error));
+    // var requestOptions = {
+    //   method: 'GET',
+    //   headers: {
+    //     // Accept: '*',
+    //     // 'Content-Type': 'application/json',
+    //     'X-Token': userToken,
+    //   },
+    // };
+    // fetch('https://gis2.ectrak.com.hk:8900/api/v2/alarms', requestOptions)
+    //   .then(response => {
+    //     return response.json();
+    //   })
+    //   .then(result => {
+    //     //  console.log(result);
+    //     // return result;
+    //     setData(result?.reverse());
+    //   })
+    //   .catch(error => console.log('error1', error));
   }, []);
 
   // console.log('outStandand alarm');
@@ -93,10 +109,10 @@ const OutstandingAlarmSub = () => {
       </View>
       <View style={{marginBottom: 60, padding: isLandscapeMode ? 5 : 0}}>
         {isLandscapeMode ? (
-          <TableTest2 data={data} />
+          <TableTest2 data={alarms} />
         ) : (
           <FlatList
-            data={data}
+            data={alarms}
             renderItem={props => (
               <OutstandingAlarmCard {...props} navigation={navigation} />
             )}

@@ -245,11 +245,11 @@ export function MyDrawer() {
         }}
         drawerContent={props => <CustomDrawerContent {...props} />}>
         {/* <Drawer.Screen name="eRFL MonitoringT" component={Monitoring} /> */}
+        <Drawer.Screen name="Outstanding Alarm" component={OutstandingAlarm} />
 
+        <Drawer.Screen name="Event Log" component={EventLog} />
         <Drawer.Screen name="eRFL Monitoring" component={MonitoringTest} />
         {/* <Drawer.Screen name="eRFL Assignment" component={Assignment} /> */}
-        <Drawer.Screen name="Event Log" component={EventLog} />
-        <Drawer.Screen name="Outstanding Alarm" component={OutstandingAlarm} />
         <Drawer.Screen name="Alarm History" component={AlarmHistory} />
         <Drawer.Screen
           name="User Account Management"

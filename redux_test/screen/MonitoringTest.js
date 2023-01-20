@@ -60,7 +60,7 @@ const MonitoringTestSub = () => {
 
   useEffect(() => {
     setInterval(function () {
-      setLoading(true);
+      //setLoading(true);
       var date = new Date();
 
       var dateStr =

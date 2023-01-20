@@ -15,6 +15,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import UserAccountDetailTab from './components/UserAccountDetailTab';
 import UserAccountCreate from './components/UserAccountCreate';
 import {useSelector} from 'react-redux';
+import {useGetUsersQuery} from '../features/api/userApiSlice';
 
 const UserAccountManagement = () => {
   const Stack = createStackNavigator();
@@ -34,25 +35,44 @@ const UserAccountManagementTest = () => {
   const [token, setToken] = useState('');
   const userToken = useSelector(state => state.login.userToken?.Token);
 
+  const {
+    data: users,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetUsersQuery(userToken);
+
+  if (isLoading) {
+    console.log('redux event log loading');
+  } else if (isSuccess) {
+    // setData(eventLogs);
+    console.log('loading success123');
+    console.log(users);
+  } else if (isError) {
+    console.log('get event log error');
+    console.log(error);
+  }
+
   useEffect(() => {
-    var requestOptions = {
-      method: 'GET',
-      headers: {
-        // Accept: '*',
-        // 'Content-Type': 'application/json',
-        'X-Token': userToken,
-      },
-    };
-    fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
-      .then(response => {
-        return response.json();
-      })
-      .then(result => {
-        //   console.log(result);
-        // return result;
-        setData(result?.content);
-      })
-      .catch(error => console.log('error1', error));
+    // var requestOptions = {
+    //   method: 'GET',
+    //   headers: {
+    //     // Accept: '*',
+    //     // 'Content-Type': 'application/json',
+    //     'X-Token': userToken,
+    //   },
+    // };
+    // fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
+    //   .then(response => {
+    //     return response.json();
+    //   })
+    //   .then(result => {
+    //     //   console.log(result);
+    //     // return result;
+    //     setData(result?.content);
+    //   })
+    //   .catch(error => console.log('error1', error));
   }, []);
 
   //   console.log('data test');
@@ -91,7 +111,7 @@ const UserAccountManagementTest = () => {
       </View>
 
       <FlatList
-        data={data}
+        data={users?.content}
         renderItem={props => (
           <UserAccountCard {...props} navigation={navigation} />
         )}
