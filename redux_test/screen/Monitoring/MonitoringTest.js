@@ -7,16 +7,16 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-import MonitoringCard from './MonitoringCard';
+import MonitoringCard from '../MonitoringCard';
 import {useNavigation} from '@react-navigation/native';
 
 import {Icon} from '@rneui/themed';
 import {useSelector, useDispatch} from 'react-redux';
-import {signout} from '../features/login/loginSlice';
+import {signout} from '../../features/login/loginSlice';
 import {Menu} from 'react-native-paper';
 import {useIsFocused} from '@react-navigation/native';
 
-import TableTest from './TableTest';
+import TableTest from '../TableTest';
 // const MonitoringTest = () => {
 //   const Stack = createStackNavigator();
 //   return (

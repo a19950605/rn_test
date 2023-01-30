@@ -6,8 +6,9 @@ import {View, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import StatusTab from './components/monitoring/StatusTab';
 import AssignmentDetail from './components/monitoring/AssignmentDetail';
 import LastControlDetail from './components/monitoring/LastControlDetail';
+
 import HistoryTab from './components/monitoring/HistoryTab';
-import Alarm from './components/monitoring/Alarm';
+import Alarm from './components/Alarm';
 import MonitoringDetailTab from './components/monitoring/MonitoringDetailTab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageDetailMon from './components/monitoring/ImageDetailMon';

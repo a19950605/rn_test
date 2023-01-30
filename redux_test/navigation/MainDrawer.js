@@ -25,8 +25,8 @@ import SysParams from '../screen/SystemParams/SysParams';
 import PasswordSetting from '../screen/SettingScreen/PasswordSetting';
 import RoleManagement from '../screen/RoleManagement';
 import UserAccountManagement from '../screen/UserAccountManagement';
-import AlarmHistory from '../screen/AlarmHistory';
-import MonitoringTest from '../screen/MonitoringTest';
+import AlarmHistory from '../screen/AlarmHistory/AlarmHistory';
+import MonitoringTest from '../screen/Monitoring/MonitoringTest';
 import EventLog from '../screen/EventLog';
 import OutstandingAlarm from '../screen/OutstandingAlarm/OutstandingAlarm';
 import {useDispatch} from 'react-redux';
@@ -147,10 +147,10 @@ export function MainDrawer() {
                 />
               </TouchableOpacity>
             ),
-            drawerActiveTintColor: 'red',
-            activeBackgroundColor: 'white',
-            inactiveTintColor: 'black',
-            inactiveBackgroundColor: 'white',
+            drawerActiveTintColor: 'black',
+            drawerActiveBackgroundColor: 'white',
+            drawerInactiveTintColor: 'black',
+            drawerInactiveBackgroundColor: 'white',
           };
         }}
         style={{
@@ -159,10 +159,41 @@ export function MainDrawer() {
         drawerContent={props => <CustomDrawerContent {...props} />}>
         {/* <Drawer.Screen name="eRFL MonitoringT" component={Monitoring} /> */}
 
-        <Drawer.Screen name="eRFL Monitoring" component={MonitoringNav} />
+        <Drawer.Screen
+          name="eRFL Monitoring"
+          component={MonitoringNav}
+          options={{
+            title: 'eRFL Monitoring',
+            drawerIcon: ({focused, size}) => (
+              <Icon
+                name="monitor"
+                type="material-community"
+                size={24}
+                color="gray"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+            ),
+          }}
+        />
 
-        <Drawer.Screen name="Event Log" component={EventLog} />
-        {/* <Drawer.Screen name="eRFL Assignment" component={Assignment} /> */}
+        <Drawer.Screen
+          name="Event Log"
+          component={EventLog}
+          options={{
+            title: 'Event Log',
+            drawerIcon: ({focused, size}) => (
+              <Icon
+                name="calendar-text"
+                type="material-community"
+                size={24}
+                color="gray"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+            ),
+          }}
+        />
+        {/* <Drawer.Screen name="eRFL Assignment" component={Assignment} /> clipboard-text
+         */}
         <Drawer.Screen
           name="Outstanding Alarm"
           component={OutstandingAlarm}
@@ -178,10 +209,73 @@ export function MainDrawer() {
           }}
         />
 
-        <Drawer.Screen name="User Account Management" component={UserDrawer} />
-        <Drawer.Screen name="Role management" component={RoleManagement} />
-        <Drawer.Screen name="Change Password" component={PasswordSetting} />
-        <Drawer.Screen name="System Parameters" component={SysParams} />
+        <Drawer.Screen
+          name="User Account Management"
+          component={UserDrawer}
+          options={{
+            title: 'User Account Management',
+            drawerIcon: ({focused, size}) => (
+              <Icon
+                name="users"
+                type="feather"
+                size={24}
+                color="gray"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Role management"
+          component={RoleManagement}
+          options={{
+            title: 'Role management',
+            drawerIcon: ({focused, size}) => (
+              <Icon
+                name="md-save-sharp"
+                type="ionicon"
+                size={24}
+                color="gray"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Change Password"
+          component={PasswordSetting}
+          options={{
+            drawerItemStyle: {display: 'none'},
+
+            title: 'Change Password',
+            drawerIcon: ({focused, size}) => (
+              <Icon
+                name="md-save-sharp"
+                type="ionicon"
+                size={24}
+                color="gray"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="System Parameters"
+          component={SysParams}
+          options={{
+            drawerItemStyle: {display: 'none'},
+            title: 'System Parameters',
+            drawerIcon: ({focused, size}) => (
+              <Icon
+                name="md-save-sharp"
+                type="ionicon"
+                size={24}
+                color="gray"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+            ),
+          }}
+        />
 
         {/* <Drawer.Screen name="Table View" component={TableView} /> */}
         {/* <Drawer.Screen name="Form" component={Form} /> */}
@@ -210,6 +304,7 @@ function CustomDrawerContent(props) {
     ]);
   };
   const [open, setOpen] = useState(false);
+  const [openSetting, setOpenSetting] = useState(false);
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{backgroundColor: 'black', padding: 10}}>
@@ -241,23 +336,115 @@ function CustomDrawerContent(props) {
             label="Toggle drawer"
             onPress={() => props.navigation.toggleDrawer()}
           /> */}
-        <DrawerItem label="Alarm open" onPress={() => setOpen(!open)} />
+
+        <DrawerItem
+          label="False alarm"
+          style={{backgroundColor: '#ffffff'}}
+          labelStyle={{color: open ? 'red' : '#000000'}}
+          onPress={() => setOpen(!open)}
+          icon={({focused, color, size}) => (
+            <Icon
+              name="access-alarm"
+              type="material"
+              size={24}
+              color={open ? 'red' : 'gray'}
+              style={{justifyContent: 'center', paddingRight: 5}}
+            />
+          )}
+        />
         {open && (
           <DrawerItem
-            style={{backgroundColor: '#ffffff'}}
+            style={{backgroundColor: '#ffffff', marginLeft: 70}}
             labelStyle={{color: '#000000'}}
             label="Outstanding alarm"
-            onPress={() => props.navigation.navigate('Outstanding Alarm')}
+            onPress={() => {
+              setOpen(false);
+              props.navigation.navigate('Outstanding Alarm');
+            }}
           />
         )}
         {open && (
-          <Drawer.Screen
-            name="Outstanding Alarm"
-            component={OutstandingAlarm}
+          <DrawerItem
+            style={{backgroundColor: '#ffffff', marginLeft: 70}}
+            labelStyle={{color: '#000000'}}
+            label="Alarm History"
+            onPress={() => {
+              setOpen(false);
+              props.navigation.navigate('Alarm History');
+            }}
           />
         )}
 
-        <DrawerItem label="Log out" onPress={() => logoutConfirm()} />
+        <DrawerItem
+          label="Setting"
+          style={{backgroundColor: '#ffffff'}}
+          labelStyle={{color: openSetting ? 'red' : '#000000'}}
+          onPress={() => setOpenSetting(!openSetting)}
+          icon={({focused, color, size}) => (
+            <Icon
+              name="md-save-sharp"
+              type="ionicon"
+              size={24}
+              color={openSetting ? 'red' : 'gray'}
+              style={{justifyContent: 'center', paddingRight: 5}}
+            />
+          )}
+        />
+        {openSetting && (
+          <DrawerItem
+            style={{backgroundColor: '#ffffff', marginLeft: 70}}
+            labelStyle={{color: '#000000'}}
+            label="Password"
+            onPress={() => {
+              setOpenSetting(false);
+            }}
+          />
+        )}
+        {openSetting && (
+          <DrawerItem
+            style={{backgroundColor: '#ffffff', marginLeft: 70}}
+            labelStyle={{color: '#000000'}}
+            label="Language"
+            onPress={() => {
+              setOpenSetting(false);
+            }}
+          />
+        )}
+        {openSetting && (
+          <DrawerItem
+            style={{backgroundColor: '#ffffff', marginLeft: 70}}
+            labelStyle={{color: '#000000'}}
+            label="System Check"
+            onPress={() => {
+              setOpenSetting(false);
+            }}
+          />
+        )}
+        {openSetting && (
+          <DrawerItem
+            style={{backgroundColor: '#ffffff', marginLeft: 70}}
+            labelStyle={{color: '#000000'}}
+            label="System Parameters"
+            onPress={() => {
+              setOpenSetting(false);
+            }}
+          />
+        )}
+        <DrawerItem
+          style={{backgroundColor: '#ffffff'}}
+          labelStyle={{color: '#000000'}}
+          label="Log out"
+          onPress={() => logoutConfirm()}
+          icon={({focused, color, size}) => (
+            <Icon
+              name="md-save-sharp"
+              type="ionicon"
+              size={24}
+              color="gray"
+              style={{justifyContent: 'center', paddingRight: 5}}
+            />
+          )}
+        />
       </DrawerContentScrollView>
     </SafeAreaView>
   );

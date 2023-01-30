@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import OutstandingAlarmMonCard from '../../OutstandingAlarmMonCard';
+import OutstandingAlarmMonCard from '../OutstandingAlarmMonCard';
 
 const Alarm = () => {
   const [data, setData] = useState();

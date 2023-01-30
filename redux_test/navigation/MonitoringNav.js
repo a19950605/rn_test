@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import MonitoringTab from '../screen/MonitoringTab';
 import MonitoringCreate from '../screen/MonitoringCreate';
-import MonitoringTest from '../screen/MonitoringTest';
+import MonitoringTest from '../screen/Monitoring/MonitoringTest';
 
 export const MonitoringNav = () => {
   const Stack = createStackNavigator();
