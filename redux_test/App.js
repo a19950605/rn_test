@@ -44,7 +44,8 @@ import {signout} from './features/login/loginSlice';
 import {Alert} from 'react-native';
 import SysParams from './screen/SystemParams/SysParams';
 import {MonitoringNav} from './navigation/MonitoringNav';
-import {userDrawer} from './navigation/UserDrawer';
+import {UserDrawer} from './navigation/UserDrawer';
+import {MainDrawer} from './navigation/MainDrawer';
 
 function CustomDrawerContent(props) {
   const dispatch = useDispatch();
@@ -91,11 +92,19 @@ function CustomDrawerContent(props) {
           label="Close drawer"
           onPress={() => props.navigation.closeDrawer()}
         />
+      */}
+        <DrawerItem
+          label="HEllo"
+          onPress={() => {
+            alert('testing');
+          }}
+        />
+        <DrawerItem label="Log out" onPress={() => logoutConfirm()} />
+
         <DrawerItem
           label="Toggle drawer"
           onPress={() => props.navigation.toggleDrawer()}
-        /> */}
-        <DrawerItem label="Log out" onPress={() => logoutConfirm()} />
+        />
       </DrawerContentScrollView>
     </SafeAreaView>
   );
@@ -226,12 +235,13 @@ export function MyDrawer() {
         drawerContent={props => <CustomDrawerContent {...props} />}>
         {/* <Drawer.Screen name="eRFL MonitoringT" component={Monitoring} /> */}
         <Drawer.Screen name="Outstanding Alarm" component={OutstandingAlarm} />
+        <Drawer.Screen name="Outstanding Alarm" component={OutstandingAlarm} />
 
         <Drawer.Screen name="Event Log" component={EventLog} />
         <Drawer.Screen name="eRFL Monitoring" component={MonitoringNav} />
         {/* <Drawer.Screen name="eRFL Assignment" component={Assignment} /> */}
         <Drawer.Screen name="Alarm History" component={AlarmHistory} />
-        <Drawer.Screen name="User Account Management" component={userDrawer} />
+        <Drawer.Screen name="User Account Management" component={UserDrawer} />
         <Drawer.Screen name="Role management" component={RoleManagement} />
         <Drawer.Screen name="Change Password" component={PasswordSetting} />
         <Drawer.Screen name="System Parameters" component={SysParams} />
@@ -254,7 +264,7 @@ export default function App() {
   }, [token]);
   return (
     <NavigationContainer>
-      {userToken ? <MyDrawer /> : <Login />}
+      {userToken ? <MainDrawer /> : <Login />}
     </NavigationContainer>
   );
 }

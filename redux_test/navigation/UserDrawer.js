@@ -6,7 +6,7 @@ import UserAccountManagement from '../screen/UserAccountManagement';
 
 const Stack = createStackNavigator();
 
-export const userDrawer = () => {
+export const UserDrawer = () => {
   return (
     <Stack.Navigator
       screenOptions={{headerTitle: 'eRFL Monitoring', headerShown: false}}>

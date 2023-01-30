@@ -42,7 +42,7 @@ function EventLog() {
       .unwrap()
       .then(data => {
         console.log('get alarm');
-        consosle.log(data);
+        console.log(data);
         console.log(response);
       })
       .then(error => {

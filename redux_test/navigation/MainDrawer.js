@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
 
-import {createDrawerNavigator} from '@react-navigation/drawer';
-
 import {
   View,
   SafeAreaView,
@@ -14,6 +12,7 @@ import {
 import {
   getFocusedRouteNameFromRoute,
   DrawerActions,
+  useRoute,
 } from '@react-navigation/native';
 import {
   createDrawerNavigator,
@@ -32,10 +31,15 @@ import EventLog from '../screen/EventLog';
 import OutstandingAlarm from '../screen/OutstandingAlarm/OutstandingAlarm';
 import {useDispatch} from 'react-redux';
 import {Alert} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {signout} from '../features/login/loginSlice';
+import {Icon} from '@rneui/themed';
+import {UserDrawer} from './UserDrawer';
+import {MonitoringNav} from './MonitoringNav';
 
 const Drawer = createDrawerNavigator();
 
-export function MyDrawer() {
+export function MainDrawer() {
   const navigation = useNavigation();
   console.log('init');
   //auth("wilson2022","R4QB10DD");
@@ -154,16 +158,27 @@ export function MyDrawer() {
         }}
         drawerContent={props => <CustomDrawerContent {...props} />}>
         {/* <Drawer.Screen name="eRFL MonitoringT" component={Monitoring} /> */}
-        <Drawer.Screen name="Outstanding Alarm" component={OutstandingAlarm} />
+
+        <Drawer.Screen name="eRFL Monitoring" component={MonitoringNav} />
 
         <Drawer.Screen name="Event Log" component={EventLog} />
-        <Drawer.Screen name="eRFL Monitoring" component={MonitoringTest} />
         {/* <Drawer.Screen name="eRFL Assignment" component={Assignment} /> */}
-        <Drawer.Screen name="Alarm History" component={AlarmHistory} />
         <Drawer.Screen
-          name="User Account Management"
-          component={UserAccountManagement}
+          name="Outstanding Alarm"
+          component={OutstandingAlarm}
+          options={{
+            drawerItemStyle: {display: 'none'},
+          }}
         />
+        <Drawer.Screen
+          name="Alarm History"
+          component={AlarmHistory}
+          options={{
+            drawerItemStyle: {display: 'none'},
+          }}
+        />
+
+        <Drawer.Screen name="User Account Management" component={UserDrawer} />
         <Drawer.Screen name="Role management" component={RoleManagement} />
         <Drawer.Screen name="Change Password" component={PasswordSetting} />
         <Drawer.Screen name="System Parameters" component={SysParams} />
@@ -177,6 +192,7 @@ export function MyDrawer() {
 
 function CustomDrawerContent(props) {
   const dispatch = useDispatch();
+  console.log('custom navigtaion');
   const logoutConfirm = () => {
     return Alert.alert('Logout', 'Confirm to logout?', [
       // The "Yes" button
@@ -193,6 +209,7 @@ function CustomDrawerContent(props) {
       },
     ]);
   };
+  const [open, setOpen] = useState(false);
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{backgroundColor: 'black', padding: 10}}>
@@ -224,6 +241,22 @@ function CustomDrawerContent(props) {
             label="Toggle drawer"
             onPress={() => props.navigation.toggleDrawer()}
           /> */}
+        <DrawerItem label="Alarm open" onPress={() => setOpen(!open)} />
+        {open && (
+          <DrawerItem
+            style={{backgroundColor: '#ffffff'}}
+            labelStyle={{color: '#000000'}}
+            label="Outstanding alarm"
+            onPress={() => props.navigation.navigate('Outstanding Alarm')}
+          />
+        )}
+        {open && (
+          <Drawer.Screen
+            name="Outstanding Alarm"
+            component={OutstandingAlarm}
+          />
+        )}
+
         <DrawerItem label="Log out" onPress={() => logoutConfirm()} />
       </DrawerContentScrollView>
     </SafeAreaView>
