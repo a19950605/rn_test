@@ -109,10 +109,10 @@ const OutstandingAlarmSub = () => {
       </View>
       <View style={{marginBottom: 60, padding: isLandscapeMode ? 5 : 0}}>
         {isLandscapeMode ? (
-          <TableTest2 data={alarms} />
+          <TableTest2 data={alarms ? Array.from(alarms).reverse() : []} />
         ) : (
           <FlatList
-            data={alarms}
+            data={alarms ? Array.from(alarms).reverse() : []}
             renderItem={props => (
               <OutstandingAlarmCard {...props} navigation={navigation} />
             )}

@@ -1,7 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Input, Icon} from '@rneui/themed';
 
-import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  Pressable,
+} from 'react-native';
 import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
 
 const Uabak = ({userData}) => {
@@ -10,6 +16,8 @@ const Uabak = ({userData}) => {
   //staffid
   //role (dropdown) default text first password, password confirmation remarks
   //status  active disabled
+  const [menu1, setMenu1] = useState(false);
+  const [menu2, setMenu2] = useState(false);
   const [username, setUsername] = useState();
   const [displayName, setDisplayName] = useState();
   const [staffNo, setStaffNo] = useState();
@@ -127,14 +135,85 @@ const Uabak = ({userData}) => {
               type="fontisto"
               style={{padding: 10}}
             />
-            <TextInput
-              selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
-              label="Role"
-              value={role}
-              onChangeText={role => setRole(role)}
-            />
+            <Pressable
+              style={{width: '100%'}}
+              onPress={() => {
+                setMenu1(!menu1);
+                setMenu2(false);
+              }}>
+              <TextInput
+                editable={false}
+                selectTextOnFocus={false}
+                style={{width: '85%', backgroundColor: 'transparent'}}
+                label="Role"
+                value={role}
+                onChangeText={role => setRole(role)}
+              />
+            </Pressable>
           </View>
+          <View>
+            {menu1 && (
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  position: 'absolute',
+                  zIndex: 999,
+                  width: '86%',
+                  left: 41,
+                  top: -10,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+
+                  elevation: 5,
+                }}>
+                <Menu.Item
+                  onPress={() => {
+                    setRole('System Admin(SYSADM)');
+                    setMenu1(false);
+                  }}
+                  title="System Admin(SYSADM)"
+                />
+                <Menu.Item
+                  onPress={() => {
+                    setRole('RFL Control (CU)');
+
+                    setMenu1(false);
+                  }}
+                  title="RFL Control (CU)"
+                />
+                <Menu.Item
+                  onPress={() => {
+                    setRole('RFL Assignment (ASU)');
+
+                    setMenu1(false);
+                  }}
+                  title="RFL Assignment (ASU)"
+                />
+                <Menu.Item
+                  onPress={() => {
+                    setRole('Readonly User(RU)');
+
+                    setMenu1(false);
+                  }}
+                  title="Readonly User(RU)"
+                />
+                <Menu.Item
+                  onPress={() => {
+                    setRole('RFL Maintainer (MA)');
+
+                    setMenu1(false);
+                  }}
+                  title="RFL Maintainer (MA)"
+                />
+              </View>
+            )}
+          </View>
+
           <View
             style={{
               flexDirection: 'row',
@@ -203,27 +282,72 @@ const Uabak = ({userData}) => {
               onChangeText={rmks => setRmks(rmks)}
             />
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              marginBottom: 15,
+          <Pressable
+            onPress={() => {
+              setMenu2(!menu2);
+              setMenu1(false);
             }}>
-            <Icon
-              name="play"
-              size={24}
-              color="black"
-              type="fontisto"
-              style={{padding: 10}}
-            />
-            <TextInput
-              selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
-              label="Status"
-              value={status}
-              onChangeText={status => setStatus(status)}
-            />
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                alignItems: 'center',
+                marginBottom: 15,
+              }}>
+              <Icon
+                name="play"
+                size={24}
+                color="black"
+                type="fontisto"
+                style={{padding: 10}}
+              />
+              <TextInput
+                editable={false}
+                selectTextOnFocus={false}
+                style={{width: '85%', backgroundColor: 'transparent'}}
+                label="Status"
+                value={status}
+                onChangeText={status => setStatus(status)}
+              />
+            </View>
+          </Pressable>
+
+          <View>
+            {menu2 && (
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  position: 'absolute',
+                  zIndex: 999,
+                  width: '86%',
+                  left: 41,
+                  bottom: -40,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+
+                  elevation: 5,
+                }}>
+                <Menu.Item
+                  onPress={() => {
+                    setStatus('ACTIVE');
+                    setMenu2(false);
+                  }}
+                  title="ACTIVE"
+                />
+                <Menu.Item
+                  onPress={() => {
+                    setStatus('DISABLE');
+                    setMenu2(false);
+                  }}
+                  title="Disabled"
+                />
+              </View>
+            )}
           </View>
           <View
             style={{

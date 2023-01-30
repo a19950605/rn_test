@@ -25,11 +25,11 @@ const UserAccountCreate = () => {
   const [displayName, setDisplayName] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
+  const [createUser, response] = useCreateUserMutation();
 
   const [staffNo, setStaffNo] = useState();
   const RoleDropDown = ({close, setRole}) => {
     const [visible, setVisible] = React.useState(false);
-    const [createUser, response] = useCreateUserMutation();
 
     return (
       <View
@@ -132,6 +132,13 @@ const UserAccountCreate = () => {
       </View>
     );
   };
+
+  var formdata = new FormData();
+  formdata.append('status', status || '');
+  formdata.append('username', username || '');
+  formdata.append('displayName', displayName || '');
+  formdata.append('password', password || '');
+  formdata.append('staffNo', staffNo || '');
   return (
     <Provider>
       <View style={{backgroundColor: 'white', flex: 1}}>
@@ -357,7 +364,7 @@ const UserAccountCreate = () => {
                 if (password != confirmPassword) {
                   alert('password not match');
                 } else {
-                  createUser(
+                  createNewUser(
                     userToken,
                     {
                       status,
@@ -368,6 +375,15 @@ const UserAccountCreate = () => {
                     },
                     navigation,
                   );
+                  // createUser({userToken, formdata})
+                  //   .unwrap()
+                  //   .then(() => {
+                  //     alert('error message1');
+                  //   })
+                  //   .then(error => {
+                  //     alert('error message');
+                  //     console.log(error);
+                  //   });
                 }
               }}>
               <Icon
@@ -386,7 +402,7 @@ const UserAccountCreate = () => {
   );
 };
 
-const createUser = (token, form, navigation) => {
+const createNewUser = (token, form, navigation) => {
   var formdata = new FormData();
   formdata.append('status', form?.status || '');
   formdata.append('username', form?.username || '');
@@ -394,37 +410,37 @@ const createUser = (token, form, navigation) => {
   formdata.append('password', form?.password || '');
   formdata.append('staffNo', form?.staffNo || '');
 
-  createUser({token, formData})
-    .unwrap()
-    .then(() => {})
-    .then(error => {
-      console.log(error);
-    });
-  // var requestOptions = {
-  //   method: 'POST',
-  //   headers: {
-  //     // Accept: '*',
-  //     // 'Content-Type': 'application/json',
-  //     'X-Token': token,
-  //   },
-  //   body: formdata,
-  // };
-  // fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
-  //   .then(response => {
-  //     if (response.status == 200) {
-  //       alert('create success');
-  //       navigation.navigate('UserAccount');
-  //     } else {
-  //       alert('create fail');
-  //     }
+  // createUser({token, formdata})
+  //   .unwrap()
+  //   .then(() => {})
+  //   .then(error => {
+  //     console.log(error);
+  //   });
+  var requestOptions = {
+    method: 'POST',
+    headers: {
+      // Accept: '*',
+      // 'Content-Type': 'application/json',
+      'X-Token': token,
+    },
+    body: formdata,
+  };
+  fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
+    .then(response => {
+      if (response.status == 200) {
+        alert('create success');
+        navigation.navigate('UserAccount');
+      } else {
+        alert('create fail');
+      }
 
-  //     return response.json();
-  //   })
-  //   .then(result => {
-  //     console.log(result);
-  //     // return result;
-  //   })
-  //   .catch(error => console.log('error1', error));
+      return response.json();
+    })
+    .then(result => {
+      console.log(result);
+      // return result;
+    })
+    .catch(error => console.log('error1', error));
 };
 
 export default UserAccountCreate;

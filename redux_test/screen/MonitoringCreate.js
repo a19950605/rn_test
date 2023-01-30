@@ -50,8 +50,6 @@ const MonitoringCreate = () => {
     });
     formdata.append('status', 'ACTIVE');
     console.log('relaychidx');
-    console.log(form.relayChannelIdx);
-    //set form first
 
     var requestOptions = {
       method: 'POST',

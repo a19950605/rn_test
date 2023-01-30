@@ -13,6 +13,7 @@ import RoleDetailPermission from './RoleDetailPermisson';
 import RoleCreateForm from './RoleCreateForm';
 import RolePermission from './RolePermssion';
 import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 const RoleCreateTab = () => {
   const [index, setIndex] = useState(0);
@@ -20,11 +21,19 @@ const RoleCreateTab = () => {
   const [displayName, setDisplayName] = useState('');
   const [rmks, setRmks] = useState('');
   const [status, setStatus] = useState();
+  const [form, setForm] = useState({
+    code: '',
+    displayName: '',
+    rmks: '',
+    status: 'ACTIVE',
+  });
+
   //permission,status,code,rmks,displayName
   const [listData, setListData] = useState([]);
   const [permission, setPermission] = useState([]);
 
   const userToken = useSelector(state => state.login.userToken?.Token);
+  const navigation = useNavigation();
 
   const getRoleAsOptions = () => {
     var requestOptions = {
@@ -93,7 +102,7 @@ const RoleCreateTab = () => {
       </Tab>
       <TabView value={index} onChange={setIndex} animationType="spring">
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <RoleCreateForm />
+          <RoleCreateForm setForm={setForm} form={form} />
         </TabView.Item>
         <TabView.Item
           style={{backgroundColor: 'white', width: '100%', height: '100%'}}>
@@ -121,7 +130,17 @@ const RoleCreateTab = () => {
             padding: 10,
           }}
           onPress={() => {
-            alert('hello' + permission);
+            // alert('hello' + permission);
+            if (!form.status || !form.code || !form.displayName) {
+              alert(
+                'formdata is missing',
+                form.status,
+                form.code,
+                form.displayName,
+              );
+            } else {
+              createRole(userToken, form, permission, navigation);
+            }
           }}>
           <Icon
             name="md-save-sharp"
@@ -137,12 +156,12 @@ const RoleCreateTab = () => {
   );
 };
 
-const createRole = (token, form, navigation) => {
+const createRole = (token, form, permission, navigation) => {
   var formdata = new FormData();
   formdata.append('teamId', 1);
   //code displayname rmks
-  formdata.append('permissionIds', form?.permission);
-  formdata.append('status', form?.status || 'STATUS');
+  formdata.append('permissionIds', permission);
+  formdata.append('status', form?.status || 'ACTIVE');
   formdata.append('code', form?.code);
   formdata.append('rmks', form?.rmks);
   formdata.append('displayName', form?.displayName);

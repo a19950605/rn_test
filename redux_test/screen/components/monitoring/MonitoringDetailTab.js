@@ -255,13 +255,57 @@ const MonitoringDetailTab = ({setForm, form, data}) => {
           </View>
           <View>
             {menu1 && (
-              <MyComponent
-                close={setMenu1}
-                relayChannelIdx={relayChannelIdx}
-                setRelayChannelIdx={setRelayChannelIdx}
-                setForm={setForm}
-                form={form}
-              />
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  position: 'absolute',
+                  zIndex: 999,
+                  width: '86%',
+                  left: 41,
+                  top: -10,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+
+                  elevation: 5,
+                }}>
+                <Menu.Item
+                  onPress={() => {
+                    setRelayChannelIdx(0);
+                    setForm({...form, relayChannelIdx: relayChannelIdx});
+                    setMenu1(false);
+                  }}
+                  title="0"
+                />
+                <Menu.Item
+                  onPress={() => {
+                    setRelayChannelIdx(1);
+                    setForm({...form, relayChannelIdx: relayChannelIdx});
+                    setMenu1(false);
+                  }}
+                  title="1"
+                />
+                <Menu.Item
+                  onPress={() => {
+                    setRelayChannelIdx(2);
+                    setForm({...form, relayChannelIdx: relayChannelIdx});
+                    setMenu1(false);
+                  }}
+                  title="2"
+                />
+                <Menu.Item
+                  onPress={() => {
+                    setRelayChannelIdx(3);
+                    setForm({...form, relayChannelIdx: relayChannelIdx});
+                    setMenu1(false);
+                  }}
+                  title="3"
+                />
+              </View>
             )}
           </View>
           <Pressable

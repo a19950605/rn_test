@@ -181,7 +181,12 @@ const MonitoringTest = () => {
 
   return (
     <View style={{flex: 1, padding: 5, backgroundColor: 'white'}}>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity
             style={{
@@ -222,16 +227,11 @@ const MonitoringTest = () => {
         </View>
         <View>
           <TouchableOpacity
+            style={{marginTop: 15}}
             onPress={() => {
               setShowFilter(!showFilter);
             }}>
-            <Icon
-              name="filter"
-              size={24}
-              color="black"
-              type="ionicon"
-              style={{padding: 10}}
-            />
+            <Icon name="filter" size={24} color="black" type="ionicon" />
           </TouchableOpacity>
           <TouchableOpacity>
             <Text></Text>

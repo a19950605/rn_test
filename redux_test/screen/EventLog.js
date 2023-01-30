@@ -31,56 +31,54 @@ function EventLog() {
   let formdata = new FormData();
   formdata.append('userName', '');
   formdata.append('funcName', '');
-  formdata.append('fromTime', '20230118');
-  formdata.append('toTime', '20230118');
+  formdata.append('fromTime', '20230130');
+  formdata.append('toTime', '20230130');
 
   const [getEventLog, response, isLoading] = useGetEventLogMutation();
   const [loading, setLoading] = useState(true);
 
-  if (loading) {
-    getEventLog({userToken, formdata})
-      .unwrap()
-      .then(data => {
-        console.log('get alarm');
-        console.log(data);
-        console.log(response);
-      })
-      .then(error => {
-        console.log(error);
-        console.log(response);
-      });
-    setLoading(false);
-  }
+  // if (loading) {
+  //   getEventLog({userToken, formdata})
+  //     .unwrap()
+  //     .then(data => {
+  //       console.log('get alarm');
+  //       consosle.log(data);
+  //       console.log(response);
+  //     })
+  //     .then(error => {
+  //       console.log(error);
+  //       console.log(response);
+  //     });
+  //   setLoading(false);
+  // }
 
   useEffect(() => {
-    //listEventLog(body_obj, token);
-    // .then(res => {
+    // listEventLog(body_obj, token).then(res => {
     //   console.log('json');
     //   console.log(res);
     // });
-    // var requestOptions = {
-    //   method: 'POST',
-    //   headers: {
-    //     // Accept: '*',
-    //     // 'Content-Type': 'application/json',
-    //     'X-Token': userToken,
-    //   },
-    //   body: formdata,
-    // };
-    // fetch('https://gis2.ectrak.com.hk:8900/api/data/eventlog', requestOptions)
-    //   .then(response => {
-    //     console.log('response');
-    //     return response.json();
-    //   })
-    //   .then(result => {
-    //     console.log('result');
-    //     console.log(result);
-    //     setData(result);
-    //     return result;
-    //   })
-    //   .catch(error => console.log('error', error));
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+      body: formdata,
+    };
+    fetch('https://gis2.ectrak.com.hk:8900/api/data/eventlog', requestOptions)
+      .then(response => {
+        console.log('response');
+        return response.json();
+      })
+      .then(result => {
+        console.log('result');
+        console.log(result);
+        setData(result);
+        return result;
+      })
+      .catch(error => console.log('error', error));
   }, []);
-
   return (
     <View style={{flex: 1, backgroundColor: 'white', padding: 2}}>
       <View

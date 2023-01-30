@@ -95,7 +95,15 @@ const UserAccountManagement = () => {
               padding: 10,
               flexDirection: 'row',
               marginRight: 5,
+              alignItems: 'center',
             }}>
+            <Icon
+              name="add-box"
+              size={24}
+              color="blue"
+              type="material"
+              style={{paddingRight: 5}}
+            />
             <Text style={{color: 'blue'}}>Add</Text>
           </View>
         </TouchableOpacity>

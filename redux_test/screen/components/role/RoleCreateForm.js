@@ -12,7 +12,7 @@ import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
 
-const RoleCreateForm = () => {
+const RoleCreateForm = ({setForm, form}) => {
   const userToken = useSelector(state => state.login.userToken?.Token);
   //permission,status,code,rmks,displayName
   const [menu1, setMenu1] = useState(false);
@@ -22,50 +22,6 @@ const RoleCreateForm = () => {
   const [code, setCode] = useState();
 
   const [rmks, setRmks] = useState('');
-  const [remarks, setRemarks] = useState();
-  const StatusDropDown = ({close, setStatus}) => {
-    const [visible, setVisible] = React.useState(false);
-
-    const openMenu = () => setVisible(true);
-
-    const closeMenu = () => setVisible(false);
-
-    return (
-      <View
-        style={{
-          backgroundColor: 'white',
-          position: 'absolute',
-          zIndex: 999,
-          width: '86%',
-          left: 41,
-          bottom: -40,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-
-          elevation: 5,
-        }}>
-        <Menu.Item
-          onPress={() => {
-            setStatus('Active');
-            close(false);
-          }}
-          title="Active"
-        />
-        <Menu.Item
-          onPress={() => {
-            setStatus('Disabled');
-            close(false);
-          }}
-          title="Disabled"
-        />
-      </View>
-    );
-  };
 
   return (
     <Provider>
@@ -91,7 +47,10 @@ const RoleCreateForm = () => {
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Display name"
               value={displayName}
-              onChangeText={displayName => setDisplayName(displayName)}
+              onChangeText={displayName => {
+                setDisplayName(displayName);
+                setForm({...form, displayName: displayName});
+              }}
             />
           </View>
 
@@ -114,7 +73,11 @@ const RoleCreateForm = () => {
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Code"
               value={code}
-              onChangeText={code => setCode(code)}
+              onChangeText={code => {
+                setCode(code);
+
+                setForm({...form, code: code});
+              }}
             />
           </View>
           <View
@@ -136,7 +99,10 @@ const RoleCreateForm = () => {
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Remarks"
               value={rmks}
-              onChangeText={rmks => setRmks(rmks)}
+              onChangeText={rmks => {
+                setRmks(rmks);
+                setForm({...form, rmks: rmks});
+              }}
             />
           </View>
           <Pressable
@@ -168,7 +134,43 @@ const RoleCreateForm = () => {
             </View>
           </Pressable>
           <View style={{zIndex: 999}}>
-            {menu2 && <StatusDropDown close={setMenu2} setStatus={setStatus} />}
+            {menu2 && (
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  position: 'absolute',
+                  zIndex: 999,
+                  width: '86%',
+                  left: 41,
+                  bottom: -40,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+
+                  elevation: 5,
+                }}>
+                <Menu.Item
+                  onPress={() => {
+                    setStatus('ACTIVE');
+                    setForm({...form, status: status});
+                    setMenu2(false);
+                  }}
+                  title="Active"
+                />
+                <Menu.Item
+                  onPress={() => {
+                    setStatus('DISABLED');
+                    setForm({...form, status: status});
+                    setMenu2(false);
+                  }}
+                  title="Disabled"
+                />
+              </View>
+            )}
           </View>
         </View>
       </View>

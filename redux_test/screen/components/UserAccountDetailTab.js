@@ -99,13 +99,23 @@ const UserAccountDetailTab = props => {
             variant="default">
             <Tab.Item
               title="Details"
-              titleStyle={{fontSize: 12}}
-              icon={{name: 'clipboard-text', type: 'material-community'}}
+              icon={{
+                name: 'clipboard-text',
+                type: 'material-community',
+                color: 'black',
+              }}
+              titleStyle={active => ({
+                color: active ? 'red' : 'black',
+                fontSize: 12,
+              })}
             />
             <Tab.Item
               title="Permission"
-              titleStyle={{fontSize: 12}}
-              icon={{name: 'rowing'}}
+              titleStyle={active => ({
+                color: active ? 'red' : 'black',
+                fontSize: 12,
+              })}
+              icon={{name: 'shield-checkmark', type: 'ionicon', color: 'black'}}
             />
           </Tab>
           <TabView value={index} onChange={setIndex} animationType="spring">
@@ -123,7 +133,7 @@ const UserAccountDetailTab = props => {
                   />
                 </View>
                 <View>
-                  <Text>helo</Text>
+                  <Text>1</Text>
                 </View>
               </View>
             </TabView.Item>
@@ -144,21 +154,23 @@ const PermissionDetail = props => {
       style={{
         padding: 10,
         borderColor: 'gray',
-        borderWidth: 1,
+        borderWidth: 0.2,
         borderRadius: 2,
         padding: 10,
       }}>
       <View style={{flexDirection: 'row'}}>
-        <Text>Function ID </Text>
-        <Text>{props?.item?.id}</Text>
+        <Text style={{color: 'black', fontWeight: 'bold'}}>Function ID: </Text>
+        <Text style={{color: 'black'}}>{props?.item?.id}</Text>
       </View>
       <View style={{flexDirection: 'row'}}>
-        <Text>Function </Text>
-        <Text>{props?.item?.longDisplayName}</Text>
+        <Text style={{color: 'black', fontWeight: 'bold'}}>Function </Text>
+        <Text style={{color: 'black'}}>{props?.item?.longDisplayName}</Text>
       </View>
       <View style={{flexDirection: 'row'}}>
-        <Text>Permission </Text>
-        <Text>{props?.item?.permissions?.displayName}</Text>
+        <Text style={{color: 'black', fontWeight: 'bold'}}>Permission </Text>
+        <Text style={{color: 'black'}}>
+          {props?.item?.permissions?.displayName}
+        </Text>
       </View>
     </View>
   );

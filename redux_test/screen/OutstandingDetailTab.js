@@ -28,12 +28,16 @@ const OutstandingDetailTab = props => {
         <Tab.Item
           title="Details"
           titleStyle={{fontSize: 12, color: 'black'}}
-          icon={{name: 'rowing', color: 'black'}}
+          icon={{
+            name: 'clipboard-text',
+            color: 'black',
+            type: 'material-community',
+          }}
         />
         <Tab.Item
           title="Acknowledgement"
           titleStyle={{fontSize: 12, color: 'black'}}
-          icon={{name: 'rowing', color: 'black'}}
+          icon={{name: 'pencil', color: 'black', type: 'material-community'}}
         />
       </Tab>
 
