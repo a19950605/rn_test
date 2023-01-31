@@ -5,7 +5,7 @@ todo
 -tablet view
 -menu item
 
--filter sort
+
 
 
 -redux setup (api)

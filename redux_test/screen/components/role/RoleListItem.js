@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 const RoleListItem = props => {
+  console.log('rolel');
   console.log(props);
   return (
     <View

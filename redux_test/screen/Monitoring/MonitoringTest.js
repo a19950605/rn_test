@@ -28,6 +28,24 @@ import TableTest from '../TableTest';
 //     </Stack.Navigator>
 //   );
 // };
+////rflid=id , rlf=code,
+function sortData(list, key, filterDesc) {
+  if (key == 'rflid') {
+    if (filterDesc) {
+      return list.sort((a, b) => (a.id > b.id ? 1 : -1)).reverse();
+    } else {
+      return list.sort((a, b) => (a.id > b.id ? 1 : -1));
+    }
+  }
+  if (key == 'rfl') {
+    if (filterDesc) {
+      return list.sort((a, b) => (a.code > b.code ? 1 : -1)).reverse();
+    } else {
+      return list.sort((a, b) => (a.code > b.code ? 1 : -1));
+    }
+  }
+}
+
 const MonitoringTest = () => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
@@ -38,7 +56,7 @@ const MonitoringTest = () => {
   const [currentDate, setCurrentDate] = useState();
   const userToken = useSelector(state => state.login.userToken?.Token);
   const [filterDesc, setFilterDesc] = useState(false);
-  const [filterField, setFilterField] = useState('');
+  const [filterField, setFilterField] = useState('rflid');
   const [showFilter, setShowFilter] = useState(false);
   console.log('islandscapemode' + isLandscapeMode);
   const isFocused = useIsFocused();
@@ -104,7 +122,7 @@ const MonitoringTest = () => {
       .then(result => {
         //  console.log(result);
         // return result;
-        setData(result);
+        setData(sortData(result, 'rflid', filterDesc));
         setLoading(false);
       })
       .catch(error => console.log('error12', error.status));
@@ -134,23 +152,50 @@ const MonitoringTest = () => {
           elevation: 5,
         }}>
         <Menu.Item
+          trailingIcon={
+            filterField == 'rflid'
+              ? filterDesc
+                ? 'arrow-up'
+                : 'arrow-down'
+              : ''
+          }
+          style={{
+            backgroundColor: filterField == 'rflid' ? 'lightgray' : 'white',
+          }}
           onPress={() => {
             setFilterDesc(!filterDesc);
             setFilterField('rflid');
+            setData(sortData(data, 'rflid', filterDesc));
+
             close(false);
           }}
           title="RFL ID"
         />
         <Menu.Item
+          style={{
+            backgroundColor: filterField == 'rfl' ? 'lightgray' : 'white',
+          }}
+          trailingIcon={
+            filterField == 'rfl' ? (filterDesc ? 'arrow-up' : 'arrow-down') : ''
+          }
           onPress={() => {
             setFilterDesc(!filterDesc);
             setFilterField('rfl');
+            setData(sortData(data, 'rfl', filterDesc));
+
             close(false);
           }}
           title="rfl"
         />
 
         <Menu.Item
+          trailingIcon={
+            filterField == 'epic'
+              ? filterDesc
+                ? 'arrow-up'
+                : 'arrow-down'
+              : ''
+          }
           onPress={() => {
             setFilterDesc(!filterDesc);
             setFilterField('epic');
@@ -160,6 +205,13 @@ const MonitoringTest = () => {
           title="EPIC"
         />
         <Menu.Item
+          trailingIcon={
+            filterField == 'Group'
+              ? filterDesc
+                ? 'arrow-up'
+                : 'arrow-down'
+              : ''
+          }
           onPress={() => {
             setFilterDesc(!filterDesc);
             setFilterField('Group');
@@ -168,6 +220,13 @@ const MonitoringTest = () => {
           title="Group"
         />
         <Menu.Item
+          trailingIcon={
+            filterField == 'statusasof'
+              ? filterDesc
+                ? 'arrow-up'
+                : 'arrow-down'
+              : ''
+          }
           onPress={() => {
             setFilterDesc(!filterDesc);
             setFilterField('statusasof');

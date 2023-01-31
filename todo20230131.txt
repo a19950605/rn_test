@@ -1,0 +1,57 @@
+current task
+*sort filter
+*file/folder structure
+
+*search
+*filter
+*global message
+
+*change screen re-render the previous access screen component(focus)
+
+
+-dropdown option
+
+
+
+user account management (done/skip)
+-detail dropdown and update ( check api and )
+
+role management (debug)
+-detail screen (need call api)
+-permission check performance 
+-permission list name (change name)
+
+(may skip and wfh)
+relay 
+assignment
+
+
+
+
+setting
+-password
+-lang
+-system check/system param(check api csv)
+
+
+
+
+
+
+    {
+        "controllerCode": "C001"
+    },
+    {
+        "controllerCode": "DEMO"
+    },
+    {
+        "controllerCode": "T001"
+    },
+    {
+        "controllerCode": "TEST01"
+    },
+    {
+        "controllerCode": "TESTMAINT"
+    }
+
+let test_arr= [{"activeAlarms": [[Object]], "activeAssignment": null, "batteryStatus": "NORMAL", "code": "KT/R1/001", "connectionStatus": "NORMAL", "id": 1, "lampStatus": "OFF", "lastCmdId": null, "relayChannelStatus": "ERROR", "status": "ACTIVE"}, {"activeAlarms": [[Object]], "activeAssignment": null, "batteryStatus": "NORMAL", "code": "KT/R1/002", "connectionStatus": "NORMAL", "id": 2, "lampStatus": "OFF", "lastCmdId": null, "relayChannelStatus": "ERROR", "status": "ACTIVE"}, {"activeAlarms": [[Object]], "activeAssignment": null, "batteryStatus": "UNKNOWN", "code": "QQ999", "connectionStatus": "CONNLOST", "id": 41, "lampStatus": "UNKNOWN", "lastCmdId": null, "relayChannelStatus": null, "status": "ACTIVE"}, {"activeAlarms": [[Object]], "activeAssignment": null, "batteryStatus": "UNKNOWN", "code": "T01001", "connectionStatus": "CONNLOST", "id": 18, "lampStatus": "UNKNOWN", "lastCmdId": null, "relayChannelStatus": null, "status": "ACTIVE"}, {"activeAlarms": [[Object]], "activeAssignment": null, "batteryStatus": "UNKNOWN", "code": "TE/ST", "connectionStatus": "CONNLOST", "id": 21, "lampStatus": "UNKNOWN", "lastCmdId": null, "relayChannelStatus": null, "status": "ACTIVE"}, {"activeAlarms": [[Object]], "activeAssignment": null, "batteryStatus": "UNKNOWN", "code": "te/st/1", "connectionStatus": "CONNLOST", "id": 37, "lampStatus": "UNKNOWN", "lastCmdId": null, "relayChannelStatus": null, "status": "ACTIVE"}, {"activeAlarms": [[Object]], "activeAssignment": null, "batteryStatus": "UNKNOWN", "code": "YY/00/99", "connectionStatus": "CONNLOST", "id": 43, "lampStatus": "UNKNOWN", "lastCmdId": null, "relayChannelStatus": null, "status": "ACTIVE"}]

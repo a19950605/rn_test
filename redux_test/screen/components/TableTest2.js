@@ -30,7 +30,6 @@ const TableTest2 = ({data}) => {
     </DataTable>
   );
 };
-
 const TableRow = rowData => {
   return (
     <DataTable.Row style={{backgroundColor: 'green', marginBottom: 1}}>
