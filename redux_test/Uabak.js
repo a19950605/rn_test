@@ -62,10 +62,16 @@ const Uabak = ({userData}) => {
               marginBottom: 15,
             }}>
             <Icon
-              name="monitor"
+              name="user-circle"
               size={24}
-              color="black"
-              style={{padding: 10, justifyContent: 'center'}}
+              color="gray"
+              type="font-awesome"
+              style={{
+                paddingTop: 10,
+                paddingLeft: 10,
+                paddingRight: 10,
+                justifyContent: 'center',
+              }}
             />
             <TextInput
               editable={false}
@@ -84,10 +90,10 @@ const Uabak = ({userData}) => {
               marginBottom: 15,
             }}>
             <Icon
-              name="hash"
+              name="user-circle-o"
               size={24}
-              color="black"
-              type="feather"
+              color="gray"
+              type="font-awesome"
               style={{padding: 10}}
             />
             <TextInput
@@ -106,10 +112,10 @@ const Uabak = ({userData}) => {
               marginBottom: 15,
             }}>
             <Icon
-              name="call-split"
+              name="hash"
               size={24}
-              color="black"
-              type="material"
+              color="gray"
+              type="feather"
               style={{padding: 10}}
             />
             <TextInput
@@ -129,10 +135,10 @@ const Uabak = ({userData}) => {
               marginBottom: 15,
             }}>
             <Icon
-              name="play"
+              name="shield-account-variant"
               size={24}
-              color="black"
-              type="fontisto"
+              color="gray"
+              type="material-community"
               style={{padding: 10}}
             />
             <Pressable
@@ -222,10 +228,10 @@ const Uabak = ({userData}) => {
               marginBottom: 15,
             }}>
             <Icon
-              name="play"
+              name="vpn-key"
               size={24}
-              color="black"
-              type="fontisto"
+              color="gray"
+              type="material"
               style={{padding: 10}}
             />
             <TextInput
@@ -244,10 +250,10 @@ const Uabak = ({userData}) => {
               marginBottom: 15,
             }}>
             <Icon
-              name="play"
+              name="vpn-key"
               size={24}
-              color="black"
-              type="fontisto"
+              color="gray"
+              type="material"
               style={{padding: 10}}
             />
             <TextInput
@@ -268,10 +274,10 @@ const Uabak = ({userData}) => {
               marginBottom: 15,
             }}>
             <Icon
-              name="play"
+              name="pencil"
               size={24}
-              color="black"
-              type="fontisto"
+              color="gray"
+              type="material-community"
               style={{padding: 10}}
             />
             <TextInput
@@ -295,10 +301,10 @@ const Uabak = ({userData}) => {
                 marginBottom: 15,
               }}>
               <Icon
-                name="play"
+                name="settings"
                 size={24}
-                color="black"
-                type="fontisto"
+                color="gray"
+                type="material"
                 style={{padding: 10}}
               />
               <TextInput
@@ -368,7 +374,7 @@ const Uabak = ({userData}) => {
                 marginRight: 5,
               }}
               onPress={() => {
-                alert('123');
+                alert('');
               }}>
               <Icon
                 name="md-save-sharp"
@@ -389,7 +395,7 @@ const Uabak = ({userData}) => {
                 padding: 10,
               }}
               onPress={() => {
-                alert('request body');
+                alert('update fail');
               }}>
               <Icon
                 name="md-save-sharp"

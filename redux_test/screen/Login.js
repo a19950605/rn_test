@@ -20,30 +20,12 @@ const Login = props => {
   const dispatch = useDispatch();
   const userToken = useSelector(state => state.login.userToken?.Token);
 
-  async function removeItemValue(key) {
-    try {
-      await AsyncStorage.removeItem(key);
-      return true;
-    } catch (exception) {
-      return false;
-    }
-  }
-
-  useEffect(() => {
-    removeItemValue('@token');
-  }, []);
   const [username, setUsername] = React.useState('');
   const [pw, setPw] = React.useState('');
   const [token1, setToken1] = useState();
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
-
-  const saveToken = (username, pw) => {
-    auth(username, pw).then(res => {
-      console.log('json');
-      console.log(res);
-    });
-  };
+  //check check
   console.log('height' + height);
   console.log('width' + width);
   console.log('islandscapemode' + isLandscapeMode);
@@ -104,18 +86,22 @@ const Login = props => {
           mode="contained"
           type="containedd"
           onPress={() =>
-            auth(username, pw).then(res => {
-              console.log('json');
-              console.log(res);
-              setToken1(JSON.parse(res));
-              if (!token1) {
-                console.log('hl');
-                //alert('Login failed');
-              }
-              dispatch(signin(JSON.parse(res)));
-              // console.log(token1);
-              // props.tokenRecord(JSON.parse(res));
-            })
+            auth(username, pw)
+              .then(res => {
+                console.log('json');
+                console.log(res);
+                setToken1(JSON.parse(res));
+                if (!token1) {
+                  console.log('hl');
+                  //alert('Login failed');
+                }
+                dispatch(signin(JSON.parse(res)));
+                // console.log(token1);
+                // props.tokenRecord(JSON.parse(res));
+              })
+              .catch(e => {
+                alert('login fail: ' + e);
+              })
           }>
           Login 登入
         </Button>

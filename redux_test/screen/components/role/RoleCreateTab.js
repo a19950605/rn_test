@@ -97,7 +97,7 @@ const RoleCreateTab = () => {
         <Tab.Item
           title="Permission"
           titleStyle={{fontSize: 12}}
-          icon={{name: 'rowing'}}
+          icon={{name: 'shield-check', type: 'material-community'}}
         />
       </Tab>
       <TabView value={index} onChange={setIndex} animationType="spring">

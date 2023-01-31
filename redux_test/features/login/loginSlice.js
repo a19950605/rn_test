@@ -14,7 +14,11 @@ export const loginSlice = createSlice({
       console.log(state);
       console.log('logging redux state');
       console.log(action.payload);
-      state.userToken = action.payload;
+      if (action.payload.errorMsg) {
+        alert(action.payload.funcDesc);
+      } else {
+        state.userToken = action.payload;
+      }
     },
     signout: state => {
       state.userToken = null;

@@ -31,8 +31,8 @@ function EventLog() {
   let formdata = new FormData();
   formdata.append('userName', '');
   formdata.append('funcName', '');
-  formdata.append('fromTime', '20230130');
-  formdata.append('toTime', '20230130');
+  formdata.append('fromTime', '20230131');
+  formdata.append('toTime', '20230131');
 
   const [getEventLog, response, isLoading] = useGetEventLogMutation();
   const [loading, setLoading] = useState(true);
@@ -98,6 +98,13 @@ function EventLog() {
             marginRight: 5,
             alignItems: 'center',
           }}>
+          <Icon
+            name="download"
+            size={24}
+            color="blue"
+            type="material-community"
+            style={{paddingRight: 5}}
+          />
           <Text style={{color: 'blue'}}>export current result to csv</Text>
         </TouchableOpacity>
 
@@ -115,7 +122,7 @@ function EventLog() {
         <EventLogTable data={data} />
       ) : (
         <FlatList
-          data={data}
+          data={data?.reverse()}
           renderItem={props => <EventLogCard {...props} />}
         />
       )}
@@ -133,7 +140,10 @@ const EventLogCard = props => {
       </View>
       <View style={{flexDirection: 'row'}}>
         <Text style={{color: 'black', fontWeight: 'bold'}}>Datetime: </Text>
-        <Text style={{color: 'black'}}> {props?.item?.time}</Text>
+        <Text style={{color: 'black'}}>
+          {' '}
+          {props?.item?.time?.split('.')[0]}
+        </Text>
       </View>
       <View style={{flexDirection: 'row'}}>
         <Text style={{color: 'black', fontWeight: 'bold'}}>Function: </Text>
@@ -146,6 +156,7 @@ const EventLogCard = props => {
 
           <Text style={{color: 'black', width: '70%'}}>
             {props?.item?.dest.split(' ')[0] +
+              '\n' +
               props?.item?.dest.split(' ')[1] +
               props?.item?.dest.split(' ')[2] +
               props?.item?.dest.split(' ')[3]}
@@ -154,8 +165,8 @@ const EventLogCard = props => {
       </View>
       <View style={{flexDirection: 'row'}}>
         <Text style={{color: 'black', fontWeight: 'bold'}}>Data: </Text>
-        <View>
-          <Text style={{color: 'black', width: '70%'}}>
+        <View style={{width: '100%'}}>
+          <Text style={{color: 'black', width: '75%'}}>
             {props?.item?.dest.split(' ')[4] +
               props?.item?.dest.split(' ')[5] +
               props?.item?.dest.split(' ')[6] +

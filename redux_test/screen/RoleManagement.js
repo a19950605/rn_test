@@ -93,7 +93,7 @@ function RoleManagementTest() {
 
   //create display name,code remarks status permission
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       <View
         style={{
           flexDirection: 'row',
@@ -103,7 +103,6 @@ function RoleManagementTest() {
         }}>
         <TouchableOpacity
           onPress={() => {
-            // navigation.navigate('Create user');
             navigation.navigate('RoleCreate');
           }}>
           <View
@@ -114,7 +113,15 @@ function RoleManagementTest() {
               padding: 10,
               flexDirection: 'row',
               marginRight: 5,
+              alignItems: 'center',
             }}>
+            <Icon
+              name="add-box"
+              size={24}
+              color="blue"
+              type="material"
+              style={{paddingRight: 5}}
+            />
             <Text style={{color: 'blue'}}>Add</Text>
           </View>
         </TouchableOpacity>

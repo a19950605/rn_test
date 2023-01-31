@@ -265,11 +265,11 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
               marginBottom: 15,
             }}>
             <Icon
-              name="play"
+              name="insert-chart"
               size={24}
-              color="black"
-              type="fontisto"
-              style={{padding: 10}}
+              color="gray"
+              type="material"
+              style={{paddingLeft: 10, paddingRight: 10, paddingTop: 10}}
             />
             <TextInput
               editable={false}

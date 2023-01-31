@@ -36,6 +36,8 @@ import {signout} from '../features/login/loginSlice';
 import {Icon} from '@rneui/themed';
 import {UserDrawer} from './UserDrawer';
 import {MonitoringNav} from './MonitoringNav';
+import Relay from '../screen/Relay/Relay';
+import Assignment from '../screen/Assignment/Assignment';
 
 const Drawer = createDrawerNavigator();
 
@@ -158,7 +160,6 @@ export function MainDrawer() {
         }}
         drawerContent={props => <CustomDrawerContent {...props} />}>
         {/* <Drawer.Screen name="eRFL MonitoringT" component={Monitoring} /> */}
-
         <Drawer.Screen
           name="eRFL Monitoring"
           component={MonitoringNav}
@@ -175,7 +176,22 @@ export function MainDrawer() {
             ),
           }}
         />
-
+        <Drawer.Screen
+          name="eRFL Assignment"
+          component={Assignment}
+          options={{
+            title: 'eRFL Assignment',
+            drawerIcon: ({focused, size}) => (
+              <Icon
+                name="clipboard-text"
+                type="material-community"
+                size={24}
+                color="gray"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+            ),
+          }}
+        />
         <Drawer.Screen
           name="Event Log"
           component={EventLog}
@@ -192,8 +208,7 @@ export function MainDrawer() {
             ),
           }}
         />
-        {/* <Drawer.Screen name="eRFL Assignment" component={Assignment} /> clipboard-text
-         */}
+
         <Drawer.Screen
           name="Outstanding Alarm"
           component={OutstandingAlarm}
@@ -208,7 +223,6 @@ export function MainDrawer() {
             drawerItemStyle: {display: 'none'},
           }}
         />
-
         <Drawer.Screen
           name="User Account Management"
           component={UserDrawer}
@@ -232,8 +246,24 @@ export function MainDrawer() {
             title: 'Role management',
             drawerIcon: ({focused, size}) => (
               <Icon
-                name="md-save-sharp"
-                type="ionicon"
+                name="shield-check"
+                type="material-community"
+                size={24}
+                color="gray"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Relay"
+          component={Relay}
+          options={{
+            title: 'Relay',
+            drawerIcon: ({focused, size}) => (
+              <Icon
+                name="electric-switch"
+                type="material-community"
                 size={24}
                 color="gray"
                 style={{justifyContent: 'center', paddingRight: 5}}
@@ -276,7 +306,6 @@ export function MainDrawer() {
             ),
           }}
         />
-
         {/* <Drawer.Screen name="Table View" component={TableView} /> */}
         {/* <Drawer.Screen name="Form" component={Form} /> */}
       </Drawer.Navigator>
@@ -382,8 +411,8 @@ function CustomDrawerContent(props) {
           onPress={() => setOpenSetting(!openSetting)}
           icon={({focused, color, size}) => (
             <Icon
-              name="md-save-sharp"
-              type="ionicon"
+              name="settings"
+              type="material"
               size={24}
               color={openSetting ? 'red' : 'gray'}
               style={{justifyContent: 'center', paddingRight: 5}}
@@ -396,6 +425,7 @@ function CustomDrawerContent(props) {
             labelStyle={{color: '#000000'}}
             label="Password"
             onPress={() => {
+              props.navigation.navigate('Change Password');
               setOpenSetting(false);
             }}
           />
@@ -437,8 +467,8 @@ function CustomDrawerContent(props) {
           onPress={() => logoutConfirm()}
           icon={({focused, color, size}) => (
             <Icon
-              name="md-save-sharp"
-              type="ionicon"
+              name="logout"
+              type="material-community"
               size={24}
               color="gray"
               style={{justifyContent: 'center', paddingRight: 5}}

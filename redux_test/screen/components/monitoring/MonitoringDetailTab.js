@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Tab, Text, TabView} from '@rneui/themed';
+import {Text} from '@rneui/themed';
 import {Input, Icon} from '@rneui/themed';
 
 import {View, StyleSheet, Button} from 'react-native';

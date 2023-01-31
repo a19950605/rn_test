@@ -161,7 +161,7 @@ const MonitoringCreate = () => {
               form.rfl == '' ||
               form.relayChannelIdx == ''
             ) {
-              alert('you have missing something' + uri + JSON.stringify(form));
+              alert('fill all input fields');
             } else {
               createNewRecord(userToken);
             }

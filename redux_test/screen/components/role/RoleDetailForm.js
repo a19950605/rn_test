@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Input, Icon} from '@rneui/themed';
 
 import {
@@ -9,10 +9,9 @@ import {
   Pressable,
 } from 'react-native';
 import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
 
-const RoleCreateForm = ({setForm, form}) => {
+const RoleDetailForm = ({setForm, form, data}) => {
   const userToken = useSelector(state => state.login.userToken?.Token);
   //permission,status,code,rmks,displayName
   const [menu1, setMenu1] = useState(false);
@@ -20,9 +19,14 @@ const RoleCreateForm = ({setForm, form}) => {
   const [status, setStatus] = useState('ACTIVE');
   const [displayName, setDisplayName] = useState();
   const [code, setCode] = useState();
-
   const [rmks, setRmks] = useState('');
 
+  useEffect(() => {
+    setStatus(data?.route?.params?.status);
+    setDisplayName(data?.route?.params?.displayName);
+    setCode(data?.route?.params?.code);
+    setRmks(data?.route?.params?.rmks);
+  }, []);
   return (
     <Provider>
       <View style={{backgroundColor: 'white', flex: 1}}>
@@ -178,4 +182,4 @@ const RoleCreateForm = ({setForm, form}) => {
   );
 };
 
-export default RoleCreateForm;
+export default RoleDetailForm;

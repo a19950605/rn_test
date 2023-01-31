@@ -26,11 +26,9 @@ const UserAccountCreate = () => {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [createUser, response] = useCreateUserMutation();
-
+  const [rmks, setRmks] = useState();
   const [staffNo, setStaffNo] = useState();
   const RoleDropDown = ({close, setRole}) => {
-    const [visible, setVisible] = React.useState(false);
-
     return (
       <View
         style={{
@@ -151,10 +149,16 @@ const UserAccountCreate = () => {
               marginBottom: 15,
             }}>
             <Icon
-              name="monitor"
+              name="user-circle"
               size={24}
-              color="black"
-              style={{padding: 10, justifyContent: 'center'}}
+              color="gray"
+              type="font-awesome"
+              style={{
+                paddingTop: 10,
+                paddingLeft: 10,
+                paddingRight: 10,
+                justifyContent: 'center',
+              }}
             />
             <TextInput
               selectTextOnFocus={false}
@@ -172,10 +176,10 @@ const UserAccountCreate = () => {
               marginBottom: 15,
             }}>
             <Icon
-              name="hash"
+              name="user-circle-o"
               size={24}
-              color="black"
-              type="feather"
+              color="gray"
+              type="font-awesome"
               style={{padding: 10}}
             />
             <TextInput
@@ -194,10 +198,10 @@ const UserAccountCreate = () => {
               marginBottom: 15,
             }}>
             <Icon
-              name="call-split"
+              name="hash"
               size={24}
-              color="black"
-              type="material"
+              color="gray"
+              type="feather"
               style={{padding: 10}}
             />
             <TextInput
@@ -216,10 +220,10 @@ const UserAccountCreate = () => {
               marginBottom: 15,
             }}>
             <Icon
-              name="play"
+              name="shield-account-variant"
               size={24}
-              color="black"
-              type="fontisto"
+              color="gray"
+              type="material-community"
               style={{padding: 10}}
             />
             <Pressable
@@ -228,14 +232,16 @@ const UserAccountCreate = () => {
                 setMenu1(!menu1);
                 setMenu2(false);
               }}>
-              <TextInput
-                editable={false}
-                selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
-                label="Role"
-                value={role}
-                onChangeText={''}
-              />
+              <View>
+                <TextInput
+                  editable={false}
+                  selectTextOnFocus={false}
+                  style={{width: '85%', backgroundColor: 'transparent'}}
+                  label="Role"
+                  value={role}
+                  onChangeText={''}
+                />
+              </View>
             </Pressable>
           </View>
           <View>
@@ -249,10 +255,10 @@ const UserAccountCreate = () => {
               marginBottom: 15,
             }}>
             <Icon
-              name="play"
+              name="vpn-key"
               size={24}
-              color="black"
-              type="fontisto"
+              color="gray"
+              type="material"
               style={{padding: 10}}
             />
             <TextInput
@@ -271,10 +277,10 @@ const UserAccountCreate = () => {
               marginBottom: 15,
             }}>
             <Icon
-              name="play"
+              name="vpn-key"
               size={24}
-              color="black"
-              type="fontisto"
+              color="gray"
+              type="vpn-key"
               style={{padding: 10}}
             />
             <TextInput
@@ -295,18 +301,18 @@ const UserAccountCreate = () => {
               marginBottom: 15,
             }}>
             <Icon
-              name="play"
+              name="pencil"
               size={24}
-              color="black"
-              type="fontisto"
+              color="gray"
+              type="material-community"
               style={{padding: 10}}
             />
             <TextInput
               selectTextOnFocus={false}
               style={{width: '85%', backgroundColor: 'transparent'}}
               label="Remarks"
-              value={''}
-              onChangeText={''}
+              value={rmks}
+              onChangeText={rmks => setRmks(rmks)}
             />
           </View>
           <Pressable
@@ -322,10 +328,10 @@ const UserAccountCreate = () => {
                 marginBottom: 15,
               }}>
               <Icon
-                name="play"
+                name="settings"
                 size={24}
-                color="black"
-                type="fontisto"
+                color="gray"
+                type="material"
                 style={{padding: 10}}
               />
               <TextInput
@@ -361,7 +367,18 @@ const UserAccountCreate = () => {
               }}
               onPress={() => {
                 //  alert('hello');
-                if (password != confirmPassword) {
+                if (
+                  !status ||
+                  !username ||
+                  !displayName ||
+                  !password ||
+                  !staffNo
+                ) {
+                  alert('pless fill all fields ');
+                } else if (
+                  password != confirmPassword &&
+                  password.length >= 8
+                ) {
                   alert('password not match');
                 } else {
                   createNewUser(
@@ -372,6 +389,7 @@ const UserAccountCreate = () => {
                       displayName,
                       password,
                       staffNo,
+                      rmks,
                     },
                     navigation,
                   );
@@ -409,6 +427,7 @@ const createNewUser = (token, form, navigation) => {
   formdata.append('displayName', form?.displayName || '');
   formdata.append('password', form?.password || '');
   formdata.append('staffNo', form?.staffNo || '');
+  formdata.append('rmks', form?.rmks || '');
 
   // createUser({token, formdata})
   //   .unwrap()

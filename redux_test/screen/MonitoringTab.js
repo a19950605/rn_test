@@ -188,7 +188,9 @@ const MonitoringTab = props => {
   return (
     <>
       {loading ? (
-        ''
+        <View>
+          <Text>Loading</Text>
+        </View>
       ) : (
         <>
           <Tab
@@ -320,9 +322,8 @@ const MonitoringTab = props => {
                   form.rfl == '' ||
                   form.relayChannelIdx == ''
                 ) {
-                  alert(
-                    'you have missing something' + uri + JSON.stringify(form),
-                  );
+                  alert('something missing');
+                  //+ uri + JSON.stringify(form),
                 } else {
                   updateRecord(userToken);
                 }

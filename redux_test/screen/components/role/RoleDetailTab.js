@@ -8,10 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Tab, TabView} from '@rneui/themed';
+import {Icon, Tab, TabView} from '@rneui/themed';
 import RoleDetailPermission from './RoleDetailPermisson';
 import {useSelector} from 'react-redux';
 import {set} from 'react-native-reanimated';
+import RoleDetailForm from './RoleDetailForm';
 
 const RoleDetailTab = props => {
   const [data, setData] = useState();
@@ -20,6 +21,13 @@ const RoleDetailTab = props => {
   const [listData, setListData] = useState();
   const [selectedData, setSelectedData] = useState();
   const [index, setIndex] = useState(0);
+  const [form, setForm] = useState({
+    code: '',
+    displayName: '',
+    rmks: '',
+    status: 'ACTIVE',
+  });
+
   const userToken = useSelector(state => state.login.userToken?.Token);
 
   useEffect(() => {
@@ -128,12 +136,12 @@ const RoleDetailTab = props => {
             <Tab.Item
               title="Permission"
               titleStyle={{fontSize: 12}}
-              icon={{name: 'rowing'}}
+              icon={{name: 'shield-check', type: 'material-community'}}
             />
           </Tab>
           <TabView value={index} onChange={setIndex} animationType="spring">
             <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-              <Text>Detail</Text>
+              <RoleDetailForm setForm={setForm} form={form} data={props} />
             </TabView.Item>
             <TabView.Item
               style={{backgroundColor: 'white', width: '100%', height: '100%'}}>
@@ -144,6 +152,60 @@ const RoleDetailTab = props => {
               />
             </TabView.Item>
           </TabView>
+
+          <View
+            style={{
+              backgroundColor: 'white',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              padding: 20,
+            }}>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderColor: 'red',
+                borderWidth: 1,
+                borderRadius: 5,
+                padding: 10,
+                marginRight: 5,
+              }}
+              onPress={() => {
+                //  deleteConfirm(userToken);
+              }}>
+              <Icon
+                name="md-save-sharp"
+                type="ionicon"
+                size={24}
+                color="red"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+              <Text style={{color: 'red'}}> Delete</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderColor: 'green',
+                borderWidth: 1,
+                borderRadius: 5,
+                padding: 10,
+              }}
+              onPress={() => {
+                console.log('request body');
+                console.log(JSON.stringify(form));
+              }}>
+              <Icon
+                name="md-save-sharp"
+                type="ionicon"
+                size={24}
+                color="green"
+                style={{justifyContent: 'center', paddingRight: 5}}
+              />
+              <Text style={{color: 'green'}}> Save</Text>
+            </TouchableOpacity>
+          </View>
         </>
       )}
     </>

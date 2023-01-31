@@ -24,7 +24,7 @@ import com.android.build.OutputFile
  *   bundleCommand: "ram-bundle",
  *
  *   // whether to bundle JS and assets in debug mode
- *   bundleInDebug: false,
+ *   false,
  *
  *   // whether to bundle JS and assets in release mode
  *   bundleInRelease: true,
@@ -78,6 +78,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
+    bundleInDebug: true,
     enableHermes: false,  // clean and rebuild if changing
 ]
 
