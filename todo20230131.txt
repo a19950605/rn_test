@@ -1,10 +1,12 @@
 current task
-*sort filter
-*file/folder structure
 
+
+*sort filter(done)
+*file/folder structure
 *search
-*filter
 *global message
+*form validation
+*tablet view
 
 *change screen re-render the previous access screen component(focus)
 

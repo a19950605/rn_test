@@ -28,11 +28,18 @@ function EventLog() {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
 
+  var date = new Date();
+
+  var dateStr =
+    date.getFullYear() +
+    ('00' + (date.getMonth() + 1)).slice(-2) +
+    ('00' + date.getDate()).slice(-2);
+
   let formdata = new FormData();
   formdata.append('userName', '');
   formdata.append('funcName', '');
-  formdata.append('fromTime', '20230131');
-  formdata.append('toTime', '20230131');
+  formdata.append('fromTime', dateStr);
+  formdata.append('toTime', dateStr);
 
   const [getEventLog, response, isLoading] = useGetEventLogMutation();
   const [loading, setLoading] = useState(true);
