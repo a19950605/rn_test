@@ -73,6 +73,7 @@ const RoleDetailPermission = props => {
             {...props}
             setSelectedId={setSelectedId}
             selectedId={selectedId}
+            checked={checked}
           />
         )}
       />
@@ -80,25 +81,27 @@ const RoleDetailPermission = props => {
   );
 };
 
-const RoleCheckItem = props => {
+const RoleCheckItem = ({item, selectedId, setSelectedId, checked}) => {
   const [checked1, setChecked1] = React.useState(false);
   //   props.selectedId.includes(props?.item?.id)
   //     ? setChecked1(true)
   //     : setChecked1(false);
 
   useEffect(() => {
-    if (props?.selectedId?.includes(props?.item?.id)) {
+    if (selectedId.includes(item.id)) {
       setChecked1(true);
     } else {
       setChecked1(false);
     }
-  }, []);
+  }, [checked]);
   useEffect(() => {
     checked1
-      ? props.selectedId.includes(props?.item?.id) == false
-        ? props.setSelectedId([...props.selectedId, props?.item?.id])
+      ? selectedId.includes(item?.id) == false
+        ? setSelectedId([...selectedId, item?.id])
         : ''
-      : props.setSelectedId(props.selectedId.filter(s => s != props?.item?.id));
+      : setSelectedId(selectedId.filter(s => s != item?.id));
+    console.log('GET SELECTED ID');
+    console.log(selectedId);
   }, [checked1]);
   return (
     <View
@@ -110,7 +113,7 @@ const RoleCheckItem = props => {
       <View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{fontWeight: 'bold'}}>Function ID</Text>
-          <Text>{props?.item?.id || ''}</Text>
+          <Text>{item?.id || ''}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{fontWeight: 'bold'}}>Function </Text>
