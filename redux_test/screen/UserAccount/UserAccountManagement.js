@@ -1,23 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Text, View, FlatList, TouchableOpacity} from 'react-native';
 import {Icon} from '@rneui/themed';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import UserAccountCard from './components/UserAccountCard';
-import {createStackNavigator} from '@react-navigation/stack';
-import UserAccountDetailTab from './components/UserAccountDetailTab';
-import UserAccountCreate from './components/UserAccountCreate';
 import {useSelector} from 'react-redux';
-import {useGetUsersQuery} from '../features/api/userApiSlice';
-import SortDropDown from '../utils/sortFilter';
-import {sortData} from '../utils/sortData';
+import SortDropDown from '../../utils/sortFilter';
+import {sortData} from '../../utils/sortData';
 import Modal from 'react-native-modal';
 // const UserAccountManagement = () => {
 //   const Stack = createStackNavigator();

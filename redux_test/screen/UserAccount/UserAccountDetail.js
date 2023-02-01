@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Tab, TabView} from '@rneui/themed';
-import Uabak from '../../Uabak';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useSelector} from 'react-redux';
 
-const UserAccountDetailTab = props => {
+import {useSelector} from 'react-redux';
+import UserAccountDetailTab from './components/UserAccountDetailTab';
+
+const UserAccountDetail = props => {
   const [index, setIndex] = React.useState(0);
   const [data1, setData1] = useState();
   const [userData, setUserData] = useState();
@@ -120,7 +120,7 @@ const UserAccountDetailTab = props => {
           </Tab>
           <TabView value={index} onChange={setIndex} animationType="spring">
             <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-              <Uabak userData={userData} />
+              <UserAccountDetailTab userData={userData} />
             </TabView.Item>
             <TabView.Item
               style={{backgroundColor: 'white', width: '100%', height: '100%'}}>
@@ -176,4 +176,4 @@ const PermissionDetail = props => {
   );
 };
 
-export default UserAccountDetailTab;
+export default UserAccountDetail;

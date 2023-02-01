@@ -24,10 +24,10 @@ import {
 import {createStackNavigator} from '@react-navigation/stack';
 import {setTokenHelper} from './helper';
 import AlarmHistory from './screen/AlarmHistory/AlarmHistory';
-import EventLog from './screen/EventLog';
+import EventLog from './unusedjs/EventLog';
 import OutstandingAlarm from './screen/OutstandingAlarm/OutstandingAlarm';
 
-import Login from './screen/Login';
+import Login from './screen/login/Login';
 import PasswordSetting from './screen/SettingScreen/PasswordSetting';
 
 //import Moment from 'react-moment';
@@ -35,8 +35,7 @@ import PasswordSetting from './screen/SettingScreen/PasswordSetting';
 import {Icon} from '@rneui/themed';
 
 import {useNavigation} from '@react-navigation/native';
-import UserAccountManagement from './screen/UserAccountManagement';
-import RoleManagement from './screen/RoleManagement';
+import RoleManagement from './screen/RoleManagement/RoleManagement';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {signout} from './features/login/loginSlice';

@@ -3,20 +3,19 @@ import {Tab, Text, TabView} from '@rneui/themed';
 import {Input, Icon} from '@rneui/themed';
 
 import {View, StyleSheet, Button, TouchableOpacity} from 'react-native';
-import StatusTab from './components/monitoring/StatusTab';
-import AssignmentDetail from './components/monitoring/AssignmentDetail';
-import LastControlDetail from './components/monitoring/LastControlDetail';
+import StatusTab from './components/StatusTab';
+import AssignmentDetail from './components/AssignmentDetail';
+import LastControlDetail from './components/LastControlDetail';
 
-import HistoryTab from './components/monitoring/HistoryTab';
+import HistoryTab from './components/HistoryTab';
 import Alarm from './components/Alarm';
-import MonitoringDetailTab from './components/monitoring/MonitoringDetailTab';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import ImageDetailMon from './components/monitoring/ImageDetailMon';
+import MonitoringDetailTab from './components/MonitoringDetailTab';
+import ImageDetailMon from './components/ImageDetailMon';
 import {useSelector} from 'react-redux';
 import {Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-const MonitoringTab = props => {
+const MonitoringDetail = props => {
   console.log('monitoring tab1');
   const navigation = useNavigation();
 
@@ -344,4 +343,4 @@ const MonitoringTab = props => {
   );
 };
 
-export default MonitoringTab;
+export default MonitoringDetail;

@@ -1,18 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {Image, TouchableOpacity, View} from 'react-native';
-import {TextInput} from 'react-native-paper';
+import React, {useState} from 'react';
+import {TouchableOpacity, View} from 'react-native';
 
 import {Tab, Text, TabView} from '@rneui/themed';
 import {Input, Icon} from '@rneui/themed';
 
-import MonitoringCreateTab from './components/monitoring/MonitoringCreateTab';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import ImageUploadTest from './ImageUploadTest';
+import MonitoringCreateTab from './components/MonitoringCreateTab';
+import ImageUploadTest from '../ImageUploadTest';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 const MonitoringCreate = () => {
   const [index, setIndex] = useState(0);
-  const [text, setText] = useState('');
   const [imgX, setImgX] = useState(0);
   const [imgY, setImgY] = useState(0);
   const [lampX, setLampX] = useState(0);

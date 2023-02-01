@@ -1,25 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  Button,
-  SafeAreaView,
-  Image,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
-import {listEventLog} from '../apiList';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
 import {Icon} from '@rneui/themed';
 import {useWindowDimensions} from 'react-native';
-import EventLogTable from './EventLogTable';
+import EventLogTable from './components/EventLogTable';
 
-import {useGetEventLogMutation} from '../features/api/apiSlice';
-import SortDropDown from '../utils/sortFilter';
-import {sortData} from '../utils/sortData';
+import SortDropDown from '../../utils/sortFilter';
+import {sortData} from '../../utils/sortData';
+import EventLogCard from './components/EventLogCard';
 
 function EventLog() {
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -154,55 +143,5 @@ function EventLog() {
     </View>
   );
 }
-
-const EventLogCard = props => {
-  return (
-    <View style={{borderColor: 'gray', borderWidth: 0.2, padding: 10}}>
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{color: 'black', fontWeight: 'bold'}}>User: </Text>
-
-        <Text style={{color: 'black'}}> {props?.item?.username}</Text>
-      </View>
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{color: 'black', fontWeight: 'bold'}}>Datetime: </Text>
-        <Text style={{color: 'black'}}>
-          {' '}
-          {props?.item?.time?.split('.')[0]}
-        </Text>
-      </View>
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{color: 'black', fontWeight: 'bold'}}>Function: </Text>
-        <Text style={{color: 'black'}}> {props?.item?.func}</Text>
-      </View>
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{color: 'black', fontWeight: 'bold'}}>Type: </Text>
-        <View>
-          <Text style={{color: 'black'}}> {props?.item?.type}</Text>
-
-          <Text style={{color: 'black', width: '70%'}}>
-            {props?.item?.dest.split(' ')[0] +
-              '\n' +
-              props?.item?.dest.split(' ')[1] +
-              props?.item?.dest.split(' ')[2] +
-              props?.item?.dest.split(' ')[3]}
-          </Text>
-        </View>
-      </View>
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{color: 'black', fontWeight: 'bold'}}>Data: </Text>
-        <View style={{width: '100%'}}>
-          <Text style={{color: 'black', width: '75%'}}>
-            {props?.item?.dest.split(' ')[4] +
-              props?.item?.dest.split(' ')[5] +
-              props?.item?.dest.split(' ')[6] +
-              props?.item?.dest.split(' ')[7] +
-              props?.item?.dest.split(' ')[8] +
-              props?.item?.dest.split(' ')[9]}
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
-};
 
 export default EventLog;

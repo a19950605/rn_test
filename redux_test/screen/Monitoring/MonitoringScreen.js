@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 
-import MonitoringCard from '../MonitoringCard';
+import MonitoringCard from './components/MonitoringCard';
 import {useNavigation} from '@react-navigation/native';
 
 import {Icon} from '@rneui/themed';
@@ -17,7 +17,7 @@ import {signout} from '../../features/login/loginSlice';
 import {Menu} from 'react-native-paper';
 import {useIsFocused} from '@react-navigation/native';
 
-import TableTest from '../TableTest';
+import TableTest from './components/TableTest';
 import {sortData} from '../../utils/sortData';
 import {getDate} from '../../utils/getDate';
 // const MonitoringTest = () => {
@@ -33,7 +33,7 @@ import {getDate} from '../../utils/getDate';
 // };
 ////rflid=id , rlf=code,
 
-const MonitoringTest = () => {
+const MonitoringScreen = () => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
   const navigation = useNavigation();
@@ -301,4 +301,4 @@ const MonitoringTest = () => {
   );
 };
 
-export default MonitoringTest;
+export default MonitoringScreen;

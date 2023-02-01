@@ -23,11 +23,9 @@ import {
 import {createStackNavigator} from '@react-navigation/stack';
 import SysParams from '../screen/SystemParams/SysParams';
 import PasswordSetting from '../screen/SettingScreen/PasswordSetting';
-import RoleManagement from '../screen/RoleManagement';
-import UserAccountManagement from '../screen/UserAccountManagement';
+import RoleManagement from '../screen/RoleManagement/RoleManagement';
 import AlarmHistory from '../screen/AlarmHistory/AlarmHistory';
-import MonitoringTest from '../screen/Monitoring/MonitoringTest';
-import EventLog from '../screen/EventLog';
+import MonitoringTest from '../screen/Monitoring/MonitoringScreen';
 import OutstandingAlarm from '../screen/OutstandingAlarm/OutstandingAlarm';
 import {useDispatch} from 'react-redux';
 import {Alert} from 'react-native';
@@ -38,6 +36,8 @@ import {UserDrawer} from './UserDrawer';
 import {MonitoringNav} from './MonitoringNav';
 import Relay from '../screen/Relay/Relay';
 import Assignment from '../screen/Assignment/Assignment';
+import EventLog from '../screen/EventLog/EventLog';
+import RoleNav from './RoleNav';
 
 const Drawer = createDrawerNavigator();
 
@@ -241,7 +241,7 @@ export function MainDrawer() {
         />
         <Drawer.Screen
           name="Role management"
-          component={RoleManagement}
+          component={RoleNav}
           options={{
             title: 'Role management',
             drawerIcon: ({focused, size}) => (

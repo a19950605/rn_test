@@ -7,15 +7,13 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Icon, Tab, TabView} from '@rneui/themed';
-import RoleDetailPermission from './RoleDetailPermisson';
-import RoleCreateForm from './RoleCreateForm';
-import RolePermission from './RolePermssion';
+import RoleCreateForm from './components/RoleCreateForm';
+import RolePermission from './components/RolePermssion';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
-const RoleCreateTab = () => {
+const RoleCreate = () => {
   const [index, setIndex] = useState(0);
   const [code, setCode] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -194,4 +192,4 @@ const createRole = (token, form, permission, navigation) => {
     })
     .catch(error => console.log('error1', error));
 };
-export default RoleCreateTab;
+export default RoleCreate;

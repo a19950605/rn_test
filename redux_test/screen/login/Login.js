@@ -11,10 +11,10 @@ import {
 import {Input, Icon} from '@rneui/themed';
 import {TextInput} from 'react-native-paper';
 import {Button} from 'react-native-paper';
-import {auth} from '../apiList';
+import {auth} from '../../apiList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector, useDispatch} from 'react-redux';
-import {signin, signout} from '../features/login/loginSlice';
+import {signin, signout} from '../../features/login/loginSlice';
 
 const Login = props => {
   const dispatch = useDispatch();

@@ -4,7 +4,7 @@ import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
 // import { Feather } from "@expo/vector-icons";
 // import { Ionicons } from "@expo/vector-icons";
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import OutstandingAlarmCard from '../OutstandingAlarmCard';
+import OutstandingAlarmCard from '../OutstandingAlarm/components/OutstandingAlarmCard';
 
 const AlarmHistory = () => {
   const [data, setData] = useState([]);

@@ -18,8 +18,6 @@ import {
 } from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import {useCreateUserMutation} from '../../features/api/userApiSlice';
-import {FlatList} from 'react-native-gesture-handler';
 
 const UserAccountCreate = () => {
   const [menu1, setMenu1] = useState(false);
@@ -35,7 +33,6 @@ const UserAccountCreate = () => {
   const [displayName, setDisplayName] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-  const [createUser, response] = useCreateUserMutation();
   const [rmks, setRmks] = useState();
   const [staffNo, setStaffNo] = useState();
 

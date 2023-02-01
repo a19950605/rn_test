@@ -2,20 +2,17 @@ import {useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
+import {Text, View, FlatList} from 'react-native';
 // import { Feather } from "@expo/vector-icons";
 // import { Ionicons } from "@expo/vector-icons";
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {getToken} from '../../helper';
-import OutstandingAlarmCard from '../OutstandingAlarmCard';
-import OutstandingAlarmCard2 from '../OutstandingAlarmCard2';
-import OutstandingDetailTab from '../OutstandingDetailTab';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+
+import OutstandingAlarmCard from './components/OutstandingAlarmCard';
+import OutstandingDetailTab from './OutstandingDetailTab';
 import {useSelector} from 'react-redux';
 import {Icon} from '@rneui/themed';
 import {useWindowDimensions} from 'react-native';
-import TableTest2 from '../components/TableTest2';
-import {useGetOutStandingAlarmQuery} from '../../features/api/alarmApiSlice';
+import TableTest2 from './components/TableTest2';
 import SortDropDown from '../../utils/sortFilter';
 import {sortData} from '../../utils/sortData';
 import {getDate} from '../../utils/getDate';

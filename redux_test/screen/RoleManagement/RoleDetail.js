@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Icon, Tab, TabView} from '@rneui/themed';
-import RoleDetailPermission from './RoleDetailPermisson';
+import RoleDetailPermission from './components/RoleDetailPermisson';
 import {useSelector} from 'react-redux';
 import {set} from 'react-native-reanimated';
-import RoleDetailForm from './RoleDetailForm';
+import RoleDetailForm from './components/RoleDetailForm';
 import {useNavigation} from '@react-navigation/native';
 
-const RoleDetailTab = props => {
+const RoleDetail = props => {
   const navigation = useNavigation();
 
   const [data, setData] = useState();
@@ -333,4 +333,4 @@ const updateRole = (token, form, selectedData, navigation, id) => {
     })
     .catch(error => console.log('error1', error));
 };
-export default RoleDetailTab;
+export default RoleDetail;
