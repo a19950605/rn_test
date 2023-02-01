@@ -5,7 +5,7 @@ import {Checkbox} from 'react-native-paper';
 
 const RolePermission = props => {
   console.log('RoleDetailPermission');
-  // console.log(props?.listData);
+  console.log(props?.listData);
   const [data1, setData1] = useState();
 
   const [checked, setChecked] = React.useState(false);
@@ -85,16 +85,16 @@ const RoleCheckItem = props => {
       }}>
       <View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontWeight: 'bold'}}>Function ID</Text>
+          <Text style={{fontWeight: 'bold'}}>Function ID: </Text>
           <Text>{props?.item?.id || ''}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontWeight: 'bold'}}>Function </Text>
-          <Text>111</Text>
+          <Text style={{fontWeight: 'bold'}}>Function: </Text>
+          <Text>{props?.item?.code}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontWeight: 'bold'}}>Permission</Text>
-          <Text>11</Text>
+          <Text style={{fontWeight: 'bold'}}>Permission: </Text>
+          <Text>{props?.item?.displayName}</Text>
         </View>
       </View>
       <Checkbox

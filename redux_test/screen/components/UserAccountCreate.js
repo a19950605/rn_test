@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Input, Icon} from '@rneui/themed';
 
 import {
@@ -8,18 +8,28 @@ import {
   Text,
   Pressable,
 } from 'react-native';
-import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
+import {
+  TextInput,
+  Button,
+  Menu,
+  Divider,
+  Provider,
+  HelperText,
+} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {useCreateUserMutation} from '../../features/api/userApiSlice';
+import {FlatList} from 'react-native-gesture-handler';
 
 const UserAccountCreate = () => {
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
   const [role, setRole] = useState();
+  const [roleSubmit, setRoleSubmit] = useState();
   const userToken = useSelector(state => state.login.userToken?.Token);
   const navigation = useNavigation();
-
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [option, setOption] = useState();
   const [status, setStatus] = useState('ACTIVE');
   const [username, setUsername] = useState();
   const [displayName, setDisplayName] = useState();
@@ -28,7 +38,34 @@ const UserAccountCreate = () => {
   const [createUser, response] = useCreateUserMutation();
   const [rmks, setRmks] = useState();
   const [staffNo, setStaffNo] = useState();
-  const RoleDropDown = ({close, setRole}) => {
+
+  useEffect(() => {
+    var requestOptions = {
+      method: 'GET',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+    };
+    fetch(
+      `https://gis2.ectrak.com.hk:8900/api/v2/options/rolesAsOptions`,
+      requestOptions,
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        console.log('get role as option');
+        console.log(result);
+        setOption(result);
+      })
+      .catch(error => console.log('error1', error));
+  }, []);
+
+  const RoleDropDown = ({close, setRole, data}) => {
+    console.log('role dropdown');
+    console.log(data);
     return (
       <View
         style={{
@@ -48,45 +85,19 @@ const UserAccountCreate = () => {
 
           elevation: 5,
         }}>
-        <Menu.Item
-          onPress={() => {
-            setRole('System Admin(SYSADM)');
-            close(false);
-          }}
-          title="System Admin(SYSADM)"
-        />
-        <Menu.Item
-          onPress={() => {
-            setRole('RFL Control (CU)');
-
-            close(false);
-          }}
-          title="RFL Control (CU)"
-        />
-        <Menu.Item
-          onPress={() => {
-            setRole('RFL Assignment (ASU)');
-
-            close(false);
-          }}
-          title="RFL Assignment (ASU)"
-        />
-        <Menu.Item
-          onPress={() => {
-            setRole('Readonly User(RU)');
-
-            close(false);
-          }}
-          title="Readonly User(RU)"
-        />
-        <Menu.Item
-          onPress={() => {
-            setRole('RFL Maintainer (MA)');
-
-            close(false);
-          }}
-          title="RFL Maintainer (MA)"
-        />
+        {data.map(d => {
+          return (
+            <Menu.Item
+              key={d.id}
+              onPress={() => {
+                setRole(`${d.displayName}(${d.code})`);
+                setRoleSubmit(d.id);
+                close(false);
+              }}
+              title={`${d.displayName}(${d.code})`}
+            />
+          );
+        })}
       </View>
     );
   };
@@ -160,13 +171,21 @@ const UserAccountCreate = () => {
                 justifyContent: 'center',
               }}
             />
-            <TextInput
-              selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
-              label="Username"
-              value={username}
-              onChangeText={username => setUsername(username)}
-            />
+            <View style={{width: '100%'}}>
+              <TextInput
+                selectTextOnFocus={false}
+                style={{width: '85%', backgroundColor: 'transparent'}}
+                label="Username"
+                value={username}
+                onChangeText={username => setUsername(username)}
+              />
+              <HelperText
+                type="error"
+                visible={username == null && isSubmit}
+                style={{marginBottom: -30}}>
+                required
+              </HelperText>
+            </View>
           </View>
           <View
             style={{
@@ -182,13 +201,21 @@ const UserAccountCreate = () => {
               type="font-awesome"
               style={{padding: 10}}
             />
-            <TextInput
-              selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
-              label="Display name"
-              value={displayName}
-              onChangeText={displayName => setDisplayName(displayName)}
-            />
+            <View style={{width: '100%'}}>
+              <TextInput
+                selectTextOnFocus={false}
+                style={{width: '85%', backgroundColor: 'transparent'}}
+                label="Display name"
+                value={displayName}
+                onChangeText={displayName => setDisplayName(displayName)}
+              />
+              <HelperText
+                type="error"
+                visible={displayName == null && isSubmit}
+                style={{marginBottom: -30}}>
+                required
+              </HelperText>
+            </View>
           </View>
           <View
             style={{
@@ -204,13 +231,21 @@ const UserAccountCreate = () => {
               type="feather"
               style={{padding: 10}}
             />
-            <TextInput
-              selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
-              label="Staff ID"
-              value={staffNo}
-              onChangeText={staffNo => setStaffNo(staffNo)}
-            />
+            <View style={{width: '100%'}}>
+              <TextInput
+                selectTextOnFocus={false}
+                style={{width: '85%', backgroundColor: 'transparent'}}
+                label="Staff ID"
+                value={staffNo}
+                onChangeText={staffNo => setStaffNo(staffNo)}
+              />
+              <HelperText
+                type="error"
+                visible={staffNo == null && isSubmit}
+                style={{marginBottom: -30}}>
+                required
+              </HelperText>
+            </View>
           </View>
           <View
             style={{
@@ -232,7 +267,7 @@ const UserAccountCreate = () => {
                 setMenu1(!menu1);
                 setMenu2(false);
               }}>
-              <View>
+              <View style={{width: '100%'}}>
                 <TextInput
                   editable={false}
                   selectTextOnFocus={false}
@@ -242,10 +277,18 @@ const UserAccountCreate = () => {
                   onChangeText={''}
                 />
               </View>
+              <HelperText
+                type="error"
+                visible={roleSubmit == null && isSubmit}
+                style={{marginBottom: -30}}>
+                required
+              </HelperText>
             </Pressable>
           </View>
           <View>
-            {menu1 && <RoleDropDown close={setMenu1} setRole={setRole} />}
+            {menu1 && (
+              <RoleDropDown close={setMenu1} setRole={setRole} data={option} />
+            )}
           </View>
           <View
             style={{
@@ -261,13 +304,22 @@ const UserAccountCreate = () => {
               type="material"
               style={{padding: 10}}
             />
-            <TextInput
-              selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
-              label="Password"
-              value={password}
-              onChangeText={password => setPassword(password)}
-            />
+            <View style={{width: '100%'}}>
+              <TextInput
+                selectTextOnFocus={false}
+                style={{width: '85%', backgroundColor: 'transparent'}}
+                label="Password"
+                value={password}
+                secureTextEntry={true}
+                onChangeText={password => setPassword(password)}
+              />
+              <HelperText
+                type="error"
+                visible={password == null && isSubmit}
+                style={{marginBottom: -30}}>
+                required
+              </HelperText>
+            </View>
           </View>
           <View
             style={{
@@ -283,15 +335,24 @@ const UserAccountCreate = () => {
               type="vpn-key"
               style={{padding: 10}}
             />
-            <TextInput
-              selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
-              label="Password Confirmation"
-              value={confirmPassword}
-              onChangeText={confirmPassword =>
-                setConfirmPassword(confirmPassword)
-              }
-            />
+            <View style={{width: '100%'}}>
+              <TextInput
+                selectTextOnFocus={false}
+                style={{width: '85%', backgroundColor: 'transparent'}}
+                label="Password Confirmation"
+                value={confirmPassword}
+                secureTextEntry={true}
+                onChangeText={confirmPassword =>
+                  setConfirmPassword(confirmPassword)
+                }
+              />
+              <HelperText
+                type="error"
+                visible={confirmPassword == null && isSubmit}
+                style={{marginBottom: -30}}>
+                required
+              </HelperText>
+            </View>
           </View>
           <View
             style={{
@@ -367,6 +428,8 @@ const UserAccountCreate = () => {
               }}
               onPress={() => {
                 //  alert('hello');
+                setIsSubmit(true);
+
                 if (
                   !status ||
                   !username ||
@@ -374,7 +437,7 @@ const UserAccountCreate = () => {
                   !password ||
                   !staffNo
                 ) {
-                  alert('pless fill all fields ');
+                  alert('fill missing fields ');
                 } else if (
                   password != confirmPassword &&
                   password.length >= 8
@@ -390,6 +453,7 @@ const UserAccountCreate = () => {
                       password,
                       staffNo,
                       rmks,
+                      roleSubmit,
                     },
                     navigation,
                   );
@@ -428,6 +492,7 @@ const createNewUser = (token, form, navigation) => {
   formdata.append('password', form?.password || '');
   formdata.append('staffNo', form?.staffNo || '');
   formdata.append('rmks', form?.rmks || '');
+  formdata.append('roleIds', [form?.roleSubmit]);
 
   // createUser({token, formdata})
   //   .unwrap()
@@ -461,5 +526,7 @@ const createNewUser = (token, form, navigation) => {
     })
     .catch(error => console.log('error1', error));
 };
+
+//api/v2/options/rolesAsOptions
 
 export default UserAccountCreate;

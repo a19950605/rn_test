@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Icon, Tab, TabView} from '@rneui/themed';
@@ -13,14 +14,21 @@ import RoleDetailPermission from './RoleDetailPermisson';
 import {useSelector} from 'react-redux';
 import {set} from 'react-native-reanimated';
 import RoleDetailForm from './RoleDetailForm';
+import {useNavigation} from '@react-navigation/native';
 
 const RoleDetailTab = props => {
+  const navigation = useNavigation();
+
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const [loading2, setLoading2] = useState(true);
+  const [loading3, setLoading3] = useState(true);
   const [listData, setListData] = useState();
-  const [selectedData, setSelectedData] = useState();
+  const [selectedData, setSelectedData] = useState([]);
+  const [selectedId, setSelectedId] = useState([]);
+
   const [index, setIndex] = useState(0);
+  const [responseCode, setResponseCode] = useState();
   const [form, setForm] = useState({
     code: '',
     displayName: '',
@@ -63,6 +71,14 @@ const RoleDetailTab = props => {
         // return result;
         // setData(result);
         setSelectedData(result?.detail?.permissions);
+
+        selectedData?.map(p => {
+          console.log('looping p');
+          console.log(p);
+          console.log('pid');
+          console.log(p.id);
+          setSelectedId(old => [...old, p.id]);
+        });
         setLoading2(false);
       })
       .catch(error => console.log('error1', error));
@@ -105,7 +121,64 @@ const RoleDetailTab = props => {
       })
       .catch(error => console.log('error1', error));
   };
+  const deleteConfirm = token => {
+    return Alert.alert(
+      'Delete',
+      'Are you sure you want to remove this record?',
+      [
+        // The "Yes" button
+        {
+          text: 'Yes',
+          onPress: () => {
+            deleteRecord(token);
+          },
+        },
+        // The "No" button
+        // Does nothing but dismiss the dialog when tapped
+        {
+          text: 'No',
+        },
+      ],
+    );
+  };
+  const deleteRecord = token => {
+    var requestOptions = {
+      method: 'DELETE',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': token,
+      },
+    };
+    fetch(
+      `https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission/${props.route.params.id}`,
+      requestOptions,
+    )
+      .then(response => {
+        if (response.status == 200) {
+          alert('delete success');
+          navigation.navigate('RoleManagement');
+        } else {
+          alert('delete fail: ' + response.status);
+        }
 
+        return response.json();
+      })
+      .then(result => {
+        //  console.log(result);
+        // return result;
+        console.log('submit result');
+        // console.log(result);
+
+        //  if (responseCode == 200) {
+        //    alert('delete success' + result?.id);
+        //  navigation.navigate('RoleManagement');
+        //  } else {
+        //   alert('delete fail: ' + responseCode + '\n' + result?.errorMsg);
+        //  }
+      })
+      .catch(error => console.log('error1Z', error));
+  };
   return (
     <>
       {loading && loading2 ? (
@@ -172,7 +245,7 @@ const RoleDetailTab = props => {
                 marginRight: 5,
               }}
               onPress={() => {
-                //  deleteConfirm(userToken);
+                deleteConfirm(userToken);
               }}>
               <Icon
                 name="md-save-sharp"
@@ -195,6 +268,14 @@ const RoleDetailTab = props => {
               onPress={() => {
                 console.log('request body');
                 console.log(JSON.stringify(form));
+                console.log(selectedData);
+                updateRole(
+                  userToken,
+                  form,
+                  selectedData,
+                  navigation,
+                  props?.route?.params?.id,
+                );
               }}>
               <Icon
                 name="md-save-sharp"
@@ -210,5 +291,46 @@ const RoleDetailTab = props => {
       )}
     </>
   );
+};
+
+const updateRole = (token, form, selectedData, navigation, id) => {
+  var formdata = new FormData();
+  formdata.append('teamId', 1);
+  //code displayname rmks
+  formdata.append('permissionIds', selectedData);
+  formdata.append('status', form?.status || 'ACTIVE');
+  formdata.append('code', form?.code);
+  formdata.append('rmks', form?.rmks);
+  formdata.append('displayName', form?.displayName);
+
+  var requestOptions = {
+    method: 'PUT',
+    headers: {
+      // Accept: '*',
+      // 'Content-Type': 'application/json',
+      'X-Token': token,
+    },
+    body: formdata,
+  };
+
+  fetch(
+    'https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission/' + id,
+    requestOptions,
+  )
+    .then(response => {
+      if (response.status == 200) {
+        alert('update success');
+        navigation.navigate('RoleManagement');
+      } else {
+        alert('update fail');
+      }
+
+      return response.json();
+    })
+    .then(result => {
+      console.log(result);
+      // return result;
+    })
+    .catch(error => console.log('error1', error));
 };
 export default RoleDetailTab;

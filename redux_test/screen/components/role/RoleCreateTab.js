@@ -21,6 +21,8 @@ const RoleCreateTab = () => {
   const [displayName, setDisplayName] = useState('');
   const [rmks, setRmks] = useState('');
   const [status, setStatus] = useState();
+  const [isSubmit, setIsSubmit] = useState(false);
+
   const [form, setForm] = useState({
     code: '',
     displayName: '',
@@ -102,7 +104,7 @@ const RoleCreateTab = () => {
       </Tab>
       <TabView value={index} onChange={setIndex} animationType="spring">
         <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <RoleCreateForm setForm={setForm} form={form} />
+          <RoleCreateForm setForm={setForm} form={form} isSubmit={isSubmit} />
         </TabView.Item>
         <TabView.Item
           style={{backgroundColor: 'white', width: '100%', height: '100%'}}>
@@ -131,13 +133,9 @@ const RoleCreateTab = () => {
           }}
           onPress={() => {
             // alert('hello' + permission);
+            setIsSubmit(true);
             if (!form.status || !form.code || !form.displayName) {
-              alert(
-                'formdata is missing',
-                form.status,
-                form.code,
-                form.displayName,
-              );
+              alert('fill all required field');
             } else {
               createRole(userToken, form, permission, navigation);
             }

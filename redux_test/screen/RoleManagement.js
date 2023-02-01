@@ -18,6 +18,10 @@ import {useNavigation} from '@react-navigation/native';
 import {Icon} from '@rneui/themed';
 import RoleCreateTab from './components/role/RoleCreateTab';
 import {useSelector} from 'react-redux';
+import {Menu} from 'react-native-paper';
+import SortDropDown from '../utils/sortFilter';
+import {sortData} from '../utils/sortData';
+import {useIsFocused} from '@react-navigation/native';
 
 const RoleManagement = () => {
   const Stack = createStackNavigator();
@@ -33,8 +37,13 @@ const RoleManagement = () => {
   );
 };
 function RoleManagementTest() {
-  const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
+  const [showFilter, setShowFilter] = useState(false);
+  const [filterDesc, setFilterDesc] = useState(false);
+  const [filterField, setFilterField] = useState('id');
   const [data, setData] = useState();
   const userToken = useSelector(state => state.login.userToken?.Token);
 
@@ -59,87 +68,85 @@ function RoleManagementTest() {
         // setData(result);
         console.log('role management');
         // console.log(result);
-        setData(result?.content);
+        setData(sortData(result?.content, filterField, filterDesc));
+        setLoading(false);
       })
       .catch(error => console.log('error1', error));
-  }, []);
+  }, [loading, isFocused]);
+  const sortOption = [
+    {displayValue: 'Role ID', apiValue: 'id'},
+    {displayValue: 'Code', apiValue: 'code'},
+    {displayValue: 'Display Name', apiValue: 'displayName'},
+    {displayValue: 'Status', apiValue: 'status'},
+  ];
 
-  const getOneRolePermission = id => {
-    getData().then(res => {
-      var requestOptions = {
-        method: 'GET',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': res,
-        },
-      };
-      fetch(
-        `https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission/${id}`,
-        requestOptions,
-      )
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          console.log(result);
-          // return result;
-          // setData(result);
-        })
-        .catch(error => console.log('error1', error));
-    });
-  };
-  //list row
-
-  //create display name,code remarks status permission
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: 5,
-        }}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('RoleCreate');
-          }}>
+    <>
+      {loading ? (
+        <View>
+          <Text>loading</Text>
+        </View>
+      ) : (
+        <View style={{flex: 1, backgroundColor: 'white'}}>
           <View
             style={{
-              borderColor: 'blue',
-              borderWidth: 1,
-              borderRadius: 5,
-              padding: 10,
               flexDirection: 'row',
-              marginRight: 5,
+              justifyContent: 'space-between',
               alignItems: 'center',
+              padding: 5,
             }}>
-            <Icon
-              name="add-box"
-              size={24}
-              color="blue"
-              type="material"
-              style={{paddingRight: 5}}
-            />
-            <Text style={{color: 'blue'}}>Add</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('RoleCreate');
+              }}>
+              <View
+                style={{
+                  borderColor: 'blue',
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  padding: 10,
+                  flexDirection: 'row',
+                  marginRight: 5,
+                  alignItems: 'center',
+                }}>
+                <Icon
+                  name="add-box"
+                  size={24}
+                  color="blue"
+                  type="material"
+                  style={{paddingRight: 5}}
+                />
+                <Text style={{color: 'blue'}}>Add</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setShowFilter(!showFilter);
+              }}>
+              <Icon name="filter" size={24} color="black" type="ionicon" />
+            </TouchableOpacity>
+
+            {showFilter && (
+              <SortDropDown
+                close={setShowFilter}
+                setFilterDesc={setFilterDesc}
+                setFilterField={setFilterField}
+                setLoading={setLoading}
+                sortOption={sortOption}
+                filterDesc={filterDesc}
+                filterField={filterField}
+              />
+            )}
           </View>
-        </TouchableOpacity>
-        <Icon
-          name="filter"
-          size={24}
-          color="black"
-          type="ionicon"
-          style={{padding: 10}}
-        />
-      </View>
-      <FlatList
-        data={data}
-        renderItem={props => (
-          <RoleListItem {...props} navigation={navigation} />
-        )}
-      />
-    </View>
+          <FlatList
+            data={data}
+            renderItem={props => (
+              <RoleListItem {...props} navigation={navigation} />
+            )}
+          />
+        </View>
+      )}
+    </>
   );
 }
 

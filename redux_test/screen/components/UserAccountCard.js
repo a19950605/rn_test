@@ -23,7 +23,6 @@ const UserAccountCard = props => {
           <Text style={{color: 'black', fontWeight: 'bold'}}>Account ID: </Text>
           <Text style={{color: 'black'}}>{props?.item?.id}</Text>
         </View>
-
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'black', fontWeight: 'bold'}}>
             Display Name:

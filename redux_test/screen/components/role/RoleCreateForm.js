@@ -8,11 +8,18 @@ import {
   Text,
   Pressable,
 } from 'react-native';
-import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
+import {
+  TextInput,
+  Button,
+  Menu,
+  Divider,
+  Provider,
+  HelperText,
+} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
 
-const RoleCreateForm = ({setForm, form}) => {
+const RoleCreateForm = ({setForm, form, isSubmit}) => {
   const userToken = useSelector(state => state.login.userToken?.Token);
   //permission,status,code,rmks,displayName
   const [menu1, setMenu1] = useState(false);
@@ -41,17 +48,24 @@ const RoleCreateForm = ({setForm, form}) => {
               type="font-awesome"
               style={{paddingLeft: 10, paddingRight: 10, paddingTop: 10}}
             />
-
-            <TextInput
-              selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
-              label="Display name"
-              value={displayName}
-              onChangeText={displayName => {
-                setDisplayName(displayName);
-                setForm({...form, displayName: displayName});
-              }}
-            />
+            <View style={{width: '100%'}}>
+              <TextInput
+                selectTextOnFocus={false}
+                style={{width: '85%', backgroundColor: 'transparent'}}
+                label="Display name"
+                value={displayName}
+                onChangeText={displayName => {
+                  setDisplayName(displayName);
+                  setForm({...form, displayName: displayName});
+                }}
+              />
+              <HelperText
+                type="error"
+                visible={displayName == null && isSubmit}
+                style={{marginBottom: -30}}>
+                required
+              </HelperText>
+            </View>
           </View>
 
           <View
@@ -68,17 +82,25 @@ const RoleCreateForm = ({setForm, form}) => {
               type="material"
               style={{paddingLeft: 10, paddingRight: 10, paddingTop: 10}}
             />
-            <TextInput
-              selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
-              label="Code"
-              value={code}
-              onChangeText={code => {
-                setCode(code);
+            <View style={{width: '100%'}}>
+              <TextInput
+                selectTextOnFocus={false}
+                style={{width: '85%', backgroundColor: 'transparent'}}
+                label="Code"
+                value={code}
+                onChangeText={code => {
+                  setCode(code);
 
-                setForm({...form, code: code});
-              }}
-            />
+                  setForm({...form, code: code});
+                }}
+              />
+              <HelperText
+                type="error"
+                visible={code == null && isSubmit}
+                style={{marginBottom: -30}}>
+                required
+              </HelperText>
+            </View>
           </View>
           <View
             style={{

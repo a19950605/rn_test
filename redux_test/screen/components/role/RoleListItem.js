@@ -22,7 +22,6 @@ const RoleListItem = props => {
           <Text style={{color: 'black', fontWeight: 'bold'}}>ID: </Text>
           <Text style={{color: 'black'}}>{props?.item?.id}</Text>
         </View>
-
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'black', fontWeight: 'bold'}}>Code: </Text>
           <Text style={{color: 'black'}}>{props?.item?.code}</Text>

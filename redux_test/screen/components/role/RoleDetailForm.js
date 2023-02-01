@@ -26,6 +26,12 @@ const RoleDetailForm = ({setForm, form, data}) => {
     setDisplayName(data?.route?.params?.displayName);
     setCode(data?.route?.params?.code);
     setRmks(data?.route?.params?.rmks);
+    setForm({
+      code: data?.route?.params?.code,
+      displayName: data?.route?.params?.displayName,
+      rmks: data?.route?.params?.rmks,
+      status: data?.route?.params?.status,
+    });
   }, []);
   return (
     <Provider>

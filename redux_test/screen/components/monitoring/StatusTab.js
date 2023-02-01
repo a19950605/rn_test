@@ -37,7 +37,7 @@ const StatusTab = props => {
           selectTextOnFocus={false}
           style={{width: '85%', backgroundColor: 'transparent'}}
           label="Health Status"
-          value="Alarm(2022-12-13 15:29:03)"
+          value="Alarm("
           onChangeText={text => setText(text)}
         />
       </View>

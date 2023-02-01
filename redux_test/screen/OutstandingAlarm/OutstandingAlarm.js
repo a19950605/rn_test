@@ -16,6 +16,9 @@ import {Icon} from '@rneui/themed';
 import {useWindowDimensions} from 'react-native';
 import TableTest2 from '../components/TableTest2';
 import {useGetOutStandingAlarmQuery} from '../../features/api/alarmApiSlice';
+import SortDropDown from '../../utils/sortFilter';
+import {sortData} from '../../utils/sortData';
+import {getDate} from '../../utils/getDate';
 const OutstandingAlarm = () => {
   const Stack = createStackNavigator();
   return (
@@ -35,95 +38,129 @@ const OutstandingAlarm = () => {
 const OutstandingAlarmSub = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
-  const [token, setToken] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [showFilter, setShowFilter] = useState(false);
+  const [filterDesc, setFilterDesc] = useState(false);
+  const [filterField, setFilterField] = useState('username');
+  const {height, width} = useWindowDimensions();
   const userToken = useSelector(state => state.login.userToken?.Token);
 
-  const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
 
-  const {
-    data: alarms,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetOutStandingAlarmQuery(userToken);
+  const sortOption = [
+    {displayValue: 'Alarm ID', apiValue: 'id'},
+    {displayValue: 'Type', apiValue: 'alarmType'},
+    {displayValue: 'Controller ID', apiValue: 'controllerCode'},
+    {displayValue: 'RFL', apiValue: 'code'},
+    {displayValue: 'Triggered Datetime', apiValue: 'dtCreate'},
+    {displayValue: 'Status', apiValue: 'status'},
+  ];
+  // const {
+  //   data: alarms,
+  //   isLoading,
+  //   isSuccess,
+  //   isError,
+  //   error,
+  // } = useGetOutStandingAlarmQuery(userToken);
 
-  if (isLoading) {
-    console.log('redux event log loading');
-  } else if (isSuccess) {
-    // setData(eventLogs);
-  } else if (isError) {
-    console.log('get event log error');
-    console.log(error);
-  }
+  // if (isLoading) {
+  //   console.log('redux event log loading');
+  // } else if (isSuccess) {
+  //   // setData(eventLogs);
+  // } else if (isError) {
+  //   console.log('get event log error');
+  //   console.log(error);
+  // }
   useEffect(() => {
-    // var requestOptions = {
-    //   method: 'GET',
-    //   headers: {
-    //     // Accept: '*',
-    //     // 'Content-Type': 'application/json',
-    //     'X-Token': userToken,
-    //   },
-    // };
-    // fetch('https://gis2.ectrak.com.hk:8900/api/v2/alarms', requestOptions)
-    //   .then(response => {
-    //     return response.json();
-    //   })
-    //   .then(result => {
-    //     //  console.log(result);
-    //     // return result;
-    //     setData(result?.reverse());
-    //   })
-    //   .catch(error => console.log('error1', error));
-  }, []);
+    var requestOptions = {
+      method: 'GET',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+    };
+    fetch('https://gis2.ectrak.com.hk:8900/api/v2/alarms', requestOptions)
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        //  console.log(result);
+        // return result;
+        setData(sortData(result, filterField, filterDesc));
+
+        setLoading(false);
+      })
+      .catch(error => console.log('error1', error));
+  }, [loading]);
 
   // console.log('outStandand alarm');
   return (
-    <View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          padding: 10,
-        }}>
-        <TouchableOpacity
-          style={{
-            borderColor: 'blue',
-            borderWidth: 1,
-            borderRadius: 2,
-            padding: 10,
-            flexDirection: 'row',
-          }}>
-          <Text style={{color: 'blue'}}>2022-12-06 12:26:43</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Icon
-            name="filter"
-            size={24}
-            color="black"
-            type="ionicon"
-            style={{padding: 10}}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={{marginBottom: 60, padding: isLandscapeMode ? 5 : 0}}>
-        {isLandscapeMode ? (
-          <TableTest2 data={alarms ? Array.from(alarms).reverse() : []} />
-        ) : (
-          <FlatList
-            data={alarms ? Array.from(alarms).reverse() : []}
-            renderItem={props => (
-              <OutstandingAlarmCard {...props} navigation={navigation} />
+    <>
+      {loading ? (
+        <View>
+          <Text>loading</Text>
+        </View>
+      ) : (
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: 10,
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                setLoading(true);
+              }}
+              style={{
+                borderColor: 'blue',
+                borderWidth: 1,
+                borderRadius: 2,
+                padding: 10,
+                flexDirection: 'row',
+              }}>
+              <Text style={{color: 'blue'}}>{getDate()}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setShowFilter(!showFilter);
+              }}>
+              <Icon name="filter" size={24} color="black" type="ionicon" />
+            </TouchableOpacity>
+
+            {showFilter && (
+              <SortDropDown
+                close={setShowFilter}
+                setFilterDesc={setFilterDesc}
+                setFilterField={setFilterField}
+                setLoading={setLoading}
+                sortOption={sortOption}
+                filterDesc={filterDesc}
+                filterField={filterField}
+              />
             )}
-            keyExtractor={item => item.id}
-          />
-        )}
-        {/* <OutstandingAlarmCard />
+          </View>
+          <View style={{marginBottom: 60, padding: isLandscapeMode ? 5 : 0}}>
+            {isLandscapeMode ? (
+              <TableTest2 data={data} />
+            ) : (
+              <FlatList
+                data={data}
+                renderItem={props => (
+                  <OutstandingAlarmCard {...props} navigation={navigation} />
+                )}
+                keyExtractor={item => item.id}
+              />
+            )}
+            {/* <OutstandingAlarmCard />
         <OutstandingAlarmCard2 />
       */}
-      </View>
-    </View>
+          </View>
+        </View>
+      )}
+    </>
   );
 };
 

@@ -18,13 +18,24 @@ import {useWindowDimensions} from 'react-native';
 import EventLogTable from './EventLogTable';
 
 import {useGetEventLogMutation} from '../features/api/apiSlice';
+import SortDropDown from '../utils/sortFilter';
+import {sortData} from '../utils/sortData';
 
 function EventLog() {
   const userToken = useSelector(state => state.login.userToken?.Token);
-
-  const [eventLogData, setEventLogData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showFilter, setShowFilter] = useState(false);
+  const [filterDesc, setFilterDesc] = useState(false);
+  const [filterField, setFilterField] = useState('username');
   const [data, setData] = useState();
 
+  const sortOption = [
+    {displayValue: 'User', apiValue: 'username'},
+    {displayValue: 'Datetime', apiValue: 'time'},
+    {displayValue: 'Function', apiValue: 'func'},
+    {displayValue: 'Type', apiValue: 'type'},
+    {displayValue: 'Data', apiValue: 'dest'},
+  ];
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
 
@@ -40,9 +51,6 @@ function EventLog() {
   formdata.append('funcName', '');
   formdata.append('fromTime', dateStr);
   formdata.append('toTime', dateStr);
-
-  const [getEventLog, response, isLoading] = useGetEventLogMutation();
-  const [loading, setLoading] = useState(true);
 
   // if (loading) {
   //   getEventLog({userToken, formdata})
@@ -81,11 +89,12 @@ function EventLog() {
       .then(result => {
         console.log('result');
         console.log(result);
-        setData(result);
-        return result;
+        setData(sortData(result, filterField, filterDesc));
+
+        setLoading(false);
       })
       .catch(error => console.log('error', error));
-  }, []);
+  }, [loading]);
   return (
     <View style={{flex: 1, backgroundColor: 'white', padding: 2}}>
       <View
@@ -115,15 +124,24 @@ function EventLog() {
           <Text style={{color: 'blue'}}>export current result to csv</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity>
-          <Icon
-            name="filter"
-            size={24}
-            color="black"
-            type="ionicon"
-            style={{padding: 10}}
-          />
+        <TouchableOpacity
+          onPress={() => {
+            setShowFilter(!showFilter);
+          }}>
+          <Icon name="filter" size={24} color="black" type="ionicon" />
         </TouchableOpacity>
+
+        {showFilter && (
+          <SortDropDown
+            close={setShowFilter}
+            setFilterDesc={setFilterDesc}
+            setFilterField={setFilterField}
+            setLoading={setLoading}
+            sortOption={sortOption}
+            filterDesc={filterDesc}
+            filterField={filterField}
+          />
+        )}
       </View>
       {isLandscapeMode ? (
         <EventLogTable data={data} />

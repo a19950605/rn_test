@@ -2,6 +2,7 @@ import {Icon} from '@rneui/themed';
 import React from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
 //monitoring
+
 const MonitoringCard = props => {
   console.log('component load');
   console.log(props.item);
@@ -70,7 +71,7 @@ const MonitoringCard = props => {
                 paddingLeft: 13,
                 paddingRight: 13,
               }}>
-              <Icon name="question" size={24} color="black" type="octicon" />
+              <Icon name="alert" size={24} color="red" type="octicon" />
               <Text style={{fontSize: 11}}>Health</Text>
             </View>
             <View
@@ -83,7 +84,24 @@ const MonitoringCard = props => {
                 paddingLeft: 13,
                 paddingRight: 13,
               }}>
-              <Icon name="question" size={24} color="black" type="octicon" />
+              <Icon
+                name={
+                  props?.item?.connectionStatus == 'CONNLOST'
+                    ? 'alert'
+                    : props?.item?.connectionStatus == 'NORMAL'
+                    ? 'device-desktop'
+                    : 'question'
+                }
+                size={24}
+                color={
+                  props?.item?.connectionStatus == 'CONNLOST'
+                    ? 'red'
+                    : props?.item?.connectionStatus == 'NORMAL'
+                    ? 'green'
+                    : 'black'
+                }
+                type="octicon"
+              />
               <Text style={{fontSize: 11}}>CONN</Text>
             </View>
             <View
@@ -96,7 +114,16 @@ const MonitoringCard = props => {
                 paddingLeft: 13,
                 paddingRight: 13,
               }}>
-              <Icon name="question" size={24} color="black" type="octicon" />
+              <Icon
+                name={
+                  props?.item?.batteryStatus == 'NORMAL' ? 'plug' : 'question'
+                }
+                size={24}
+                color={
+                  props?.item?.batteryStatus == 'NORMAL' ? 'green' : 'black'
+                }
+                type="octicon"
+              />
               <Text style={{fontSize: 11}}>Power</Text>
             </View>
             <View
@@ -109,7 +136,18 @@ const MonitoringCard = props => {
                 paddingLeft: 13,
                 paddingRight: 13,
               }}>
-              <Icon name="question" size={24} color="black" type="octicon" />
+              <Icon
+                name={
+                  props?.item?.relayChannelStatus == 'ERROR'
+                    ? 'alert'
+                    : 'question'
+                }
+                size={24}
+                color={
+                  props?.item?.relayChannelStatus == 'ERROR' ? 'red' : 'black'
+                }
+                type="octicon"
+              />
               <Text style={{fontSize: 11}}>Relay</Text>
             </View>
           </View>

@@ -39,6 +39,7 @@ const RoleDetailPermission = props => {
       console.log(selectedId.length);
       setChecked(false);
     }
+    props?.setSelectedData(selectedId);
   }, [selectedId]);
 
   return (

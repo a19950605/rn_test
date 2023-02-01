@@ -18,6 +18,8 @@ import {Menu} from 'react-native-paper';
 import {useIsFocused} from '@react-navigation/native';
 
 import TableTest from '../TableTest';
+import {sortData} from '../../utils/sortData';
+import {getDate} from '../../utils/getDate';
 // const MonitoringTest = () => {
 //   const Stack = createStackNavigator();
 //   return (
@@ -30,22 +32,6 @@ import TableTest from '../TableTest';
 //   );
 // };
 ////rflid=id , rlf=code,
-function sortData(list, key, filterDesc) {
-  if (key == 'rflid') {
-    if (filterDesc) {
-      return list.sort((a, b) => (a.id > b.id ? 1 : -1)).reverse();
-    } else {
-      return list.sort((a, b) => (a.id > b.id ? 1 : -1));
-    }
-  }
-  if (key == 'rfl') {
-    if (filterDesc) {
-      return list.sort((a, b) => (a.code > b.code ? 1 : -1)).reverse();
-    } else {
-      return list.sort((a, b) => (a.code > b.code ? 1 : -1));
-    }
-  }
-}
 
 const MonitoringTest = () => {
   const {height, width} = useWindowDimensions();
@@ -59,48 +45,26 @@ const MonitoringTest = () => {
   const [filterDesc, setFilterDesc] = useState(false);
   const [filterField, setFilterField] = useState('rflid');
   const [showFilter, setShowFilter] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [showRoleModal, setShowRoleModal] = useState(false);
+
+  const [roleOption, setRoleOption] = useState([]);
+  const [userOption, setUserOption] = useState([]);
+
   console.log('islandscapemode' + isLandscapeMode);
   const isFocused = useIsFocused();
 
   useEffect(() => {
     setInterval(function () {
       //setLoading(true);
-      var date = new Date();
 
-      var dateStr =
-        date.getFullYear() +
-        '-' +
-        ('00' + (date.getMonth() + 1)).slice(-2) +
-        '-' +
-        ('00' + date.getDate()).slice(-2) +
-        '-' +
-        ' ' +
-        ('00' + date.getHours()).slice(-2) +
-        ':' +
-        ('00' + date.getMinutes()).slice(-2) +
-        ':' +
-        ('00' + date.getSeconds()).slice(-2);
-      setCurrentDate(dateStr);
+      setCurrentDate(getDate());
     }, 30000);
   }, []);
 
   useEffect(() => {
-    var date = new Date();
-
-    var dateStr =
-      date.getFullYear() +
-      '-' +
-      ('00' + (date.getMonth() + 1)).slice(-2) +
-      '-' +
-      ('00' + date.getDate()).slice(-2) +
-      '-' +
-      ' ' +
-      ('00' + date.getHours()).slice(-2) +
-      ':' +
-      ('00' + date.getMinutes()).slice(-2) +
-      ':' +
-      ('00' + date.getSeconds()).slice(-2);
-    setCurrentDate(dateStr);
+    setCurrentDate(getDate());
     var requestOptions = {
       method: 'GET',
       headers: {
@@ -123,15 +87,16 @@ const MonitoringTest = () => {
       .then(result => {
         //  console.log(result);
         // return result;
-        setData(sortData(result, 'rflid', filterDesc));
+        setData(sortData(result, filterField, filterDesc));
         setLoading(false);
       })
       .catch(error => console.log('error12', error.status));
   }, [loading, isFocused]);
+  //search role options
 
   console.log('monitoring test data');
   console.log(data);
-
+  console.log();
   const SortDropDown = ({close}) => {
     return (
       <View
@@ -166,8 +131,8 @@ const MonitoringTest = () => {
           onPress={() => {
             setFilterDesc(!filterDesc);
             setFilterField('rflid');
-            setData(sortData(data, 'rflid', filterDesc));
-
+            // setData(sortData(data, 'rflid', filterDesc));
+            setLoading(true);
             close(false);
           }}
           title="RFL ID"
@@ -182,7 +147,8 @@ const MonitoringTest = () => {
           onPress={() => {
             setFilterDesc(!filterDesc);
             setFilterField('rfl');
-            setData(sortData(data, 'rfl', filterDesc));
+            //  setData(sortData(data, 'rfl', filterDesc));
+            setLoading(true);
 
             close(false);
           }}
@@ -190,6 +156,9 @@ const MonitoringTest = () => {
         />
 
         <Menu.Item
+          style={{
+            backgroundColor: filterField == 'epic' ? 'lightgray' : 'white',
+          }}
           trailingIcon={
             filterField == 'epic'
               ? filterDesc
@@ -200,12 +169,16 @@ const MonitoringTest = () => {
           onPress={() => {
             setFilterDesc(!filterDesc);
             setFilterField('epic');
+            setLoading(true);
 
             close(false);
           }}
           title="EPIC"
         />
         <Menu.Item
+          style={{
+            backgroundColor: filterField == 'Group' ? 'lightgray' : 'white',
+          }}
           trailingIcon={
             filterField == 'Group'
               ? filterDesc
@@ -216,11 +189,17 @@ const MonitoringTest = () => {
           onPress={() => {
             setFilterDesc(!filterDesc);
             setFilterField('Group');
+            setLoading(true);
+
             close(false);
           }}
           title="Group"
         />
         <Menu.Item
+          style={{
+            backgroundColor:
+              filterField == 'statusasof' ? 'lightgray' : 'white',
+          }}
           trailingIcon={
             filterField == 'statusasof'
               ? filterDesc
@@ -231,6 +210,8 @@ const MonitoringTest = () => {
           onPress={() => {
             setFilterDesc(!filterDesc);
             setFilterField('statusasof');
+            setLoading(true);
+
             close(false);
           }}
           title="Status As Of"
@@ -286,7 +267,12 @@ const MonitoringTest = () => {
           </TouchableOpacity>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity onPress={() => {}}></TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setShowModal(true);
+            }}>
+            <Icon name="search" size={24} color="black" type="ionicon" />
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               setShowFilter(!showFilter);
@@ -298,19 +284,7 @@ const MonitoringTest = () => {
       </View>
 
       <View style={{padding: 5}}></View>
-      <Modal isVisible={false}>
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginTop: 20,
-              padding: 20,
-              backgroundColor: 'white',
-            }}>
-            <Text>I am the modal content!</Text>
-          </View>
-        </View>
-      </Modal>
+
       {loading ? (
         <Text>loading</Text>
       ) : isLandscapeMode ? (
