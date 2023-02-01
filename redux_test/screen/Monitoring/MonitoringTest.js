@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
+import Modal from 'react-native-modal';
 
 import MonitoringCard from '../MonitoringCard';
 import {useNavigation} from '@react-navigation/native';
@@ -284,23 +285,32 @@ const MonitoringTest = () => {
             <Text style={{color: 'blue'}}>{currentDate}</Text>
           </TouchableOpacity>
         </View>
-        <View>
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity onPress={() => {}}></TouchableOpacity>
           <TouchableOpacity
-            style={{marginTop: 15}}
             onPress={() => {
               setShowFilter(!showFilter);
             }}>
             <Icon name="filter" size={24} color="black" type="ionicon" />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text></Text>
           </TouchableOpacity>
         </View>
         {showFilter && <SortDropDown close={setShowFilter} />}
       </View>
 
       <View style={{padding: 5}}></View>
-
+      <Modal isVisible={false}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 20,
+              padding: 20,
+              backgroundColor: 'white',
+            }}>
+            <Text>I am the modal content!</Text>
+          </View>
+        </View>
+      </Modal>
       {loading ? (
         <Text>loading</Text>
       ) : isLandscapeMode ? (
