@@ -8,7 +8,7 @@ import React from 'react';
 import {name as appName} from './app.json';
 import 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
-import {store} from './store';
+import {store} from './src/store';
 
 const Root = () => {
   return (
