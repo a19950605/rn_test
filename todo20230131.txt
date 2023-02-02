@@ -1,6 +1,6 @@
 current task
 
-
+*monitoring icon/ detail data
 *sort filter(done)
 *file/folder structure(dayend)
 *search               
