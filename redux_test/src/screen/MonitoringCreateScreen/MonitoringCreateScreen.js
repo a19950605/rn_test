@@ -130,17 +130,27 @@ const MonitoringCreateScreen = () => {
         variant="primary">
         <Tab.Item
           title="Details"
-          titleStyle={{fontSize: 12, color: 'black'}}
-          icon={{
+          titleStyle={active => ({
+            color: active ? '#7a2210' : 'black',
+            fontSize: 12,
+          })}
+          icon={active => ({
             name: 'clipboard-text',
-            color: 'black',
             type: 'material-community',
-          }}
+            color: active ? '#7a2210' : 'black',
+          })}
         />
         <Tab.Item
           title="Location"
-          titleStyle={{fontSize: 12, color: 'black'}}
-          icon={{name: 'map', color: 'black', type: 'material'}}
+          titleStyle={active => ({
+            color: active ? '#7a2210' : 'black',
+            fontSize: 12,
+          })}
+          icon={active => ({
+            name: 'map',
+            type: 'material',
+            color: active ? '#7a2210' : 'black',
+          })}
         />
       </Tab>
 

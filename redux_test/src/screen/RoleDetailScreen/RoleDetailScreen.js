@@ -193,13 +193,27 @@ const RoleDetailScreen = props => {
             variant="default">
             <Tab.Item
               title="Details"
-              titleStyle={{fontSize: 12}}
-              icon={{name: 'clipboard-text', type: 'material-community'}}
+              titleStyle={active => ({
+                color: active ? '#7a2210' : 'black',
+                fontSize: 12,
+              })}
+              icon={active => ({
+                name: 'clipboard-text',
+                type: 'material-community',
+                color: active ? '#7a2210' : 'black',
+              })}
             />
             <Tab.Item
               title="Permission"
-              titleStyle={{fontSize: 12}}
-              icon={{name: 'shield-check', type: 'material-community'}}
+              titleStyle={active => ({
+                color: active ? '#7a2210' : 'black',
+                fontSize: 12,
+              })}
+              icon={active => ({
+                name: 'shield-check',
+                type: 'material-community',
+                color: active ? '#7a2210' : 'black',
+              })}
             />
           </Tab>
           <TabView value={index} onChange={setIndex} animationType="spring">

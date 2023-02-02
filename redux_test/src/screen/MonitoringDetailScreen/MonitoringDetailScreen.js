@@ -217,38 +217,86 @@ const MonitoringDetailScreen = props => {
             variant="default">
             <Tab.Item
               title="Details"
-              titleStyle={{fontSize: 12}}
-              icon={{name: 'clipboard-text', type: 'material-community'}}
+              titleStyle={active => ({
+                color: active ? '#7a2210' : 'black',
+                fontSize: 12,
+              })}
+              icon={active => ({
+                name: 'clipboard-text',
+                type: 'material-community',
+                color: active ? '#7a2210' : 'black',
+              })}
             />
             <Tab.Item
               title="Status"
-              titleStyle={{fontSize: 12}}
-              icon={{name: 'insert-chart', type: 'material'}}
+              titleStyle={active => ({
+                color: active ? '#7a2210' : 'black',
+                fontSize: 12,
+              })}
+              icon={active => ({
+                name: 'insert-chart',
+                type: 'material',
+                color: active ? '#7a2210' : 'black',
+              })}
             />
             <Tab.Item
               title="Assignment"
-              titleStyle={{fontSize: 12}}
-              icon={{name: 'clipboard-text', type: 'material-community'}}
+              titleStyle={active => ({
+                color: active ? '#7a2210' : 'black',
+                fontSize: 12,
+              })}
+              icon={active => ({
+                name: 'clipboard-text',
+                type: 'material-community',
+                color: active ? '#7a2210' : 'black',
+              })}
             />
             <Tab.Item
               title="Last Control"
-              titleStyle={{fontSize: 12}}
-              icon={{name: 'toggle-switch-off', type: 'material-community'}}
+              titleStyle={active => ({
+                color: active ? '#7a2210' : 'black',
+                fontSize: 12,
+              })}
+              icon={active => ({
+                name: 'toggle-switch-off',
+                type: 'material-community',
+                color: active ? '#7a2210' : 'black',
+              })}
             />
             <Tab.Item
               title="Location"
-              titleStyle={{fontSize: 12}}
-              icon={{name: 'map', type: 'material'}}
+              titleStyle={active => ({
+                color: active ? '#7a2210' : 'black',
+                fontSize: 12,
+              })}
+              icon={active => ({
+                name: 'map',
+                type: 'material',
+                color: active ? '#7a2210' : 'black',
+              })}
             />
             <Tab.Item
               title="History"
-              titleStyle={{fontSize: 12}}
-              icon={{name: 'history'}}
+              titleStyle={active => ({
+                color: active ? '#7a2210' : 'black',
+                fontSize: 12,
+              })}
+              icon={active => ({
+                name: 'history',
+                color: active ? '#7a2210' : 'black',
+              })}
             />
             <Tab.Item
               title="Alarm"
-              titleStyle={{fontSize: 12}}
-              icon={{name: 'alert', type: 'material-community'}}
+              titleStyle={active => ({
+                color: active ? '#7a2210' : 'black',
+                fontSize: 12,
+              })}
+              icon={active => ({
+                name: 'alert',
+                type: 'material-community',
+                color: active ? '#7a2210' : 'black',
+              })}
             />
           </Tab>
           <TabView value={index} onChange={setIndex} animationType="spring">

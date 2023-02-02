@@ -91,23 +91,27 @@ const UserAccountDetailScreen = props => {
             variant="default">
             <Tab.Item
               title="Details"
-              icon={{
+              icon={active => ({
                 name: 'clipboard-text',
                 type: 'material-community',
-                color: 'black',
-              }}
+                color: active ? '#7a2210' : 'black',
+              })}
               titleStyle={active => ({
-                color: active ? 'red' : 'black',
+                color: active ? '#7a2210' : 'black',
                 fontSize: 12,
               })}
             />
             <Tab.Item
               title="Permission"
               titleStyle={active => ({
-                color: active ? 'red' : 'black',
+                color: active ? '#7a2210' : 'black',
                 fontSize: 12,
               })}
-              icon={{name: 'shield-checkmark', type: 'ionicon', color: 'black'}}
+              icon={active => ({
+                name: 'shield-checkmark',
+                type: 'ionicon',
+                color: active ? '#7a2210' : 'black',
+              })}
             />
           </Tab>
           <TabView value={index} onChange={setIndex} animationType="spring">

@@ -27,17 +27,29 @@ const OutstandingDetailScreen = props => {
         variant="default">
         <Tab.Item
           title="Details"
-          titleStyle={{fontSize: 12, color: 'black'}}
-          icon={{
+          titleStyle={active => ({
+            color: active ? '#7a2210' : 'black',
+            fontSize: 12,
+          })}
+          icon={active => ({
             name: 'clipboard-text',
             color: 'black',
             type: 'material-community',
-          }}
+            color: active ? '#7a2210' : 'black',
+          })}
         />
         <Tab.Item
           title="Acknowledgement"
-          titleStyle={{fontSize: 12, color: 'black'}}
-          icon={{name: 'pencil', color: 'black', type: 'material-community'}}
+          titleStyle={active => ({
+            color: active ? '#7a2210' : 'black',
+            fontSize: 12,
+          })}
+          icon={active => ({
+            name: 'pencil',
+            color: 'black',
+            type: 'material-community',
+            color: active ? '#7a2210' : 'black',
+          })}
         />
       </Tab>
 
