@@ -18,7 +18,7 @@ import {useIsFocused} from '@react-navigation/native';
 import TableTest from './components/TableTest';
 import {getDate} from '../../utils/getDate';
 import CreateButton from '../../components/CreateButton';
-import {useFetchMonitorData} from '../../hooks/apiHook';
+import {useFetchMonitorData, useFetchMonitorTest} from '../../hooks/apiHook';
 import SortDropDown from '../../utils/sortFilter';
 // const MonitoringTest = () => {
 //   const Stack = createStackNavigator();
@@ -61,10 +61,7 @@ const MonitoringScreen = () => {
     }, 30000);
   }, []);
 
-  console.log('monitoring test data');
-  console.log(data);
-
-  const [data, error] = useFetchMonitorData({
+  const [data, error] = useFetchMonitorTest({
     userToken,
     loading,
     isFocused,

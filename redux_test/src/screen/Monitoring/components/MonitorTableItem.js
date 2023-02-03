@@ -2,6 +2,7 @@ import {Icon} from '@rneui/themed';
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {DataTable} from 'react-native-paper';
+import {convertDate} from '../../../utils/getDate';
 
 const MonitoringTableItem = rowData => {
   console.log('current in table row');
@@ -21,12 +22,12 @@ const MonitoringTableItem = rowData => {
         -
       </DataTable.Cell>
       <DataTable.Cell style={{flex: 2, justifyContent: 'center'}}>
-        -
+        {convertDate(rowData?.item?.dtKeepalive) || '-'}
       </DataTable.Cell>
       <DataTable.Cell style={{flex: 2, justifyContent: 'center'}}>
         {rowData?.item?.status}
       </DataTable.Cell>
-      <DataTable.Cell style={{flex: 4, justifyContent: 'center'}}>
+      <DataTable.Cell style={{flex: 4, justifyContent: 'center', marginTop: 5}}>
         <View
           style={{
             backgroundColor: '#f7f7f7',
@@ -110,7 +111,7 @@ const MonitoringTableItem = rowData => {
             borderRadius: 100,
             marginLeft: 5,
             paddingTop: 10,
-            paddingBottom: 5,
+            paddingBottom: 0,
             paddingLeft: 13,
             paddingRight: 13,
           }}>

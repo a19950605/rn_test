@@ -2,12 +2,13 @@
 
 
 SEARCH FUNCTION ***
-tablet view     ***(done)
 
 use stylesheet ***
-global alert message
 
-relay
-assignment
+global alert message**
+
+relay (create form and dummy)
+
+assignment(
 
 

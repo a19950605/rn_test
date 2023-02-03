@@ -48,7 +48,6 @@ const useFetchRoleData = ({
 
   return [data, error];
 };
-
 const useFetchUsersData = ({
   userToken,
   loading,
@@ -107,8 +106,8 @@ const useFetchEventLogData = ({
   let formdata = new FormData();
   formdata.append('userName', '');
   formdata.append('funcName', '');
-  formdata.append('fromTime', '20230202');
-  formdata.append('toTime', '20230202');
+  formdata.append('fromTime', getToday());
+  formdata.append('toTime', getToday());
 
   useEffect(() => {
     var requestOptions = {
@@ -150,8 +149,6 @@ const useFetchMonitorData = ({
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    setCurrentDate(getDate());
-
     var requestOptions = {
       method: 'GET',
       headers: {
@@ -177,6 +174,7 @@ const useFetchMonitorData = ({
         console.log('role management');
         console.log(result);
         setData(sortData(result, filterField, filterDesc));
+        setCurrentDate(getDate());
         setLoading(false);
       })
       .catch(error => {
@@ -232,10 +230,58 @@ const useCreateUser = ({userToken, form, navigation}) => {
     .catch(error => console.log('error1', error));
 };
 
+const useFetchMonitorTest = ({
+  userToken,
+  loading,
+  isFocused,
+  setLoading,
+  filterField,
+  filterDesc,
+  setCurrentDate,
+}) => {
+  const [data, setData] = useState();
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    let formdata = new FormData();
+    formdata.append('status', 'ACTIVE');
+
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+        'X-Token': userToken,
+      },
+      body: formdata,
+    };
+
+    fetch(
+      'https://gis2.ectrak.com.hk:8900/api/v2/device/search',
+      requestOptions,
+    )
+      .then(response => {
+        console.log('response.status: ', response.status); // 👉️ 200
+
+        return response.json();
+      })
+      .then(result => {
+        setData(sortData(result?.content, filterField, filterDesc));
+        setCurrentDate(getDate());
+        setLoading(false);
+        console.log('post list test');
+      })
+      .catch(error => {
+        setError(true);
+
+        console.log('error1', error);
+      });
+  }, [loading, isFocused]);
+  return [data, error];
+};
+
 export {
   useFetchRoleData,
   useFetchUsersData,
   useFetchEventLogData,
   useFetchMonitorData,
   useCreateUser,
+  useFetchMonitorTest,
 };
