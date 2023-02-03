@@ -33,7 +33,7 @@ const MonitoringDetailScreen = props => {
   const [lampX, setLampX] = useState(0);
   const [lampY, setLampY] = useState(0);
   const [uri, setUri] = useState('');
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = useState(0);
   const [responseCode, setResponseCode] = useState();
 
   const [data, setData] = useState('');

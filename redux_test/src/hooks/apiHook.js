@@ -244,6 +244,7 @@ const useFetchMonitorTest = ({
   useEffect(() => {
     let formdata = new FormData();
     formdata.append('status', 'ACTIVE');
+    formdata.append('deviceId', '');
 
     var requestOptions = {
       method: 'POST',

@@ -1,9 +1,9 @@
 
+tablet view(outstandingalarm
 
+tab speed(too slow)(maybe use other)
 
 SEARCH FUNCTION ***
-
-use stylesheet ***
 
 global alert message**
 
@@ -11,4 +11,5 @@ relay (create form and dummy)
 
 assignment(
 
+PERFORMANCE 
 
