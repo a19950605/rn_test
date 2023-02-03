@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Text,
   Pressable,
+  useWindowDimensions,
 } from 'react-native';
 import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
 import {useSelector} from 'react-redux';
@@ -20,7 +21,8 @@ const RoleDetailForm = ({setForm, form, data}) => {
   const [displayName, setDisplayName] = useState();
   const [code, setCode] = useState();
   const [rmks, setRmks] = useState('');
-
+  const {height, width} = useWindowDimensions();
+  const isLandscapeMode = width > height ? true : false;
   useEffect(() => {
     setStatus(data?.route?.params?.status);
     setDisplayName(data?.route?.params?.displayName);
@@ -54,7 +56,10 @@ const RoleDetailForm = ({setForm, form, data}) => {
 
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode ? '95%' : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Display name"
               value={displayName}
               onChangeText={displayName => {
@@ -80,7 +85,10 @@ const RoleDetailForm = ({setForm, form, data}) => {
             />
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode ? '95%' : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Code"
               value={code}
               onChangeText={code => {
@@ -106,7 +114,10 @@ const RoleDetailForm = ({setForm, form, data}) => {
             />
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode ? '95%' : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Remarks"
               value={rmks}
               onChangeText={rmks => {
@@ -136,7 +147,10 @@ const RoleDetailForm = ({setForm, form, data}) => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
+                style={{
+                  width: isLandscapeMode ? '95%' : '85%',
+                  backgroundColor: '#f5f6f7',
+                }}
                 label="Status"
                 value={status}
                 onChangeText={status => setStatus(status)}

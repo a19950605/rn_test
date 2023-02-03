@@ -65,7 +65,7 @@ const Login = props => {
             theme={{colors: {primary: 'darkred'}}}
             style={{
               width: isLandscapeMode ? '65%' : '85%',
-              backgroundColor: 'transparent',
+              backgroundColor: '#f5f6f7',
             }}
             label="username/用戶名"
             value={username}
@@ -85,7 +85,7 @@ const Login = props => {
             theme={{colors: {primary: 'darkred'}}}
             style={{
               width: isLandscapeMode ? '65%' : '85%',
-              backgroundColor: 'transparent',
+              backgroundColor: '#f5f6f7',
             }}
             label="password/密碼"
             value={pw}

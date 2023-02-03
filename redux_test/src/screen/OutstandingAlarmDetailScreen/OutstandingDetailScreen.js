@@ -3,12 +3,14 @@ import {Tab, Text, TabView} from '@rneui/themed';
 import {Input, Icon} from '@rneui/themed';
 import {TextInput} from 'react-native-paper';
 import {Button} from 'react-native-paper';
-import {View} from 'react-native';
+import {useWindowDimensions, View} from 'react-native';
 
 const OutstandingDetailScreen = props => {
   const [index, setIndex] = React.useState(0);
   const [text, setText] = React.useState('');
 
+  const {height, width} = useWindowDimensions();
+  const isLandscapeMode = width > height ? true : false;
   console.log('inside tab');
   console.log(props.route.params);
   return (
@@ -73,7 +75,7 @@ const OutstandingDetailScreen = props => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: '85%'}}
+                style={{width: isLandscapeMode ? '95%' : '85%'}}
                 label="Alarm ID"
                 value={JSON.stringify(props.route.params.id)}
                 onChangeText={text => setText(text)}
@@ -96,7 +98,7 @@ const OutstandingDetailScreen = props => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: '85%'}}
+                style={{width: isLandscapeMode ? '95%' : '85%'}}
                 label="Types"
                 value={props.route.params.alarmType}
                 onChangeText={text => setText(text)}
@@ -119,7 +121,7 @@ const OutstandingDetailScreen = props => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: '85%'}}
+                style={{width: isLandscapeMode ? '95%' : '85%'}}
                 label="Controller ID"
                 value={JSON.stringify(props.route.params.controllerDeviceId)}
                 onChangeText={text => setText(text)}
@@ -142,7 +144,7 @@ const OutstandingDetailScreen = props => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: '85%'}}
+                style={{width: isLandscapeMode ? '95%' : '85%'}}
                 label="RFL"
                 value={JSON.stringify(props.route.params.controllerDeviceId)}
                 onChangeText={text => setText(text)}
@@ -165,7 +167,7 @@ const OutstandingDetailScreen = props => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: '85%'}}
+                style={{width: isLandscapeMode ? '95%' : '85%'}}
                 label="Status"
                 value={JSON.stringify(props.route.params.status)}
                 onChangeText={text => setText(text)}
@@ -189,7 +191,7 @@ const OutstandingDetailScreen = props => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: '85%'}}
+                style={{width: isLandscapeMode ? '95%' : '85%'}}
                 label="Triggered Time"
                 value={JSON.stringify(props.route.params.dtCreate)}
                 onChangeText={text => setText(text)}
@@ -206,6 +208,8 @@ const OutstandingDetailScreen = props => {
 };
 
 const AcknowledgementTab = () => {
+  const {height, width} = useWindowDimensions();
+  const isLandscapeMode = width > height ? true : false;
   return (
     <View style={{flex: 1, padding: 10}}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -227,7 +231,7 @@ const AcknowledgementTab = () => {
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5,
-            width: '85%',
+            width: isLandscapeMode ? '95%' : '85%',
             backgroundColor: '#faf9f7',
           }}>
           <Text style={{fontWeight: 'bold'}}>

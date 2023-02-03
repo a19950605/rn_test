@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, FlatList, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+  useWindowDimensions,
+} from 'react-native';
 import {Icon, LinearProgress} from '@rneui/themed';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import UserAccountCard from './components/UserAccountCard';
@@ -9,6 +15,7 @@ import {sortData} from '../../utils/sortData';
 import Modal from 'react-native-modal';
 import CreateButton from '../../components/CreateButton';
 import {useFetchUsersData} from '../../hooks/apiHook';
+import UserAccountTable from './components/UserAccountTable';
 
 const UserAccountManagementScreen = () => {
   const isFocused = useIsFocused();
@@ -29,6 +36,9 @@ const UserAccountManagementScreen = () => {
 
   const [roleOption, setRoleOption] = useState([]);
   const [userOption, setUserOption] = useState([]);
+  const {height, width} = useWindowDimensions();
+  const isLandscapeMode = width > height ? true : false;
+
   useEffect(() => {
     var requestOptions = {
       method: 'GET',
@@ -67,39 +77,6 @@ const UserAccountManagementScreen = () => {
       .catch(error => console.log('error1', error));
   }, []);
 
-  // useEffect(() => {
-  //   var requestOptions = {
-  //     method: 'GET',
-  //     headers: {
-  //       // Accept: '*',
-  //       // 'Content-Type': 'application/json',
-  //       'X-Token': userToken,
-  //     },
-  //   };
-  //   let appendStr = '';
-  //   // if (selectedUserName != null && selectedRole != null) appendStr += '?';
-  //   // // if (selectedUserName != null) {
-  //   // //   appendStr += `keyword=${selectedUserName}`;
-  //   // // }
-  //   if (selectedRole != null) {
-  //     appendStr += `?roleIds=${selectedRole}`;
-  //   }
-  //   fetch(
-  //     `https://gis2.ectrak.com.hk:8900/api/system/user${appendStr}`,
-  //     requestOptions,
-  //   )
-  //     .then(response => {
-  //       return response.json();
-  //     })
-  //     .then(result => {
-  //       //   console.log(result);
-  //       // return result;
-  //       setData(sortData(result?.content, filterField, filterDesc));
-  //       setLoading(false);
-  //     })
-  //     .catch(error => console.log('error1', error));
-  // }, [loading, isFocused]);
-
   const [data, error] = useFetchUsersData({
     userToken,
     loading,
@@ -108,7 +85,6 @@ const UserAccountManagementScreen = () => {
     filterField,
     filterDesc,
   });
-
   const sortOption = [
     {displayValue: 'Account ID', apiValue: 'id'},
     {displayValue: 'Display Name', apiValue: 'displayName'},
@@ -116,7 +92,6 @@ const UserAccountManagementScreen = () => {
 
     {displayValue: 'Status', apiValue: 'status'},
   ];
-  //props?.item?.id, props?.item?.displayName,props?.item?.username,props?.item?.status
 
   return (
     <>
@@ -161,6 +136,16 @@ const UserAccountManagementScreen = () => {
           <View>
             <LinearProgress color="red" />
           </View>
+        ) : isLandscapeMode ? (
+          <UserAccountTable
+            data={data}
+            setFilterDesc={setFilterDesc}
+            setFilterField={setFilterField}
+            filterDesc={filterDesc}
+            filterField={filterField}
+            setLoading={setLoading}
+            navigation={navigation}
+          />
         ) : (
           <FlatList
             data={data}
@@ -341,4 +326,5 @@ const RoleModal = ({
     </Modal>
   );
 };
+
 export default UserAccountManagementScreen;

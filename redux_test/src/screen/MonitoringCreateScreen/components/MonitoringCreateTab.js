@@ -1,7 +1,13 @@
 import React, {useState} from 'react';
 import {Input, Icon} from '@rneui/themed';
 
-import {View, StyleSheet, Pressable, Text} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Pressable,
+  Text,
+  useWindowDimensions,
+} from 'react-native';
 import {
   TextInput,
   Button,
@@ -10,9 +16,10 @@ import {
   Provider,
   HelperText,
 } from 'react-native-paper';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
+  const {height, width} = useWindowDimensions();
+  const isLandscapeMode = width > height ? true : false;
   const [controllerId, setControllerId] = useState(); // T002
   const [deviceId, setDeviceId] = useState(); // Eg 1-4
   const [rfl, setRfl] = useState(); // TE/ST/123
@@ -79,7 +86,10 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
           <View style={{width: '100%'}}>
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode ? '95%' : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Controller ID"
               value={controllerId}
               onChangeText={controllerId => {
@@ -112,7 +122,10 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
           <View style={{width: '100%'}}>
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode ? '95%' : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Device ID"
               value={deviceId}
               onChangeText={deviceId => {
@@ -145,7 +158,10 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
           <View style={{width: '100%'}}>
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode ? '95%' : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="RFL"
               value={rfl}
               onChangeText={rfl => {
@@ -186,7 +202,10 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
             <TextInput
               editable={false}
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode ? '95%' : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Relay Channel Index"
               value={relayChannelIdx?.toString()}
               onChangeText={relayChannelIdx => {
@@ -274,7 +293,10 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
             <TextInput
               editable={false}
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode ? '95%' : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Status"
               value={status}
               onChangeText={status => {

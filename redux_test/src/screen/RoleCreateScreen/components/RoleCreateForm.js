@@ -51,7 +51,7 @@ const RoleCreateForm = ({setForm, form, isSubmit}) => {
             <View style={{width: '100%'}}>
               <TextInput
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
+                style={{width: '85%', backgroundColor: '#f5f6f7'}}
                 label="Display name"
                 value={displayName}
                 onChangeText={displayName => {
@@ -85,7 +85,7 @@ const RoleCreateForm = ({setForm, form, isSubmit}) => {
             <View style={{width: '100%'}}>
               <TextInput
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
+                style={{width: '85%', backgroundColor: '#f5f6f7'}}
                 label="Code"
                 value={code}
                 onChangeText={code => {
@@ -118,7 +118,7 @@ const RoleCreateForm = ({setForm, form, isSubmit}) => {
             />
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{width: '85%', backgroundColor: '#f5f6f7'}}
               label="Remarks"
               value={rmks}
               onChangeText={rmks => {
@@ -148,7 +148,7 @@ const RoleCreateForm = ({setForm, form, isSubmit}) => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
+                style={{width: '85%', backgroundColor: '#f5f6f7'}}
                 label="Status"
                 value={status}
                 onChangeText={status => setStatus(status)}

@@ -27,7 +27,7 @@ const AssignmentDetail = ({islandscapemode}) => {
           selectTextOnFocus={false}
           style={{
             width: islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="Group"
           value=""
@@ -53,7 +53,7 @@ const AssignmentDetail = ({islandscapemode}) => {
           selectTextOnFocus={false}
           style={{
             width: islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="EPIC"
           value=""
@@ -79,7 +79,7 @@ const AssignmentDetail = ({islandscapemode}) => {
           selectTextOnFocus={false}
           style={{
             width: islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="CP"
           value=""
@@ -105,7 +105,7 @@ const AssignmentDetail = ({islandscapemode}) => {
           selectTextOnFocus={false}
           style={{
             width: islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="ASSIGNED DATE"
           value=""
@@ -131,7 +131,7 @@ const AssignmentDetail = ({islandscapemode}) => {
           selectTextOnFocus={false}
           style={{
             width: islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="ETMS START TIME"
           value=""
@@ -158,7 +158,7 @@ const AssignmentDetail = ({islandscapemode}) => {
           selectTextOnFocus={false}
           style={{
             width: islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="ETMS FINISH TIME"
           value=""

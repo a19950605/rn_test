@@ -1,6 +1,12 @@
 import React, {useState, useEffect} from 'react';
 
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  useWindowDimensions,
+} from 'react-native';
 import RoleListItem from './components/RoleListItem';
 import {useNavigation} from '@react-navigation/native';
 import {Icon, LinearProgress} from '@rneui/themed';
@@ -10,6 +16,7 @@ import {sortData} from '../../utils/sortData';
 import {useIsFocused} from '@react-navigation/native';
 import CreateButton from '../../components/CreateButton';
 import {useFetchRoleData} from '../../hooks/apiHook';
+import RoleManagementTable from './components/RoleManagementTable';
 
 function RoleManagementScreen() {
   const isFocused = useIsFocused();
@@ -22,33 +29,9 @@ function RoleManagementScreen() {
   // const [data, setData] = useState();
   const userToken = useSelector(state => state.login.userToken?.Token);
 
-  // useEffect(()   => {
-  //   var requestOptions = {
-  //     method: 'GET',
-  //     headers: {
-  //       // Accept: '*',
-  //       // 'Content-Type': 'application/json',
-  //       'X-Token': userToken,
-  //     },
-  //   };
+  const {height, width} = useWindowDimensions();
+  const isLandscapeMode = width > height ? true : false;
 
-  //   fetch(
-  //     'https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission',
-  //     requestOptions,
-  //   )
-  //     .then(response => {
-  //       return response.json();
-  //     })
-  //     .then(result => {
-  //       // return result;
-  //       // setData(result);
-  //       console.log('role management');
-  //       // console.log(result);
-  //       setData(sortData(result?.content, filterField, filterDesc));
-  //       setLoading(false);
-  //     })
-  //     .catch(error => console.log('error1', error));
-  // }, [loading, isFocused]);
   const [data, error] = useFetchRoleData({
     userToken,
     loading,
@@ -99,6 +82,16 @@ function RoleManagementScreen() {
           <View>
             <LinearProgress color="red" />
           </View>
+        ) : isLandscapeMode ? (
+          <RoleManagementTable
+            data={data}
+            navigation={navigation}
+            filterDesc={filterDesc}
+            filterField={filterField}
+            setFilterDesc={setFilterDesc}
+            setFilterField={setFilterField}
+            setLoading={setLoading}
+          />
         ) : (
           <FlatList
             data={data}

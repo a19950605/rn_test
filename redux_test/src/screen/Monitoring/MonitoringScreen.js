@@ -13,12 +13,9 @@ import {useNavigation} from '@react-navigation/native';
 
 import {Icon, LinearProgress} from '@rneui/themed';
 import {useSelector, useDispatch} from 'react-redux';
-import {signout} from '../../features/login/loginSlice';
-import {Menu} from 'react-native-paper';
 import {useIsFocused} from '@react-navigation/native';
 
 import TableTest from './components/TableTest';
-import {sortData} from '../../utils/sortData';
 import {getDate} from '../../utils/getDate';
 import CreateButton from '../../components/CreateButton';
 import {useFetchMonitorData} from '../../hooks/apiHook';
@@ -59,8 +56,7 @@ const MonitoringScreen = () => {
 
   useEffect(() => {
     setInterval(function () {
-      //setLoading(true);
-
+      // setLoading(true);
       setCurrentDate(getDate());
     }, 30000);
   }, []);
@@ -145,7 +141,15 @@ const MonitoringScreen = () => {
       {loading ? (
         <LinearProgress style={{marginTop: -5}} color="red" />
       ) : isLandscapeMode ? (
-        <TableTest data={data} navigation={navigation} />
+        <TableTest
+          data={data}
+          navigation={navigation}
+          filterDesc={filterDesc}
+          filterField={filterField}
+          setFilterDesc={setFilterDesc}
+          setFilterField={setFilterField}
+          setLoading={setLoading}
+        />
       ) : (
         <FlatList
           data={data}

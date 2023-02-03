@@ -1,7 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Input, Icon} from '@rneui/themed';
 
-import {View, TouchableOpacity, Text, Pressable, Alert} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  Pressable,
+  Alert,
+  useWindowDimensions,
+} from 'react-native';
 import {TextInput, Menu, Provider} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -27,7 +34,8 @@ const UserAccountDetailTab = ({userData}) => {
   const userToken = useSelector(state => state.login.userToken?.Token);
   const navigation = useNavigation();
   const [option, setOption] = useState();
-
+  const {height, width} = useWindowDimensions();
+  const isLandscapeMode = width > height ? true : false;
   console.log('user data');
   console.log(userData?.detail);
   console.log(userData?.detail?.roles);
@@ -198,7 +206,14 @@ const UserAccountDetailTab = ({userData}) => {
             <TextInput
               editable={false}
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode
+                  ? '95%'
+                  : isLandscapeMode
+                  ? '95%'
+                  : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Username"
               value={username}
               onChangeText={username => setUsername(username)}
@@ -220,7 +235,14 @@ const UserAccountDetailTab = ({userData}) => {
             />
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode
+                  ? '95%'
+                  : isLandscapeMode
+                  ? '95%'
+                  : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Display name"
               value={displayName}
               onChangeText={displayName => setDisplayName(displayName)}
@@ -243,7 +265,14 @@ const UserAccountDetailTab = ({userData}) => {
             <TextInput
               editable={false}
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode
+                  ? '95%'
+                  : isLandscapeMode
+                  ? '95%'
+                  : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Staff ID"
               value={staffNo}
               onChangeText={staffNo => setStaffNo(staffNo)}
@@ -272,7 +301,14 @@ const UserAccountDetailTab = ({userData}) => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
+                style={{
+                  width: isLandscapeMode
+                    ? '95%'
+                    : isLandscapeMode
+                    ? '95%'
+                    : '85%',
+                  backgroundColor: '#f5f6f7',
+                }}
                 label="Role"
                 value={role}
                 onChangeText={role => setRole(role)}
@@ -301,7 +337,14 @@ const UserAccountDetailTab = ({userData}) => {
             />
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode
+                  ? '95%'
+                  : isLandscapeMode
+                  ? '95%'
+                  : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Password"
               value={password}
               onChangeText={password => setPassword(password)}
@@ -323,7 +366,14 @@ const UserAccountDetailTab = ({userData}) => {
             />
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode
+                  ? '95%'
+                  : isLandscapeMode
+                  ? '95%'
+                  : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Password Confirmation"
               value={confirmPassword}
               onChangeText={confirmPassword =>
@@ -347,7 +397,14 @@ const UserAccountDetailTab = ({userData}) => {
             />
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{
+                width: isLandscapeMode
+                  ? '95%'
+                  : isLandscapeMode
+                  ? '95%'
+                  : '85%',
+                backgroundColor: '#f5f6f7',
+              }}
               label="Remarks"
               value={rmks}
               onChangeText={rmks => setRmks(rmks)}
@@ -375,7 +432,14 @@ const UserAccountDetailTab = ({userData}) => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
+                style={{
+                  width: isLandscapeMode
+                    ? '95%'
+                    : isLandscapeMode
+                    ? '95%'
+                    : '85%',
+                  backgroundColor: '#f5f6f7',
+                }}
                 label="Status"
                 value={status}
                 onChangeText={status => setStatus(status)}

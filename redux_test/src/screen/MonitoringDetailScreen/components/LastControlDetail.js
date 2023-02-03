@@ -28,7 +28,7 @@ const LastControlDetail = props => {
           selectTextOnFocus={false}
           style={{
             width: props?.islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="Last Control By"
           value={''}
@@ -54,7 +54,7 @@ const LastControlDetail = props => {
           selectTextOnFocus={false}
           style={{
             width: props?.islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="Last Control Action"
           value={''}
@@ -81,7 +81,7 @@ const LastControlDetail = props => {
           selectTextOnFocus={false}
           style={{
             width: props?.islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="Last Control Datetime"
           value={''}

@@ -37,7 +37,7 @@ const StatusTab = props => {
           selectTextOnFocus={false}
           style={{
             width: props?.islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="Health Status"
           value="Alarm("
@@ -63,7 +63,7 @@ const StatusTab = props => {
           selectTextOnFocus={false}
           style={{
             width: props?.islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="Controller Connection Status"
           value={props?.data?.device?.connectionStatus || ''}
@@ -89,7 +89,7 @@ const StatusTab = props => {
           selectTextOnFocus={false}
           style={{
             width: props?.islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="Power Status"
           value={props?.data?.device?.batteryStatus || ''}
@@ -115,7 +115,7 @@ const StatusTab = props => {
           selectTextOnFocus={false}
           style={{
             width: props?.islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="Lamp Status"
           value={
@@ -145,7 +145,7 @@ const StatusTab = props => {
           selectTextOnFocus={false}
           style={{
             width: props?.islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="Previous Lamp Status"
           value={props?.data?.device?.prevLampStatus || ''}
@@ -172,7 +172,7 @@ const StatusTab = props => {
           selectTextOnFocus={false}
           style={{
             width: props?.islandscapemode ? '95%' : '85%',
-            backgroundColor: 'transparent',
+            backgroundColor: '#f5f6f7',
           }}
           label="Relay Channel Status"
           value=""

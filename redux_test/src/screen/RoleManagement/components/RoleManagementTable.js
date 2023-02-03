@@ -4,11 +4,11 @@ import {DataTable} from 'react-native-paper';
 import {Button, Icon} from '@rneui/themed';
 import {FlatList} from 'react-native';
 import {TouchableOpacity} from 'react-native';
-import MonitoringTableItem from './MonitorTableItem';
+import RoleManagementTableItem from './RoleManagementTableItem';
 
 const optionsPerPage = [2, 3, 4];
 
-const TableTest = ({
+const RoleManagementTable = ({
   data,
   navigation,
   filterDesc,
@@ -18,28 +18,22 @@ const TableTest = ({
   setLoading,
 }) => {
   console.log('current in table');
+  const [page, setPage] = React.useState(0);
+  const [itemsPerPage, setItemsPerPage] = React.useState(optionsPerPage[0]);
 
-  const sortOption = [
-    {displayValue: 'RFL ID', apiValue: 'rflid'},
-    {displayValue: 'RFL', apiValue: 'rfl'},
-    {displayValue: 'EPIC', apiValue: 'epic'},
-    {displayValue: 'Group', apiValue: 'Group'},
-    {displayValue: 'Status As Of', apiValue: 'statusasof'},
-  ];
+  React.useEffect(() => {
+    setPage(0);
+  }, [itemsPerPage]);
   return (
     <DataTable style={{paddingHorizontal: 0}}>
       <DataTable.Header style={{paddingHorizontal: 0}}>
         <DataTable.Title
           style={{flex: 1, justifyContent: 'center'}}
           sortDirection={
-            filterField == 'rflid'
-              ? filterDesc
-                ? 'ascending'
-                : 'descending'
-              : ''
+            filterField == 'id' ? (filterDesc ? 'ascending' : 'descending') : ''
           }
           onPress={() => {
-            setFilterField('rflid');
+            setFilterField('id');
             setFilterDesc(!filterDesc);
             setLoading(true);
           }}>
@@ -50,44 +44,20 @@ const TableTest = ({
               fontSize: 16,
               textAlign: 'center',
             }}>
-            RFL ID
-          </Text>
-        </DataTable.Title>
-        <DataTable.Title
-          style={{flex: 2, justifyContent: 'center'}}
-          sortDirection={
-            filterField == 'rfl'
-              ? filterDesc
-                ? 'ascending'
-                : 'descending'
-              : ''
-          }
-          onPress={() => {
-            setFilterField('rfl');
-            setFilterDesc(!filterDesc);
-            setLoading(true);
-          }}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            RFL
+            Role ID
           </Text>
         </DataTable.Title>
         <DataTable.Title
           style={{flex: 1, justifyContent: 'center'}}
           sortDirection={
-            filterField == 'epic'
+            filterField == 'code'
               ? filterDesc
                 ? 'ascending'
                 : 'descending'
               : ''
           }
           onPress={() => {
-            setFilterField('epic');
+            setFilterField('code');
             setFilterDesc(!filterDesc);
             setLoading(true);
           }}>
@@ -98,20 +68,20 @@ const TableTest = ({
               fontSize: 16,
               textAlign: 'center',
             }}>
-            EPIC
+            Code
           </Text>
         </DataTable.Title>
         <DataTable.Title
           style={{flex: 1, justifyContent: 'center'}}
           sortDirection={
-            filterField == 'Group'
+            filterField == 'displayName'
               ? filterDesc
                 ? 'ascending'
                 : 'descending'
               : ''
           }
           onPress={() => {
-            setFilterField('Group');
+            setFilterField('displayName');
             setFilterDesc(!filterDesc);
             setLoading(true);
           }}>
@@ -122,62 +92,35 @@ const TableTest = ({
               fontSize: 16,
               textAlign: 'center',
             }}>
-            Group
+            Display Name
           </Text>
         </DataTable.Title>
         <DataTable.Title
-          style={{flex: 2, justifyContent: 'center', flexDirection: 'row'}}
+          style={{flex: 1, justifyContent: 'center'}}
           sortDirection={
-            filterField == 'statusasof'
+            filterField == 'status'
               ? filterDesc
                 ? 'ascending'
                 : 'descending'
               : ''
           }
           onPress={() => {
-            setFilterField('statusasof');
+            setFilterField('status');
             setFilterDesc(!filterDesc);
             setLoading(true);
           }}>
           <Text
             style={{
-              flex: 1,
               color: 'black',
               fontWeight: 'bold',
               fontSize: 16,
               textAlign: 'center',
-              flexShrink: 1,
-            }}>
-            Status As Of
-          </Text>
-        </DataTable.Title>
-        <DataTable.Title style={{flex: 2, justifyContent: 'center'}}>
-          <Text
-            style={{
-              flex: 1,
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-              flexShrink: 1,
-            }}>
-            eRFL Readliness
-          </Text>
-        </DataTable.Title>
-        <DataTable.Title style={{flex: 4, justifyContent: 'center'}}>
-          <Text
-            style={{
-              flex: 1,
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-              flexShrink: 1,
             }}>
             Status
           </Text>
         </DataTable.Title>
-        <DataTable.Title style={{flex: 2.5, justifyContent: 'center'}}>
+        <DataTable.Title
+          style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}}>
           <Text
             style={{
               flex: 1,
@@ -195,11 +138,11 @@ const TableTest = ({
       <FlatList
         data={data}
         renderItem={props => (
-          <MonitoringTableItem {...props} navigation={navigation} />
+          <RoleManagementTableItem {...props} navigation={navigation} />
         )}
       />
     </DataTable>
   );
 };
 
-export default TableTest;
+export default RoleManagementTable;

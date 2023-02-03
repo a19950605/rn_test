@@ -77,7 +77,7 @@ const PasswordSetting = () => {
           style={{padding: 10}}
         />
         <TextInput
-          style={{width: '85%', backgroundColor: 'transparent'}}
+          style={{width: '85%', backgroundColor: '#f5f6f7'}}
           label="current password"
           value={cPw}
           onChangeText={cPw => setCpw(cPw)}
@@ -98,7 +98,7 @@ const PasswordSetting = () => {
           style={{padding: 10}}
         />
         <TextInput
-          style={{width: '85%', backgroundColor: 'transparent'}}
+          style={{width: '85%', backgroundColor: '#f5f6f7'}}
           label="new password"
           value={pw1}
           onChangeText={pw1 => setPw1(pw1)}
@@ -119,7 +119,7 @@ const PasswordSetting = () => {
           style={{padding: 10}}
         />
         <TextInput
-          style={{width: '85%', backgroundColor: 'transparent'}}
+          style={{width: '85%', backgroundColor: '#f5f6f7'}}
           label="password2"
           value={pw2}
           onChangeText={pw2 => setPw2(pw2)}

@@ -160,7 +160,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
               selectTextOnFocus={false}
               style={{
                 width: islandscapemode ? '95%' : '85%',
-                backgroundColor: 'transparent',
+                backgroundColor: '#f5f6f7',
               }}
               label="Controller ID"
               value={controllerId}
@@ -189,7 +189,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
               selectTextOnFocus={false}
               style={{
                 width: islandscapemode ? '95%' : '85%',
-                backgroundColor: 'transparent',
+                backgroundColor: '#f5f6f7',
               }}
               label="Device ID"
               value={deviceId}
@@ -218,7 +218,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
               selectTextOnFocus={false}
               style={{
                 width: islandscapemode ? '95%' : '85%',
-                backgroundColor: 'transparent',
+                backgroundColor: '#f5f6f7',
               }}
               label="RFL"
               value={rfl}
@@ -253,7 +253,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
                 selectTextOnFocus={false}
                 style={{
                   width: islandscapemode ? '95%' : '85%',
-                  backgroundColor: 'transparent',
+                  backgroundColor: '#f5f6f7',
                 }}
                 label="Relay Channel Index"
                 value={relayChannelIdx?.toString()}
@@ -344,7 +344,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
                 selectTextOnFocus={false}
                 style={{
                   width: islandscapemode ? '95%' : '85%',
-                  backgroundColor: 'transparent',
+                  backgroundColor: '#f5f6f7',
                 }}
                 label="Status"
                 value={status}

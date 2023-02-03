@@ -476,7 +476,6 @@ function CustomDrawerContent(props) {
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   sideMenuProfileIcon: {
     resizeMode: 'center',

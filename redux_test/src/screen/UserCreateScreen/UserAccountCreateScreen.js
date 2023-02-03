@@ -172,7 +172,7 @@ const UserAccountCreateScreen = () => {
             <View style={{width: '100%'}}>
               <TextInput
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
+                style={{width: '85%', backgroundColor: '#f5f6f7'}}
                 label="Username"
                 value={username}
                 onChangeText={username => setUsername(username)}
@@ -202,7 +202,7 @@ const UserAccountCreateScreen = () => {
             <View style={{width: '100%'}}>
               <TextInput
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
+                style={{width: '85%', backgroundColor: '#f5f6f7'}}
                 label="Display name"
                 value={displayName}
                 onChangeText={displayName => setDisplayName(displayName)}
@@ -232,7 +232,7 @@ const UserAccountCreateScreen = () => {
             <View style={{width: '100%'}}>
               <TextInput
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
+                style={{width: '85%', backgroundColor: '#f5f6f7'}}
                 label="Staff ID"
                 value={staffNo}
                 onChangeText={staffNo => setStaffNo(staffNo)}
@@ -269,7 +269,7 @@ const UserAccountCreateScreen = () => {
                 <TextInput
                   editable={false}
                   selectTextOnFocus={false}
-                  style={{width: '85%', backgroundColor: 'transparent'}}
+                  style={{width: '85%', backgroundColor: '#f5f6f7'}}
                   label="Role"
                   value={role}
                   onChangeText={''}
@@ -305,7 +305,7 @@ const UserAccountCreateScreen = () => {
             <View style={{width: '100%'}}>
               <TextInput
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
+                style={{width: '85%', backgroundColor: '#f5f6f7'}}
                 label="Password"
                 value={password}
                 secureTextEntry={true}
@@ -336,7 +336,7 @@ const UserAccountCreateScreen = () => {
             <View style={{width: '100%'}}>
               <TextInput
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
+                style={{width: '85%', backgroundColor: '#f5f6f7'}}
                 label="Password Confirmation"
                 value={confirmPassword}
                 secureTextEntry={true}
@@ -368,7 +368,7 @@ const UserAccountCreateScreen = () => {
             />
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: 'transparent'}}
+              style={{width: '85%', backgroundColor: '#f5f6f7'}}
               label="Remarks"
               value={rmks}
               onChangeText={rmks => setRmks(rmks)}
@@ -396,7 +396,7 @@ const UserAccountCreateScreen = () => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: 'transparent'}}
+                style={{width: '85%', backgroundColor: '#f5f6f7'}}
                 label="Status"
                 value={status}
                 onChangeText={''}

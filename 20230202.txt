@@ -2,10 +2,12 @@
 
 
 SEARCH FUNCTION ***
-tablet view     ***
+tablet view     ***(done)
 
-
-use stylesheet
+use stylesheet ***
 global alert message
+
+relay
+assignment
 
 
