@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-native-pager-view": "^6.1.2",
+    "react-native-paper-tabs": "^0.7.0"
+  }
+}

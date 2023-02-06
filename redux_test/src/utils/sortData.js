@@ -7,9 +7,13 @@ export function sortData(list, key, filterDesc) {
     }
   } else if (key == 'rfl') {
     if (filterDesc) {
-      return list.sort((a, b) => (a.code > b.code ? 1 : -1)).reverse();
+      return list
+        .sort((a, b) => (a.code.toLowerCase() > b.code.toLowerCase() ? 1 : -1))
+        .reverse();
     } else {
-      return list.sort((a, b) => (a.code > b.code ? 1 : -1));
+      return list.sort((a, b) =>
+        a.code.toLowerCase() > b.code.toLowerCase() ? 1 : -1,
+      );
     }
   } else if (key == 'id') {
     if (filterDesc) {

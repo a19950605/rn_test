@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Tab, Text, TabView} from '@rneui/themed';
+import {Tab, Text, TabView, Overlay} from '@rneui/themed';
+import {Tabs, TabScreen} from 'react-native-paper-tabs';
+
 import {Input, Icon} from '@rneui/themed';
 
 import {
@@ -20,6 +22,10 @@ import ImageDetailMon from './components/ImageDetailMon';
 import {useSelector} from 'react-redux';
 import {Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {color} from '@rneui/base';
+import {ActivityIndicator} from 'react-native-paper';
+import {Loading} from '../../components/Loading';
+import {ModalMessage} from '../../components/ModalMessage';
 
 const MonitoringDetailScreen = props => {
   console.log('monitoring tab1');
@@ -35,6 +41,12 @@ const MonitoringDetailScreen = props => {
   const [uri, setUri] = useState('');
   const [index, setIndex] = useState(0);
   const [responseCode, setResponseCode] = useState();
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const [showModal, setShowModal] = useState(false);
+  const [color, setColor] = useState('red');
+  const [icon, setIcon] = useState('alert');
+  const [alertMessage, setAlertMessage] = useState('');
 
   const [data, setData] = useState('');
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -47,25 +59,25 @@ const MonitoringDetailScreen = props => {
     status: 'ACTIVE',
   });
 
-  const updateRecord = token => {
+  const updateRecord = (token, form) => {
+    console.log('update test');
+    console.log(form);
     var formdata = new FormData();
-    formdata.append('controllerCode', form.controllerId);
-    formdata.append('code', form.rfl);
+    formdata.append('controllerCode', form?.controllerId);
+    formdata.append('code', form?.rfl);
 
-    formdata.append('controllerDeviceId', parseInt(form.deviceId));
-    formdata.append('lampPositionY', lampX);
-    formdata.append('lampPositionX', lampY);
-    formdata.append('imageW', imgX);
-    formdata.append('imageH', imgY);
-    formdata.append('relayChannelIdx', form.relayChannelIdx);
+    formdata.append('controllerDeviceId', parseInt(form?.deviceId));
+    formdata.append('lampPositionY', form?.lampX);
+    formdata.append('lampPositionX', form?.lampY);
+    formdata.append('imageW', form?.imgX);
+    formdata.append('imageH', form?.imgY);
+    formdata.append('relayChannelIdx', form?.relayChannelIdx);
     formdata.append('xxoo', {
-      uri: uri,
+      uri: form?.uri,
       type: 'image/jpeg',
       name: 'xxoo',
     });
-    formdata.append('status', 'ACTIVE');
-    console.log('relaychidx');
-    console.log(form.relayChannelIdx);
+    formdata.append('status', form?.status);
     //set form first
 
     var requestOptions = {
@@ -81,27 +93,42 @@ const MonitoringDetailScreen = props => {
       `https://gis2.ectrak.com.hk:8900/api/v2/device/${props.route.params.id}`,
       requestOptions,
     )
-      .then(response => {
-        setResponseCode(response.status);
+      .then(async response => {
+        console.log('response create');
+        let data = await response.json();
+        console.log(data);
+        if (response.status == 200) {
+          setAlertMessage('update success' + `(id:${data?.id})`);
+          setIcon('check-circle');
+          setColor('green');
+          setShowModal(true);
 
-        return response.json();
-      })
-      .then(result => {
-        //  console.log(result);
-        // return result;
-        console.log('submit result');
-        console.log(result);
-
-        if (responseCode == 200) {
-          alert('update success' + result?.id);
           navigation.navigate('MonitoringTestSub');
         } else {
-          alert('update fail: ' + responseCode + '\n' + result?.errorMsg);
+          setIcon('alert');
+          setColor('red');
+          setAlertMessage(
+            'update fail: ' + response.status + '\n' + data?.errorMsg,
+          );
+          setShowModal(true);
         }
       })
+      // .then(result => {
+      //   //  console.log(result);
+      //   // return result;
+      //   console.log('submit result');
+      //   console.log(result);
+
+      //   if (responseCode == 200) {
+      //     alert('update success' + result?.id);
+      //     navigation.navigate('MonitoringTestSub');
+      //   } else {
+      //     alert('update fail: ' + responseCode + '\n' + result?.errorMsg);
+      //   }
+      // })
       .catch(error => console.log('error13', error));
   };
-  const deleteConfirm = token => {
+  const deleteConfirm = (token, id) => {
     return Alert.alert(
       'Delete',
       'Are you sure you want to remove this record?',
@@ -110,7 +137,7 @@ const MonitoringDetailScreen = props => {
         {
           text: 'Yes',
           onPress: () => {
-            deleteRecord(token);
+            deleteRecord({token, id});
           },
         },
         // The "No" button
@@ -121,7 +148,7 @@ const MonitoringDetailScreen = props => {
       ],
     );
   };
-  const deleteRecord = token => {
+  const deleteRecord = ({token, id}) => {
     var requestOptions = {
       method: 'DELETE',
       headers: {
@@ -130,29 +157,43 @@ const MonitoringDetailScreen = props => {
         'X-Token': token,
       },
     };
-    fetch(
-      `https://gis2.ectrak.com.hk:8900/api/v2/device/${props.route.params.id}`,
-      requestOptions,
-    )
-      .then(response => {
-        setResponseCode(response.status);
+    console.log('deleterecord');
+    console.log(token);
+    console.log(id);
+    fetch(`https://gis2.ectrak.com.hk:8900/api/v2/device/${id}`, requestOptions)
+      .then(async response => {
+        let data = await response.json();
+        console.log(data);
+        if (response.status == 200) {
+          setAlertMessage('Delete success' + `(id:${data?.id})`);
+          setIcon('check-circle');
+          setColor('green');
+          setShowModal(true);
 
-        return response.json();
-      })
-      .then(result => {
-        //  console.log(result);
-        // return result;
-        console.log('submit result');
-        console.log(result);
-
-        if (responseCode == 200) {
-          alert('delete success' + result?.id);
           navigation.navigate('MonitoringTestSub');
         } else {
-          alert('delete fail: ' + responseCode + '\n' + result?.errorMsg);
+          setIcon('alert');
+          setColor('red');
+          setAlertMessage(
+            'Delete fail: ' + response.status + '\n' + data?.errorMsg,
+          );
+          setShowModal(true);
         }
       })
-      .catch(error => console.log('error1Z', error));
+      // .then(result => {
+      //   //  console.log(result);
+      //   // return result;
+      //   console.log('submit result');
+      //   console.log(result);
+
+      //   if (responseCode == 200) {
+      //     alert('delete success' + result?.id);
+      //     navigation.navigate('MonitoringTestSub');
+      //   } else {
+      //     alert('delete fail: ' + responseCode + '\n' + result?.errorMsg);
+      //   }
+      // })
+      .catch(error => console.log('error1', error));
   };
   useEffect(() => {
     var requestOptions = {
@@ -163,6 +204,7 @@ const MonitoringDetailScreen = props => {
         'X-Token': userToken,
       },
     };
+    // https://gis2.ectrak.com.hk:8900/api/data/device/img/37
     //hardcode the id at this moment
     fetch(
       `https://gis2.ectrak.com.hk:8900/api/v2/device/${props.route.params.id}`,
@@ -175,11 +217,34 @@ const MonitoringDetailScreen = props => {
         //  console.log(result);
         // return result;
         //   setData(result);
-        console.log('device tst121');
+        console.log('device tst1211');
         console.log(result);
         setData(result);
 
         setLoading(false);
+      })
+      .catch(error => console.log('error14', error));
+
+    fetch(
+      `https://gis2.ectrak.com.hk:8900/api/data/device/img/${props.route.params.id}`,
+      requestOptions,
+    )
+      .then(response => {
+        console.log('img res');
+        console.log(response);
+        console.log(response?._bodyBlob);
+        return response.blob();
+      })
+      .then(result => {
+        //  console.log(result);
+        // return result;
+        //   setData(result);
+
+        // const imageObjectURL = URL.createObjectURL(result);
+        console.log('imagetest');
+        console.log(result);
+        // setUri(imageObjectURL);
+        console.log(result?._data);
       })
       .catch(error => console.log('error14', error));
   }, []);
@@ -196,131 +261,44 @@ const MonitoringDetailScreen = props => {
   return (
     <>
       {loading ? (
-        <View>
-          <Text>Loading</Text>
-        </View>
+        <Loading />
       ) : (
         <>
-          <Tab
-            value={index}
-            scrollable={true}
-            onChange={e => setIndex(e)}
-            containerStyle={{
-              backgroundColor: 'white',
-              color: 'black',
-            }}
-            indicatorStyle={{
-              backgroundColor: 'red',
-              height: 3,
-            }}
-            style={{backgroundColor: 'white'}}
-            variant="default">
-            <Tab.Item
-              title="Details"
-              titleStyle={active => ({
-                color: active ? '#7a2210' : 'black',
-                fontSize: 12,
-              })}
-              icon={active => ({
-                name: 'clipboard-text',
-                type: 'material-community',
-                color: active ? '#7a2210' : 'black',
-              })}
-            />
-            <Tab.Item
-              title="Status"
-              titleStyle={active => ({
-                color: active ? '#7a2210' : 'black',
-                fontSize: 12,
-              })}
-              icon={active => ({
-                name: 'insert-chart',
-                type: 'material',
-                color: active ? '#7a2210' : 'black',
-              })}
-            />
-            <Tab.Item
-              title="Assignment"
-              titleStyle={active => ({
-                color: active ? '#7a2210' : 'black',
-                fontSize: 12,
-              })}
-              icon={active => ({
-                name: 'clipboard-text',
-                type: 'material-community',
-                color: active ? '#7a2210' : 'black',
-              })}
-            />
-            <Tab.Item
-              title="Last Control"
-              titleStyle={active => ({
-                color: active ? '#7a2210' : 'black',
-                fontSize: 12,
-              })}
-              icon={active => ({
-                name: 'toggle-switch-off',
-                type: 'material-community',
-                color: active ? '#7a2210' : 'black',
-              })}
-            />
-            <Tab.Item
-              title="Location"
-              titleStyle={active => ({
-                color: active ? '#7a2210' : 'black',
-                fontSize: 12,
-              })}
-              icon={active => ({
-                name: 'map',
-                type: 'material',
-                color: active ? '#7a2210' : 'black',
-              })}
-            />
-            <Tab.Item
-              title="History"
-              titleStyle={active => ({
-                color: active ? '#7a2210' : 'black',
-                fontSize: 12,
-              })}
-              icon={active => ({
-                name: 'history',
-                color: active ? '#7a2210' : 'black',
-              })}
-            />
-            <Tab.Item
-              title="Alarm"
-              titleStyle={active => ({
-                color: active ? '#7a2210' : 'black',
-                fontSize: 12,
-              })}
-              icon={active => ({
-                name: 'alert',
-                type: 'material-community',
-                color: active ? '#7a2210' : 'black',
-              })}
-            />
-          </Tab>
-          <TabView value={index} onChange={setIndex} animationType="spring">
-            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+          <Tabs
+            defaultIndex={0} // default = 0
+            uppercase={false} // true/false | default=true | labels are uppercase
+            // showTextLabel={false} // true/false | default=false (KEEP PROVIDING LABEL WE USE IT AS KEY INTERNALLY + SCREEN READERS)
+            iconPosition="top" // leading, top | default=leading
+            style={{backgroundColor: 'white'}} // works the same as AppBar in react-native-paper
+            // dark={false} // works the same as AppBar in react-native-paper
+            // theme={{color: 'black'}} // works the same as AppBar in react-native-paper
+            mode="scrollable" // fixed, scrollable | default=fixed
+            // onChangeIndex={(newIndex) => {}} // react on index change
+            showLeadingSpace={false} //  (default=true) show leading space in scrollable tabs inside the header
+            // disableSwipe={false} // (default=false) disable swipe to left/right gestures
+          >
+            <TabScreen label="Detail" icon="clipboard-text">
               <MonitoringDetailTab
                 data={data}
                 form={form}
                 setForm={setForm}
+                isSubmit={isSubmit}
                 islandscapemode={islandscapemode}
               />
-            </TabView.Item>
-            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+            </TabScreen>
+            <TabScreen label="Status" icon="chart-box">
               <StatusTab data={data} islandscapemode={islandscapemode} />
-            </TabView.Item>
-            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+            </TabScreen>
+            <TabScreen label="Assignment" icon="clipboard-text">
               <AssignmentDetail islandscapemode={islandscapemode} />
-            </TabView.Item>
-            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+            </TabScreen>
+            <TabScreen label="Last Control" icon="toggle-switch-off">
               <LastControlDetail
                 data={data}
                 islandscapemode={islandscapemode}
               />
-            </TabView.Item>
-            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+            </TabScreen>
+            <TabScreen label="Location" icon="map">
               <ImageDetailMon
                 setImgX={setImgX}
                 setImgY={setImgY}
@@ -330,14 +308,18 @@ const MonitoringDetailScreen = props => {
                 uri={uri}
                 islandscapemode={islandscapemode}
               />
-            </TabView.Item>
-            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+            </TabScreen>
+            <TabScreen label="History" icon="history">
               <HistoryTab deviceID={1} islandscapemode={islandscapemode} />
-            </TabView.Item>
-            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-              <Alarm islandscapemode={islandscapemode} />
-            </TabView.Item>
-          </TabView>
+            </TabScreen>
+
+            <TabScreen label="Alarm" icon="alert">
+              <Alarm
+                islandscapemode={islandscapemode}
+                deviceId={data?.device?.code}
+              />
+            </TabScreen>
+          </Tabs>
 
           <View
             style={{
@@ -358,7 +340,7 @@ const MonitoringDetailScreen = props => {
                 marginRight: 5,
               }}
               onPress={() => {
-                deleteConfirm(userToken);
+                deleteConfirm(userToken, props?.route?.params?.id);
               }}>
               <Icon
                 name="md-save-sharp"
@@ -381,17 +363,29 @@ const MonitoringDetailScreen = props => {
               onPress={() => {
                 console.log('request body');
                 console.log(JSON.stringify(form));
+                setIsSubmit(true);
                 if (
                   uri == '' ||
                   form.deviceId == '' ||
                   form.controllerId == '' ||
                   form.rfl == '' ||
-                  form.relayChannelIdx == ''
+                  form.relayChannelIdx == '' ||
+                  form.status == ''
                 ) {
-                  alert('something missing');
+                  console.log('formdata');
+                  console.log({uri, ...form});
+                  setAlertMessage('Missing required field!');
+                  setShowModal('true');
                   //+ uri + JSON.stringify(form),
                 } else {
-                  updateRecord(userToken);
+                  updateRecord(userToken, {
+                    uri,
+                    imgX,
+                    imgY,
+                    lampX,
+                    lampY,
+                    ...form,
+                  });
                 }
               }}>
               <Icon
@@ -403,6 +397,16 @@ const MonitoringDetailScreen = props => {
               />
               <Text style={{color: 'green'}}> Save</Text>
             </TouchableOpacity>
+          </View>
+          <View>
+            {showModal && (
+              <ModalMessage
+                message={alertMessage}
+                setShowModal={setShowModal}
+                color={color}
+                icon={icon}
+              />
+            )}
           </View>
         </>
       )}

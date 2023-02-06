@@ -7,7 +7,7 @@ import {TextInput} from 'react-native-paper';
 
 const AssignmentDetail = ({islandscapemode}) => {
   return (
-    <View style={{padding: 10}}>
+    <View style={{padding: 10, backgroundColor: 'white', flex: 1}}>
       <View
         style={{
           flexDirection: 'row',

@@ -3,42 +3,43 @@ import {View, Text} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OutstandingAlarmMonCard from '../../OutstandingAlarm/components/OutstandingAlarmMonCard';
+import {useSelector} from 'react-redux';
 
-const Alarm = () => {
+const Alarm = ({deviceId}) => {
   const [data, setData] = useState();
+  const userToken = useSelector(state => state.login.userToken?.Token);
+  console.log('arlarm deviceid');
+  console.log(deviceId);
+  //KT/R1/002
+  var formdata = new FormData();
+  formdata.append('deviceId', deviceId);
   useEffect(() => {
-    async function getData() {
-      return await AsyncStorage.getItem('@token').then(res => {
-        console.log('tokentest');
-        console.log(res);
-        return res;
-      });
-    }
-    getData().then(res => {
-      var requestOptions = {
-        method: 'GET',
-        headers: {
-          // Accept: '*',
-          // 'Content-Type': 'application/json',
-          'X-Token': res,
-        },
-      };
-      fetch('https://gis2.ectrak.com.hk:8900/api/v2/alarms', requestOptions)
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          //  console.log(result);
-          // return result;
-          console.log('result');
-          console.log(result);
-          setData(result);
-        })
-        .catch(error => console.log('error1', error));
-    });
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+    };
+    fetch(
+      `https://gis2.ectrak.com.hk:8900/api/v2/alarm/search?deviceId=`,
+      requestOptions,
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        //  console.log(result);
+        // return result;
+        console.log('result123');
+        console.log(result);
+        setData(result?.content);
+      })
+      .catch(error => console.log('error1', error));
   }, []);
   return (
-    <View style={{flex: 1, padding: 10}}>
+    <View style={{flex: 1, padding: 10, backgroundColor: 'white'}}>
       <View
         style={{
           flexDirection: 'row',
@@ -54,7 +55,6 @@ const Alarm = () => {
       {/** History list */}
 
       <View style={{marginTop: 10}}>
-        <Text>get list here</Text>
         <FlatList
           data={data}
           renderItem={props => <OutstandingAlarmMonCard {...props} />}

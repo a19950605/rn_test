@@ -145,8 +145,8 @@ const useFetchMonitorData = ({
   setCurrentDate,
 }) => {
   const dispatch = useDispatch();
-  const [data, setData] = useState();
-  const [error, setError] = useState(false);
+  const [data2, setData] = useState();
+  const [error2, setError] = useState(false);
 
   useEffect(() => {
     var requestOptions = {
@@ -160,7 +160,7 @@ const useFetchMonitorData = ({
     //`https://gis2.ectrak.com.hk:8900/api/system/user${appendStr}`,
 
     fetch(
-      'https://gis2.ectrak.com.hk:8900/api/v2/options/devices?showOnlyActive=1',
+      'https://gis2.ectrak.com.hk:8900/api/v2/options/devices?showOnlyActive=0',
       requestOptions,
     )
       .then(response => {
@@ -174,16 +174,15 @@ const useFetchMonitorData = ({
         console.log('role management');
         console.log(result);
         setData(sortData(result, filterField, filterDesc));
-        setCurrentDate(getDate());
-        setLoading(false);
+        // setLoading(false);
       })
       .catch(error => {
         setError(true);
         console.log('error1', error);
       });
-  }, [loading, isFocused]);
+  }, [isFocused]);
 
-  return [data, error];
+  return [data2, error2];
 };
 
 const useCreateUser = ({userToken, form, navigation}) => {
@@ -238,14 +237,28 @@ const useFetchMonitorTest = ({
   filterField,
   filterDesc,
   setCurrentDate,
+  filterStatus,
 }) => {
   const [data, setData] = useState();
   const [error, setError] = useState(false);
   useEffect(() => {
     let formdata = new FormData();
-    formdata.append('status', 'ACTIVE');
-    formdata.append('deviceId', '');
 
+    formdata.append(
+      'status',
+      filterStatus == 'All'
+        ? ''
+        : filterStatus == 'ACTIVE'
+        ? 'ACTIVE'
+        : filterStatus == 'Isolated'
+        ? 'SPECIAL'
+        : filterStatus == 'Maintenance'
+        ? 'DISABLED'
+        : '',
+    ); //SPECIAL=ISOLATE, //maintenance=disabled //isolate=special
+    formdata.append('deviceId', '');
+    formdata.append('connectionStatus', '');
+    //status maintenace
     var requestOptions = {
       method: 'POST',
       headers: {

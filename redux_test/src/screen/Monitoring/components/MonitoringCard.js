@@ -1,11 +1,12 @@
 import {Icon} from '@rneui/themed';
 import React from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
+import {convertDate} from '../../../utils/getDate';
 //monitoring
 
 const MonitoringCard = props => {
-  console.log('component load');
-  console.log(props.item);
+  // console.log('component load');
+  // console.log(props.item);
 
   return (
     <View style={styles.card}>
@@ -30,7 +31,7 @@ const MonitoringCard = props => {
           <Text style={{color: 'black', fontWeight: 'bold'}}>
             Status As Of:
           </Text>
-          <Text>{props.item.activeAssignment?.dtCreate || '-'}</Text>
+          <Text>{convertDate(props.item.dtKeepalive) || '-'}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'black', fontWeight: 'bold'}}>
@@ -40,9 +41,19 @@ const MonitoringCard = props => {
             style={
               props.item.status == 'ACTIVE'
                 ? {color: 'green'}
+                : props.item.status == 'SPECIAL'
+                ? {color: 'purple'}
+                : props.item.status == 'DISABLED'
+                ? {color: 'red'}
                 : {color: 'black'}
             }>
-            {props.item.status}
+            {props.item.status == 'ACTIVE'
+              ? 'Active(Available)'
+              : props.item.status == 'SPECIAL'
+              ? 'Isolated'
+              : props.item.status == 'DISABLED'
+              ? 'Maintenance'
+              : ''}
           </Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>

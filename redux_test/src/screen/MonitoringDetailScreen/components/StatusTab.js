@@ -6,18 +6,18 @@ import {View, StyleSheet, Button} from 'react-native';
 import {TextInput} from 'react-native-paper';
 
 const StatusTab = props => {
-  console.log('inside status tab');
-  console.log(props);
+  // console.log('inside status tab');
+  // console.log(props);
 
-  console.log(props?.data?.device?.activeAlarms); //health status ==alarm
-  console.log(props?.data?.device?.connectionStatus); //
-  console.log(props?.data?.device?.dtKeepalive);
-  console.log(props?.data?.device?.dtPrevLampStatus);
-  console.log(props?.data?.device?.prevLampStatus);
-  console.log(props?.data?.device?.relayChannel);
-  console.log(props?.data?.device?.status);
+  // console.log(props?.data?.device?.activeAlarms); //health status ==alarm
+  // console.log(props?.data?.device?.connectionStatus); //
+  // console.log(props?.data?.device?.dtKeepalive);
+  // console.log(props?.data?.device?.dtPrevLampStatus);
+  // console.log(props?.data?.device?.prevLampStatus);
+  // console.log(props?.data?.device?.relayChannel);
+  // console.log(props?.data?.device?.status);
   return (
-    <View style={{padding: 10}}>
+    <View style={{padding: 10, backgroundColor: 'white', flex: 1}}>
       <View
         style={{
           flexDirection: 'row',

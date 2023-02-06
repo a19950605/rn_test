@@ -20,11 +20,11 @@ import {
 const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
-  const [controllerId, setControllerId] = useState(); // T002
-  const [deviceId, setDeviceId] = useState(); // Eg 1-4
-  const [rfl, setRfl] = useState(); // TE/ST/123
-  const [relayChannelIdx, setRelayChannelIdx] = useState(); //0-3
-  const [status, setStatus] = useState(); //active maintenanace
+  const [controllerId, setControllerId] = useState(''); // T002
+  const [deviceId, setDeviceId] = useState(''); // Eg 1-4
+  const [rfl, setRfl] = useState(''); // TE/ST/123
+  const [relayChannelIdx, setRelayChannelIdx] = useState(''); //0-3
+  const [status, setStatus] = useState('ACTIVE'); //active maintenanace
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
   const StatusDropDown = ({close}) => {
@@ -69,7 +69,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
 
   return (
     <Provider>
-      <View style={{padding: 10}}>
+      <View style={{padding: 10, backgroundColor: 'white', flex: 1}}>
         <View
           style={{
             flexDirection: 'row',
@@ -97,13 +97,18 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
                 setForm({...form, controllerId: controllerId});
               }}
             />
-            <HelperText
-              type="error"
-              visible={controllerId == null && isSubmit}
-              style={{marginBottom: -30}}>
-              Controller ID is invalid!
-            </HelperText>
           </View>
+        </View>
+        <View>
+          <HelperText
+            type="error"
+            visible={controllerId == '' && isSubmit}
+            style={{
+              marginTop: controllerId == '' && isSubmit ? -15 : -30,
+              marginLeft: 30,
+            }}>
+            Controller ID is invalid!
+          </HelperText>
         </View>
         <View
           style={{
@@ -133,13 +138,18 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
                 setForm({...form, deviceId: deviceId});
               }}
             />
-            <HelperText
-              type="error"
-              visible={deviceId == null && isSubmit}
-              style={{marginBottom: -30}}>
-              Device ID is missing
-            </HelperText>
           </View>
+        </View>
+        <View>
+          <HelperText
+            type="error"
+            visible={deviceId == '' && isSubmit}
+            style={{
+              marginTop: deviceId == '' && isSubmit ? -15 : -30,
+              marginLeft: 30,
+            }}>
+            Device ID is missing
+          </HelperText>
         </View>
         <View
           style={{
@@ -169,14 +179,18 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
                 setForm({...form, rfl: rfl});
               }}
             />
-
-            <HelperText
-              type="error"
-              visible={rfl == null && isSubmit}
-              style={{marginBottom: -30}}>
-              RFL is missing
-            </HelperText>
           </View>
+        </View>
+        <View>
+          <HelperText
+            type="error"
+            visible={rfl == '' && isSubmit}
+            style={{
+              marginTop: rfl == '' && isSubmit ? -15 : -30,
+              marginLeft: 30,
+            }}>
+            RFL is missing
+          </HelperText>
         </View>
         <View
           style={{
@@ -215,6 +229,16 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
             />
           </Pressable>
         </View>
+
+        <HelperText
+          type="error"
+          visible={relayChannelIdx == '' && isSubmit}
+          style={{
+            marginTop: relayChannelIdx == '' && isSubmit ? -15 : -30,
+            marginLeft: 30,
+          }}>
+          relayChannel Index is missing
+        </HelperText>
         <View>
           {menu1 && (
             <View
@@ -238,7 +262,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
               <Menu.Item
                 onPress={() => {
                   setRelayChannelIdx(0);
-                  setForm({...form, relayChannelIdx: relayChannelIdx});
+                  setForm({...form, relayChannelIdx: 0});
                   setMenu1(false);
                 }}
                 title="0"
@@ -246,7 +270,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
               <Menu.Item
                 onPress={() => {
                   setRelayChannelIdx(1);
-                  setForm({...form, relayChannelIdx: relayChannelIdx});
+                  setForm({...form, relayChannelIdx: 1});
                   setMenu1(false);
                 }}
                 title="1"
@@ -254,7 +278,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
               <Menu.Item
                 onPress={() => {
                   setRelayChannelIdx(2);
-                  setForm({...form, relayChannelIdx: relayChannelIdx});
+                  setForm({...form, relayChannelIdx: 2});
                   setMenu1(false);
                 }}
                 title="2"
@@ -262,7 +286,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
               <Menu.Item
                 onPress={() => {
                   setRelayChannelIdx(3);
-                  setForm({...form, relayChannelIdx: relayChannelIdx});
+                  setForm({...form, relayChannelIdx: 3});
                   setMenu1(false);
                 }}
                 title="3"

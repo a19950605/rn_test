@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   useWindowDimensions,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import Modal from 'react-native-modal';
 
@@ -20,6 +21,7 @@ import {getDate} from '../../utils/getDate';
 import CreateButton from '../../components/CreateButton';
 import {useFetchMonitorData, useFetchMonitorTest} from '../../hooks/apiHook';
 import SortDropDown from '../../utils/sortFilter';
+import {MonitoringFilterModal} from './components/MonitoringFilterModal';
 // const MonitoringTest = () => {
 //   const Stack = createStackNavigator();
 //   return (
@@ -48,12 +50,14 @@ const MonitoringScreen = () => {
   const [showUserModal, setShowUserModal] = useState(false);
   const [showRoleModal, setShowRoleModal] = useState(false);
 
-  const [roleOption, setRoleOption] = useState([]);
-  const [userOption, setUserOption] = useState([]);
-
-  console.log('islandscapemode' + isLandscapeMode);
+  const [filterRFL, setFilterRFL] = useState('All');
+  const [filterCONNStatus, setFilterCONNStatus] = useState('All');
+  const [filterGroup, setFilterGroup] = useState('All');
+  const [filterDate, setFilterDate] = useState('');
+  const [filterStatus, setFilterStatus] = useState('ACTIVE');
+  const [showMainModal, setShowMainModal] = useState(false);
   const isFocused = useIsFocused();
-
+  const [rflDropDown, setRflDropDown] = useState([]);
   useEffect(() => {
     setInterval(function () {
       // setLoading(true);
@@ -69,7 +73,29 @@ const MonitoringScreen = () => {
     filterField,
     filterDesc,
     setCurrentDate,
+    filterStatus,
   });
+
+  const [data2, error2] = useFetchMonitorData({
+    userToken,
+    loading,
+    isFocused,
+    setLoading,
+    filterField,
+    filterDesc,
+    setCurrentDate,
+  });
+
+  useEffect(() => {
+    console.log('data');
+
+    data2?.map(d => {
+      console.log(d.id, d.code);
+      setRflDropDown([...rflDropDown, {id: d.id, code: d.code}]);
+      setRflDropDown(oldArray => [...oldArray, {id: d.id, code: d.code}]);
+    });
+  }, []);
+
   const sortOption = [
     {displayValue: 'RFL ID', apiValue: 'rflid'},
     {displayValue: 'RFL', apiValue: 'rfl'},
@@ -109,7 +135,7 @@ const MonitoringScreen = () => {
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity
             onPress={() => {
-              setShowModal(true);
+              setShowMainModal(true);
             }}>
             <Icon name="search" size={24} color="black" type="ionicon" />
           </TouchableOpacity>
@@ -153,6 +179,15 @@ const MonitoringScreen = () => {
           renderItem={props => (
             <MonitoringCard {...props} navigation={navigation} />
           )}
+        />
+      )}
+      {showMainModal && (
+        <MonitoringFilterModal
+          setLoading={setLoading}
+          setShowMainModal={setShowMainModal}
+          showMainModal={showMainModal}
+          filterStatus={filterStatus}
+          setFilterStatus={setFilterStatus}
         />
       )}
     </View>

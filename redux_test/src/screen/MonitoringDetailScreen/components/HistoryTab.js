@@ -47,7 +47,7 @@ const HistoryTab = ({deviceID}) => {
     });
   }, [deviceID]);
   return (
-    <View style={{flex: 1, padding: 10}}>
+    <View style={{flex: 1, padding: 10, backgroundColor: 'white'}}>
       <View
         style={{
           flexDirection: 'row',

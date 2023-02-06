@@ -3,18 +3,24 @@ import {Text} from '@rneui/themed';
 import {Input, Icon} from '@rneui/themed';
 
 import {View, StyleSheet, Button} from 'react-native';
-import {Menu, Provider, TextInput} from 'react-native-paper';
+import {Menu, Provider, TextInput, HelperText} from 'react-native-paper';
 import {Pressable} from 'react-native';
-const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
+const MonitoringDetailTab = ({
+  setForm,
+  form,
+  data,
+  islandscapemode,
+  isSubmit,
+}) => {
   console.log('inside monitor tab');
   console.log(data);
   console.log('tab controller tab');
   console.log(data?.device?.controllerCode);
-  const [controllerId, setControllerId] = useState(); // T002
-  const [deviceId, setDeviceId] = useState(); // Eg 1-4
-  const [rfl, setRfl] = useState(); // TE/ST/123
-  const [relayChannelIdx, setRelayChannelIdx] = useState(); //0-3
-  const [status, setStatus] = useState(); //active maintenanace
+  const [controllerId, setControllerId] = useState(''); // T002
+  const [deviceId, setDeviceId] = useState(''); // Eg 1-4
+  const [rfl, setRfl] = useState(''); // TE/ST/123
+  const [relayChannelIdx, setRelayChannelIdx] = useState(''); //0-3
+  const [status, setStatus] = useState(''); //active maintenanace
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -101,7 +107,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
         <Menu.Item
           onPress={() => {
             setRelayChannelIdx(0);
-            setForm({...form, relayChannelIdx: relayChannelIdx});
+            setForm({...form, relayChannelIdx: 0});
             close(false);
           }}
           title="0"
@@ -109,7 +115,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
         <Menu.Item
           onPress={() => {
             setRelayChannelIdx(1);
-            setForm({...form, relayChannelIdx: relayChannelIdx});
+            setForm({...form, relayChannelIdx: 1});
             close(false);
           }}
           title="1"
@@ -117,7 +123,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
         <Menu.Item
           onPress={() => {
             setRelayChannelIdx(2);
-            setForm({...form, relayChannelIdx: relayChannelIdx});
+            setForm({...form, relayChannelIdx: 2});
             close(false);
           }}
           title="2"
@@ -125,7 +131,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
         <Menu.Item
           onPress={() => {
             setRelayChannelIdx(3);
-            setForm({...form, relayChannelIdx: relayChannelIdx});
+            setForm({...form, relayChannelIdx: 3});
             close(false);
           }}
           title="3"
@@ -141,7 +147,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
           <Text>loading</Text>
         </View>
       ) : (
-        <View style={{padding: 10}}>
+        <View style={{padding: 10, backgroundColor: 'white', flex: 1}}>
           <View
             style={{
               flexDirection: 'row',
@@ -169,6 +175,17 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
                 setForm({...form, controllerId: controllerId});
               }}
             />
+          </View>
+          <View>
+            <HelperText
+              type="error"
+              visible={controllerId == '' && isSubmit}
+              style={{
+                marginTop: controllerId == '' && isSubmit ? -15 : -30,
+                marginLeft: 30,
+              }}>
+              Controller ID is invalid!
+            </HelperText>
           </View>
           <View
             style={{
@@ -199,6 +216,17 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
               }}
             />
           </View>
+          <View>
+            <HelperText
+              type="error"
+              visible={deviceId == '' && isSubmit}
+              style={{
+                marginTop: deviceId == '' && isSubmit ? -15 : -30,
+                marginLeft: 30,
+              }}>
+              Device ID is missing
+            </HelperText>
+          </View>
           <View
             style={{
               flexDirection: 'row',
@@ -227,6 +255,17 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
                 setForm({...form, rfl: rfl});
               }}
             />
+          </View>
+          <View>
+            <HelperText
+              type="error"
+              visible={rfl == '' && isSubmit}
+              style={{
+                marginTop: rfl == '' && isSubmit ? -15 : -30,
+                marginLeft: 30,
+              }}>
+              RFL is missing
+            </HelperText>
           </View>
           <View
             style={{
@@ -264,6 +303,15 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
               />
             </Pressable>
           </View>
+          <HelperText
+            type="error"
+            visible={relayChannelIdx == '' && relayChannelIdx != 0 && isSubmit}
+            style={{
+              marginTop: relayChannelIdx == '' && isSubmit ? -15 : -30,
+              marginLeft: 30,
+            }}>
+            relayChannel Index is missing
+          </HelperText>
           <View>
             {menu1 && (
               <View
@@ -287,7 +335,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
                 <Menu.Item
                   onPress={() => {
                     setRelayChannelIdx(0);
-                    setForm({...form, relayChannelIdx: relayChannelIdx});
+                    setForm({...form, relayChannelIdx: 0});
                     setMenu1(false);
                   }}
                   title="0"
@@ -295,7 +343,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
                 <Menu.Item
                   onPress={() => {
                     setRelayChannelIdx(1);
-                    setForm({...form, relayChannelIdx: relayChannelIdx});
+                    setForm({...form, relayChannelIdx: 1});
                     setMenu1(false);
                   }}
                   title="1"
@@ -303,7 +351,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
                 <Menu.Item
                   onPress={() => {
                     setRelayChannelIdx(2);
-                    setForm({...form, relayChannelIdx: relayChannelIdx});
+                    setForm({...form, relayChannelIdx: 2});
                     setMenu1(false);
                   }}
                   title="2"
@@ -311,7 +359,7 @@ const MonitoringDetailTab = ({setForm, form, data, islandscapemode}) => {
                 <Menu.Item
                   onPress={() => {
                     setRelayChannelIdx(3);
-                    setForm({...form, relayChannelIdx: relayChannelIdx});
+                    setForm({...form, relayChannelIdx: 3});
                     setMenu1(false);
                   }}
                   title="3"

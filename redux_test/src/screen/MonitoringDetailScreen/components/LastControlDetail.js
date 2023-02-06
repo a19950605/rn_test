@@ -8,7 +8,7 @@ import {TextInput} from 'react-native-paper';
 const LastControlDetail = props => {
   console.log(props?.data?.lastCmd);
   return (
-    <View style={{padding: 10}}>
+    <View style={{padding: 10, backgroundColor: 'white', flex: 1}}>
       <View
         style={{
           flexDirection: 'row',

@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 
-import {Tab, Text, TabView} from '@rneui/themed';
+// import {Tab, Text, TabView} from '@rneui/themed';
 import {Input, Icon} from '@rneui/themed';
-
+import {Tabs, TabScreen} from 'react-native-paper-tabs';
+import {Button, Title, Paragraph} from 'react-native-paper';
 import MonitoringCreateTab from './components/MonitoringCreateTab';
 import ImageUploadTest from './components/ImageUploadTest';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {ModalMessage} from '../../components/ModalMessage';
 const MonitoringCreateScreen = () => {
   const [index, setIndex] = useState(0);
   const [imgX, setImgX] = useState(0);
@@ -15,11 +17,15 @@ const MonitoringCreateScreen = () => {
   const [lampX, setLampX] = useState(0);
   const [lampY, setLampY] = useState(0);
   const [uri, setUri] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [color, setColor] = useState('red');
+  const [icon, setIcon] = useState('alert');
   const [isSubmit, setIsSubmit] = useState(false);
   const userToken = useSelector(state => state.login.userToken?.Token);
 
   const navigation = useNavigation();
   const [responseCode, setResponseCode] = useState();
+  const [alertMessage, setAlertMessage] = useState('');
   const [form, setForm] = useState({
     controllerId: '',
     deviceId: '',
@@ -73,7 +79,7 @@ const MonitoringCreateScreen = () => {
     formdata.append('lampPositionX', lampY);
     formdata.append('imageW', imgX);
     formdata.append('imageH', imgY);
-    formdata.append('relayChannelIdx', form.relayChannelIdx);
+    formdata.append('relayChannelIdx', parseInt(form.relayChannelIdx));
     formdata.append('xxoo', {
       uri: uri,
       type: 'image/jpeg',
@@ -92,78 +98,60 @@ const MonitoringCreateScreen = () => {
       body: formdata,
     };
     fetch('https://gis2.ectrak.com.hk:8900/api/v2/device', requestOptions)
-      .then(response => {
+      .then(async response => {
         setResponseCode(response.status);
 
-        return response.json();
-      })
-      .then(result => {
-        //  console.log(result);
-        // return result;
-        console.log('submit result');
-        console.log(result);
+        console.log('response create');
+        let data = await response.json();
+        console.log(data);
+        if (response.status == 200) {
+          setAlertMessage('Create success' + `(id:${data?.id})`);
+          setIcon('check-circle');
+          setColor('green');
+          setShowModal(true);
 
-        if (responseCode == 200) {
-          alert('create success' + result?.id);
           navigation.navigate('MonitoringTestSub');
         } else {
-          alert('create fail: ' + responseCode + '\n' + result?.errorMsg);
+          setIcon('alert');
+          setColor('red');
+          setAlertMessage(
+            'create fail: ' + response.status + '\n' + data?.errorMsg,
+          );
+          setShowModal(true);
         }
+
+        // return response.json();
       })
+      // .then(result => {
+      //   console.log('submit result');
+      //   console.log(result);
+      //   // setAlertMessage(alertMessage + `(id:${result?.id})`);
+
+      //   // if (responseCode == 200) {
+      //   //   alert('create success' + result?.id);
+      //   //   navigation.navigate('MonitoringTestSub');
+      //   // } else {
+      //   //   alert('create fail: ' + responseCode + '\n' + result?.errorMsg);
+      //   // }
+      // })
       .catch(error => console.log('error1', error));
   };
 
   return (
     <>
-      <Tab
-        value={index}
-        onChange={e => setIndex(e)}
-        indicatorStyle={{
-          backgroundColor: 'red',
-          height: 3,
-          color: 'black',
-        }}
-        containerStyle={{
-          backgroundColor: 'white',
-          color: 'black',
-        }}
-        variant="primary">
-        <Tab.Item
-          title="Details"
-          titleStyle={active => ({
-            color: active ? '#7a2210' : 'black',
-            fontSize: 12,
-          })}
-          icon={active => ({
-            name: 'clipboard-text',
-            type: 'material-community',
-            color: active ? '#7a2210' : 'black',
-          })}
-        />
-        <Tab.Item
-          title="Location"
-          titleStyle={active => ({
-            color: active ? '#7a2210' : 'black',
-            fontSize: 12,
-          })}
-          icon={active => ({
-            name: 'map',
-            type: 'material',
-            color: active ? '#7a2210' : 'black',
-          })}
-        />
-      </Tab>
-
-      <TabView value={index} onChange={setIndex} animationType="spring">
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+      <Tabs
+        style={{backgroundColor: 'white'}}
+        iconPosition="top"
+        uppercase={false} // true/false | default=true | labels are uppercase
+      >
+        <TabScreen label="Detail" icon="clipboard-text">
           <MonitoringCreateTab
             setForm={setForm}
             form={form}
             isSubmit={isSubmit}
           />
-        </TabView.Item>
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          {/* <Text h1>Location</Text> */}
+        </TabScreen>
+        <TabScreen label="Location" icon="map">
           <ImageUploadTest
             setImgX={setImgX}
             setImgY={setImgY}
@@ -172,8 +160,8 @@ const MonitoringCreateScreen = () => {
             setUri={setUri}
             uri={uri}
           />
-        </TabView.Item>
-      </TabView>
+        </TabScreen>
+      </Tabs>
       <View
         style={{
           backgroundColor: 'white',
@@ -200,9 +188,10 @@ const MonitoringCreateScreen = () => {
               form.deviceId == '' ||
               form.controllerId == '' ||
               form.rfl == '' ||
-              form.relayChannelIdx == ''
+              (form.relayChannelIdx == '' && form.relayChannelIdx != 0)
             ) {
-              alert('fill missing  fields');
+              setAlertMessage('Missing required field!');
+              setShowModal(true);
             } else {
               createNewRecord(userToken);
             }
@@ -216,6 +205,16 @@ const MonitoringCreateScreen = () => {
           />
           <Text style={{color: 'green'}}> Save</Text>
         </TouchableOpacity>
+      </View>
+      <View>
+        {showModal && (
+          <ModalMessage
+            message={alertMessage}
+            setShowModal={setShowModal}
+            color={color}
+            icon={icon}
+          />
+        )}
       </View>
     </>
   );
