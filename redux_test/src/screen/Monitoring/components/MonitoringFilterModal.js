@@ -15,6 +15,7 @@ export const MonitoringFilterModal = ({
   setLoading,
 }) => {
   const [openStatusModal, setOpenStatusModal] = useState(false);
+  const [openConnModal, setOpenConnModal] = useState(false);
 
   return (
     <View>
