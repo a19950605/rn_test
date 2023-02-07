@@ -6,6 +6,7 @@ import {Button} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {signin} from '../../features/login/loginSlice';
 import {auth} from '../../apiFunc';
+import {useTranslation} from 'react-i18next';
 
 const Login = props => {
   const dispatch = useDispatch();
@@ -15,11 +16,15 @@ const Login = props => {
   const [pw, setPw] = React.useState('');
   const [token1, setToken1] = useState();
   const {height, width} = useWindowDimensions();
+  const {t, i18n} = useTranslation();
+  const {language: currentLanguage} = i18n;
+
   const isLandscapeMode = width > height ? true : false;
   //check check
   console.log('height' + height);
   console.log('width' + width);
   console.log('islandscapemode' + isLandscapeMode);
+  console.log(currentLanguage);
   return (
     <View
       style={{
@@ -125,7 +130,7 @@ const Login = props => {
                   alert('login fail: ' + e);
                 })
             }>
-            Login 登入
+            <Text>{t('demoScope.title')}</Text>
           </Button>
         </View>
       </View>

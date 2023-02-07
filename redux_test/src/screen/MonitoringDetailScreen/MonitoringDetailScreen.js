@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Tab, Text, TabView, Overlay} from '@rneui/themed';
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
-
+import axios from 'axios';
 import {Input, Icon} from '@rneui/themed';
 
 import {
@@ -224,29 +224,58 @@ const MonitoringDetailScreen = props => {
         setLoading(false);
       })
       .catch(error => console.log('error14', error));
-
+    var requestOptions2 = {
+      method: 'GET',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+        redirect: 'follow',
+      },
+    };
     fetch(
       `https://gis2.ectrak.com.hk:8900/api/data/device/img/${props.route.params.id}`,
-      requestOptions,
+      requestOptions2,
     )
       .then(response => {
         console.log('img res');
         console.log(response);
-        console.log(response?._bodyBlob);
-        return response.blob();
+        return response.text();
       })
       .then(result => {
         //  console.log(result);
         // return result;
         //   setData(result);
 
-        // const imageObjectURL = URL.createObjectURL(result);
+        //const imageObjectURL = URL.createObjectURL(result);
         console.log('imagetest');
         console.log(result);
-        // setUri(imageObjectURL);
-        console.log(result?._data);
+        setUri(result);
       })
       .catch(error => console.log('error14', error));
+  }, []);
+
+  useEffect(() => {
+    /*
+    var config = {
+      method: 'get',
+      url: 'https://gis2.ectrak.com.hk:8900/api/data/device/img/38',
+      headers: {
+        'X-Token': userToken,
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log('axios,test');
+        console.log(response.data);
+
+        console.log(JSON.stringify(response.data));
+        setUri(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });*/
   }, []);
 
   useEffect(() => {

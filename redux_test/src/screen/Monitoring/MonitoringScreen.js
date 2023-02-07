@@ -74,6 +74,7 @@ const MonitoringScreen = () => {
     filterDesc,
     setCurrentDate,
     filterStatus,
+    filterCONNStatus,
   });
 
   const [data2, error2] = useFetchMonitorData({
@@ -188,6 +189,9 @@ const MonitoringScreen = () => {
           showMainModal={showMainModal}
           filterStatus={filterStatus}
           setFilterStatus={setFilterStatus}
+          setFilterCONNStatus={setFilterCONNStatus}
+          filterCONNStatus={filterCONNStatus}
+          rflDropDown={rflDropDown}
         />
       )}
     </View>

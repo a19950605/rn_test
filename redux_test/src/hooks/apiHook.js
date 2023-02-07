@@ -238,6 +238,7 @@ const useFetchMonitorTest = ({
   filterDesc,
   setCurrentDate,
   filterStatus,
+  filterCONNStatus,
 }) => {
   const [data, setData] = useState();
   const [error, setError] = useState(false);
@@ -256,8 +257,23 @@ const useFetchMonitorTest = ({
         ? 'DISABLED'
         : '',
     ); //SPECIAL=ISOLATE, //maintenance=disabled //isolate=special
+    let connStatus = '';
+    switch (filterCONNStatus) {
+      case 'Normal':
+        connStatus = 'NORMAL';
+        break;
+      case 'Connection Loss':
+        connStatus = 'CONNLOST';
+        break;
+      case 'Unknown':
+        connStatus = 'UNKNOWN';
+        break;
+      default:
+        connStatus = '';
+        break;
+    }
     formdata.append('deviceId', '');
-    formdata.append('connectionStatus', '');
+    formdata.append('connectionStatus', connStatus);
     //status maintenace
     var requestOptions = {
       method: 'POST',

@@ -80,7 +80,7 @@ const ImageDetailMon = ({
             padding: 10,
           }}>
           <MarkerImage
-            image={!uri ? require('../../../assets/test.jpg') : {uri: uri}}
+            image={!uri ? '' : {uri: uri}}
             markerImage={require('../../../assets/location-pin-icon-on-transparent-pin-vector-20942049.jpg')}
             markerSize={50}
             markerPosition={{x: 250, y: 200}}

@@ -33,7 +33,7 @@ const SortDropDown = ({
       {sortOption.map(s => {
         return (
           <Menu.Item
-            key={s.id}
+            key={s.apiValue}
             trailingIcon={
               filterField == s.apiValue
                 ? filterDesc

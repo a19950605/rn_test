@@ -36,7 +36,7 @@ const Alarm = ({deviceId}) => {
         console.log(result);
         setData(result?.content);
       })
-      .catch(error => console.log('error1', error));
+      .catch(error => console.log('error16', error));
   }, []);
   return (
     <View style={{flex: 1, padding: 10, backgroundColor: 'white'}}>

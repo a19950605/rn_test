@@ -10,6 +10,7 @@ const HistoryTab = ({deviceID}) => {
   console.log(deviceID);
   const [token, setToken] = useState('');
   const [data, setData] = useState('');
+  /*
   useEffect(() => {
     async function getData() {
       return await AsyncStorage.getItem('@token').then(res => {
@@ -19,7 +20,7 @@ const HistoryTab = ({deviceID}) => {
         return res;
       });
     }
-
+    
     getData().then(token => {
       var requestOptions = {
         method: 'GET',
@@ -43,9 +44,10 @@ const HistoryTab = ({deviceID}) => {
 
           setData(result);
         })
-        .catch(error => console.log('error1', error));
+        .catch(error => console.log('error17', error));
+        
     });
-  }, [deviceID]);
+  }, [deviceID]);*/
   return (
     <View style={{flex: 1, padding: 10, backgroundColor: 'white'}}>
       <View

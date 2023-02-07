@@ -13,6 +13,9 @@ export const MonitoringFilterModal = ({
   filterStatus,
   setFilterStatus,
   setLoading,
+  rflDropDown,
+  filterCONNStatus,
+  setFilterCONNStatus,
 }) => {
   const [openStatusModal, setOpenStatusModal] = useState(false);
   const [openConnModal, setOpenConnModal] = useState(false);
@@ -40,6 +43,19 @@ export const MonitoringFilterModal = ({
               }}>
               <Text style={{color: 'black', fontSize: 16.5}}>
                 {filterStatus}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Text style={{color: 'black', fontSize: 16.5}}>CONN</Text>
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                setOpenConnModal(true);
+              }}>
+              <Text style={{color: 'black', fontSize: 16.5}}>
+                {filterCONNStatus}
               </Text>
             </TouchableOpacity>
           </View>
@@ -77,10 +93,14 @@ export const MonitoringFilterModal = ({
         filterStatus={filterStatus}
         setFilterStatus={setFilterStatus}
       />
+      <ConnStatusModal
+        setFilterCONNStatus={setFilterCONNStatus}
+        setOpenConnModal={setOpenConnModal}
+        openConnModal={openConnModal}
+      />
     </View>
   );
 };
-//拆出黎
 const StatusModal = ({
   setOpenStatusModal,
   openStatusModal,
@@ -148,28 +168,26 @@ const StatusModal = ({
     </View>
   );
 };
-
 const ConnStatusModal = ({
   setOpenConnModal,
   openConnModal,
-  filterStatus,
-  setFilterStatus,
+  setFilterCONNStatus,
 }) => {
   const options = [
     {displayValue: 'All', stateVal: ''},
-    {displayValue: 'ACTIVE', stateVal: 'ACTIVE'},
 
-    {displayValue: 'Isolated', stateVal: 'SPECIAL'},
-    {displayValue: 'Maintenance', stateVal: 'DISABLED'},
+    {displayValue: 'Normal', stateVal: 'NORMAL'},
+    {displayValue: 'Connection Loss', stateVal: 'CONNLOST'},
+    {displayValue: 'Unknown', stateVal: 'UNKNOWN'},
   ];
   return (
     <View>
       <Modal
-        isVisible={openStatusModal}
+        isVisible={openConnModal}
         customBackdrop={
           <TouchableWithoutFeedback
             onPress={() => {
-              setOpenStatusModal(false);
+              setOpenConnModal(false);
             }}>
             <View style={{flex: 1, backgroundColor: 'black'}} />
           </TouchableWithoutFeedback>
@@ -178,7 +196,7 @@ const ConnStatusModal = ({
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
               onPress={() => {
-                setOpenStatusModal(false);
+                setOpenConnModal(false);
               }}
               style={{
                 marginRight: 10,
@@ -196,9 +214,9 @@ const ConnStatusModal = ({
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    setFilterStatus(o.displayValue);
+                    setFilterCONNStatus(o.displayValue);
                   }}
-                  key={o.displayValue}
+                  key={o.id}
                   style={{
                     marginRight: 10,
 
