@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
+import {appContextPaths, EndPoint, appDefDomain} from '../constants/constants';
 import {signout} from '../features/login/loginSlice';
 import {getDate, getToday} from '../utils/getDate';
 import {sortData} from '../utils/sortData';
@@ -239,6 +240,7 @@ const useFetchMonitorTest = ({
   setCurrentDate,
   filterStatus,
   filterCONNStatus,
+  filterRFLCode,
 }) => {
   const [data, setData] = useState();
   const [error, setError] = useState(false);
@@ -272,7 +274,7 @@ const useFetchMonitorTest = ({
         connStatus = '';
         break;
     }
-    formdata.append('deviceId', '');
+    formdata.append('deviceId', filterRFLCode);
     formdata.append('connectionStatus', connStatus);
     //status maintenace
     var requestOptions = {
@@ -283,10 +285,7 @@ const useFetchMonitorTest = ({
       body: formdata,
     };
 
-    fetch(
-      'https://gis2.ectrak.com.hk:8900/api/v2/device/search',
-      requestOptions,
-    )
+    fetch(`${appContextPaths[appDefDomain]}${EndPoint.lamps}`, requestOptions)
       .then(response => {
         console.log('response.status: ', response.status); // 👉️ 200
 

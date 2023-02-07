@@ -130,7 +130,7 @@ const Login = props => {
                   alert('login fail: ' + e);
                 })
             }>
-            <Text>Login 登入</Text>
+            <Text>{t('demoScope.title')}</Text>
           </Button>
         </View>
       </View>

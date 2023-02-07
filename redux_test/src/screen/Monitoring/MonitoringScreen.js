@@ -22,6 +22,7 @@ import CreateButton from '../../components/CreateButton';
 import {useFetchMonitorData, useFetchMonitorTest} from '../../hooks/apiHook';
 import SortDropDown from '../../utils/sortFilter';
 import {MonitoringFilterModal} from './components/MonitoringFilterModal';
+import {color, styles} from '../../constants/GlobalStyles';
 // const MonitoringTest = () => {
 //   const Stack = createStackNavigator();
 //   return (
@@ -51,6 +52,8 @@ const MonitoringScreen = () => {
   const [showRoleModal, setShowRoleModal] = useState(false);
 
   const [filterRFL, setFilterRFL] = useState('All');
+  const [filterRFLCode, setFilterRFLCode] = useState('');
+
   const [filterCONNStatus, setFilterCONNStatus] = useState('All');
   const [filterGroup, setFilterGroup] = useState('All');
   const [filterDate, setFilterDate] = useState('');
@@ -64,7 +67,6 @@ const MonitoringScreen = () => {
       setCurrentDate(getDate());
     }, 30000);
   }, []);
-
   const [data, error] = useFetchMonitorTest({
     userToken,
     loading,
@@ -75,6 +77,7 @@ const MonitoringScreen = () => {
     setCurrentDate,
     filterStatus,
     filterCONNStatus,
+    filterRFLCode,
   });
 
   const [data2, error2] = useFetchMonitorData({
@@ -86,15 +89,6 @@ const MonitoringScreen = () => {
     filterDesc,
     setCurrentDate,
   });
-  useEffect(() => {
-    console.log('data');
-
-    data2?.map(d => {
-      console.log(d.id, d.code);
-      setRflDropDown([...rflDropDown, {id: d.id, code: d.code}]);
-      setRflDropDown(oldArray => [...oldArray, {id: d.id, code: d.code}]);
-    });
-  }, []);
 
   useEffect(() => {
     if (!isFocused) {
@@ -109,15 +103,19 @@ const MonitoringScreen = () => {
     {displayValue: 'Group', apiValue: 'Group'},
     {displayValue: 'Status As Of', apiValue: 'statusasof'},
   ];
-
+  useEffect(() => {
+    console.log('data');
+    console.log(data2);
+    // loading == false &&
+    //   data2?.map(d => {
+    //     console.log(d.id, d.code);
+    //     // setRflDropDown([...rflDropDown, {id: d.id, code: d.code}]);
+    //     setRflDropDown(oldArray => [...oldArray, {id: d.id, code: d.code}]);
+    //   });
+  }, [loading]);
   return (
-    <View style={{flex: 1, padding: 5, backgroundColor: 'white'}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
+    <View style={styles.screenInit}>
+      <View style={styles.spaceBetween}>
         <View style={{flexDirection: 'row'}}>
           <CreateButton navigation={navigation} navLoc={'Create Monitoring'} />
 
@@ -126,14 +124,14 @@ const MonitoringScreen = () => {
               setLoading(true);
             }}
             style={{
-              borderColor: loading ? 'gray' : 'blue',
+              borderColor: loading ? color.gray : color.blue,
               borderWidth: 1,
               borderRadius: 2,
               padding: 10,
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Text style={{color: loading ? 'gray' : 'blue'}}>
+            <Text style={{color: loading ? color.gray : color.blue}}>
               {loading ? 'loading' : currentDate}
             </Text>
           </TouchableOpacity>
@@ -196,7 +194,10 @@ const MonitoringScreen = () => {
           setFilterStatus={setFilterStatus}
           setFilterCONNStatus={setFilterCONNStatus}
           filterCONNStatus={filterCONNStatus}
-          rflDropDown={rflDropDown}
+          rflDropDown={data2}
+          filterRFL={filterRFL}
+          setFilterRFL={setFilterRFL}
+          setFilterRFLCode={setFilterRFLCode}
         />
       )}
     </View>
