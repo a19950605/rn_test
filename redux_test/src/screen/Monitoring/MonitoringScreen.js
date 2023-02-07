@@ -86,7 +86,6 @@ const MonitoringScreen = () => {
     filterDesc,
     setCurrentDate,
   });
-
   useEffect(() => {
     console.log('data');
 
@@ -96,6 +95,12 @@ const MonitoringScreen = () => {
       setRflDropDown(oldArray => [...oldArray, {id: d.id, code: d.code}]);
     });
   }, []);
+
+  useEffect(() => {
+    if (!isFocused) {
+      setShowFilter(false);
+    }
+  }, [isFocused]);
 
   const sortOption = [
     {displayValue: 'RFL ID', apiValue: 'rflid'},

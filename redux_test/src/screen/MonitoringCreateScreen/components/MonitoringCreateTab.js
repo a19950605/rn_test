@@ -7,6 +7,7 @@ import {
   Pressable,
   Text,
   useWindowDimensions,
+  Keyboard,
 } from 'react-native';
 import {
   TextInput,
@@ -212,6 +213,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
             onPress={() => {
               setMenu1(!menu1);
               setMenu2(false);
+              Keyboard.dismiss();
             }}>
             <TextInput
               editable={false}
@@ -299,6 +301,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
           onPress={() => {
             setMenu2(!menu2);
             setMenu1(false);
+            Keyboard.dismiss();
           }}>
           <View
             style={{
