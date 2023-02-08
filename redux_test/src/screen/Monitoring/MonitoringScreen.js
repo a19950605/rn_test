@@ -23,6 +23,7 @@ import {useFetchMonitorData, useFetchMonitorTest} from '../../hooks/apiHook';
 import SortDropDown from '../../utils/sortFilter';
 import {MonitoringFilterModal} from './components/MonitoringFilterModal';
 import {color, styles} from '../../constants/GlobalStyles';
+import {useTranslation} from 'react-i18next';
 // const MonitoringTest = () => {
 //   const Stack = createStackNavigator();
 //   return (
@@ -41,6 +42,8 @@ const MonitoringScreen = () => {
   const isLandscapeMode = width > height ? true : false;
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
+  const [loading2, setLoading2] = useState(true);
+
   const dispatch = useDispatch();
   const [currentDate, setCurrentDate] = useState();
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -50,6 +53,7 @@ const MonitoringScreen = () => {
   const [showModal, setShowModal] = useState(false);
   const [showUserModal, setShowUserModal] = useState(false);
   const [showRoleModal, setShowRoleModal] = useState(false);
+  const {t} = useTranslation();
 
   const [filterRFL, setFilterRFL] = useState('All');
   const [filterRFLCode, setFilterRFLCode] = useState('');
@@ -82,9 +86,9 @@ const MonitoringScreen = () => {
 
   const [data2, error2] = useFetchMonitorData({
     userToken,
-    loading,
+    loading2,
     isFocused,
-    setLoading,
+    setLoading2,
     filterField,
     filterDesc,
     setCurrentDate,
@@ -124,14 +128,14 @@ const MonitoringScreen = () => {
               setLoading(true);
             }}
             style={{
-              borderColor: loading ? color.gray : color.blue,
+              borderColor: loading ? color.gray : 'blue',
               borderWidth: 1,
               borderRadius: 2,
               padding: 10,
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Text style={{color: loading ? color.gray : color.blue}}>
+            <Text style={{color: loading ? color.gray : 'blue'}}>
               {loading ? 'loading' : currentDate}
             </Text>
           </TouchableOpacity>

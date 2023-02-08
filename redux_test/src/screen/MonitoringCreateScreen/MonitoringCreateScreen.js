@@ -10,6 +10,7 @@ import ImageUploadTest from './components/ImageUploadTest';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {ModalMessage} from '../../components/ModalMessage';
+import {useTranslation} from 'react-i18next';
 const MonitoringCreateScreen = () => {
   const [index, setIndex] = useState(0);
   const [imgX, setImgX] = useState(0);
@@ -35,6 +36,7 @@ const MonitoringCreateScreen = () => {
   });
 
   //api/v2/options/rolesAsOptions
+  const {t} = useTranslation();
 
   const getRoleAsOptions = userToken => {
     var requestOptions = {
@@ -144,14 +146,15 @@ const MonitoringCreateScreen = () => {
         iconPosition="top"
         uppercase={false} // true/false | default=true | labels are uppercase
       >
-        <TabScreen label="Detail" icon="clipboard-text">
+        <TabScreen label={t('lamp.details')} icon="clipboard-text">
           <MonitoringCreateTab
             setForm={setForm}
             form={form}
             isSubmit={isSubmit}
+            t={t}
           />
         </TabScreen>
-        <TabScreen label="Location" icon="map">
+        <TabScreen label={t('lamp.location')} icon="map">
           <ImageUploadTest
             setImgX={setImgX}
             setImgY={setImgY}
@@ -159,6 +162,7 @@ const MonitoringCreateScreen = () => {
             setLampY={setLampY}
             setUri={setUri}
             uri={uri}
+            t={t}
           />
         </TabScreen>
       </Tabs>
@@ -203,7 +207,7 @@ const MonitoringCreateScreen = () => {
             color="green"
             style={{justifyContent: 'center', paddingRight: 5}}
           />
-          <Text style={{color: 'green'}}> Save</Text>
+          <Text style={{color: 'green'}}> {t('lamp.save')}</Text>
         </TouchableOpacity>
       </View>
       <View>

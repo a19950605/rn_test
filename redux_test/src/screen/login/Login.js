@@ -130,12 +130,11 @@ const Login = props => {
                   alert('login fail: ' + e);
                 })
             }>
-            <Text>{t('demoScope.title')}</Text>
+            <Text>Login 登入</Text>
           </Button>
         </View>
       </View>
     </View>
   );
 };
-
 export default Login;

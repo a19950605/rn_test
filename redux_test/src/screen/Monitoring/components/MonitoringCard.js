@@ -1,12 +1,16 @@
 import {Icon} from '@rneui/themed';
 import React from 'react';
-import {Text, View, StyleSheet, Button} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {Text, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
+import {CardButton} from '../../../components/CardButton';
 import {convertDate} from '../../../utils/getDate';
+import {StatusBubble} from './StatusBubble';
 //monitoring
 
 const MonitoringCard = props => {
   // console.log('component load');
   // console.log(props.item);
+  const {t} = useTranslation();
 
   return (
     <View style={styles.card}>
@@ -16,7 +20,9 @@ const MonitoringCard = props => {
           <Text> {JSON.stringify(props.item.id)}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>RFL : </Text>
+          <Text style={{color: 'black', fontWeight: 'bold'}}>
+            {t('lamp.rfl')}{' '}
+          </Text>
           <Text>{props.item.code}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
@@ -24,18 +30,20 @@ const MonitoringCard = props => {
           <Text>{props.item.activeAssignment?.epicName || '--'}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>GROUP : </Text>
+          <Text style={{color: 'black', fontWeight: 'bold'}}>
+            {t('lamp.group')}:{' '}
+          </Text>
           <Text>{props.item.activeAssignment?.groupName || '--'}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'black', fontWeight: 'bold'}}>
-            Status As Of:
+            {t('lamp.statusasof')}:{' '}
           </Text>
           <Text>{convertDate(props.item.dtKeepalive) || '-'}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: 'black', fontWeight: 'bold'}}>
-            eRFL Readlines:
+            {t('lamp.erflreadiness')}:{' '}
           </Text>
           <Text
             style={
@@ -48,16 +56,18 @@ const MonitoringCard = props => {
                 : {color: 'black'}
             }>
             {props.item.status == 'ACTIVE'
-              ? 'Active(Available)'
+              ? t('lamp.active')
               : props.item.status == 'SPECIAL'
-              ? 'Isolated'
+              ? t('lamp.isolated')
               : props.item.status == 'DISABLED'
-              ? 'Maintenance'
+              ? t('lamp.maintenance')
               : ''}
           </Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>Status:</Text>
+          <Text style={{color: 'black', fontWeight: 'bold'}}>
+            {t('lamp.status')}:{' '}
+          </Text>
           <View style={{flexDirection: 'row'}}>
             <View
               style={{
@@ -70,7 +80,9 @@ const MonitoringCard = props => {
                 paddingRight: 13,
               }}>
               <Icon name="question" size={24} color="black" type="octicon" />
-              <Text style={{fontSize: 11}}>Lamp</Text>
+              <Text style={{fontSize: 11, textAlign: 'center'}}>
+                {t('lamp.lamp')}
+              </Text>
             </View>
             <View
               style={{
@@ -83,38 +95,16 @@ const MonitoringCard = props => {
                 paddingRight: 13,
               }}>
               <Icon name="alert" size={24} color="red" type="octicon" />
-              <Text style={{fontSize: 11}}>Health</Text>
+              <Text style={{fontSize: 11, textAlign: 'center'}}>
+                {t('lamp.health')}
+              </Text>
             </View>
-            <View
-              style={{
-                backgroundColor: '#f7f7f7',
-                borderRadius: 100,
-                marginLeft: 5,
-                paddingTop: 10,
-                paddingBottom: 0,
-                paddingLeft: 13,
-                paddingRight: 13,
-              }}>
-              <Icon
-                name={
-                  props?.item?.connectionStatus == 'CONNLOST'
-                    ? 'alert'
-                    : props?.item?.connectionStatus == 'NORMAL'
-                    ? 'device-desktop'
-                    : 'question'
-                }
-                size={24}
-                color={
-                  props?.item?.connectionStatus == 'CONNLOST'
-                    ? 'red'
-                    : props?.item?.connectionStatus == 'NORMAL'
-                    ? 'green'
-                    : 'black'
-                }
-                type="octicon"
-              />
-              <Text style={{fontSize: 11}}>CONN</Text>
-            </View>
+
+            <StatusBubble
+              t={t}
+              title={'lamp.conn'}
+              status={props?.item?.connectionStatus}
+            />
             <View
               style={{
                 backgroundColor: '#f7f7f7',
@@ -135,7 +125,9 @@ const MonitoringCard = props => {
                 }
                 type="octicon"
               />
-              <Text style={{fontSize: 11}}>Power</Text>
+              <Text style={{fontSize: 11, textAlign: 'center'}}>
+                {t('lamp.power')}
+              </Text>
             </View>
             <View
               style={{
@@ -159,32 +151,42 @@ const MonitoringCard = props => {
                 }
                 type="octicon"
               />
-              <Text style={{fontSize: 11}}>Relay</Text>
+              <Text style={{fontSize: 11, textAlign: 'center'}}>
+                {t('lamp.relay')}
+              </Text>
             </View>
           </View>
         </View>
       </View>
+
       <View
         style={{
+          flex: 2,
           flexDirection: 'row',
+          justifyContent: 'space-between',
+
           marginLeft: 5,
           marginRight: 5,
-          justifyContent: 'space-around',
-          backgroundColor: '#fafcff',
-          marginBottom: 2,
+          marginBottom: 3,
         }}>
-        <View>
-          <Text
-            style={{padding: 10, color: 'blue'}}
-            onPress={() => {
-              props.navigation.navigate('MonitoringDetail', props.item);
-            }}>
-            Details
-          </Text>
-        </View>
-        <View>
-          <Text style={{padding: 10, color: 'blue'}}>Control</Text>
-        </View>
+        <CardButton
+          navLoc={'MonitoringDetail'}
+          navigation={props.navigation}
+          data={props.item || {}}
+          text={'lamp.details'}
+          t={t}
+          isDetail={true}
+        />
+        {props.item.status == 'ACTIVE' && (
+          <CardButton
+            navLoc={''}
+            navigation={props.navigation}
+            data={props.item || {}}
+            text={'lamp.control'}
+            t={t}
+            isDetail={false}
+          />
+        )}
       </View>
     </View>
   );

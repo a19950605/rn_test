@@ -1,7 +1,56 @@
 {
-    "_comment": "src/localization/en/translation.json",
-    "demoScope": {
-      "title": "i18next 測試",
-      "description": "Everyone understands me!"
-    }
+  "_comment": "src/localization/en/translation.json",
+  "demoScope": {
+    "title": "i18next 測試",
+    "description": "Everyone understands me!"
+  },
+  "lamp": {
+    "rflid": "RFL ID",
+    "rfl": "紅閃燈",
+    "group": "組別",
+    "statusasof": "現狀",
+    "erflreadiness": "eRFL 準備",
+    "maintenance": "維修中",
+    "isolated": "孤立中",
+    "active": "準備好(可使用)",
+    "status": "狀態",
+    "lamp": "燈",
+    "health": "健康",
+    "conn": "連接",
+    "power": "電源",
+    "relay": "繼電器",
+    "details": "詳情",
+    "assignment": "分配",
+    "lastcontrol": "最後控制",
+    "location": "地點",
+    "history": "歷史",
+    "alarm": "警報",
+    "controllerId": "控制器 ID",
+    "deviceId": "設備編號",
+    "relaychannelIdx": "繼電器槽路",
+    "active2": "準備好",
+    "save": "保存",
+    "delete": "刪除",
+    "confirmDelete": "確認刪除?",
+    "confirm": "確認",
+    "cancel": "取消",
+    "control": "控制",
+    "healthStatus": "健康狀態",
+    "controllerStatus": "連接狀態",
+    "powerStatus": "電源狀態",
+    "lampStatus": "燈狀態",
+    "previousStatus": "之前的燈狀態",
+    "relaystatus": "繼電器槽路狀態",
+    "cp": "CP",
+    "assignedDate": "分配日期",
+    "etmsStart": "開始時間",
+    "etmsEnd": "完成時間",
+    "lastcontrolby": "最後控制者",
+    "lastcontrolaction": "最後控制動作",
+    "lastcontroldatetime": "最後控制日期時間"
+  },
+  "general": {
+    "add": "增加",
+    "details": "詳情"
   }
+}

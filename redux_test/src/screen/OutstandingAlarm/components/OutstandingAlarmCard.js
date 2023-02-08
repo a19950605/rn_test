@@ -57,33 +57,39 @@ const OutstandingAlarmCard = props => {
           <Text>{props.item.status || ''}</Text>
         </View>
       </View>
+
       <View
         style={{
+          flex: 2,
           flexDirection: 'row',
+          justifyContent: 'space-between',
+
           marginLeft: 5,
           marginRight: 5,
-          justifyContent: 'space-around',
-          backgroundColor: buttonColor,
-          marginBottom: 2,
+          marginBottom: 3,
         }}>
-        <View>
-          <Text
-            style={{padding: 10, color: 'blue'}}
+        <View
+          style={{
+            backgroundColor: buttonColor,
+            flex: 1,
+            padding: 10,
+            marginRight: 1,
+          }}>
+          <TouchableOpacity
             onPress={() => {
               props.navigation.navigate('OutstandingDetailTab', props.item);
             }}>
-            Details
-          </Text>
+            <Text style={{textAlign: 'center', color: 'blue'}}>Details</Text>
+          </TouchableOpacity>
         </View>
         {props.item.status != 'ACKNOWLEDGED' && (
-          <View>
-            <Text
-              style={{padding: 10, color: 'blue'}}
+          <View style={{backgroundColor: buttonColor, flex: 1, padding: 10}}>
+            <TouchableOpacity
               onPress={() => {
                 alert(props.item.id);
               }}>
-              ACK
-            </Text>
+              <Text style={{textAlign: 'center', color: 'blue'}}>ACK</Text>
+            </TouchableOpacity>
           </View>
         )}
       </View>

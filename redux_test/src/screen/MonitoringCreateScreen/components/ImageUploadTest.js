@@ -101,16 +101,22 @@ const ImageUploadTest = ({
       console.log(filePath);
       // console.log(filePath[0]);
       // console.log(filePath[0].uri);
-      console.log(setUri);
+
       setUri(response.assets[0].uri);
       console.log('setted uri');
-      console.log(uri);
     });
   };
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{borderWidth: 5, flexShrink: 1, height: 500, width: '100%'}}>
+      <View
+        style={{
+          borderWidth: 5,
+          flexShrink: 1,
+          height: 500,
+          width: '100%',
+          backgroundColor: 'white',
+        }}>
         <ReactNativeZoomableView
           maxZoom={2}
           minZoom={0.5}
@@ -124,7 +130,7 @@ const ImageUploadTest = ({
             padding: 10,
           }}>
           <MarkerImage
-            image={!uri ? '' : {uri: uri}}
+            image={!uri ? require('../../../assets/white.jpg') : {uri: uri}}
             markerImage={require('../../../assets/location-pin-icon-on-transparent-pin-vector-20942049.jpg')}
             markerSize={50}
             onChange={data => {
@@ -155,7 +161,7 @@ const ImageUploadTest = ({
           onPress={() => chooseFile('photo')}>
           <Text style={styles.textStyle}>Choose Image</Text>
         </TouchableOpacity>
-        <Image source={{uri: filePath[0]?.uri}} style={styles.imageStyle} />
+        <Image source={{uri: uri}} style={styles.imageStyle} />
       </View>
     </SafeAreaView>
   );

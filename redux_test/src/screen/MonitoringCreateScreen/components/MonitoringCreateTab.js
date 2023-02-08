@@ -18,7 +18,7 @@ import {
   HelperText,
 } from 'react-native-paper';
 
-const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
+const MonitoringCreateTab = ({setForm, form, isSubmit, t}) => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
   const [controllerId, setControllerId] = useState(''); // T002
@@ -91,7 +91,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
                 width: isLandscapeMode ? '95%' : '85%',
                 backgroundColor: '#f5f6f7',
               }}
-              label="Controller ID"
+              label={t('lamp.controllerId')}
               value={controllerId}
               onChangeText={controllerId => {
                 setControllerId(controllerId);
@@ -108,7 +108,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
               marginTop: controllerId == '' && isSubmit ? -15 : -30,
               marginLeft: 30,
             }}>
-            Controller ID is invalid!
+            Controller ID is missing!
           </HelperText>
         </View>
         <View
@@ -132,7 +132,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
                 width: isLandscapeMode ? '95%' : '85%',
                 backgroundColor: '#f5f6f7',
               }}
-              label="Device ID"
+              label={t('lamp.deviceId')}
               value={deviceId}
               onChangeText={deviceId => {
                 setDeviceId(parseInt(deviceId));
@@ -173,7 +173,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
                 width: isLandscapeMode ? '95%' : '85%',
                 backgroundColor: '#f5f6f7',
               }}
-              label="RFL"
+              label={t('lamp.rfl')}
               value={rfl}
               onChangeText={rfl => {
                 setRfl(rfl);
@@ -222,7 +222,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
                 width: isLandscapeMode ? '95%' : '85%',
                 backgroundColor: '#f5f6f7',
               }}
-              label="Relay Channel Index"
+              label={t('lamp.relaychannelIdx')}
               value={relayChannelIdx?.toString()}
               onChangeText={relayChannelIdx => {
                 setRelayChannelIdx(relayChannelIdx);
@@ -324,7 +324,7 @@ const MonitoringCreateTab = ({setForm, form, isSubmit}) => {
                 width: isLandscapeMode ? '95%' : '85%',
                 backgroundColor: '#f5f6f7',
               }}
-              label="Status"
+              label={t('lamp.status')}
               value={status}
               onChangeText={status => {
                 setStatus(status);

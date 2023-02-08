@@ -56,29 +56,27 @@ export const MonitoringFilterModal = ({
               Filters
             </Text>
           </View>
-          <View style={{padding: 20}}>
+          <View style={{padding: 10}}>
             <View>
               <Text style={{color: 'black', fontSize: 16.5}}>RFL</Text>
             </View>
-            <View>
+            <View style={{padding: 10}}>
               <TouchableOpacity
                 onPress={() => {
                   setOpenRFLModal(true);
                 }}>
-                <Text style={{color: 'black', fontSize: 16.5}}>
-                  {filterRFL}
-                </Text>
+                <Text style={{color: 'black', fontSize: 18}}>{filterRFL}</Text>
               </TouchableOpacity>
             </View>
             <View>
               <Text style={{color: 'black', fontSize: 16.5}}>Status</Text>
             </View>
-            <View>
+            <View style={{padding: 10}}>
               <TouchableOpacity
                 onPress={() => {
                   setOpenStatusModal(true);
                 }}>
-                <Text style={{color: 'black', fontSize: 16.5}}>
+                <Text style={{color: 'black', fontSize: 18}}>
                   {filterStatus}
                 </Text>
               </TouchableOpacity>
@@ -86,18 +84,24 @@ export const MonitoringFilterModal = ({
             <View>
               <Text style={{color: 'black', fontSize: 16.5}}>CONN</Text>
             </View>
-            <View>
+            <View style={{padding: 10}}>
               <TouchableOpacity
                 onPress={() => {
                   setOpenConnModal(true);
                 }}>
-                <Text style={{color: 'black', fontSize: 16.5}}>
+                <Text style={{color: 'black', fontSize: 18}}>
                   {filterCONNStatus}
                 </Text>
               </TouchableOpacity>
             </View>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
               <TouchableOpacity
+                onPress={() => {
+                  setFilterCONNStatus('All');
+                  setFilterRFLCode('');
+                  setFilterRFL('All');
+                  setFilterStatus('ACTIVE');
+                }}
                 style={{
                   marginRight: 10,
                   borderWidth: 1,

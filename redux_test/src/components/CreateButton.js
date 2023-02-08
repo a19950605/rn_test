@@ -1,8 +1,11 @@
 import {Icon} from '@rneui/themed';
 import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {Text, View, TouchableOpacity} from 'react-native';
 
 const CreateButton = ({navLoc, navigation}) => {
+  const {t} = useTranslation();
+
   return (
     <TouchableOpacity
       style={{
@@ -24,7 +27,7 @@ const CreateButton = ({navLoc, navigation}) => {
         type="material"
         style={{paddingRight: 5}}
       />
-      <Text style={{color: 'blue'}}>Add</Text>
+      <Text style={{color: 'blue'}}>{t('general.add')}</Text>
     </TouchableOpacity>
   );
 };
