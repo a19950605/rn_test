@@ -1,5 +1,5 @@
 import {Icon} from '@rneui/themed';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import {CardButton} from '../../../components/CardButton';
@@ -12,6 +12,50 @@ const MonitoringCard = props => {
   // console.log(props.item);
   const {t} = useTranslation();
 
+  /*
+              props.item.status == 'ACTIVE'
+                ? {color: 'green'}
+                : props.item.status == 'SPECIAL'
+                ? {color: 'purple'}
+                : props.item.status == 'DISABLED'
+                ? {color: 'red'}
+                : {color: 'black'}
+            }>
+            {props.item.status == 'ACTIVE'
+              ? t('lamp.active')
+              : props.item.status == 'SPECIAL'
+              ? t('lamp.isolated')
+              : props.item.status == 'DISABLED'
+              ? t('lamp.maintenance')
+              : ''}
+
+  */
+  const [readinessStatus, setReadinessStatus] = useState('');
+  const [readinessStr, setReadinessStr] = useState(t('lamp.active'));
+  const [readinessColor, setReadinessColor] = useState({color: 'green'});
+
+  useEffect(() => {
+    setReadinessStatus(props?.item?.status);
+  }, []);
+
+  useEffect(() => {
+    switch (readinessStatus) {
+      case 'ACTIVE':
+        setReadinessColor({color: 'green'});
+        setReadinessStr(t('lamp.active'));
+        break;
+      case 'SPECIAL':
+        setReadinessColor({color: 'purple'});
+        setReadinessStr(t('lamp.isolated'));
+        break;
+      case 'DISABLED':
+        setReadinessColor({color: 'red'});
+        setReadinessStr(t('lamp.maintenance'));
+        break;
+      default:
+        break;
+    }
+  }, [readinessStatus]);
   return (
     <View style={styles.card}>
       <View style={{padding: 20}}>
@@ -45,90 +89,38 @@ const MonitoringCard = props => {
           <Text style={{color: 'black', fontWeight: 'bold'}}>
             {t('lamp.erflreadiness')}:{' '}
           </Text>
-          <Text
-            style={
-              props.item.status == 'ACTIVE'
-                ? {color: 'green'}
-                : props.item.status == 'SPECIAL'
-                ? {color: 'purple'}
-                : props.item.status == 'DISABLED'
-                ? {color: 'red'}
-                : {color: 'black'}
-            }>
-            {props.item.status == 'ACTIVE'
-              ? t('lamp.active')
-              : props.item.status == 'SPECIAL'
-              ? t('lamp.isolated')
-              : props.item.status == 'DISABLED'
-              ? t('lamp.maintenance')
-              : ''}
-          </Text>
+          <Text style={readinessColor}>{readinessStr}</Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={{color: 'black', fontWeight: 'bold'}}>
             {t('lamp.status')}:{' '}
           </Text>
           <View style={{flexDirection: 'row'}}>
-            <View
-              style={{
-                backgroundColor: '#f7f7f7',
-                borderRadius: 100,
-                marginLeft: 5,
-                paddingTop: 10,
-                paddingBottom: 0,
-                paddingLeft: 13,
-                paddingRight: 13,
-              }}>
-              <Icon name="question" size={24} color="black" type="octicon" />
-              <Text style={{fontSize: 11, textAlign: 'center'}}>
-                {t('lamp.lamp')}
-              </Text>
-            </View>
-            <View
-              style={{
-                backgroundColor: '#f7f7f7',
-                borderRadius: 100,
-                marginLeft: 5,
-                paddingTop: 10,
-                paddingBottom: 0,
-                paddingLeft: 13,
-                paddingRight: 13,
-              }}>
-              <Icon name="alert" size={24} color="red" type="octicon" />
-              <Text style={{fontSize: 11, textAlign: 'center'}}>
-                {t('lamp.health')}
-              </Text>
-            </View>
-
             <StatusBubble
+              mode={'lamp'}
+              t={t}
+              title={'lamp.lamp'}
+              status={props?.item?.lampStatus}
+            />
+            <StatusBubble
+              mode={'health'}
+              t={t}
+              title={'lamp.health'}
+              status={props?.item?.connectionStatus}
+            />
+            <StatusBubble
+              mode={'conn'}
               t={t}
               title={'lamp.conn'}
               status={props?.item?.connectionStatus}
             />
-            <View
-              style={{
-                backgroundColor: '#f7f7f7',
-                borderRadius: 100,
-                marginLeft: 5,
-                paddingTop: 10,
-                paddingBottom: 0,
-                paddingLeft: 13,
-                paddingRight: 13,
-              }}>
-              <Icon
-                name={
-                  props?.item?.batteryStatus == 'NORMAL' ? 'plug' : 'question'
-                }
-                size={24}
-                color={
-                  props?.item?.batteryStatus == 'NORMAL' ? 'green' : 'black'
-                }
-                type="octicon"
-              />
-              <Text style={{fontSize: 11, textAlign: 'center'}}>
-                {t('lamp.power')}
-              </Text>
-            </View>
+            <StatusBubble
+              mode={'power'}
+              t={t}
+              title={'lamp.power'}
+              status={props?.item?.batteryStatus}
+            />
+
             <View
               style={{
                 backgroundColor: '#f7f7f7',
@@ -195,7 +187,6 @@ const styles = StyleSheet.create({
   card: {},
   btn: {
     width: '100%',
-
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',

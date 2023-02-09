@@ -47,7 +47,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.2",
-    "remote-redux-devtools": "^0.5.16"
+    "remote-redux-devtools": "^0.5.16",
+    "use-onclickoutside": "^0.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

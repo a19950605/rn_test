@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Text} from '@rneui/themed';
 import {Input, Icon} from '@rneui/themed';
 
-import {View, StyleSheet, Button} from 'react-native';
+import {View, StyleSheet, Button, TouchableWithoutFeedback} from 'react-native';
 import {Menu, Provider, TextInput, HelperText} from 'react-native-paper';
 import {Pressable} from 'react-native';
 const MonitoringDetailTab = ({
@@ -142,237 +142,17 @@ const MonitoringDetailTab = ({
 
   return (
     <Provider>
-      {loading ? (
-        <View style={{padding: 10}}>
-          <Text>loading</Text>
-        </View>
-      ) : (
-        <View style={{padding: 10, backgroundColor: 'white', flex: 1}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              marginBottom: 15,
-            }}>
-            <Icon
-              name="monitor"
-              size={24}
-              color="black"
-              style={{padding: 10, justifyContent: 'center'}}
-            />
-            <TextInput
-              editable={true}
-              selectTextOnFocus={false}
-              style={{
-                width: islandscapemode ? '95%' : '85%',
-                backgroundColor: '#f5f6f7',
-              }}
-              label="Controller ID"
-              value={controllerId}
-              onChangeText={controllerId => {
-                setControllerId(controllerId);
-                setForm({...form, controllerId: controllerId});
-              }}
-            />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          setMenu1(false);
+          setMenu2(false);
+        }}>
+        {loading ? (
+          <View style={{padding: 10}}>
+            <Text>loading</Text>
           </View>
-          <View>
-            <HelperText
-              type="error"
-              visible={controllerId == '' && isSubmit}
-              style={{
-                marginTop: controllerId == '' && isSubmit ? -15 : -30,
-                marginLeft: 30,
-              }}>
-              Controller ID is invalid!
-            </HelperText>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              marginBottom: 15,
-            }}>
-            <Icon
-              name="hash"
-              size={24}
-              color="black"
-              type="feather"
-              style={{padding: 10}}
-            />
-            <TextInput
-              editable={true}
-              selectTextOnFocus={false}
-              style={{
-                width: islandscapemode ? '95%' : '85%',
-                backgroundColor: '#f5f6f7',
-              }}
-              label="Device ID"
-              value={deviceId}
-              onChangeText={deviceId => {
-                setDeviceId(parseInt(deviceId));
-                setForm({...form, deviceId: deviceId});
-              }}
-            />
-          </View>
-          <View>
-            <HelperText
-              type="error"
-              visible={deviceId == '' && isSubmit}
-              style={{
-                marginTop: deviceId == '' && isSubmit ? -15 : -30,
-                marginLeft: 30,
-              }}>
-              Device ID is missing
-            </HelperText>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              marginBottom: 15,
-            }}>
-            <Icon
-              name="location-pin"
-              size={24}
-              color="black"
-              type="material"
-              style={{padding: 10}}
-            />
-            <TextInput
-              editable={true}
-              selectTextOnFocus={false}
-              style={{
-                width: islandscapemode ? '95%' : '85%',
-                backgroundColor: '#f5f6f7',
-              }}
-              label="RFL"
-              value={rfl}
-              onChangeText={rfl => {
-                setRfl(rfl);
-                setForm({...form, rfl: rfl});
-              }}
-            />
-          </View>
-          <View>
-            <HelperText
-              type="error"
-              visible={rfl == '' && isSubmit}
-              style={{
-                marginTop: rfl == '' && isSubmit ? -15 : -30,
-                marginLeft: 30,
-              }}>
-              RFL is missing
-            </HelperText>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              marginBottom: 15,
-            }}>
-            <Icon
-              name="call-split"
-              size={24}
-              color="black"
-              type="material"
-              style={{padding: 10}}
-            />
-            <Pressable
-              style={{width: '100%'}}
-              onPress={() => {
-                setMenu1(!menu1);
-                setMenu2(false);
-              }}>
-              <TextInput
-                editable={false}
-                selectTextOnFocus={false}
-                style={{
-                  width: islandscapemode ? '95%' : '85%',
-                  backgroundColor: '#f5f6f7',
-                }}
-                label="Relay Channel Index"
-                value={relayChannelIdx?.toString()}
-                onChangeText={relayChannelIdx => {
-                  setRelayChannelIdx(relayChannelIdx);
-                  setForm({...form, relayChannelIdx: relayChannelIdx});
-                }}
-              />
-            </Pressable>
-          </View>
-          <HelperText
-            type="error"
-            visible={relayChannelIdx == '' && relayChannelIdx != 0 && isSubmit}
-            style={{
-              marginTop: relayChannelIdx == '' && isSubmit ? -15 : -30,
-              marginLeft: 30,
-            }}>
-            relayChannel Index is missing
-          </HelperText>
-          <View>
-            {menu1 && (
-              <View
-                style={{
-                  backgroundColor: 'white',
-                  position: 'absolute',
-                  zIndex: 999,
-                  width: '86%',
-                  left: 41,
-                  top: -10,
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 2,
-                  },
-                  shadowOpacity: 0.25,
-                  shadowRadius: 3.84,
-
-                  elevation: 5,
-                }}>
-                <Menu.Item
-                  onPress={() => {
-                    setRelayChannelIdx(0);
-                    setForm({...form, relayChannelIdx: 0});
-                    setMenu1(false);
-                  }}
-                  title="0"
-                />
-                <Menu.Item
-                  onPress={() => {
-                    setRelayChannelIdx(1);
-                    setForm({...form, relayChannelIdx: 1});
-                    setMenu1(false);
-                  }}
-                  title="1"
-                />
-                <Menu.Item
-                  onPress={() => {
-                    setRelayChannelIdx(2);
-                    setForm({...form, relayChannelIdx: 2});
-                    setMenu1(false);
-                  }}
-                  title="2"
-                />
-                <Menu.Item
-                  onPress={() => {
-                    setRelayChannelIdx(3);
-                    setForm({...form, relayChannelIdx: 3});
-                    setMenu1(false);
-                  }}
-                  title="3"
-                />
-              </View>
-            )}
-          </View>
-          <Pressable
-            style={{width: '100%'}}
-            onPress={() => {
-              setMenu2(!menu2);
-              setMenu1(false);
-            }}>
+        ) : (
+          <View style={{padding: 10, backgroundColor: 'white', flex: 1}}>
             <View
               style={{
                 flexDirection: 'row',
@@ -381,32 +161,288 @@ const MonitoringDetailTab = ({
                 marginBottom: 15,
               }}>
               <Icon
-                name="play"
+                name="monitor"
                 size={24}
                 color="black"
-                type="fontisto"
-                style={{padding: 10}}
+                style={{padding: 10, justifyContent: 'center'}}
               />
               <TextInput
-                editable={false}
+                editable={true}
                 selectTextOnFocus={false}
                 style={{
                   width: islandscapemode ? '95%' : '85%',
                   backgroundColor: '#f5f6f7',
                 }}
-                label="Status"
-                value={status}
-                onChangeText={status => {
-                  setStatus(status);
-                  setForm({...form, status: status});
+                onFocus={() => {
+                  setMenu1(false);
+                  setMenu2(false);
+                }}
+                label="Controller ID"
+                value={controllerId}
+                onChangeText={controllerId => {
+                  setControllerId(controllerId);
+                  setForm({...form, controllerId: controllerId});
                 }}
               />
             </View>
-          </Pressable>
+            <View>
+              <HelperText
+                type="error"
+                visible={controllerId == '' && isSubmit}
+                style={{
+                  marginTop: controllerId == '' && isSubmit ? -15 : -30,
+                  marginLeft: 30,
+                }}>
+                Controller ID is invalid!
+              </HelperText>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                alignItems: 'center',
+                marginBottom: 15,
+              }}>
+              <Icon
+                name="hash"
+                size={24}
+                color="black"
+                type="feather"
+                style={{padding: 10}}
+              />
+              <TextInput
+                onFocus={() => {
+                  setMenu1(false);
+                  setMenu2(false);
+                }}
+                editable={true}
+                selectTextOnFocus={false}
+                style={{
+                  width: islandscapemode ? '95%' : '85%',
+                  backgroundColor: '#f5f6f7',
+                }}
+                label="Device ID"
+                value={deviceId}
+                onChangeText={deviceId => {
+                  setDeviceId(parseInt(deviceId));
+                  setForm({...form, deviceId: deviceId});
+                }}
+              />
+            </View>
+            <View>
+              <HelperText
+                type="error"
+                visible={deviceId == '' && isSubmit}
+                style={{
+                  marginTop: deviceId == '' && isSubmit ? -15 : -30,
+                  marginLeft: 30,
+                }}>
+                Device ID is missing
+              </HelperText>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                alignItems: 'center',
+                marginBottom: 15,
+              }}>
+              <Icon
+                name="location-pin"
+                size={24}
+                color="black"
+                type="material"
+                style={{padding: 10}}
+              />
+              <TextInput
+                onFocus={() => {
+                  setMenu1(false);
+                  setMenu2(false);
+                }}
+                editable={true}
+                selectTextOnFocus={false}
+                style={{
+                  width: islandscapemode ? '95%' : '85%',
+                  backgroundColor: '#f5f6f7',
+                }}
+                label="RFL"
+                value={rfl}
+                onChangeText={rfl => {
+                  setRfl(rfl);
+                  setForm({...form, rfl: rfl});
+                }}
+              />
+            </View>
+            <View>
+              <HelperText
+                type="error"
+                visible={rfl == '' && isSubmit}
+                style={{
+                  marginTop: rfl == '' && isSubmit ? -15 : -30,
+                  marginLeft: 30,
+                }}>
+                RFL is missing
+              </HelperText>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                alignItems: 'center',
+                marginBottom: 15,
+              }}>
+              <Icon
+                name="call-split"
+                size={24}
+                color="black"
+                type="material"
+                style={{padding: 10}}
+              />
+              <Pressable
+                style={{width: '100%'}}
+                onPress={() => {
+                  setMenu1(!menu1);
+                  setMenu2(false);
+                }}>
+                <TextInput
+                  editable={false}
+                  selectTextOnFocus={false}
+                  style={{
+                    width: islandscapemode ? '95%' : '85%',
+                    backgroundColor: '#f5f6f7',
+                  }}
+                  label="Relay Channel Index"
+                  value={relayChannelIdx?.toString()}
+                  onChangeText={relayChannelIdx => {
+                    setRelayChannelIdx(relayChannelIdx);
+                    setForm({...form, relayChannelIdx: relayChannelIdx});
+                  }}
+                />
+                <View style={{position: 'absolute', left: '78%', top: '30%'}}>
+                  <Icon
+                    name="angle-down"
+                    size={24}
+                    color="black"
+                    type="font-awesome"
+                  />
+                </View>
+              </Pressable>
+            </View>
+            <HelperText
+              type="error"
+              visible={
+                relayChannelIdx == '' && relayChannelIdx != 0 && isSubmit
+              }
+              style={{
+                marginTop: relayChannelIdx == '' && isSubmit ? -15 : -30,
+                marginLeft: 30,
+              }}>
+              relayChannel Index is missing
+            </HelperText>
+            <View>
+              {menu1 && (
+                <View
+                  style={{
+                    backgroundColor: 'white',
+                    position: 'absolute',
+                    zIndex: 999,
+                    width: '86%',
+                    left: 41,
+                    top: -10,
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
 
-          <View>{menu2 && <StatusDropDown close={setMenu2} />}</View>
-        </View>
-      )}
+                    elevation: 5,
+                  }}>
+                  <Menu.Item
+                    onPress={() => {
+                      setRelayChannelIdx(0);
+                      setForm({...form, relayChannelIdx: 0});
+                      setMenu1(false);
+                    }}
+                    title="0"
+                  />
+                  <Menu.Item
+                    onPress={() => {
+                      setRelayChannelIdx(1);
+                      setForm({...form, relayChannelIdx: 1});
+                      setMenu1(false);
+                    }}
+                    title="1"
+                  />
+                  <Menu.Item
+                    onPress={() => {
+                      setRelayChannelIdx(2);
+                      setForm({...form, relayChannelIdx: 2});
+                      setMenu1(false);
+                    }}
+                    title="2"
+                  />
+                  <Menu.Item
+                    onPress={() => {
+                      setRelayChannelIdx(3);
+                      setForm({...form, relayChannelIdx: 3});
+                      setMenu1(false);
+                    }}
+                    title="3"
+                  />
+                </View>
+              )}
+            </View>
+            <Pressable
+              style={{width: '100%'}}
+              onPress={() => {
+                setMenu2(!menu2);
+                setMenu1(false);
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                  alignItems: 'center',
+                  marginBottom: 15,
+                }}>
+                <Icon
+                  name="play"
+                  size={24}
+                  color="black"
+                  type="fontisto"
+                  style={{padding: 10}}
+                />
+                <TextInput
+                  editable={false}
+                  selectTextOnFocus={false}
+                  style={{
+                    width: islandscapemode ? '95%' : '85%',
+                    backgroundColor: '#f5f6f7',
+                  }}
+                  label="Status"
+                  value={status}
+                  onChangeText={status => {
+                    setStatus(status);
+                    setForm({...form, status: status});
+                  }}
+                />
+                <View style={{position: 'absolute', left: '90%', top: '30%'}}>
+                  <Icon
+                    name="angle-down"
+                    size={24}
+                    color="black"
+                    type="font-awesome"
+                  />
+                </View>
+              </View>
+            </Pressable>
+
+            <View>{menu2 && <StatusDropDown close={setMenu2} />}</View>
+          </View>
+        )}
+      </TouchableWithoutFeedback>
     </Provider>
   );
 };

@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import {Icon} from '@rneui/themed';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -6,6 +7,8 @@ import {
   View,
 } from 'react-native';
 import Modal from 'react-native-modal';
+import {RadioButton, TextInput} from 'react-native-paper';
+import {SubModal} from './SubModal';
 
 export const MonitoringFilterModal = ({
   setShowMainModal,
@@ -23,6 +26,23 @@ export const MonitoringFilterModal = ({
   const [openStatusModal, setOpenStatusModal] = useState(false);
   const [openConnModal, setOpenConnModal] = useState(false);
   const [openRFLModal, setOpenRFLModal] = useState(false);
+  const [ModalContent, setModalContent] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  useEffect(() => {
+    if (ModalContent == true) {
+    }
+    {
+      /*
+        setOpenModal={setOpenRFLModal}
+        openModal={openRFLModal}
+        setFilter={setFilterRFL}
+        options={rflDropDown}
+        setFilterCode={setFilterRFLCode}
+        filterVal={filterRFL}
+        mode={'rfl'}
+*/
+    }
+  }, [ModalContent]);
 
   return (
     <View>
@@ -56,44 +76,139 @@ export const MonitoringFilterModal = ({
               Filters
             </Text>
           </View>
-          <View style={{padding: 10}}>
+          <View style={{paddingVertical: 10}}>
             <View>
-              <Text style={{color: 'black', fontSize: 16.5}}>RFL</Text>
-            </View>
-            <View style={{padding: 10}}>
-              <TouchableOpacity
-                onPress={() => {
-                  setOpenRFLModal(true);
+              <Text
+                style={{
+                  color: 'black',
+                  fontSize: 14,
+                  paddingLeft: 10,
+                  paddingBottom: 10,
                 }}>
-                <Text style={{color: 'black', fontSize: 18}}>{filterRFL}</Text>
-              </TouchableOpacity>
+                RFL
+              </Text>
             </View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setOpenRFLModal(true);
+              }}>
+              <View
+                style={{
+                  padding: 10,
+                  flexDirection: 'row',
+                  width: '100%',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <View>
+                  <Text style={{color: 'black', fontSize: 18, marginLeft: 20}}>
+                    {filterRFL}
+                  </Text>
+                </View>
+                <Icon
+                  name="sort-down"
+                  type="font-awesome"
+                  size={18}
+                  color={'gray'}
+                  style={{marginRight: 15}}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+            <View
+              style={{
+                borderBottomColor: 'rgba(0,0,0,0.2)',
+                borderBottomWidth: 1,
+                marginBottom: 15,
+              }}
+            />
             <View>
-              <Text style={{color: 'black', fontSize: 16.5}}>Status</Text>
-            </View>
-            <View style={{padding: 10}}>
-              <TouchableOpacity
-                onPress={() => {
-                  setOpenStatusModal(true);
+              <Text
+                style={{
+                  color: 'black',
+                  fontSize: 14,
+                  paddingLeft: 10,
+                  paddingBottom: 10,
                 }}>
-                <Text style={{color: 'black', fontSize: 18}}>
-                  {filterStatus}
-                </Text>
-              </TouchableOpacity>
+                Status
+              </Text>
             </View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setOpenStatusModal(true);
+              }}>
+              <View
+                style={{
+                  padding: 10,
+                  flexDirection: 'row',
+                  width: '100%',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <View>
+                  <Text style={{color: 'black', fontSize: 18, marginLeft: 15}}>
+                    {filterStatus}
+                  </Text>
+                </View>
+                <Icon
+                  name="sort-down"
+                  type="font-awesome"
+                  size={18}
+                  color={'gray'}
+                  style={{marginRight: 15}}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+            <View
+              style={{
+                borderBottomColor: 'rgba(0,0,0,0.2)',
+                borderBottomWidth: 1,
+                marginBottom: 15,
+              }}
+            />
             <View>
-              <Text style={{color: 'black', fontSize: 16.5}}>CONN</Text>
-            </View>
-            <View style={{padding: 10}}>
-              <TouchableOpacity
-                onPress={() => {
-                  setOpenConnModal(true);
+              <Text
+                style={{
+                  color: 'black',
+                  fontSize: 14,
+                  paddingLeft: 10,
+                  paddingBottom: 10,
                 }}>
-                <Text style={{color: 'black', fontSize: 18}}>
-                  {filterCONNStatus}
-                </Text>
-              </TouchableOpacity>
+                CONN
+              </Text>
             </View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setOpenConnModal(true);
+              }}>
+              <View
+                style={{
+                  padding: 10,
+                  flexDirection: 'row',
+                  width: '100%',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <View>
+                  <Text style={{color: 'black', fontSize: 18, marginLeft: 15}}>
+                    {filterCONNStatus}
+                  </Text>
+                </View>
+                <Icon
+                  name="sort-down"
+                  type="font-awesome"
+                  color={'gray'}
+                  size={18}
+                  style={{marginRight: 15}}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+            <View
+              style={{
+                borderBottomColor: 'rgba(0,0,0,0.2)',
+                borderBottomWidth: 1,
+                marginBottom: 25,
+              }}
+            />
             <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
               <TouchableOpacity
                 onPress={() => {
@@ -108,8 +223,12 @@ export const MonitoringFilterModal = ({
                   borderColor: 'blue',
                   borderRadius: 5,
                   padding: 10,
+                  flexDirection: 'row',
                 }}>
-                <Text style={{fontSize: 18, color: 'blue'}}>Reset</Text>
+                <Icon name="sync" type="octicon" size={24} color={'blue'} />
+                <Text style={{fontSize: 18, color: 'blue', paddingLeft: 5}}>
+                  Reset
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -122,30 +241,62 @@ export const MonitoringFilterModal = ({
                   borderColor: 'green',
                   borderRadius: 5,
                   padding: 10,
+                  flexDirection: 'row',
                 }}>
-                <Text style={{fontSize: 18, color: 'green'}}>Filter</Text>
+                <Icon
+                  name="filter"
+                  type="font-awesome"
+                  size={24}
+                  color={'green'}
+                />
+                <Text style={{fontSize: 18, color: 'green', paddingLeft: 5}}>
+                  Filter
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </Modal>
-      <StatusModal
-        setOpenStatusModal={setOpenStatusModal}
-        openStatusModal={openStatusModal}
-        filterStatus={filterStatus}
-        setFilterStatus={setFilterStatus}
+
+      <SubModal
+        setOpenModal={setOpenStatusModal}
+        openModal={openStatusModal}
+        setFilter={setFilterStatus}
+        options={[
+          {code: 'All', stateVal: ''},
+          {code: 'ACTIVE', stateVal: 'ACTIVE'},
+
+          {code: 'Isolated', stateVal: 'SPECIAL'},
+          {code: 'Maintenance', stateVal: 'DISABLED'},
+        ]}
+        setFilterCode={undefined}
+        filterVal={filterStatus}
+        mode={'others'}
       />
-      <ConnStatusModal
-        setFilterCONNStatus={setFilterCONNStatus}
-        setOpenConnModal={setOpenConnModal}
-        openConnModal={openConnModal}
+      <SubModal
+        setOpenModal={setOpenConnModal}
+        openModal={openConnModal}
+        setFilter={setFilterCONNStatus}
+        options={[
+          {code: 'All', stateVal: ''},
+
+          {code: 'Normal', stateVal: 'NORMAL'},
+          {code: 'Connection Loss', stateVal: 'CONNLOST'},
+          {code: 'Unknown', stateVal: 'UNKNOWN'},
+        ]}
+        setFilterCode={undefined}
+        filterVal={filterCONNStatus}
+        mode={'others'}
       />
-      <RflModal
-        rflDropDown={rflDropDown}
-        setFilterRFL={setFilterRFL}
-        setFilterRFLCode={setFilterRFLCode}
-        openRFLModal={openRFLModal}
-        setOpenRFLModal={setOpenRFLModal}
+
+      <SubModal
+        setOpenModal={setOpenRFLModal}
+        openModal={openRFLModal}
+        setFilter={setFilterRFL}
+        options={rflDropDown}
+        setFilterCode={setFilterRFLCode}
+        filterVal={filterRFL}
+        mode={'rfl'}
       />
     </View>
   );
@@ -157,11 +308,11 @@ const StatusModal = ({
   setFilterStatus,
 }) => {
   const options = [
-    {displayValue: 'All', stateVal: ''},
-    {displayValue: 'ACTIVE', stateVal: 'ACTIVE'},
+    {code: 'All', stateVal: ''},
+    {code: 'ACTIVE', stateVal: 'ACTIVE'},
 
-    {displayValue: 'Isolated', stateVal: 'SPECIAL'},
-    {displayValue: 'Maintenance', stateVal: 'DISABLED'},
+    {code: 'Isolated', stateVal: 'SPECIAL'},
+    {code: 'Maintenance', stateVal: 'DISABLED'},
   ];
   return (
     <View>
@@ -197,17 +348,15 @@ const StatusModal = ({
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    setFilterStatus(o.displayValue);
+                    setFilterStatus(o.code);
                   }}
-                  key={o.displayValue}
+                  key={o.code}
                   style={{
                     marginRight: 10,
 
                     padding: 10,
                   }}>
-                  <Text style={{fontSize: 18, color: 'blue'}}>
-                    {o.displayValue}
-                  </Text>
+                  <Text style={{fontSize: 18, color: 'blue'}}>{o.code}</Text>
                 </TouchableOpacity>
               );
             })}
@@ -223,11 +372,11 @@ const ConnStatusModal = ({
   setFilterCONNStatus,
 }) => {
   const options = [
-    {displayValue: 'All', stateVal: ''},
+    {code: 'All', stateVal: ''},
 
-    {displayValue: 'Normal', stateVal: 'NORMAL'},
-    {displayValue: 'Connection Loss', stateVal: 'CONNLOST'},
-    {displayValue: 'Unknown', stateVal: 'UNKNOWN'},
+    {code: 'Normal', stateVal: 'NORMAL'},
+    {code: 'Connection Loss', stateVal: 'CONNLOST'},
+    {code: 'Unknown', stateVal: 'UNKNOWN'},
   ];
   return (
     <View>
@@ -263,7 +412,7 @@ const ConnStatusModal = ({
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    setFilterCONNStatus(o.displayValue);
+                    setFilterCONNStatus(o.code);
                   }}
                   key={idx}
                   style={{
@@ -271,9 +420,7 @@ const ConnStatusModal = ({
 
                     padding: 10,
                   }}>
-                  <Text style={{fontSize: 18, color: 'blue'}}>
-                    {o.displayValue}
-                  </Text>
+                  <Text style={{fontSize: 18, color: 'blue'}}>{o.code}</Text>
                 </TouchableOpacity>
               );
             })}
@@ -290,14 +437,10 @@ const RflModal = ({
   setFilterRFL,
   rflDropDown,
   setFilterRFLCode,
+  filterRFL,
 }) => {
-  const options = [
-    {displayValue: 'All', stateVal: ''},
+  const [text, setText] = React.useState('');
 
-    {displayValue: 'Normal', stateVal: 'NORMAL'},
-    {displayValue: 'Connection Loss', stateVal: 'CONNLOST'},
-    {displayValue: 'Unknown', stateVal: 'UNKNOWN'},
-  ];
   return (
     <View>
       <Modal
@@ -310,41 +453,88 @@ const RflModal = ({
             <View style={{flex: 1, backgroundColor: 'black'}} />
           </TouchableWithoutFeedback>
         }>
-        <View style={{flex: 1, backgroundColor: 'white', padding: 20}}>
-          <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'white',
+            paddingVertical: 20,
+            width: '100%',
+          }}>
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
             <TouchableOpacity
               onPress={() => {
                 setOpenRFLModal(false);
               }}
               style={{
                 marginRight: 10,
-                borderWidth: 1,
-                borderColor: 'blue',
-                borderRadius: 5,
                 padding: 10,
+                flexDirection: 'row',
               }}>
+              <Icon name="close" type="ionicon" color={'blue'} size={24} />
               <Text style={{fontSize: 18, color: 'blue'}}>Done</Text>
             </TouchableOpacity>
           </View>
 
           <View>
-            {rflDropDown.map(o => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    setFilterRFLCode(o.id);
-                    setFilterRFL(o.code);
-                  }}
-                  key={o.id}
-                  style={{
-                    marginRight: 10,
-
-                    padding: 10,
-                  }}>
-                  <Text style={{fontSize: 18, color: 'blue'}}>{o.code}</Text>
-                </TouchableOpacity>
-              );
-            })}
+            <View style={{padding: 10}}>
+              <TextInput
+                label=""
+                value={text}
+                onChangeText={text => setText(text)}
+              />
+            </View>
+            {'all'.includes(text?.toLowerCase()) && (
+              <TouchableOpacity
+                onPress={() => {
+                  setFilterRFLCode('');
+                  setFilterRFL('All');
+                }}
+                style={{
+                  marginRight: 10,
+                  flexDirection: 'row',
+                  padding: 5,
+                  alignItems: 'center',
+                }}>
+                <RadioButton
+                  value="first"
+                  color={'red'}
+                  status={filterRFL == 'All' ? 'checked' : 'unchecked'}
+                  onPress={() => {}}
+                />
+                <Text style={{fontSize: 18, color: 'black'}}>{'All'}</Text>
+              </TouchableOpacity>
+            )}
+            {rflDropDown
+              .filter(r =>
+                r?.code?.toLowerCase()?.includes(text?.toLowerCase()),
+              )
+              .map(o => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      setFilterRFLCode(o.id);
+                      setFilterRFL(o.code);
+                    }}
+                    key={o.id}
+                    style={{
+                      marginRight: 10,
+                      flexDirection: 'row',
+                      padding: 5,
+                      alignItems: 'center',
+                    }}>
+                    <RadioButton
+                      value="first"
+                      color={'red'}
+                      status={filterRFL == o.code ? 'checked' : 'unchecked'}
+                      onPress={() => {
+                        setFilterRFLCode(o.id);
+                        setFilterRFL(o.code);
+                      }}
+                    />
+                    <Text style={{fontSize: 18, color: 'black'}}>{o.code}</Text>
+                  </TouchableOpacity>
+                );
+              })}
           </View>
         </View>
       </Modal>

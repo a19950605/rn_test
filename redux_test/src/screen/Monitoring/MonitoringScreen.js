@@ -118,93 +118,101 @@ const MonitoringScreen = () => {
     //   });
   }, [loading]);
   return (
-    <View style={styles.screenInit}>
-      <View style={styles.spaceBetween}>
-        <View style={{flexDirection: 'row'}}>
-          <CreateButton navigation={navigation} navLoc={'Create Monitoring'} />
+    <TouchableWithoutFeedback
+      onPress={() => {
+        setShowFilter(false);
+      }}>
+      <View style={styles.screenInit}>
+        <View style={styles.spaceBetween}>
+          <View style={{flexDirection: 'row'}}>
+            <CreateButton
+              navigation={navigation}
+              navLoc={'Create Monitoring'}
+            />
 
-          <TouchableOpacity
-            onPress={() => {
-              setLoading(true);
-            }}
-            style={{
-              borderColor: loading ? color.gray : 'blue',
-              borderWidth: 1,
-              borderRadius: 2,
-              padding: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <Text style={{color: loading ? color.gray : 'blue'}}>
-              {loading ? 'loading' : currentDate}
-            </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setLoading(true);
+              }}
+              style={{
+                borderColor: loading ? color.gray : 'blue',
+                borderWidth: 1,
+                borderRadius: 2,
+                padding: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <Text style={{color: loading ? color.gray : 'blue'}}>
+                {loading ? 'loading' : currentDate}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              onPress={() => {
+                setShowMainModal(true);
+              }}>
+              <Icon name="search" size={24} color="black" type="ionicon" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setShowFilter(!showFilter);
+              }}>
+              <Icon name="filter" size={24} color="black" type="ionicon" />
+            </TouchableOpacity>
+          </View>
+          {showFilter && (
+            <SortDropDown
+              closeFilter={setShowFilter}
+              setFilterDesc={setFilterDesc}
+              setFilterField={setFilterField}
+              setLoading={setLoading}
+              sortOption={sortOption}
+              filterDesc={filterDesc}
+              filterField={filterField}
+            />
+          )}
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity
-            onPress={() => {
-              setShowMainModal(true);
-            }}>
-            <Icon name="search" size={24} color="black" type="ionicon" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setShowFilter(!showFilter);
-            }}>
-            <Icon name="filter" size={24} color="black" type="ionicon" />
-          </TouchableOpacity>
-        </View>
-        {showFilter && (
-          <SortDropDown
-            close={setShowFilter}
+
+        <View style={{padding: 5}}></View>
+
+        {loading ? (
+          <LinearProgress style={{marginTop: -5}} color="red" />
+        ) : isLandscapeMode ? (
+          <TableTest
+            data={data}
+            navigation={navigation}
+            filterDesc={filterDesc}
+            filterField={filterField}
             setFilterDesc={setFilterDesc}
             setFilterField={setFilterField}
             setLoading={setLoading}
-            sortOption={sortOption}
-            filterDesc={filterDesc}
-            filterField={filterField}
+          />
+        ) : (
+          <FlatList
+            data={data}
+            renderItem={props => (
+              <MonitoringCard {...props} navigation={navigation} />
+            )}
+          />
+        )}
+        {showMainModal && (
+          <MonitoringFilterModal
+            setLoading={setLoading}
+            setShowMainModal={setShowMainModal}
+            showMainModal={showMainModal}
+            filterStatus={filterStatus}
+            setFilterStatus={setFilterStatus}
+            setFilterCONNStatus={setFilterCONNStatus}
+            filterCONNStatus={filterCONNStatus}
+            rflDropDown={data2}
+            filterRFL={filterRFL}
+            setFilterRFL={setFilterRFL}
+            setFilterRFLCode={setFilterRFLCode}
           />
         )}
       </View>
-
-      <View style={{padding: 5}}></View>
-
-      {loading ? (
-        <LinearProgress style={{marginTop: -5}} color="red" />
-      ) : isLandscapeMode ? (
-        <TableTest
-          data={data}
-          navigation={navigation}
-          filterDesc={filterDesc}
-          filterField={filterField}
-          setFilterDesc={setFilterDesc}
-          setFilterField={setFilterField}
-          setLoading={setLoading}
-        />
-      ) : (
-        <FlatList
-          data={data}
-          renderItem={props => (
-            <MonitoringCard {...props} navigation={navigation} />
-          )}
-        />
-      )}
-      {showMainModal && (
-        <MonitoringFilterModal
-          setLoading={setLoading}
-          setShowMainModal={setShowMainModal}
-          showMainModal={showMainModal}
-          filterStatus={filterStatus}
-          setFilterStatus={setFilterStatus}
-          setFilterCONNStatus={setFilterCONNStatus}
-          filterCONNStatus={filterCONNStatus}
-          rflDropDown={data2}
-          filterRFL={filterRFL}
-          setFilterRFL={setFilterRFL}
-          setFilterRFLCode={setFilterRFLCode}
-        />
-      )}
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

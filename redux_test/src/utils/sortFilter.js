@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import {Menu} from 'react-native-paper';
-
 const SortDropDown = ({
-  close,
+  closeFilter,
   setFilterDesc,
   setFilterField,
   setLoading,
@@ -17,7 +16,6 @@ const SortDropDown = ({
         backgroundColor: 'white',
         position: 'absolute',
         zIndex: 999,
-
         right: 0,
         top: 40,
         shadowColor: '#000',
@@ -27,7 +25,6 @@ const SortDropDown = ({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-
         elevation: 5,
       }}>
       {sortOption.map(s => {
@@ -50,7 +47,7 @@ const SortDropDown = ({
               setFilterField(s.apiValue);
               // setData(sortData(data, 'rflid', filterDesc));
               setLoading(true);
-              close(false);
+              closeFilter(false);
             }}
             title={s.displayValue}
           />
