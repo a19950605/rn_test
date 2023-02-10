@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text, View, TouchableOpacity} from 'react-native';
 
-const CreateButton = ({navLoc, navigation}) => {
+const CreateButton = ({navLoc, navigation, dropDown1}) => {
   const {t} = useTranslation();
 
   return (
@@ -18,7 +18,7 @@ const CreateButton = ({navLoc, navigation}) => {
         alignItems: 'center',
       }}
       onPress={() => {
-        navigation.navigate(navLoc);
+        navigation.navigate(navLoc, dropDown1);
       }}>
       <Icon
         name="add-box"

@@ -16,12 +16,20 @@ export const SubModal = ({
   setFilterCode, //set code on rfl option
   filterVal, //selected value
   mode, // rfl,others currently
+  title,
 }) => {
   const [text, setText] = useState('');
 
   return (
     <View>
       <Modal
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          top: -10,
+          left: -20,
+        }}
         isVisible={openModal}
         customBackdrop={
           <TouchableWithoutFeedback
@@ -36,9 +44,17 @@ export const SubModal = ({
             flex: 1,
             backgroundColor: 'white',
             paddingVertical: 20,
-            width: '100%',
           }}>
-          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View
+              style={{
+                marginRight: 10,
+                padding: 10,
+              }}>
+              <Text style={{color: 'black', fontSize: 16}}>
+                Enter {title || ''}
+              </Text>
+            </View>
             <TouchableOpacity
               onPress={() => {
                 setOpenModal(false);
@@ -52,38 +68,42 @@ export const SubModal = ({
               <Text style={{fontSize: 18, color: 'blue'}}>Done</Text>
             </TouchableOpacity>
           </View>
-
           <View>
             <View style={{padding: 10}}>
               <TextInput
                 label=""
                 value={text}
+                style={{backgroundColor: '#f7f7f7', paddingLeft: 25}}
                 onChangeText={text => setText(text)}
               />
+              <View style={{position: 'absolute', left: '5%', top: '45%'}}>
+                <Icon name="search" size={24} color="gray" type="ionicon" />
+              </View>
             </View>
-            {mode == 'rfl' && 'all'.includes(text?.toLowerCase()) && (
-              <TouchableOpacity
-                onPress={() => {
-                  mode == 'rfl' &&
-                    setFilterCode != undefined &&
-                    setFilterCode('');
-                  setFilter('All');
-                }}
-                style={{
-                  marginRight: 10,
-                  flexDirection: 'row',
-                  padding: 5,
-                  alignItems: 'center',
-                }}>
-                <RadioButton
-                  value="first"
-                  color={'red'}
-                  status={filterVal == 'All' ? 'checked' : 'unchecked'}
-                  onPress={() => {}}
-                />
-                <Text style={{fontSize: 18, color: 'black'}}>{'All'}</Text>
-              </TouchableOpacity>
-            )}
+            {(mode == 'rfl' || mode == 'group') &&
+              'all'.includes(text?.toLowerCase()) && (
+                <TouchableOpacity
+                  onPress={() => {
+                    mode == 'rfl' &&
+                      setFilterCode != undefined &&
+                      setFilterCode('');
+                    setFilter('All');
+                  }}
+                  style={{
+                    marginRight: 10,
+                    flexDirection: 'row',
+                    padding: 5,
+                    alignItems: 'center',
+                  }}>
+                  <RadioButton
+                    value="first"
+                    color={'red'}
+                    status={filterVal == 'All' ? 'checked' : 'unchecked'}
+                    onPress={() => {}}
+                  />
+                  <Text style={{fontSize: 18, color: 'black'}}>{'All'}</Text>
+                </TouchableOpacity>
+              )}
             {options
               .filter(r =>
                 r?.code?.toLowerCase()?.includes(text?.toLowerCase()),
@@ -112,7 +132,7 @@ export const SubModal = ({
                         mode == 'rfl' &&
                           setFilterCode != undefined &&
                           setFilterCode(o.id);
-                        setfilterVal(o.code);
+                        setFilter(o.code);
                       }}
                     />
                     <Text style={{fontSize: 18, color: 'black'}}>{o.code}</Text>

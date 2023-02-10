@@ -264,7 +264,7 @@ const useFetchMonitorTest = ({
       case 'Normal':
         connStatus = 'NORMAL';
         break;
-      case 'Connection Loss':
+      case 'Connection Lost':
         connStatus = 'CONNLOST';
         break;
       case 'Unknown':
@@ -306,6 +306,110 @@ const useFetchMonitorTest = ({
   return [data, error];
 };
 
+const useFetchControllerList = ({userToken, loading, isFocused}) => {
+  const [data3, setData3] = useState();
+  const [error3, setError3] = useState(false);
+
+  useEffect(() => {
+    var requestOptions = {
+      method: 'GET',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+    };
+    //`https://gis2.ectrak.com.hk:8900/api/system/user${appendStr}`,
+
+    fetch(
+      'https://gis2.ectrak.com.hk:8900/api/v2/options/controllerCode',
+      requestOptions,
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        // return result;
+        // setData(result);
+        console.log('controller code');
+        console.log(result);
+        setData3(result);
+      })
+      .catch(error => {
+        setError3(true);
+        console.log('error1', error);
+      });
+  }, [loading, isFocused]);
+
+  return [data3, error3];
+};
+
+const createNewRecord = ({
+  token,
+  setAlertMessage,
+  setColor,
+  setIcon,
+  setShowModal,
+  navigation,
+  form,
+  uri,
+  lampX,
+  lampY,
+  imgX,
+  imgY,
+}) => {
+  var formdata = new FormData();
+  formdata.append('controllerCode', form.controllerId);
+  formdata.append('code', form.rfl);
+
+  formdata.append('controllerDeviceId', parseInt(form.deviceId));
+  formdata.append('lampPositionY', lampX);
+  formdata.append('lampPositionX', lampY);
+  formdata.append('imageW', imgX);
+  formdata.append('imageH', imgY);
+  formdata.append('relayChannelIdx', parseInt(form.relayChannelIdx));
+  formdata.append('xxoo', {
+    uri: uri,
+    type: 'image/jpeg',
+    name: 'xxoo',
+  });
+  formdata.append('status', 'ACTIVE');
+
+  var requestOptions = {
+    method: 'POST',
+    headers: {
+      // Accept: '*',
+      // 'Content-Type': 'application/json',
+      'X-Token': token,
+    },
+    body: formdata,
+  };
+  fetch('https://gis2.ectrak.com.hk:8900/api/v2/device', requestOptions)
+    .then(async response => {
+      console.log('response create');
+      let data = await response.json();
+      console.log(data);
+      if (response.status == 200) {
+        setAlertMessage('Create success' + `(id:${data?.id})`);
+        setIcon('check-circle');
+        setColor('green');
+        setShowModal(true);
+
+        navigation.navigate('MonitoringTestSub');
+      } else {
+        setIcon('alert');
+        setColor('red');
+        setAlertMessage(
+          'create fail: ' + response.status + '\n' + data?.errorMsg,
+        );
+        setShowModal(true);
+      }
+
+      // return response.json();
+    })
+
+    .catch(error => console.log('error1', error));
+};
 export {
   useFetchRoleData,
   useFetchUsersData,
@@ -313,4 +417,6 @@ export {
   useFetchMonitorData,
   useCreateUser,
   useFetchMonitorTest,
+  useFetchControllerList,
+  createNewRecord,
 };

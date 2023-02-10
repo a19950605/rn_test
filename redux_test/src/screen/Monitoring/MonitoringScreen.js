@@ -7,7 +7,6 @@ import {
   useWindowDimensions,
   TouchableWithoutFeedback,
 } from 'react-native';
-import Modal from 'react-native-modal';
 
 import MonitoringCard from './components/MonitoringCard';
 import {useNavigation} from '@react-navigation/native';
@@ -19,23 +18,15 @@ import {useIsFocused} from '@react-navigation/native';
 import TableTest from './components/TableTest';
 import {getDate} from '../../utils/getDate';
 import CreateButton from '../../components/CreateButton';
-import {useFetchMonitorData, useFetchMonitorTest} from '../../hooks/apiHook';
+import {
+  useFetchControllerList,
+  useFetchMonitorData,
+  useFetchMonitorTest,
+} from '../../hooks/apiHook';
 import SortDropDown from '../../utils/sortFilter';
 import {MonitoringFilterModal} from './components/MonitoringFilterModal';
 import {color, styles} from '../../constants/GlobalStyles';
 import {useTranslation} from 'react-i18next';
-// const MonitoringTest = () => {
-//   const Stack = createStackNavigator();
-//   return (
-//     <Stack.Navigator
-//       screenOptions={{headerTitle: 'eRFL Monitoring', headerShown: false}}>
-//       <Stack.Screen name="MonitoringTestSub" component={MonitoringTestSub} />
-//       <Stack.Screen name="MonitoringDetail" component={MonitoringTab} />
-//       <Stack.Screen name="Create Monitoring" component={MonitoringCreate} />
-//     </Stack.Navigator>
-//   );
-// };
-////rflid=id , rlf=code,
 
 const MonitoringScreen = () => {
   const {height, width} = useWindowDimensions();
@@ -43,6 +34,7 @@ const MonitoringScreen = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [loading2, setLoading2] = useState(true);
+  const [loadingController, setLoadingController] = useState();
 
   const dispatch = useDispatch();
   const [currentDate, setCurrentDate] = useState();
@@ -50,9 +42,6 @@ const MonitoringScreen = () => {
   const [filterDesc, setFilterDesc] = useState(false);
   const [filterField, setFilterField] = useState('rflid');
   const [showFilter, setShowFilter] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [showUserModal, setShowUserModal] = useState(false);
-  const [showRoleModal, setShowRoleModal] = useState(false);
   const {t} = useTranslation();
 
   const [filterRFL, setFilterRFL] = useState('All');
@@ -64,10 +53,8 @@ const MonitoringScreen = () => {
   const [filterStatus, setFilterStatus] = useState('ACTIVE');
   const [showMainModal, setShowMainModal] = useState(false);
   const isFocused = useIsFocused();
-  const [rflDropDown, setRflDropDown] = useState([]);
   useEffect(() => {
     setInterval(function () {
-      // setLoading(true);
       setCurrentDate(getDate());
     }, 30000);
   }, []);
@@ -93,6 +80,11 @@ const MonitoringScreen = () => {
     filterDesc,
     setCurrentDate,
   });
+  const [data3, error3] = useFetchControllerList({
+    userToken,
+    loading,
+    isFocused,
+  });
 
   useEffect(() => {
     if (!isFocused) {
@@ -107,16 +99,7 @@ const MonitoringScreen = () => {
     {displayValue: 'Group', apiValue: 'Group'},
     {displayValue: 'Status As Of', apiValue: 'statusasof'},
   ];
-  useEffect(() => {
-    console.log('data');
-    console.log(data2);
-    // loading == false &&
-    //   data2?.map(d => {
-    //     console.log(d.id, d.code);
-    //     // setRflDropDown([...rflDropDown, {id: d.id, code: d.code}]);
-    //     setRflDropDown(oldArray => [...oldArray, {id: d.id, code: d.code}]);
-    //   });
-  }, [loading]);
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -128,6 +111,7 @@ const MonitoringScreen = () => {
             <CreateButton
               navigation={navigation}
               navLoc={'Create Monitoring'}
+              dropDown1={data3}
             />
 
             <TouchableOpacity
@@ -209,6 +193,8 @@ const MonitoringScreen = () => {
             filterRFL={filterRFL}
             setFilterRFL={setFilterRFL}
             setFilterRFLCode={setFilterRFLCode}
+            filterGroup={filterGroup}
+            setFilterGroup={setFilterGroup}
           />
         )}
       </View>

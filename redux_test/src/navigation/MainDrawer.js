@@ -129,23 +129,7 @@ export function MainDrawer() {
                 )}
               </TouchableOpacity>
             ),
-            headerRight: () => (
-              <TouchableOpacity
-                onPress={() => {
-                  {
-                    console.log('hello');
-                    // alert('hello');
-                  }
-                }}>
-                <Icon
-                  name="search"
-                  size={24}
-                  color="white"
-                  type="material"
-                  style={{padding: 10}}
-                />
-              </TouchableOpacity>
-            ),
+
             drawerActiveTintColor: 'black',
             drawerActiveBackgroundColor: 'white',
             drawerInactiveTintColor: 'black',

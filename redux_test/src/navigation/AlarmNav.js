@@ -19,5 +19,4 @@ const AlarmNav = () => {
     </Stack.Navigator>
   );
 };
-
 export default AlarmNav;

@@ -19,7 +19,7 @@ import {
 } from 'react-native-paper';
 import {TouchableWithoutFeedback} from 'react-native';
 
-const MonitoringCreateTab = ({setForm, form, isSubmit, t}) => {
+const MonitoringCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
   const [controllerId, setControllerId] = useState(''); // T002
@@ -29,6 +29,9 @@ const MonitoringCreateTab = ({setForm, form, isSubmit, t}) => {
   const [status, setStatus] = useState('ACTIVE'); //active maintenanace
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
+  const [menu3, setMenu3] = useState(false);
+  const [menu4, setMenu4] = useState(false);
+  const deviceIdList = [1, 2, 3, 4];
   const StatusDropDown = ({close}) => {
     return (
       <View
@@ -69,12 +72,16 @@ const MonitoringCreateTab = ({setForm, form, isSubmit, t}) => {
     );
   };
 
+  console.log('hello create tab');
+  console.log(controllerList);
   return (
     <Provider>
       <TouchableWithoutFeedback
         onPress={() => {
           setMenu1(false);
           setMenu2(false);
+          setMenu3(false);
+          setMenu4(false);
         }}>
         <View style={{padding: 10, backgroundColor: 'white', flex: 1}}>
           <View
@@ -91,8 +98,17 @@ const MonitoringCreateTab = ({setForm, form, isSubmit, t}) => {
               style={{padding: 10, justifyContent: 'center'}}
             />
 
-            <View style={{width: '100%'}}>
+            <Pressable
+              style={{width: '100%'}}
+              onPress={() => {
+                setMenu2(false);
+                setMenu1(false);
+                setMenu3(!menu3);
+                setMenu4(false);
+                Keyboard.dismiss();
+              }}>
               <TextInput
+                editable={false}
                 selectTextOnFocus={false}
                 style={{
                   width: isLandscapeMode ? '95%' : '85%',
@@ -109,7 +125,43 @@ const MonitoringCreateTab = ({setForm, form, isSubmit, t}) => {
                   setForm({...form, controllerId: controllerId});
                 }}
               />
-            </View>
+            </Pressable>
+          </View>
+          <View>
+            {menu3 && (
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  position: 'absolute',
+                  zIndex: 999,
+                  width: '86%',
+                  left: 41,
+                  top: -10,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+
+                  elevation: 5,
+                }}>
+                {controllerList.map(c => {
+                  return (
+                    <Menu.Item
+                      key={c.controllerCode}
+                      onPress={() => {
+                        setControllerId(c.controllerCode);
+                        setForm({...form, controllerId: c.controllerCode});
+                        setMenu3(false);
+                      }}
+                      title={c.controllerCode}
+                    />
+                  );
+                })}
+              </View>
+            )}
           </View>
           <View>
             <HelperText
@@ -136,8 +188,17 @@ const MonitoringCreateTab = ({setForm, form, isSubmit, t}) => {
               type="feather"
               style={{padding: 10}}
             />
-            <View style={{width: '100%'}}>
+            <Pressable
+              style={{width: '100%'}}
+              onPress={() => {
+                setMenu2(false);
+                setMenu1(false);
+                setMenu3(false);
+                setMenu4(!menu4);
+                Keyboard.dismiss();
+              }}>
               <TextInput
+                editable={false}
                 onFocus={() => {
                   setMenu1(false);
                   setMenu2(false);
@@ -148,13 +209,13 @@ const MonitoringCreateTab = ({setForm, form, isSubmit, t}) => {
                   backgroundColor: '#f5f6f7',
                 }}
                 label={t('lamp.deviceId')}
-                value={deviceId}
+                value={deviceId?.toString()}
                 onChangeText={deviceId => {
                   setDeviceId(parseInt(deviceId));
                   setForm({...form, deviceId: deviceId});
                 }}
               />
-            </View>
+            </Pressable>
           </View>
           <View>
             <HelperText
@@ -166,6 +227,61 @@ const MonitoringCreateTab = ({setForm, form, isSubmit, t}) => {
               }}>
               Device ID is missing
             </HelperText>
+          </View>
+          <View>
+            {menu4 && (
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  position: 'absolute',
+                  zIndex: 999,
+                  width: '86%',
+                  left: 41,
+                  top: -10,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+
+                  elevation: 5,
+                }}>
+                <Menu.Item
+                  onPress={() => {
+                    setDeviceId(parseInt(1));
+                    setForm({...form, deviceId: parseInt(1)});
+                    setMenu4(false);
+                  }}
+                  title="1"
+                />
+                <Menu.Item
+                  onPress={() => {
+                    setDeviceId(2);
+                    setForm({...form, deviceId: parseInt(2)});
+                    setMenu4(false);
+                  }}
+                  title="2"
+                />
+                <Menu.Item
+                  onPress={() => {
+                    setDeviceId(3);
+                    setForm({...form, deviceId: parseInt(3)});
+                    setMenu1(false);
+                  }}
+                  title="3"
+                />
+                <Menu.Item
+                  onPress={() => {
+                    setDeviceId(4);
+                    setForm({...form, deviceId: parseInt(4)});
+                    setMenu4(false);
+                  }}
+                  title="4"
+                />
+              </View>
+            )}
           </View>
           <View
             style={{
@@ -232,6 +348,8 @@ const MonitoringCreateTab = ({setForm, form, isSubmit, t}) => {
               onPress={() => {
                 setMenu1(!menu1);
                 setMenu2(false);
+                setMenu3(false);
+                setMenu4(false);
                 Keyboard.dismiss();
               }}>
               <TextInput
@@ -329,6 +447,8 @@ const MonitoringCreateTab = ({setForm, form, isSubmit, t}) => {
             onPress={() => {
               setMenu2(!menu2);
               setMenu1(false);
+              setMenu3(false);
+              setMenu4(false);
               Keyboard.dismiss();
             }}>
             <View

@@ -161,7 +161,6 @@ const ImageUploadTest = ({
           onPress={() => chooseFile('photo')}>
           <Text style={styles.textStyle}>Choose Image</Text>
         </TouchableOpacity>
-        <Image source={{uri: uri}} style={styles.imageStyle} />
       </View>
     </SafeAreaView>
   );

@@ -11,7 +11,9 @@ import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {ModalMessage} from '../../components/ModalMessage';
 import {useTranslation} from 'react-i18next';
-const MonitoringCreateScreen = () => {
+import {useEffect} from 'react';
+import {createNewRecord} from '../../hooks/apiHook';
+const MonitoringCreateScreen = props => {
   const [index, setIndex] = useState(0);
   const [imgX, setImgX] = useState(0);
   const [imgY, setImgY] = useState(0);
@@ -27,6 +29,7 @@ const MonitoringCreateScreen = () => {
   const navigation = useNavigation();
   const [responseCode, setResponseCode] = useState();
   const [alertMessage, setAlertMessage] = useState('');
+  const [controllerList, setControllerList] = useState('');
   const [form, setForm] = useState({
     controllerId: '',
     deviceId: '',
@@ -38,107 +41,9 @@ const MonitoringCreateScreen = () => {
   //api/v2/options/rolesAsOptions
   const {t} = useTranslation();
 
-  const getRoleAsOptions = userToken => {
-    var requestOptions = {
-      method: 'GET',
-      headers: {
-        // Accept: '*',
-        // 'Content-Type': 'application/json',
-        'X-Token': userToken,
-      },
-    };
-    fetch(`https://gis2.ectrak.com.hk:8900/api/rolesAsOptions`, requestOptions)
-      .then(response => {
-        return response.json();
-      })
-      .then(result => {
-        console.log('get role as option');
-        //console.log(result.func[0].permissions); //5,4,2,3
-        //console.log(result.func[1].permissions); //9,7,8,6
-        //  console.log(result.func[2].permissions);
-        console.log(result.func[8].permissions);
-        let temp_arr = [];
-        result?.func?.map(per => {
-          temp_arr = temp_arr.concat(per.permissions);
-        });
-        // console.log('temp_arr');
-        // console.log(temp_arr);
-        // console.log(temp_arr.length);
-        // return result;
-        setListData(temp_arr);
-        setLoading(false);
-      })
-      .catch(error => console.log('error1', error));
-  };
-  //   //formdata.append("xxoo", fileInput.files[0], "/C:/Users/stoneroad/Pictures/test.jpg");
-  const createNewRecord = token => {
-    var formdata = new FormData();
-    formdata.append('controllerCode', form.controllerId);
-    formdata.append('code', form.rfl);
-
-    formdata.append('controllerDeviceId', parseInt(form.deviceId));
-    formdata.append('lampPositionY', lampX);
-    formdata.append('lampPositionX', lampY);
-    formdata.append('imageW', imgX);
-    formdata.append('imageH', imgY);
-    formdata.append('relayChannelIdx', parseInt(form.relayChannelIdx));
-    formdata.append('xxoo', {
-      uri: uri,
-      type: 'image/jpeg',
-      name: 'xxoo',
-    });
-    formdata.append('status', 'ACTIVE');
-    console.log('relaychidx');
-
-    var requestOptions = {
-      method: 'POST',
-      headers: {
-        // Accept: '*',
-        // 'Content-Type': 'application/json',
-        'X-Token': token,
-      },
-      body: formdata,
-    };
-    fetch('https://gis2.ectrak.com.hk:8900/api/v2/device', requestOptions)
-      .then(async response => {
-        setResponseCode(response.status);
-
-        console.log('response create');
-        let data = await response.json();
-        console.log(data);
-        if (response.status == 200) {
-          setAlertMessage('Create success' + `(id:${data?.id})`);
-          setIcon('check-circle');
-          setColor('green');
-          setShowModal(true);
-
-          navigation.navigate('MonitoringTestSub');
-        } else {
-          setIcon('alert');
-          setColor('red');
-          setAlertMessage(
-            'create fail: ' + response.status + '\n' + data?.errorMsg,
-          );
-          setShowModal(true);
-        }
-
-        // return response.json();
-      })
-      // .then(result => {
-      //   console.log('submit result');
-      //   console.log(result);
-      //   // setAlertMessage(alertMessage + `(id:${result?.id})`);
-
-      //   // if (responseCode == 200) {
-      //   //   alert('create success' + result?.id);
-      //   //   navigation.navigate('MonitoringTestSub');
-      //   // } else {
-      //   //   alert('create fail: ' + responseCode + '\n' + result?.errorMsg);
-      //   // }
-      // })
-      .catch(error => console.log('error1', error));
-  };
-
+  useEffect(() => {
+    setControllerList(props?.route?.params);
+  }, []);
   return (
     <>
       <Tabs
@@ -152,6 +57,7 @@ const MonitoringCreateScreen = () => {
             form={form}
             isSubmit={isSubmit}
             t={t}
+            controllerList={controllerList}
           />
         </TabScreen>
         <TabScreen label={t('lamp.location')} icon="map">
@@ -197,7 +103,20 @@ const MonitoringCreateScreen = () => {
               setAlertMessage('Missing required field!');
               setShowModal(true);
             } else {
-              createNewRecord(userToken);
+              createNewRecord({
+                token: userToken,
+                setAlertMessage,
+                setColor,
+                setIcon,
+                setShowModal,
+                navigation,
+                form,
+                uri,
+                lampX,
+                lampY,
+                imgX,
+                imgY,
+              });
             }
           }}>
           <Icon

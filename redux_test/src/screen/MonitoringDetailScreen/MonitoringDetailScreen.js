@@ -3,6 +3,7 @@ import {Tab, Text, TabView, Overlay} from '@rneui/themed';
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
 import axios from 'axios';
 import {Input, Icon} from '@rneui/themed';
+import RNFetchBlob from 'rn-fetch-blob';
 
 import {
   View,
@@ -239,20 +240,62 @@ const MonitoringDetailScreen = props => {
     )
       .then(response => {
         console.log('img res');
+        console.log(response.url);
+
+        // console.log(response);
+
         console.log(response);
-        return response.text();
+        console.log(response.headers);
+
+        return response.blob();
       })
       .then(result => {
-        //  console.log(result);
+        console.log('res');
+        console.log(result);
         // return result;
         //   setData(result);
+        //image_picker6597993569716493407.jpg
+        // const imageObjectURL = URL.createObjectURL(result);
+        const imgtst = new File([result], 'test.png', {type: 'image/png'});
+        console.log(imgtst);
+        const imageObjectURL = URL.createObjectURL(imgtst);
 
-        //const imageObjectURL = URL.createObjectURL(result);
         console.log('imagetest');
-        console.log(result);
-        setUri(result);
+        console.log(imageObjectURL);
+        // setUri(result);
       })
       .catch(error => console.log('error14', error));
+  }, []);
+
+  useEffect(() => {
+    RNFetchBlob.fetch(
+      'GET',
+      '`https://gis2.ectrak.com.hk:8900/api/data/device/img/${props.route.params.id}`',
+      {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+        redirect: 'follow',
+      },
+    )
+      .then(res => {
+        let status = res.info().status;
+
+        if (status == 200) {
+          // the conversion is done in native code
+          let base64Str = res.base64();
+          // the following conversions are done in js, it's SYNC
+          let text = res.text();
+          let json = res.json();
+          let path = res.path();
+        } else {
+          // handle other status codes
+        }
+      })
+      // Something went wrong:
+      .catch((errorMessage, statusCode) => {
+        // error handling
+      });
   }, []);
 
   useEffect(() => {
