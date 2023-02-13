@@ -288,13 +288,19 @@ const MonitoringDetailScreen = props => {
           let text = res.text();
           let json = res.json();
           let path = res.path();
+          console.log('status blob 200');
+          console.log(path);
         } else {
+          console.log('blob status not 200');
           // handle other status codes
         }
       })
       // Something went wrong:
       .catch((errorMessage, statusCode) => {
         // error handling
+        console.log('error on fetch blob');
+        console.log(errorMessage);
+        console.log(statusCode);
       });
   }, []);
 
