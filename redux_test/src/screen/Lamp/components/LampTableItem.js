@@ -4,7 +4,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import {convertDate} from '../../../utils/getDate';
 
-const MonitoringTableItem = rowData => {
+const LampTableItem = rowData => {
   console.log('current in table row');
   console.log(rowData);
   return (
@@ -165,4 +165,4 @@ const MonitoringTableItem = rowData => {
   );
 };
 
-export default MonitoringTableItem;
+export default LampTableItem;

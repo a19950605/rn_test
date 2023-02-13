@@ -5,14 +5,14 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {Input, Icon} from '@rneui/themed';
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
 import {Button, Title, Paragraph} from 'react-native-paper';
-import MonitoringCreateTab from './components/MonitoringCreateTab';
+import LampCreateTab from './components/LampCreateTab';
 import ImageUploadTest from './components/ImageUploadTest';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {ModalMessage} from '../../components/ModalMessage';
 import {useTranslation} from 'react-i18next';
 import {useEffect} from 'react';
-import {createNewRecord} from '../../hooks/apiHook';
+import {createNewRecord} from '../../hooks/ApiHook';
 const MonitoringCreateScreen = props => {
   const [index, setIndex] = useState(0);
   const [imgX, setImgX] = useState(0);
@@ -52,7 +52,7 @@ const MonitoringCreateScreen = props => {
         uppercase={false} // true/false | default=true | labels are uppercase
       >
         <TabScreen label={t('lamp.details')} icon="clipboard-text">
-          <MonitoringCreateTab
+          <LampCreateTab
             setForm={setForm}
             form={form}
             isSubmit={isSubmit}

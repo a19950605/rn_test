@@ -14,7 +14,7 @@ import SortDropDown from '../../utils/sortFilter';
 import {sortData} from '../../utils/sortData';
 import Modal from 'react-native-modal';
 import CreateButton from '../../components/CreateButton';
-import {useFetchUsersData} from '../../hooks/apiHook';
+import {useFetchUsersData} from '../../hooks/ApiHook';
 import UserAccountTable from './components/UserAccountTable';
 
 const UserAccountManagementScreen = () => {

@@ -4,7 +4,7 @@ import {DataTable} from 'react-native-paper';
 import {Button, Icon} from '@rneui/themed';
 import {FlatList} from 'react-native';
 import {TouchableOpacity} from 'react-native';
-import MonitoringTableItem from './MonitorTableItem';
+import MonitoringTableItem from './LampTableItem';
 
 const optionsPerPage = [2, 3, 4];
 
@@ -195,7 +195,7 @@ const TableTest = ({
       <FlatList
         data={data}
         renderItem={props => (
-          <MonitoringTableItem {...props} navigation={navigation} />
+          <LampTableItem {...props} navigation={navigation} />
         )}
       />
     </DataTable>

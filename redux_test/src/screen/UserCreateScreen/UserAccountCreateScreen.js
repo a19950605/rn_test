@@ -18,7 +18,8 @@ import {
 } from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import {useCreateUser} from '../../hooks/apiHook';
+import {useCreateUser} from '../../hooks/ApiHook';
+import {appContextPaths, EndPoint} from '../../constants/constants';
 
 const UserAccountCreateScreen = () => {
   const [menu1, setMenu1] = useState(false);
@@ -46,10 +47,10 @@ const UserAccountCreateScreen = () => {
         'X-Token': userToken,
       },
     };
-    fetch(
-      `https://gis2.ectrak.com.hk:8900/api/v2/options/rolesAsOptions`,
-      requestOptions,
-    )
+    //拆出黎
+    //appContextPaths[appDefDomain]
+    //opRoles
+    fetch(`${appContextPaths[appDefDomain]}${EndPoint.opRoles}`, requestOptions)
       .then(response => {
         return response.json();
       })

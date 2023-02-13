@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
-import MonitoringCard from './components/MonitoringCard';
+import LampCard from './components/LampCard';
 import {useNavigation} from '@react-navigation/native';
 
 import {Icon, LinearProgress} from '@rneui/themed';
@@ -22,13 +22,14 @@ import {
   useFetchControllerList,
   useFetchMonitorData,
   useFetchMonitorTest,
-} from '../../hooks/apiHook';
+} from '../../hooks/ApiHook';
 import SortDropDown from '../../utils/sortFilter';
-import {MonitoringFilterModal} from './components/MonitoringFilterModal';
-import {color, styles} from '../../constants/GlobalStyles';
+import {LampFilterModal} from './components/LampFilterModal';
+import {color, styles} from '../../constants/styles';
 import {useTranslation} from 'react-i18next';
+import {DatePickerModal} from 'react-native-paper-dates';
 
-const MonitoringScreen = () => {
+const LampScreen = () => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
   const navigation = useNavigation();
@@ -53,6 +54,20 @@ const MonitoringScreen = () => {
   const [filterStatus, setFilterStatus] = useState('ACTIVE');
   const [showMainModal, setShowMainModal] = useState(false);
   const isFocused = useIsFocused();
+  const [date, setDate] = React.useState(undefined);
+  const [openDate, setOpenDate] = React.useState(false);
+
+  const onDismissSingle = React.useCallback(() => {
+    setOpenDate(false);
+  }, [setOpenDate]);
+
+  const onConfirmSingle = React.useCallback(
+    params => {
+      setOpenDate(false);
+      setDate(params.date);
+    },
+    [setOpenDate, setDate],
+  );
   useEffect(() => {
     setInterval(function () {
       setCurrentDate(getDate());
@@ -176,12 +191,12 @@ const MonitoringScreen = () => {
           <FlatList
             data={data}
             renderItem={props => (
-              <MonitoringCard {...props} navigation={navigation} />
+              <LampCard {...props} navigation={navigation} />
             )}
           />
         )}
         {showMainModal && (
-          <MonitoringFilterModal
+          <LampFilterModal
             setLoading={setLoading}
             setShowMainModal={setShowMainModal}
             showMainModal={showMainModal}
@@ -195,11 +210,21 @@ const MonitoringScreen = () => {
             setFilterRFLCode={setFilterRFLCode}
             filterGroup={filterGroup}
             setFilterGroup={setFilterGroup}
+            setOpenDate={setOpenDate}
+            date={date}
           />
         )}
+        <DatePickerModal
+          locale="en"
+          mode="single"
+          visible={openDate}
+          onDismiss={onDismissSingle}
+          date={date}
+          onConfirm={onConfirmSingle}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
-export default MonitoringScreen;
+export default LampScreen;

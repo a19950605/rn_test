@@ -4,6 +4,7 @@ import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
 // import { Feather } from "@expo/vector-icons";
 // import { Ionicons } from "@expo/vector-icons";
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {appContextPaths, EndPoint} from '../../constants/constants';
 import OutstandingAlarmCard from '../OutstandingAlarm/components/OutstandingAlarmCard';
 
 const AlarmHistory = () => {
@@ -19,7 +20,7 @@ const AlarmHistory = () => {
         'X-Token': token,
       },
     };
-    fetch('https://gis2.ectrak.com.hk:8900/api/v2/alarms', requestOptions)
+    fetch(`${appContextPaths[appDefDomain]}${EndPoint.alarm}`, requestOptions)
       .then(response => {
         return response.json();
       })

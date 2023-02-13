@@ -5,7 +5,6 @@ import {TextInput} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {signin} from '../../features/login/loginSlice';
-import {auth} from '../../apiFunc';
 import {useTranslation} from 'react-i18next';
 
 const Login = props => {
@@ -77,6 +76,7 @@ const Login = props => {
             onChangeText={text => setUsername(text)}
           />
         </View>
+
         <View
           style={{
             flexDirection: 'row',
@@ -106,13 +106,22 @@ const Login = props => {
           }}>
           <Button
             style={{
-              backgroundColor: 'black',
+              backgroundColor: pw != '' && username != '' ? 'black' : 'gray',
               width: isLandscapeMode ? '65%' : '85%',
               marginTop: 5,
             }}
+            disabled={pw == '' || username == ''}
             mode="contained"
             type="containedd"
-            onPress={() =>
+            onPress={() => {
+              //login
+              //username missing
+              //password missing
+              //
+              // if (loginValidation()) {
+              // } else {
+              // }
+
               auth(username, pw)
                 .then(res => {
                   console.log('json');
@@ -128,8 +137,8 @@ const Login = props => {
                 })
                 .catch(e => {
                   alert('login fail: ' + e);
-                })
-            }>
+                });
+            }}>
             <Text>Login 登入</Text>
           </Button>
         </View>
@@ -137,4 +146,27 @@ const Login = props => {
     </View>
   );
 };
+const loginValidation = () => {};
+const auth = (username, password) => {
+  var formdata = new FormData();
+  formdata.append('username', username);
+  formdata.append('password', password);
+
+  var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    redirect: 'follow',
+  };
+
+  return fetch('https://gis2.ectrak.com.hk:8900/api/auth', requestOptions)
+    .then(response => {
+      return response.json();
+    })
+    .then(result => {
+      console.log(result);
+      return JSON.stringify(result);
+    })
+    .catch(error => console.log('error', error));
+};
+
 export default Login;

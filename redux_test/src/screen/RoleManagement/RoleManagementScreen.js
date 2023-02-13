@@ -15,7 +15,7 @@ import SortDropDown from '../../utils/sortFilter';
 import {sortData} from '../../utils/sortData';
 import {useIsFocused} from '@react-navigation/native';
 import CreateButton from '../../components/CreateButton';
-import {useFetchRoleData} from '../../hooks/apiHook';
+import {useFetchRoleData} from '../../hooks/ApiHook';
 import RoleManagementTable from './components/RoleManagementTable';
 
 function RoleManagementScreen() {

@@ -19,7 +19,7 @@ import {
 } from 'react-native-paper';
 import {TouchableWithoutFeedback} from 'react-native';
 
-const MonitoringCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
+const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
   const [controllerId, setControllerId] = useState(''); // T002
@@ -497,4 +497,4 @@ const MonitoringCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
   );
 };
 
-export default MonitoringCreateTab;
+export default LampCreateTab;

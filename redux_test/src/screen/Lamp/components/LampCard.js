@@ -7,7 +7,7 @@ import {convertDate} from '../../../utils/getDate';
 import {StatusBubble} from './StatusBubble';
 //monitoring
 
-const MonitoringCard = props => {
+const LampCard = props => {
   // console.log('component load');
   // console.log(props.item);
   const {t} = useTranslation();
@@ -197,4 +197,4 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
 });
-export default MonitoringCard;
+export default LampCard;

@@ -29,7 +29,7 @@ import {useNavigation} from '@react-navigation/native';
 import {signout} from '../features/login/loginSlice';
 import {Icon} from '@rneui/themed';
 import {UserNav} from './UserNav';
-import {MonitoringNav} from './MonitoringNav';
+import {LampNav} from './LampNav';
 import Relay from '../screen/Relay/Relay';
 import Assignment from '../screen/Assignment/Assignment';
 import EventLog from '../screen/EventLog/EventLog';
@@ -143,7 +143,7 @@ export function MainDrawer() {
         {/* <Drawer.Screen name="eRFL MonitoringT" component={Monitoring} /> */}
         <Drawer.Screen
           name="eRFL Monitoring"
-          component={MonitoringNav}
+          component={LampNav}
           options={{
             title: 'eRFL Monitoring',
             drawerIcon: ({focused, size}) => (

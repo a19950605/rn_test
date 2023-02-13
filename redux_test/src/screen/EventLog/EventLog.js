@@ -11,7 +11,7 @@ import {sortData} from '../../utils/sortData';
 import EventLogCard from './components/EventLogCard';
 import {getDate} from '../../utils/getDate';
 import {useIsFocused} from '@react-navigation/native';
-import {useFetchEventLogData} from '../../hooks/apiHook';
+import {useFetchEventLogData} from '../../hooks/ApiHook';
 
 function EventLog() {
   const userToken = useSelector(state => state.login.userToken?.Token);

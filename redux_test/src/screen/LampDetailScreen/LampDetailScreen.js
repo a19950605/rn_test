@@ -18,7 +18,7 @@ import LastControlDetail from './components/LastControlDetail';
 
 import HistoryTab from './components/HistoryTab';
 import Alarm from './components/Alarm';
-import MonitoringDetailTab from './components/MonitoringDetailTab';
+import LampDetailTab from './components/LampDetailTab';
 import ImageDetailMon from './components/ImageDetailMon';
 import {useSelector} from 'react-redux';
 import {Alert} from 'react-native';
@@ -28,7 +28,7 @@ import {ActivityIndicator} from 'react-native-paper';
 import {Loading} from '../../components/Loading';
 import {ModalMessage} from '../../components/ModalMessage';
 
-const MonitoringDetailScreen = props => {
+const LampDetailScreen = props => {
   console.log('monitoring tab1');
 
   const {height, width} = useWindowDimensions();
@@ -234,43 +234,44 @@ const MonitoringDetailScreen = props => {
         redirect: 'follow',
       },
     };
-    fetch(
-      `https://gis2.ectrak.com.hk:8900/api/data/device/img/${props.route.params.id}`,
-      requestOptions2,
-    )
-      .then(response => {
-        console.log('img res');
-        console.log(response.url);
+    // fetch(
+    //   `https://gis2.ectrak.com.hk:8900/api/data/device/img/${props.route.params.id}`,
+    //   requestOptions2,
+    // )
+    //   .then(response => {
+    //     console.log('img res');
+    //     console.log(response.url);
 
-        // console.log(response);
+    //     // console.log(response);
 
-        console.log(response);
-        console.log(response.headers);
+    //     console.log(response);
+    //     console.log(response.headers);
 
-        return response.blob();
-      })
-      .then(result => {
-        console.log('res');
-        console.log(result);
-        // return result;
-        //   setData(result);
-        //image_picker6597993569716493407.jpg
-        // const imageObjectURL = URL.createObjectURL(result);
-        const imgtst = new File([result], 'test.png', {type: 'image/png'});
-        console.log(imgtst);
-        const imageObjectURL = URL.createObjectURL(imgtst);
+    //     return response.blob();
+    //   })
+    //   .then(result => {
+    //     console.log('res');
+    //     console.log(result);
+    //     // return result;
+    //     //   setData(result);
+    //     //image_picker6597993569716493407.jpg
+    //     // const imageObjectURL = URL.createObjectURL(result);
+    //     const imgtst = new File([result], 'test.png', {type: 'image/png'});
+    //     console.log(imgtst);
+    //     const imageObjectURL = URL.createObjectURL(imgtst);
 
-        console.log('imagetest');
-        console.log(imageObjectURL);
-        // setUri(result);
-      })
-      .catch(error => console.log('error14', error));
+    //     console.log('imagetest');
+    //     console.log(imageObjectURL);
+    //     // setUri(result);
+    //   })
+    //   .catch(error => console.log('error14', error));
   }, []);
 
   useEffect(() => {
     RNFetchBlob.fetch(
       'GET',
-      '`https://gis2.ectrak.com.hk:8900/api/data/device/img/${props.route.params.id}`',
+      'https://gis2.ectrak.com.hk:8900/api/data/device/img/' +
+        props.route.params.id,
       {
         // Accept: '*',
         // 'Content-Type': 'application/json',
@@ -283,13 +284,21 @@ const MonitoringDetailScreen = props => {
 
         if (status == 200) {
           // the conversion is done in native code
+          // the following conversions are done in js, it's SYNC
+
+          // let path = res.path();
+          console.log('status blob 200');
           let base64Str = res.base64();
           // the following conversions are done in js, it's SYNC
           let text = res.text();
-          let json = res.json();
-          let path = res.path();
-          console.log('status blob 200');
-          console.log(path);
+          // // let json = res.json();
+          // console.log('base64');
+          // console.log(base64Str);
+          // setUri(base64Str);
+          // console.log('text');
+          // console.log(text);
+          // console.log('json');
+          // console.log(json);
         } else {
           console.log('blob status not 200');
           // handle other status codes
@@ -356,7 +365,7 @@ const MonitoringDetailScreen = props => {
             // disableSwipe={false} // (default=false) disable swipe to left/right gestures
           >
             <TabScreen label="Detail" icon="clipboard-text">
-              <MonitoringDetailTab
+              <LampDetailTab
                 data={data}
                 form={form}
                 setForm={setForm}
@@ -492,4 +501,4 @@ const MonitoringDetailScreen = props => {
   );
 };
 
-export default MonitoringDetailScreen;
+export default LampDetailScreen;

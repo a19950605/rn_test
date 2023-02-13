@@ -1,6 +1,0 @@
-to do task
--redux login
--api integration
--navigation stack 
--alarm
-

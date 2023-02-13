@@ -26,10 +26,7 @@ const useFetchRoleData = ({
         'X-Token': userToken,
       },
     };
-    fetch(
-      'https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission',
-      requestOptions,
-    )
+    fetch(`${appContextPaths[appDefDomain]}${EndPoint.roles}`, requestOptions)
       .then(response => {
         return response.json();
       })
@@ -72,7 +69,7 @@ const useFetchUsersData = ({
     };
     //`https://gis2.ectrak.com.hk:8900/api/system/user${appendStr}`,
 
-    fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
+    fetch(`${appContextPaths[appDefDomain]}${EndPoint.users}`, requestOptions)
       .then(response => {
         return response.json();
       })
@@ -118,7 +115,7 @@ const useFetchEventLogData = ({
       },
       body: formdata,
     };
-    fetch('https://gis2.ectrak.com.hk:8900/api/data/eventlog', requestOptions)
+    fetch(`${appContextPaths[appDefDomain]}${EndPoint.elogs}`, requestOptions)
       .then(response => {
         console.log('response');
         return response.json();
@@ -160,8 +157,9 @@ const useFetchMonitorData = ({
     };
     //`https://gis2.ectrak.com.hk:8900/api/system/user${appendStr}`,
 
+    let showActive = '?showOnlyActive=0';
     fetch(
-      'https://gis2.ectrak.com.hk:8900/api/v2/options/devices?showOnlyActive=0',
+      `${appContextPaths[appDefDomain]}${EndPoint.opLamps}${showActive}`,
       requestOptions,
     )
       .then(response => {
@@ -212,7 +210,7 @@ const useCreateUser = ({userToken, form, navigation}) => {
     },
     body: formdata,
   };
-  fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
+  fetch(`${appContextPaths[appDefDomain]}${EndPoint.user}`, requestOptions)
     .then(response => {
       if (response.status == 200) {
         alert('create success');
@@ -322,7 +320,7 @@ const useFetchControllerList = ({userToken, loading, isFocused}) => {
     //`https://gis2.ectrak.com.hk:8900/api/system/user${appendStr}`,
 
     fetch(
-      'https://gis2.ectrak.com.hk:8900/api/v2/options/controllerCode',
+      `${appContextPaths[appDefDomain]}${EndPoint.opCntlrcodes}`,
       requestOptions,
     )
       .then(response => {
@@ -384,7 +382,7 @@ const createNewRecord = ({
     },
     body: formdata,
   };
-  fetch('https://gis2.ectrak.com.hk:8900/api/v2/device', requestOptions)
+  fetch(`${appContextPaths[appDefDomain]}${EndPoint.lamp}`, requestOptions)
     .then(async response => {
       console.log('response create');
       let data = await response.json();

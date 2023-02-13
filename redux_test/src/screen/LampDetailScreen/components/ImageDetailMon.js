@@ -66,7 +66,14 @@ const ImageDetailMon = ({
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{borderWidth: 5, flexShrink: 1, height: 500, width: '100%'}}>
+      <View
+        style={{
+          borderWidth: 5,
+          flexShrink: 1,
+          height: 500,
+          width: '100%',
+          backgroundColor: 'white',
+        }}>
         <ReactNativeZoomableView
           maxZoom={2}
           minZoom={0.5}
@@ -80,7 +87,7 @@ const ImageDetailMon = ({
             padding: 10,
           }}>
           <MarkerImage
-            image={!uri ? '' : {uri: uri}}
+            image={!uri ? require('../../../assets/white.jpg') : {uri: uri}}
             markerImage={require('../../../assets/location-pin-icon-on-transparent-pin-vector-20942049.jpg')}
             markerSize={50}
             markerPosition={{x: 250, y: 200}}

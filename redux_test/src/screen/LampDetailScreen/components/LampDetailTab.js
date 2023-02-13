@@ -5,13 +5,7 @@ import {Input, Icon} from '@rneui/themed';
 import {View, StyleSheet, Button, TouchableWithoutFeedback} from 'react-native';
 import {Menu, Provider, TextInput, HelperText} from 'react-native-paper';
 import {Pressable} from 'react-native';
-const MonitoringDetailTab = ({
-  setForm,
-  form,
-  data,
-  islandscapemode,
-  isSubmit,
-}) => {
+const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
   console.log('inside monitor tab');
   console.log(data);
   console.log('tab controller tab');
@@ -447,4 +441,4 @@ const MonitoringDetailTab = ({
   );
 };
 
-export default MonitoringDetailTab;
+export default LampDetailTab;

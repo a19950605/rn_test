@@ -10,7 +10,7 @@ import Modal from 'react-native-modal';
 import {RadioButton, TextInput} from 'react-native-paper';
 import {SubModal} from './SubModal';
 
-export const MonitoringFilterModal = ({
+export const LampFilterModal = ({
   setShowMainModal,
   showMainModal,
   filterStatus,
@@ -24,6 +24,8 @@ export const MonitoringFilterModal = ({
   setFilterRFLCode,
   filterGroup,
   setFilterGroup,
+  setOpenDate,
+  date,
 }) => {
   const [openStatusModal, setOpenStatusModal] = useState(false);
   const [openConnModal, setOpenConnModal] = useState(false);
@@ -221,6 +223,43 @@ export const MonitoringFilterModal = ({
                 marginBottom: 25,
               }}
             />
+            <View>
+              <Text
+                style={{
+                  color: 'black',
+                  fontSize: 14,
+                  paddingLeft: 10,
+                  paddingBottom: 10,
+                }}>
+                Status as of
+              </Text>
+            </View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                // setOpenDate(true);
+              }}>
+              <View
+                style={{
+                  padding: 10,
+                  flexDirection: 'row',
+                  width: '100%',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <View>
+                  <Text style={{color: 'black', fontSize: 18, marginLeft: 15}}>
+                    {date}
+                  </Text>
+                </View>
+                <Icon
+                  name="close"
+                  type="font-awesome"
+                  size={18}
+                  color={'black'}
+                  style={{marginRight: 15}}
+                />
+              </View>
+            </TouchableWithoutFeedback>
             <View>
               <Text
                 style={{
