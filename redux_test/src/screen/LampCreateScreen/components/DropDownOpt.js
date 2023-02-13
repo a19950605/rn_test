@@ -1,27 +1,11 @@
 import React from 'react';
 import {View} from 'react-native';
 import {Menu} from 'react-native-paper';
+import {styles} from '../../../constants/styles';
 
 export const DropDownOpt = ({setSelectedOption, setForm, form, setVal}) => {
   return (
-    <View
-      style={{
-        backgroundColor: 'white',
-        position: 'absolute',
-        zIndex: 999,
-        width: '86%',
-        left: 41,
-        top: -10,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-
-        elevation: 5,
-      }}>
+    <View style={styles.dropDownContainer}>
       <Menu.Item
         onPress={() => {
           setSelectedOption(0);

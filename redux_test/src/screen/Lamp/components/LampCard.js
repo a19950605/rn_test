@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import {CardButton} from '../../../components/CardButton';
+import {styles} from '../../../constants/styles';
 import {convertDate} from '../../../utils/getDate';
 import {StatusBubble} from './StatusBubble';
 //monitoring
@@ -58,44 +59,34 @@ const LampCard = props => {
   }, [readinessStatus]);
   return (
     <View style={styles.card}>
-      <View style={{padding: 20}}>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>RFL ID: </Text>
+      <View style={styles.p20}>
+        <View style={styles.flexRow}>
+          <Text style={styles.cardTitle}>RFL ID: </Text>
           <Text> {JSON.stringify(props.item.id)}</Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>
-            {t('lamp.rfl')}{' '}
-          </Text>
+        <View style={styles.flexRow}>
+          <Text style={styles.cardTitle}>{t('lamp.rfl')} </Text>
           <Text>{props.item.code}</Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>EPIC : </Text>
+        <View style={styles.flexRow}>
+          <Text style={styles.cardTitle}>EPIC : </Text>
           <Text>{props.item.activeAssignment?.epicName || '--'}</Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>
-            {t('lamp.group')}:{' '}
-          </Text>
+        <View style={styles.flexRow}>
+          <Text style={styles.cardTitle}>{t('lamp.group')}: </Text>
           <Text>{props.item.activeAssignment?.groupName || '--'}</Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>
-            {t('lamp.statusasof')}:{' '}
-          </Text>
+        <View style={styles.flexRow}>
+          <Text style={styles.cardTitle}>{t('lamp.statusasof')}: </Text>
           <Text>{convertDate(props.item.dtKeepalive) || '-'}</Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>
-            {t('lamp.erflreadiness')}:{' '}
-          </Text>
+        <View style={styles.flexRow}>
+          <Text style={styles.cardTitle}>{t('lamp.erflreadiness')}: </Text>
           <Text style={readinessColor}>{readinessStr}</Text>
         </View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>
-            {t('lamp.status')}:{' '}
-          </Text>
-          <View style={{flexDirection: 'row'}}>
+        <View style={styles.rowCenter}>
+          <Text style={styles.cardTitle}>{t('lamp.status')}: </Text>
+          <View style={styles.flexRow}>
             <StatusBubble
               mode={'lamp'}
               t={t}
@@ -120,33 +111,12 @@ const LampCard = props => {
               title={'lamp.power'}
               status={props?.item?.batteryStatus}
             />
-
-            <View
-              style={{
-                backgroundColor: '#f7f7f7',
-                borderRadius: 100,
-                marginLeft: 5,
-                paddingTop: 10,
-                paddingBottom: 5,
-                paddingLeft: 13,
-                paddingRight: 13,
-              }}>
-              <Icon
-                name={
-                  props?.item?.relayChannelStatus == 'ERROR'
-                    ? 'alert'
-                    : 'question'
-                }
-                size={24}
-                color={
-                  props?.item?.relayChannelStatus == 'ERROR' ? 'red' : 'black'
-                }
-                type="octicon"
-              />
-              <Text style={{fontSize: 11, textAlign: 'center'}}>
-                {t('lamp.relay')}
-              </Text>
-            </View>
+            <StatusBubble
+              mode={'relay'}
+              t={t}
+              title={'lamp.relay'}
+              status={props?.item?.relayChannelStatus}
+            />
           </View>
         </View>
       </View>
@@ -183,18 +153,5 @@ const LampCard = props => {
     </View>
   );
 };
-const styles = StyleSheet.create({
-  card: {},
-  btn: {
-    width: '100%',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  btns: {
-    alignItems: 'center',
-    padding: '20',
-    color: 'blue',
-  },
-});
+
 export default LampCard;

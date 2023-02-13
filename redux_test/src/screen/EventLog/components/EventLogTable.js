@@ -3,6 +3,7 @@ import {Text, View} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import {FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {styles} from '../../../constants/styles';
 
 const optionsPerPage = [2, 3, 4];
 
@@ -18,60 +19,20 @@ const EventLogTable = ({data}) => {
   return (
     <DataTable>
       <DataTable.Header>
-        <DataTable.Title style={{flex: 1.5, justifyContent: 'center'}}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            User
-          </Text>
+        <DataTable.Title style={styles.tableCell1_5}>
+          <Text style={styles.eventLogTableText}>User</Text>
         </DataTable.Title>
-        <DataTable.Title style={{flex: 1.5, justifyContent: 'center'}}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            Datetime
-          </Text>
+        <DataTable.Title style={styles.tableCell1_5}>
+          <Text style={styles.eventLogTableText}>Datetime</Text>
         </DataTable.Title>
-        <DataTable.Title style={{flex: 1.5, justifyContent: 'center'}}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            Function
-          </Text>
+        <DataTable.Title style={styles.tableCell1_5}>
+          <Text style={styles.eventLogTableText}>Function</Text>
         </DataTable.Title>
-        <DataTable.Title style={{flex: 1.5, justifyContent: 'center'}}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            Type
-          </Text>
+        <DataTable.Title style={styles.tableCell1_5}>
+          <Text style={styles.eventLogTableText}>Type</Text>
         </DataTable.Title>
-        <DataTable.Title style={{flex: 4, justifyContent: 'center'}}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            Data
-          </Text>
+        <DataTable.Title style={styles.tableCell4}>
+          <Text style={styles.eventLogTableText}>Data</Text>
         </DataTable.Title>
       </DataTable.Header>
 
@@ -88,21 +49,19 @@ const TableRow = rowData => {
   console.log(rowData);
   return (
     <DataTable.Row>
-      <DataTable.Cell style={{flex: 1.5, justifyContent: 'center'}}>
+      <DataTable.Cell style={styles.tableCell1_5}>
         {rowData?.item?.username}
       </DataTable.Cell>
-      <DataTable.Cell style={{flex: 1.5, justifyContent: 'center'}}>
+      <DataTable.Cell style={styles.tableCell1_5}>
         {rowData?.item?.time?.split('.')[0]}
       </DataTable.Cell>
-      <DataTable.Cell style={{flex: 1.5, justifyContent: 'center'}}>
+      <DataTable.Cell style={styles.tableCell1_5}>
         {rowData?.item?.func}
       </DataTable.Cell>
-      <DataTable.Cell style={{flex: 1.5, justifyContent: 'center'}}>
+      <DataTable.Cell style={styles.tableCell1_5}>
         {rowData?.item?.type}
       </DataTable.Cell>
-      <DataTable.Cell
-        style={{flex: 4, justifyContent: 'center'}}
-        numberOfLines={8}>
+      <DataTable.Cell style={styles.tableCell4} numberOfLines={8}>
         <View>
           <Text>
             {rowData?.item?.dest.split(' ')[0] +

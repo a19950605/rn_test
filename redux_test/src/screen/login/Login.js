@@ -6,8 +6,9 @@ import {Button} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {signin} from '../../features/login/loginSlice';
 import {useTranslation} from 'react-i18next';
+import {styles} from '../../constants/styles';
 
-const Login = props => {
+const Login = () => {
   const dispatch = useDispatch();
   const userToken = useSelector(state => state.login.userToken?.Token);
 
@@ -19,95 +20,52 @@ const Login = props => {
   const {language: currentLanguage} = i18n;
 
   const isLandscapeMode = width > height ? true : false;
-  //check check
+
   console.log('height' + height);
   console.log('width' + width);
   console.log('islandscapemode' + isLandscapeMode);
   console.log(currentLanguage);
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        paddingTop: isLandscapeMode ? '20%' : '50%',
-      }}>
+    <View style={isLandscapeMode ? styles.loginTablet : styles.loginMobile}>
       <View style={{flexDirection: 'row'}}>
         <Image
           source={{
             uri: 'https://static.wikia.nocookie.net/logopedia/images/1/16/120724090720-MTR-Corporation-logo.png',
           }}
-          style={{width: 100, height: 80}}
+          style={styles.loginImage}
         />
-        <Text style={{fontSize: 50}}> eRFL</Text>
+        <Text style={styles.font50}> eRFL</Text>
       </View>
 
       <View
-        style={{
-          width: isLandscapeMode ? '30%' : '75%',
-          marginTop: isLandscapeMode ? 30 : 20,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 1,
-          },
-          shadowOpacity: 0.18,
-          shadowRadius: 1.0,
-
-          elevation: 5,
-          paddingBottom: 30,
-          paddingTop: 20,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 15,
-          }}>
+        style={
+          isLandscapeMode ? styles.loginFormTablet : styles.loginFormMobile
+        }>
+        <View style={styles.loginInputContainer}>
           <TextInput
             theme={{colors: {primary: 'darkred'}}}
-            style={{
-              width: isLandscapeMode ? '65%' : '85%',
-              backgroundColor: '#f5f6f7',
-            }}
+            style={isLandscapeMode ? styles.loginInputT : styles.loginInputM}
             label="username/用戶名"
             value={username}
             onChangeText={text => setUsername(text)}
           />
         </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-
-            marginBottom: 15,
-          }}>
+        <View style={styles.loginInputContainer}>
           <TextInput
             theme={{colors: {primary: 'darkred'}}}
-            style={{
-              width: isLandscapeMode ? '65%' : '85%',
-              backgroundColor: '#f5f6f7',
-            }}
+            style={isLandscapeMode ? styles.loginInputT : styles.loginInputM}
             label="password/密碼"
             value={pw}
             secureTextEntry={true}
             onChangeText={pw => setPw(pw)}
           />
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            width: '100%',
-          }}>
+        <View style={styles.justifyContentCenter}>
           <Button
             style={{
               backgroundColor: pw != '' && username != '' ? 'black' : 'gray',
-              width: isLandscapeMode ? '65%' : '85%',
+              width: isLandscapeMode ? '85%' : '65%',
               marginTop: 5,
             }}
             disabled={pw == '' || username == ''}

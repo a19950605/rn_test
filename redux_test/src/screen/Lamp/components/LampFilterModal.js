@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {RadioButton, TextInput} from 'react-native-paper';
+import {styles} from '../../../constants/styles';
 import {SubModal} from './SubModal';
 
 export const LampFilterModal = ({
@@ -40,78 +41,34 @@ export const LampFilterModal = ({
   const [filterVal, setfilterVal] = useState();
   const [mode, setMode] = useState('other');
 
-  useEffect(() => {
-    if (ModalContent == true) {
-    }
-    {
-      /*
-        setOpenModal={setOpenRFLModal}
-        openModal={openRFLModal}
-        setFilter={setFilterRFL}
-        options={rflDropDown}
-        setFilterCode={setFilterRFLCode}
-        filterVal={filterRFL}
-        mode={'rfl'}
-*/
-    }
-  }, [ModalContent]);
-
   return (
     <View>
       <Modal
         animationIn={'slideInRight'}
         animationOut={'slideOutDown'}
-        style={{
-          width: '70%',
-          position: 'absolute',
-          right: -25,
-          top: -15,
-          height: '100%',
-        }}
+        style={styles.filterMenu}
         isVisible={showMainModal}
         customBackdrop={
           <TouchableWithoutFeedback
             onPress={() => {
               setShowMainModal(false);
             }}>
-            <View style={{flex: 1, backgroundColor: 'black'}} />
+            <View style={styles.overlay} />
           </TouchableWithoutFeedback>
         }>
-        <View style={{flex: 1, backgroundColor: 'white'}}>
-          <View
-            style={{
-              backgroundColor: 'black',
-              paddingVertical: 15,
-              paddingHorizontal: 10,
-            }}>
-            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 22}}>
-              Filters
-            </Text>
+        <View style={styles.filterBody}>
+          <View style={styles.filterTop}>
+            <Text style={styles.filterTitle}>Filters</Text>
           </View>
-          <View style={{paddingVertical: 10}}>
+          <View style={styles.pV10}>
             <View>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 14,
-                  paddingLeft: 10,
-                  paddingBottom: 10,
-                }}>
-                RFL
-              </Text>
+              <Text style={styles.filterItemTitle}>RFL</Text>
             </View>
             <TouchableWithoutFeedback
               onPress={() => {
                 setOpenRFLModal(true);
               }}>
-              <View
-                style={{
-                  padding: 10,
-                  flexDirection: 'row',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
+              <View style={styles.filterContent}>
                 <View>
                   <Text style={{color: 'black', fontSize: 18, marginLeft: 20}}>
                     {filterRFL}
@@ -122,7 +79,7 @@ export const LampFilterModal = ({
                   type="font-awesome"
                   size={18}
                   color={'gray'}
-                  style={{marginRight: 15}}
+                  style={styles.mr15}
                 />
               </View>
             </TouchableWithoutFeedback>
@@ -135,30 +92,15 @@ export const LampFilterModal = ({
             />
 
             <View>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 14,
-                  paddingLeft: 10,
-                  paddingBottom: 10,
-                }}>
-                CONN Status
-              </Text>
+              <Text style={styles.filterItemTitle}>CONN Status</Text>
             </View>
             <TouchableWithoutFeedback
               onPress={() => {
                 setOpenConnModal(true);
               }}>
-              <View
-                style={{
-                  padding: 10,
-                  flexDirection: 'row',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
+              <View style={styles.filterContent}>
                 <View>
-                  <Text style={{color: 'black', fontSize: 18, marginLeft: 15}}>
+                  <Text style={styles.filterContentText}>
                     {filterCONNStatus}
                   </Text>
                 </View>
@@ -167,145 +109,76 @@ export const LampFilterModal = ({
                   type="font-awesome"
                   color={'gray'}
                   size={18}
-                  style={{marginRight: 15}}
+                  style={styles.mr15}
                 />
               </View>
             </TouchableWithoutFeedback>
-            <View
-              style={{
-                borderBottomColor: 'rgba(0,0,0,0.2)',
-                borderBottomWidth: 1,
-                marginBottom: 25,
-              }}
-            />
+            <View style={styles.bottomSpacing} />
 
             <View>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 14,
-                  paddingLeft: 10,
-                  paddingBottom: 10,
-                }}>
-                Group
-              </Text>
+              <Text style={styles.filterItemTitle}>Group</Text>
             </View>
             <TouchableWithoutFeedback
               onPress={() => {
                 setOpenGroupModal(true);
               }}>
-              <View
-                style={{
-                  padding: 10,
-                  flexDirection: 'row',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
+              <View style={styles.filterContent}>
                 <View>
-                  <Text style={{color: 'black', fontSize: 18, marginLeft: 15}}>
-                    {filterGroup}
-                  </Text>
+                  <Text style={styles.filterContentText}>{filterGroup}</Text>
                 </View>
                 <Icon
                   name="sort-down"
                   type="font-awesome"
                   color={'gray'}
                   size={18}
-                  style={{marginRight: 15}}
+                  style={styles.mr15}
                 />
               </View>
             </TouchableWithoutFeedback>
-            <View
-              style={{
-                borderBottomColor: 'rgba(0,0,0,0.2)',
-                borderBottomWidth: 1,
-                marginBottom: 25,
-              }}
-            />
+            <View style={styles.bottomSpacing} />
             <View>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 14,
-                  paddingLeft: 10,
-                  paddingBottom: 10,
-                }}>
-                Status as of
-              </Text>
+              <Text style={styles.filterItemTitle}>Status as of</Text>
             </View>
             <TouchableWithoutFeedback
               onPress={() => {
                 // setOpenDate(true);
               }}>
-              <View
-                style={{
-                  padding: 10,
-                  flexDirection: 'row',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
+              <View style={styles.filterContent}>
                 <View>
-                  <Text style={{color: 'black', fontSize: 18, marginLeft: 15}}>
-                    {date}
-                  </Text>
+                  <Text style={styles.filterContentText}>{date}</Text>
                 </View>
                 <Icon
                   name="close"
                   type="font-awesome"
                   size={18}
                   color={'black'}
-                  style={{marginRight: 15}}
+                  style={styles.mr15}
                 />
               </View>
             </TouchableWithoutFeedback>
             <View>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 14,
-                  paddingLeft: 10,
-                  paddingBottom: 10,
-                }}>
-                Status
-              </Text>
+              <Text style={styles.filterItemTitle}>Status</Text>
             </View>
             <TouchableWithoutFeedback
               onPress={() => {
                 setOpenStatusModal(true);
               }}>
-              <View
-                style={{
-                  padding: 10,
-                  flexDirection: 'row',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
+              <View style={styles.filterContent}>
                 <View>
-                  <Text style={{color: 'black', fontSize: 18, marginLeft: 15}}>
-                    {filterStatus}
-                  </Text>
+                  <Text style={styles.filterContentText}>{filterStatus}</Text>
                 </View>
                 <Icon
                   name="sort-down"
                   type="font-awesome"
                   size={18}
                   color={'gray'}
-                  style={{marginRight: 15}}
+                  style={styles.mr15}
                 />
               </View>
             </TouchableWithoutFeedback>
-            <View
-              style={{
-                borderBottomColor: 'rgba(0,0,0,0.2)',
-                borderBottomWidth: 1,
-                marginBottom: 15,
-              }}
-            />
+            <View style={styles.bottomSpacing} />
 
-            <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <View style={styles.flexEnd0Padding}>
               <TouchableOpacity
                 onPress={() => {
                   setFilterCONNStatus('All');
@@ -313,41 +186,23 @@ export const LampFilterModal = ({
                   setFilterRFL('All');
                   setFilterStatus('ACTIVE');
                 }}
-                style={{
-                  marginRight: 10,
-                  borderWidth: 1,
-                  borderColor: 'blue',
-                  borderRadius: 5,
-                  padding: 10,
-                  flexDirection: 'row',
-                }}>
+                style={styles.resetBtn}>
                 <Icon name="sync" type="octicon" size={24} color={'blue'} />
-                <Text style={{fontSize: 18, color: 'blue', paddingLeft: 5}}>
-                  Reset
-                </Text>
+                <Text style={styles.resetBtnTitle}>Reset</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   setLoading(true);
                   setShowMainModal(false);
                 }}
-                style={{
-                  marginRight: 10,
-                  borderWidth: 1,
-                  borderColor: 'green',
-                  borderRadius: 5,
-                  padding: 10,
-                  flexDirection: 'row',
-                }}>
+                style={styles.filterBtn}>
                 <Icon
                   name="filter"
                   type="font-awesome"
                   size={24}
                   color={'green'}
                 />
-                <Text style={{fontSize: 18, color: 'green', paddingLeft: 5}}>
-                  Filter
-                </Text>
+                <Text style={styles.filterBtnTitle}>Filter</Text>
               </TouchableOpacity>
             </View>
           </View>

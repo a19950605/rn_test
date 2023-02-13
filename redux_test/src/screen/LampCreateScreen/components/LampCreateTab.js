@@ -18,6 +18,7 @@ import {
   HelperText,
 } from 'react-native-paper';
 import {TouchableWithoutFeedback} from 'react-native';
+import {styles} from '../../../constants/styles';
 
 const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
   const {height, width} = useWindowDimensions();
@@ -34,24 +35,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
   const deviceIdList = [1, 2, 3, 4];
   const StatusDropDown = ({close}) => {
     return (
-      <View
-        style={{
-          backgroundColor: 'white',
-          position: 'absolute',
-          zIndex: 999,
-          width: '86%',
-          left: 41,
-          top: -10,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-
-          elevation: 5,
-        }}>
+      <View style={styles.lampStatus}>
         <Menu.Item
           onPress={() => {
             setStatus('ACTIVE');
@@ -83,23 +67,16 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
           setMenu3(false);
           setMenu4(false);
         }}>
-        <View style={{padding: 10, backgroundColor: 'white', flex: 1}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              marginBottom: 15,
-            }}>
+        <View style={styles.lampCreateContainer}>
+          <View style={styles.inputRow}>
             <Icon
               name="monitor"
               size={24}
               color="black"
-              style={{padding: 10, justifyContent: 'center'}}
+              style={styles.rowIcon}
             />
-
             <Pressable
-              style={{width: '100%'}}
+              style={styles.width100}
               onPress={() => {
                 setMenu2(false);
                 setMenu1(false);
@@ -110,10 +87,11 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{
-                  width: isLandscapeMode ? '95%' : '85%',
-                  backgroundColor: '#f5f6f7',
-                }}
+                style={
+                  isLandscapeMode
+                    ? styles.textInputMobile
+                    : styles.textInputTablet
+                }
                 label={t('lamp.controllerId')}
                 value={controllerId}
                 onFocus={() => {
@@ -129,24 +107,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
           </View>
           <View>
             {menu3 && (
-              <View
-                style={{
-                  backgroundColor: 'white',
-                  position: 'absolute',
-                  zIndex: 999,
-                  width: '86%',
-                  left: 41,
-                  top: -10,
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 2,
-                  },
-                  shadowOpacity: 0.25,
-                  shadowRadius: 3.84,
-
-                  elevation: 5,
-                }}>
+              <View style={styles.dropDownContainer}>
                 {controllerList.map(c => {
                   return (
                     <Menu.Item
@@ -167,20 +128,15 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
             <HelperText
               type="error"
               visible={controllerId == '' && isSubmit}
-              style={{
-                marginTop: controllerId == '' && isSubmit ? -15 : -30,
-                marginLeft: 30,
-              }}>
+              style={
+                controllerId == '' && isSubmit
+                  ? styles.errorTxtShow
+                  : styles.errorTxtHide
+              }>
               Controller ID is missing!
             </HelperText>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              marginBottom: 15,
-            }}>
+          <View style={styles.inputRow}>
             <Icon
               name="hash"
               size={24}
@@ -189,7 +145,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
               style={{padding: 10}}
             />
             <Pressable
-              style={{width: '100%'}}
+              style={styles.width100}
               onPress={() => {
                 setMenu2(false);
                 setMenu1(false);
@@ -283,13 +239,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
               </View>
             )}
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              marginBottom: 15,
-            }}>
+          <View style={styles.inputRow}>
             <Icon
               name="location-pin"
               size={24}
@@ -297,7 +247,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
               type="material"
               style={{padding: 10}}
             />
-            <View style={{width: '100%'}}>
+            <View style={styles.width100}>
               <TextInput
                 onFocus={() => {
                   setMenu1(false);
@@ -328,13 +278,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
               RFL is missing
             </HelperText>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              marginBottom: 15,
-            }}>
+          <View style={styles.inputRow}>
             <Icon
               name="call-split"
               size={24}
@@ -344,7 +288,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
             />
 
             <Pressable
-              style={{width: '100%'}}
+              style={styles.width100}
               onPress={() => {
                 setMenu1(!menu1);
                 setMenu2(false);
@@ -443,7 +387,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
             )}
           </View>
           <Pressable
-            style={{width: '100%'}}
+            style={styles.width100}
             onPress={() => {
               setMenu2(!menu2);
               setMenu1(false);

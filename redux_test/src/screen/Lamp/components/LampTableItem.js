@@ -2,6 +2,7 @@ import {Icon} from '@rneui/themed';
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {DataTable} from 'react-native-paper';
+import {styles} from '../../../constants/styles';
 import {convertDate} from '../../../utils/getDate';
 
 const LampTableItem = rowData => {
@@ -9,25 +10,21 @@ const LampTableItem = rowData => {
   console.log(rowData);
   return (
     <DataTable.Row style={{paddingHorizontal: 0}}>
-      <DataTable.Cell style={{flex: 1, justifyContent: 'center'}}>
+      <DataTable.Cell style={styles.tableCell1}>
         {rowData?.item?.id}
       </DataTable.Cell>
-      <DataTable.Cell style={{flex: 2, justifyContent: 'center'}}>
+      <DataTable.Cell style={styles.tableCell2}>
         {rowData?.item?.code}
       </DataTable.Cell>
-      <DataTable.Cell style={{flex: 1, justifyContent: 'center'}}>
-        -
-      </DataTable.Cell>
-      <DataTable.Cell style={{flex: 1, justifyContent: 'center'}}>
-        -
-      </DataTable.Cell>
-      <DataTable.Cell style={{flex: 2, justifyContent: 'center'}}>
+      <DataTable.Cell style={styles.tableCell1}>-</DataTable.Cell>
+      <DataTable.Cell style={styles.tableCell1}>-</DataTable.Cell>
+      <DataTable.Cell style={styles.tableCell2}>
         {convertDate(rowData?.item?.dtKeepalive) || '-'}
       </DataTable.Cell>
-      <DataTable.Cell style={{flex: 2, justifyContent: 'center'}}>
+      <DataTable.Cell style={styles.tableCell2}>
         {rowData?.item?.status}
       </DataTable.Cell>
-      <DataTable.Cell style={{flex: 4, justifyContent: 'center', marginTop: 5}}>
+      <DataTable.Cell style={styles.tableCell4mt}>
         <View
           style={{
             backgroundColor: '#f7f7f7',

@@ -4,20 +4,26 @@ import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
 // import { Feather } from "@expo/vector-icons";
 // import { Ionicons } from "@expo/vector-icons";
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {appContextPaths, EndPoint} from '../../constants/constants';
+import {useSelector} from 'react-redux';
+import {
+  appContextPaths,
+  appDefDomain,
+  EndPoint,
+} from '../../constants/constants';
+import {styles} from '../../constants/styles';
 import OutstandingAlarmCard from '../OutstandingAlarm/components/OutstandingAlarmCard';
 
 const AlarmHistory = () => {
   const [data, setData] = useState([]);
+  const userToken = useSelector(state => state.login.userToken?.Token);
+
   useEffect(() => {
-    let token =
-      'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdnJJZCI6IjIiLCJqdGkiOiIxNjcwOTE3Nzk3OTEyIn0.PRKOlfc-TKLBPmo_5IT0PSpdzmof_pUSLRCrXQu7X6QPPOOkdQSG1yPCqRb2rLvCIH2aQIlT8hq4idfMh2kGVQ';
     var requestOptions = {
       method: 'GET',
       headers: {
         // Accept: '*',
         // 'Content-Type': 'application/json',
-        'X-Token': token,
+        'X-Token': userToken,
       },
     };
     fetch(`${appContextPaths[appDefDomain]}${EndPoint.alarm}`, requestOptions)
@@ -41,20 +47,8 @@ const AlarmHistory = () => {
 
   return (
     <View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          padding: 10,
-        }}>
-        <TouchableOpacity
-          style={{
-            borderColor: 'blue',
-            borderWidth: 1,
-            borderRadius: 2,
-            padding: 10,
-            flexDirection: 'row',
-          }}>
+      <View style={styles.flexEnd}>
+        <TouchableOpacity style={styles.csvHeader}>
           <Text style={{color: 'blue'}}>Export 30 day csv</Text>
         </TouchableOpacity>
         <TouchableOpacity>
@@ -63,11 +57,11 @@ const AlarmHistory = () => {
             size={24}
             color="black"
             type="ionicon"
-            style={{padding: 10}}
+            style={styles.p10}
           />
         </TouchableOpacity>
       </View>
-      <View style={{marginBottom: 60}}>
+      <View style={styles.mb60}>
         <FlatList
           data={data}
           renderItem={OutstandingAlarmCard}

@@ -28,6 +28,7 @@ import {LampFilterModal} from './components/LampFilterModal';
 import {color, styles} from '../../constants/styles';
 import {useTranslation} from 'react-i18next';
 import {DatePickerModal} from 'react-native-paper-dates';
+import {ReloadButton} from '../../components/ReloadButton';
 
 const LampScreen = () => {
   const {height, width} = useWindowDimensions();
@@ -125,26 +126,14 @@ const LampScreen = () => {
           <View style={{flexDirection: 'row'}}>
             <CreateButton
               navigation={navigation}
-              navLoc={'Create Monitoring'}
+              navLoc={'Create Lamp'}
               dropDown1={data3}
             />
-
-            <TouchableOpacity
-              onPress={() => {
-                setLoading(true);
-              }}
-              style={{
-                borderColor: loading ? color.gray : 'blue',
-                borderWidth: 1,
-                borderRadius: 2,
-                padding: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <Text style={{color: loading ? color.gray : 'blue'}}>
-                {loading ? 'loading' : currentDate}
-              </Text>
-            </TouchableOpacity>
+            <ReloadButton
+              setLoading={setLoading}
+              loading={loading}
+              currentDate={currentDate}
+            />
           </View>
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
@@ -173,10 +162,10 @@ const LampScreen = () => {
           )}
         </View>
 
-        <View style={{padding: 5}}></View>
+        <View style={styles.p5}></View>
 
         {loading ? (
-          <LinearProgress style={{marginTop: -5}} color="red" />
+          <LinearProgress style={styles.mtNeg5} color="red" />
         ) : isLandscapeMode ? (
           <TableTest
             data={data}

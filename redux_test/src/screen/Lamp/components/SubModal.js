@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {RadioButton, TextInput} from 'react-native-paper';
+import {styles} from '../../../constants/styles';
 export const SubModal = ({
   setOpenModal,
   openModal,
@@ -23,60 +24,39 @@ export const SubModal = ({
   return (
     <View>
       <Modal
-        style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          top: -10,
-          left: -20,
-        }}
+        style={styles.subModalSize}
         isVisible={openModal}
         customBackdrop={
           <TouchableWithoutFeedback
             onPress={() => {
               setOpenModal(false);
             }}>
-            <View style={{flex: 1, backgroundColor: 'black'}} />
+            <View style={styles.overlay} />
           </TouchableWithoutFeedback>
         }>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'white',
-            paddingVertical: 20,
-          }}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View
-              style={{
-                marginRight: 10,
-                padding: 10,
-              }}>
-              <Text style={{color: 'black', fontSize: 16}}>
-                Enter {title || ''}
-              </Text>
+        <View style={styles.subModalContainer}>
+          <View style={styles.rowSpaceBetween}>
+            <View style={styles.filterEnterTitleContainer}>
+              <Text style={styles.filterEnterTitle}>Enter {title || ''}</Text>
             </View>
             <TouchableOpacity
               onPress={() => {
                 setOpenModal(false);
               }}
-              style={{
-                marginRight: 10,
-                padding: 10,
-                flexDirection: 'row',
-              }}>
+              style={styles.filterClose}>
               <Icon name="close" type="ionicon" color={'blue'} size={24} />
-              <Text style={{fontSize: 18, color: 'blue'}}>Done</Text>
+              <Text style={styles.filterCloseText}>Done</Text>
             </TouchableOpacity>
           </View>
           <View>
-            <View style={{padding: 10}}>
+            <View style={styles.p10}>
               <TextInput
                 label=""
                 value={text}
-                style={{backgroundColor: '#f7f7f7', paddingLeft: 25}}
+                style={styles.filterTextInput}
                 onChangeText={text => setText(text)}
               />
-              <View style={{position: 'absolute', left: '5%', top: '45%'}}>
+              <View style={styles.filterTextIcon}>
                 <Icon name="search" size={24} color="gray" type="ionicon" />
               </View>
             </View>
@@ -89,19 +69,14 @@ export const SubModal = ({
                       setFilterCode('');
                     setFilter('All');
                   }}
-                  style={{
-                    marginRight: 10,
-                    flexDirection: 'row',
-                    padding: 5,
-                    alignItems: 'center',
-                  }}>
+                  style={styles.radioTouch}>
                   <RadioButton
                     value="first"
                     color={'red'}
                     status={filterVal == 'All' ? 'checked' : 'unchecked'}
                     onPress={() => {}}
                   />
-                  <Text style={{fontSize: 18, color: 'black'}}>{'All'}</Text>
+                  <Text style={styles.optionsText}>{'All'}</Text>
                 </TouchableOpacity>
               )}
             {options
@@ -118,12 +93,7 @@ export const SubModal = ({
                       setFilter(o.code);
                     }}
                     key={o.code}
-                    style={{
-                      marginRight: 10,
-                      flexDirection: 'row',
-                      padding: 5,
-                      alignItems: 'center',
-                    }}>
+                    style={styles.radioTouch}>
                     <RadioButton
                       value="first"
                       color={'red'}
@@ -135,7 +105,7 @@ export const SubModal = ({
                         setFilter(o.code);
                       }}
                     />
-                    <Text style={{fontSize: 18, color: 'black'}}>{o.code}</Text>
+                    <Text style={styles.optionsText}>{o.code}</Text>
                   </TouchableOpacity>
                 );
               })}

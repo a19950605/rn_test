@@ -1,6 +1,7 @@
 import {Icon} from '@rneui/themed';
 import React from 'react';
 import {View, Text} from 'react-native';
+import {styles} from '../../../constants/styles';
 
 export const StatusBubble = ({title, mode, status, t}) => {
   let iconColor = 'black';
@@ -71,26 +72,26 @@ export const StatusBubble = ({title, mode, status, t}) => {
           break;
       }
       break;
+    case 'relay':
+      switch (status) {
+        case 'ERROR':
+          iconCode = 'alert';
+          iconColor = 'red';
+          break;
+        default:
+          break;
+      }
+      break;
 
     default:
       iconCode = 'question';
       iconColor = 'black';
       break;
   }
-
   return (
-    <View
-      style={{
-        backgroundColor: '#f7f7f7',
-        borderRadius: 100,
-        marginLeft: 5,
-        paddingTop: 10,
-        paddingBottom: 0,
-        paddingLeft: 13,
-        paddingRight: 13,
-      }}>
+    <View style={styles.bubbleContainer}>
       <Icon name={iconCode} size={24} color={iconColor} type="octicon" />
-      <Text style={{fontSize: 11, textAlign: 'center'}}>{t(title)}</Text>
+      <Text style={styles.bubbleText}>{t(title)}</Text>
     </View>
   );
 };

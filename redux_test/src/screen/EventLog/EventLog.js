@@ -12,6 +12,7 @@ import EventLogCard from './components/EventLogCard';
 import {getDate} from '../../utils/getDate';
 import {useIsFocused} from '@react-navigation/native';
 import {useFetchEventLogData} from '../../hooks/ApiHook';
+import {color, styles} from '../../constants/styles';
 
 function EventLog() {
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -46,32 +47,17 @@ function EventLog() {
     filterDesc,
   });
   return (
-    <View style={{flex: 1, backgroundColor: 'white', padding: 2}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          padding: 5,
-          alignItems: 'center',
-        }}>
-        <TouchableOpacity
-          style={{
-            borderColor: 'blue',
-            borderWidth: 1,
-            borderRadius: 2,
-            padding: 10,
-            flexDirection: 'row',
-            marginRight: 5,
-            alignItems: 'center',
-          }}>
+    <View style={styles.container}>
+      <View style={styles.eventFlexEnd}>
+        <TouchableOpacity style={styles.csvButton}>
           <Icon
             name="download"
             size={24}
             color="blue"
             type="material-community"
-            style={{paddingRight: 5}}
+            style={styles.pr5}
           />
-          <Text style={{color: 'blue'}}>export current result to csv</Text>
+          <Text style={color.blue}>export current result to csv</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -103,7 +89,7 @@ function EventLog() {
           />
         )
       ) : (
-        <LinearProgress style={{marginTop: -5}} color="red" />
+        <LinearProgress style={styles.mtNeg5} color="red" />
       )}
     </View>
   );

@@ -2,9 +2,8 @@ import React, {useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 
 // import {Tab, Text, TabView} from '@rneui/themed';
-import {Input, Icon} from '@rneui/themed';
+import {Icon} from '@rneui/themed';
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
-import {Button, Title, Paragraph} from 'react-native-paper';
 import LampCreateTab from './components/LampCreateTab';
 import ImageUploadTest from './components/ImageUploadTest';
 import {useSelector} from 'react-redux';
@@ -13,8 +12,8 @@ import {ModalMessage} from '../../components/ModalMessage';
 import {useTranslation} from 'react-i18next';
 import {useEffect} from 'react';
 import {createNewRecord} from '../../hooks/ApiHook';
+import {styles} from '../../constants/styles';
 const MonitoringCreateScreen = props => {
-  const [index, setIndex] = useState(0);
   const [imgX, setImgX] = useState(0);
   const [imgY, setImgY] = useState(0);
   const [lampX, setLampX] = useState(0);
@@ -27,7 +26,6 @@ const MonitoringCreateScreen = props => {
   const userToken = useSelector(state => state.login.userToken?.Token);
 
   const navigation = useNavigation();
-  const [responseCode, setResponseCode] = useState();
   const [alertMessage, setAlertMessage] = useState('');
   const [controllerList, setControllerList] = useState('');
   const [form, setForm] = useState({
@@ -47,7 +45,7 @@ const MonitoringCreateScreen = props => {
   return (
     <>
       <Tabs
-        style={{backgroundColor: 'white'}}
+        style={styles.whiteBackground}
         iconPosition="top"
         uppercase={false} // true/false | default=true | labels are uppercase
       >
@@ -72,23 +70,9 @@ const MonitoringCreateScreen = props => {
           />
         </TabScreen>
       </Tabs>
-      <View
-        style={{
-          backgroundColor: 'white',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          padding: 20,
-        }}>
+      <View style={styles.saveDeleteButtonGroup}>
         <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            borderColor: 'green',
-            borderWidth: 1,
-            borderRadius: 5,
-            padding: 10,
-          }}
+          style={styles.saveBtnContainer}
           onPress={() => {
             console.log('request body');
             console.log(JSON.stringify(form));
@@ -124,9 +108,9 @@ const MonitoringCreateScreen = props => {
             type="ionicon"
             size={24}
             color="green"
-            style={{justifyContent: 'center', paddingRight: 5}}
+            style={styles.btnIconPadding}
           />
-          <Text style={{color: 'green'}}> {t('lamp.save')}</Text>
+          <Text style={styles.saveBtnTitle}> {t('lamp.save')}</Text>
         </TouchableOpacity>
       </View>
       <View>

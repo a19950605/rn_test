@@ -19,7 +19,11 @@ import {
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {useCreateUser} from '../../hooks/ApiHook';
-import {appContextPaths, EndPoint} from '../../constants/constants';
+import {
+  appContextPaths,
+  appDefDomain,
+  EndPoint,
+} from '../../constants/constants';
 
 const UserAccountCreateScreen = () => {
   const [menu1, setMenu1] = useState(false);

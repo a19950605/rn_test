@@ -1,0 +1,24 @@
+mvvm
+ts(wed or thur)
+detail
+dropdown
+datetimepicker
+
+sorting function,
+moment
+1.FILE STRUCTURE(file struture)
+2. Error Handling  (message and form validation(follow)
+3.create user/role
+4. user permission handling
+5.USER ROLE CREATE
+(formvalidation on others part)
+6.login  (done on null checking , need update later)
+MOMENT
+7.STYLE CONSTANT <<<
+8.detail data correctness
+
+Loadmore data 
+
+API   逐頁搵
+FILE NAME  (轉大細階)全大OR全細
+show menu permissions

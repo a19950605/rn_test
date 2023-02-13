@@ -1,25 +1,5 @@
 import {StyleSheet} from 'react-native';
-
-const styles = StyleSheet.create({
-  brightness: {
-    color: 'dark',
-  },
-  redText: {
-    color: 'red',
-  },
-  primaryColor: {
-    color: 'green',
-  },
-  primaryColor: {
-    color: '#fd9c12',
-  },
-  spaceBetween: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  screenInit: {flex: 1, padding: 5, backgroundColor: 'white'},
-});
+import {black} from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 const color = StyleSheet.create({
   brightness: {
@@ -40,6 +20,346 @@ const color = StyleSheet.create({
   blue: {
     color: 'blue',
   },
+  black: {
+    color: 'black',
+  },
+});
+
+const styles = StyleSheet.create({
+  brightness: {
+    color: 'dark',
+  },
+  redText: {
+    color: 'red',
+  },
+  primaryColor: {
+    color: 'green',
+  },
+  primaryColor: {
+    color: '#fd9c12',
+  },
+  spaceBetween: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  screenInit: {flex: 1, padding: 5, backgroundColor: 'white'},
+  loginMobile: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: '50%',
+  },
+  loginTablet: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: '20%',
+  },
+  loginImage: {width: 100, height: 80},
+  font50: {
+    fontSize: 50,
+  },
+  loginFormMobile: {
+    width: '75%',
+    marginTop: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+
+    elevation: 5,
+    paddingBottom: 30,
+    paddingTop: 20,
+  },
+  loginFormTablet: {
+    width: '30%',
+    marginTop: 30,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+
+    elevation: 5,
+    paddingBottom: 30,
+    paddingTop: 20,
+  },
+  loginInputM: {
+    width: '85%',
+    backgroundColor: '#f5f6f7',
+  },
+  loginInputT: {
+    width: '65%',
+    backgroundColor: '#f5f6f7',
+  },
+  loginInputContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 15,
+  },
+  justifyContentCenter: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  loginButtonM: {width: '85%'},
+  loginButtonT: {width: '65%'},
+  //alarm history
+  csvHeader: {
+    borderColor: 'blue',
+    borderWidth: 1,
+    borderRadius: 2,
+    padding: 10,
+    flexDirection: 'row',
+  },
+  flexEnd: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    padding: 10,
+  },
+  flexEnd0Padding: {flexDirection: 'row', justifyContent: 'flex-end'},
+  mb60: {marginBottom: 60},
+  //eventlog
+  container: {flex: 1, backgroundColor: 'white'},
+  eventFlexEnd: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    padding: 5,
+    alignItems: 'center',
+  },
+  csvButton: {
+    borderColor: 'blue',
+    borderWidth: 1,
+    borderRadius: 2,
+    padding: 10,
+    flexDirection: 'row',
+    marginRight: 5,
+    alignItems: 'center',
+  },
+
+  //eventlog card
+  eventCardBorder: {borderColor: 'gray', borderWidth: 0.2, padding: 10},
+  flexRow: {flexDirection: 'row'},
+  cardTitle: {color: 'black', fontWeight: 'bold'},
+  width100: {width: '100%'},
+  tableCell1_5: {flex: 1.5, justifyContent: 'center'},
+  tableCell4: {flex: 4, justifyContent: 'center'},
+  eventLogTableText: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  //lamp Monitoring
+  reloadButtonBlue: {
+    borderColor: 'blue',
+    borderWidth: 1,
+    borderRadius: 2,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  reloadButtonGray: {
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 2,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  //padding and margin single item
+  p5: {
+    padding: 5,
+  },
+  p10: {padding: 10},
+  p20: {padding: 20},
+  pV10: {paddingVertical: 10},
+  pr5: {
+    paddingRight: 5,
+  },
+  mr15: {
+    marginRight: 15,
+  },
+  mtNeg5: {
+    marginTop: -5,
+  },
+  //lamp screen component
+  //card
+  rowCenter: {flexDirection: 'row', alignItems: 'center'},
+  bubbleContainer: {
+    backgroundColor: '#f7f7f7',
+    borderRadius: 100,
+    marginLeft: 5,
+    paddingTop: 10,
+    paddingBottom: 5,
+    paddingLeft: 13,
+    paddingRight: 13,
+  },
+  bubbleText: {fontSize: 11, textAlign: 'center'},
+  //lamp filter modal
+  filterMenu: {
+    width: '70%',
+    position: 'absolute',
+    right: -25,
+    top: -15,
+    height: '100%',
+  },
+  overlay: {flex: 1, backgroundColor: 'black'},
+  filterTop: {
+    backgroundColor: 'black',
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+  },
+  filterTitle: {color: 'white', fontWeight: 'bold', fontSize: 22},
+  filterItemTitle: {
+    color: 'black',
+    fontSize: 14,
+    paddingLeft: 10,
+    paddingBottom: 10,
+  },
+  filterContent: {
+    padding: 10,
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  filterBody: {flex: 1, backgroundColor: 'white'},
+  bottomSpacing: {
+    borderBottomColor: 'rgba(0,0,0,0.2)',
+    borderBottomWidth: 1,
+    marginBottom: 20,
+  },
+  filterContentText: {color: 'black', fontSize: 18, marginLeft: 15},
+  resetBtn: {
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: 'blue',
+    borderRadius: 5,
+    padding: 10,
+    flexDirection: 'row',
+  },
+  resetBtnTitle: {fontSize: 18, color: 'blue', paddingLeft: 5},
+  filterBtn: {
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: 'green',
+    borderRadius: 5,
+    padding: 10,
+    flexDirection: 'row',
+  },
+  filterBtnTitle: {fontSize: 18, color: 'green', paddingLeft: 5},
+  //lamp table item
+  //table cell
+  tableCell1: {flex: 1, justifyContent: 'center'},
+  tableCell2: {flex: 2, justifyContent: 'center'},
+  tableCell4mt: {flex: 4, justifyContent: 'center', marginTop: 5},
+  subModalSize: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: -10,
+    left: -20,
+  },
+  subModalContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingVertical: 20,
+  },
+  rowSpaceBetween: {flexDirection: 'row', justifyContent: 'space-between'},
+  filterEnterTitle: {color: 'black', fontSize: 16},
+  filterEnterTitleContainer: {
+    marginRight: 10,
+    padding: 10,
+  },
+  filterClose: {
+    marginRight: 10,
+    padding: 10,
+    flexDirection: 'row',
+  },
+  filterCloseText: {fontSize: 18, color: 'blue'},
+  filterTextInput: {backgroundColor: '#f7f7f7', paddingLeft: 25},
+  filterTextIcon: {position: 'absolute', left: '5%', top: '45%'},
+  radioTouch: {
+    marginRight: 10,
+    flexDirection: 'row',
+    padding: 5,
+    alignItems: 'center',
+  },
+  optionsText: {fontSize: 18, color: 'black'},
+  //lamp create screen
+  whiteBackground: {backgroundColor: 'white'},
+  saveDeleteButtonGroup: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: 20,
+  },
+  saveBtnContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: 'green',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+  },
+  saveBtnTitle: {color: 'green'},
+  btnIconPadding: {justifyContent: 'center', paddingRight: 5},
+  //dropdown
+  dropDownContainer: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    zIndex: 999,
+    width: '86%',
+    left: 41,
+    top: -10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+  //lamp create tab
+  lampStatus: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    zIndex: 999,
+    width: '86%',
+    left: 41,
+    top: -10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+  lampCreateContainer: {padding: 10, backgroundColor: 'white', flex: 1},
+  inputRow: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  rowIcon: {padding: 10, justifyContent: 'center'},
+  textInputMobile: {backgroundColor: '#f5f6f7', width: '85%'},
+  textInputTablet: {backgroundColor: '#f5f6f7', width: '95%'},
+  errorTxtShow: {marginTop: -15, marginLeft: 30},
+  errorTxtHide: {marginTop: -30, marginLeft: 30},
 });
 
 export {styles, color};
