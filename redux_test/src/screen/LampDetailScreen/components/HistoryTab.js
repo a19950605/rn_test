@@ -4,6 +4,7 @@ import {FlatList} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableOpacity} from 'react-native';
 import {Icon} from '@rneui/themed';
+import {styles} from '../../../constants/styles';
 //import Moment from 'react-moment';
 
 const HistoryTab = ({deviceID}) => {
@@ -49,13 +50,8 @@ const HistoryTab = ({deviceID}) => {
     });
   }, [deviceID]);*/
   return (
-    <View style={{flex: 1, padding: 10, backgroundColor: 'white'}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
+    <View style={styles.screenInit}>
+      <View style={styles.spaceBetween}>
         <View>
           <Text>Last 30 Day record</Text>
         </View>
@@ -66,13 +62,13 @@ const HistoryTab = ({deviceID}) => {
               size={24}
               color="black"
               type="ionicon"
-              style={{padding: 10}}
+              style={styles.p10}
             />
           </TouchableOpacity>
         </View>
       </View>
       {/** History list */}
-      <FlatList style={{padding: 10}} data={data} renderItem={HistoryItem} />
+      <FlatList style={styles.p10} data={data} renderItem={HistoryItem} />
     </View>
   );
 };
@@ -80,7 +76,7 @@ const HistoryItem = props => {
   // console.log(props);
   return (
     <View style={{padding: 10, borderWidth: 0.5, borderColor: 'gray'}}>
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.row}>
         <View>
           <Text>Command ID</Text>
         </View>
@@ -88,7 +84,7 @@ const HistoryItem = props => {
           <Text>{props?.item.id || ''}</Text>
         </View>
       </View>
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.row}>
         <View>
           <Text>User</Text>
         </View>
@@ -96,7 +92,7 @@ const HistoryItem = props => {
           <Text>{props?.item.usernameCreate || ''}</Text>
         </View>
       </View>
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.row}>
         <View>
           <Text>Action</Text>
         </View>
@@ -104,7 +100,7 @@ const HistoryItem = props => {
           <Text>{props?.item.lampCmd || ''}</Text>
         </View>
       </View>
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.row}>
         <View>
           <Text>Datetime</Text>
         </View>

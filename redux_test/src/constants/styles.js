@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {black} from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 const color = StyleSheet.create({
   brightness: {
@@ -38,11 +37,21 @@ const styles = StyleSheet.create({
   primaryColor: {
     color: '#fd9c12',
   },
+  bgWhite: {backgroundColor: 'white'},
+  flex_1: {flex: 1},
   spaceBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  spaceBetweenP10: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+  },
+  row: {flexDirection: 'row'},
+  bold: {fontWeight: 'bold'},
   screenInit: {flex: 1, padding: 5, backgroundColor: 'white'},
   loginMobile: {
     flex: 1,
@@ -118,6 +127,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: 'row',
   },
+  blue: {color: 'blue'},
   flexEnd: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -125,6 +135,8 @@ const styles = StyleSheet.create({
   },
   flexEnd0Padding: {flexDirection: 'row', justifyContent: 'flex-end'},
   mb60: {marginBottom: 60},
+  mb60p5: {marginBottom: 60, padding: 5},
+  mbn30: {marginBottom: -30},
   //eventlog
   container: {flex: 1, backgroundColor: 'white'},
   eventFlexEnd: {
@@ -148,6 +160,8 @@ const styles = StyleSheet.create({
   flexRow: {flexDirection: 'row'},
   cardTitle: {color: 'black', fontWeight: 'bold'},
   width100: {width: '100%'},
+  width100w: {backgroundColor: 'white', width: '100%'},
+  wh100w: {backgroundColor: 'white', width: '100%', height: '100%'},
   tableCell1_5: {flex: 1.5, justifyContent: 'center'},
   tableCell4: {flex: 4, justifyContent: 'center'},
   eventLogTableText: {
@@ -188,6 +202,9 @@ const styles = StyleSheet.create({
   },
   mtNeg5: {
     marginTop: -5,
+  },
+  mt10: {
+    marginTop: 10,
   },
   //lamp screen component
   //card
@@ -302,6 +319,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     padding: 20,
   },
+  saveDeleteButtonGroupLessPad: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: 10,
+  },
   saveBtnContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -310,7 +334,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
+  deleteBtnContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: 'red',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 5,
+  },
   saveBtnTitle: {color: 'green'},
+  delBtnTitle: {color: 'red'},
+
   btnIconPadding: {justifyContent: 'center', paddingRight: 5},
   //dropdown
   dropDownContainer: {
@@ -360,6 +395,99 @@ const styles = StyleSheet.create({
   textInputTablet: {backgroundColor: '#f5f6f7', width: '95%'},
   errorTxtShow: {marginTop: -15, marginLeft: 30},
   errorTxtHide: {marginTop: -30, marginLeft: 30},
+  createIconPadd: {paddingLeft: 10, paddingRight: 10, paddingTop: 10},
+  inputArrowIcon: {position: 'absolute', left: '90%', top: '30%'},
+  inputArrowIconV2: {position: 'absolute', left: '78%', top: '30%'},
+  //lamp details
+
+  //role create,
+  rowTab: {backgroundColor: 'white', padding: 2},
+  roleCheckedRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 5,
+  },
+  //row item list
+  rowListBorder: {
+    borderColor: 'gray',
+    borderWidth: 0.2,
+  },
+  detailBtn: {
+    backgroundColor: '#f0fbff',
+    padding: 15,
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  //row man table
+  ph0: {paddingHorizontal: 0},
+  tableTitle: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  tableBtn: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#e6f9fa',
+    borderColor: 'lightgray',
+    borderWidth: 0.3,
+    borderRadius: 0,
+  },
+  itemCenter: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+  tableArr: {flex: 1, justifyContent: 'center', flexDirection: 'row'},
+  tableBtn2: {
+    flex: 1,
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'center',
+    flexShrink: 1,
+  },
+  flexGrow1: {flex: 1, flexGrow: 1},
+  //useraccount
+  userFirstIcon: {
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    justifyContent: 'center',
+  },
+  //component
+  //card button
+  cardBtnContainer: {
+    backgroundColor: 'lightblue',
+    flex: 1,
+    padding: 10,
+    marginRight: 1,
+  },
+  cardBtnTxt: {textAlign: 'center', color: 'blue'},
+  createBtnContainer: {
+    borderColor: 'blue',
+    borderWidth: 1,
+    borderRadius: 2,
+    padding: 10,
+    flexDirection: 'row',
+    marginRight: 5,
+    alignItems: 'center',
+  },
+  //
+  loadBtnOverlay: {
+    backgroundColor: 'black',
+    paddingVertical: 30,
+    paddingHorizontal: 40,
+  },
+  loadTxt: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  //message overlay
+  msgOverlay: {
+    backgroundColor: 'black',
+    paddingVertical: 30,
+    paddingHorizontal: 50,
+  },
 });
 
 export {styles, color};

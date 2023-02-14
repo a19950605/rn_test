@@ -5,6 +5,7 @@ import {Input, Icon} from '@rneui/themed';
 import {View, StyleSheet, Button, TouchableWithoutFeedback} from 'react-native';
 import {Menu, Provider, TextInput, HelperText} from 'react-native-paper';
 import {Pressable} from 'react-native';
+import {styles} from '../../../constants/styles';
 const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
   console.log('inside monitor tab');
   console.log(data);
@@ -29,24 +30,7 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
 
   const StatusDropDown = ({close}) => {
     return (
-      <View
-        style={{
-          backgroundColor: 'white',
-          position: 'absolute',
-          zIndex: 999,
-          width: '86%',
-          left: 41,
-          top: -10,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-
-          elevation: 5,
-        }}>
+      <View style={styles.dropDownContainer}>
         <Menu.Item
           onPress={() => {
             setStatus('ACTIVE');
@@ -67,73 +51,6 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
     );
   };
 
-  const MyComponent = ({
-    close,
-    relayChannelIdx,
-    setRelayChannelIdx,
-    setForm,
-  }) => {
-    const [visible, setVisible] = React.useState(false);
-
-    const openMenu = () => setVisible(true);
-
-    const closeMenu = () => setVisible(false);
-
-    return (
-      <View
-        style={{
-          backgroundColor: 'white',
-          position: 'absolute',
-          zIndex: 999,
-          width: '86%',
-          left: 41,
-          top: -10,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-
-          elevation: 5,
-        }}>
-        <Menu.Item
-          onPress={() => {
-            setRelayChannelIdx(0);
-            setForm({...form, relayChannelIdx: 0});
-            close(false);
-          }}
-          title="0"
-        />
-        <Menu.Item
-          onPress={() => {
-            setRelayChannelIdx(1);
-            setForm({...form, relayChannelIdx: 1});
-            close(false);
-          }}
-          title="1"
-        />
-        <Menu.Item
-          onPress={() => {
-            setRelayChannelIdx(2);
-            setForm({...form, relayChannelIdx: 2});
-            close(false);
-          }}
-          title="2"
-        />
-        <Menu.Item
-          onPress={() => {
-            setRelayChannelIdx(3);
-            setForm({...form, relayChannelIdx: 3});
-            close(false);
-          }}
-          title="3"
-        />
-      </View>
-    );
-  };
-
   return (
     <Provider>
       <TouchableWithoutFeedback
@@ -142,31 +59,26 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
           setMenu2(false);
         }}>
         {loading ? (
-          <View style={{padding: 10}}>
+          <View style={styles.p10}>
             <Text>loading</Text>
           </View>
         ) : (
-          <View style={{padding: 10, backgroundColor: 'white', flex: 1}}>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
+          <View style={styles.lampCreateContainer}>
+            <View style={styles.inputRow}>
               <Icon
                 name="monitor"
                 size={24}
                 color="black"
-                style={{padding: 10, justifyContent: 'center'}}
+                style={styles.rowIcon}
               />
               <TextInput
                 editable={true}
                 selectTextOnFocus={false}
-                style={{
-                  width: islandscapemode ? '95%' : '85%',
-                  backgroundColor: '#f5f6f7',
-                }}
+                style={
+                  islandscapemode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 onFocus={() => {
                   setMenu1(false);
                   setMenu2(false);
@@ -190,19 +102,13 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
                 Controller ID is invalid!
               </HelperText>
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
+            <View style={styles.inputRow}>
               <Icon
                 name="hash"
                 size={24}
                 color="black"
                 type="feather"
-                style={{padding: 10}}
+                style={styles.p10}
               />
               <TextInput
                 onFocus={() => {
@@ -211,10 +117,11 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
                 }}
                 editable={true}
                 selectTextOnFocus={false}
-                style={{
-                  width: islandscapemode ? '95%' : '85%',
-                  backgroundColor: '#f5f6f7',
-                }}
+                style={
+                  islandscapemode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 label="Device ID"
                 value={deviceId}
                 onChangeText={deviceId => {
@@ -227,26 +134,21 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
               <HelperText
                 type="error"
                 visible={deviceId == '' && isSubmit}
-                style={{
-                  marginTop: deviceId == '' && isSubmit ? -15 : -30,
-                  marginLeft: 30,
-                }}>
+                style={
+                  deviceId == '' && isSubmit
+                    ? styles.errorTxtShow
+                    : styles.errorTxtHide
+                }>
                 Device ID is missing
               </HelperText>
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
+            <View style={styles.inputRow}>
               <Icon
                 name="location-pin"
                 size={24}
                 color="black"
                 type="material"
-                style={{padding: 10}}
+                style={styles.p10}
               />
               <TextInput
                 onFocus={() => {
@@ -255,10 +157,11 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
                 }}
                 editable={true}
                 selectTextOnFocus={false}
-                style={{
-                  width: islandscapemode ? '95%' : '85%',
-                  backgroundColor: '#f5f6f7',
-                }}
+                style={
+                  islandscapemode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 label="RFL"
                 value={rfl}
                 onChangeText={rfl => {
@@ -271,29 +174,24 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
               <HelperText
                 type="error"
                 visible={rfl == '' && isSubmit}
-                style={{
-                  marginTop: rfl == '' && isSubmit ? -15 : -30,
-                  marginLeft: 30,
-                }}>
+                style={
+                  rfl == '' && isSubmit
+                    ? styles.errorTxtShow
+                    : styles.errorTxtHide
+                }>
                 RFL is missing
               </HelperText>
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
+            <View style={styles.inputRow}>
               <Icon
                 name="call-split"
                 size={24}
                 color="black"
                 type="material"
-                style={{padding: 10}}
+                style={styles.p10}
               />
               <Pressable
-                style={{width: '100%'}}
+                style={styles.width100}
                 onPress={() => {
                   setMenu1(!menu1);
                   setMenu2(false);
@@ -301,10 +199,11 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
                 <TextInput
                   editable={false}
                   selectTextOnFocus={false}
-                  style={{
-                    width: islandscapemode ? '95%' : '85%',
-                    backgroundColor: '#f5f6f7',
-                  }}
+                  style={
+                    islandscapemode
+                      ? styles.textInputTablet
+                      : styles.textInputMobile
+                  }
                   label="Relay Channel Index"
                   value={relayChannelIdx?.toString()}
                   onChangeText={relayChannelIdx => {
@@ -312,7 +211,7 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
                     setForm({...form, relayChannelIdx: relayChannelIdx});
                   }}
                 />
-                <View style={{position: 'absolute', left: '78%', top: '30%'}}>
+                <View style={styles.inputArrowIconV2}>
                   <Icon
                     name="angle-down"
                     size={24}
@@ -327,32 +226,16 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
               visible={
                 relayChannelIdx == '' && relayChannelIdx != 0 && isSubmit
               }
-              style={{
-                marginTop: relayChannelIdx == '' && isSubmit ? -15 : -30,
-                marginLeft: 30,
-              }}>
+              style={
+                relayChannelIdx == '' && isSubmit
+                  ? styles.errorTxtShow
+                  : styles.errorTxtHide
+              }>
               relayChannel Index is missing
             </HelperText>
             <View>
               {menu1 && (
-                <View
-                  style={{
-                    backgroundColor: 'white',
-                    position: 'absolute',
-                    zIndex: 999,
-                    width: '86%',
-                    left: 41,
-                    top: -10,
-                    shadowColor: '#000',
-                    shadowOffset: {
-                      width: 0,
-                      height: 2,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 3.84,
-
-                    elevation: 5,
-                  }}>
+                <View style={styles.dropDownContainer}>
                   <Menu.Item
                     onPress={() => {
                       setRelayChannelIdx(0);
@@ -389,32 +272,27 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
               )}
             </View>
             <Pressable
-              style={{width: '100%'}}
+              style={styles.width100}
               onPress={() => {
                 setMenu2(!menu2);
                 setMenu1(false);
               }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  width: '100%',
-                  alignItems: 'center',
-                  marginBottom: 15,
-                }}>
+              <View style={styles.inputRow}>
                 <Icon
                   name="play"
                   size={24}
                   color="black"
                   type="fontisto"
-                  style={{padding: 10}}
+                  style={styles.p10}
                 />
                 <TextInput
                   editable={false}
                   selectTextOnFocus={false}
-                  style={{
-                    width: islandscapemode ? '95%' : '85%',
-                    backgroundColor: '#f5f6f7',
-                  }}
+                  style={
+                    islandscapemode
+                      ? styles.textInputTablet
+                      : styles.textInputMobile
+                  }
                   label="Status"
                   value={status}
                   onChangeText={status => {
@@ -422,7 +300,7 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
                     setForm({...form, status: status});
                   }}
                 />
-                <View style={{position: 'absolute', left: '90%', top: '30%'}}>
+                <View style={styles.inputArrowIcon}>
                   <Icon
                     name="angle-down"
                     size={24}

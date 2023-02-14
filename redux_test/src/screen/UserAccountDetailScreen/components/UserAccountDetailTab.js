@@ -484,24 +484,9 @@ const UserAccountDetailTab = ({userData}) => {
               </View>
             )}
           </View>
-          <View
-            style={{
-              backgroundColor: 'white',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              padding: 20,
-            }}>
+          <View style={styles.saveDeleteButtonGroup}>
             <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderColor: 'red',
-                borderWidth: 1,
-                borderRadius: 5,
-                padding: 10,
-                marginRight: 5,
-              }}
+              style={styles.deleteBtnContainer}
               onPress={() => {
                 deleteConfirm(userToken);
               }}>
@@ -510,19 +495,12 @@ const UserAccountDetailTab = ({userData}) => {
                 type="ionicon"
                 size={24}
                 color="red"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
-              <Text style={{color: 'red'}}> Delete</Text>
+              <Text style={styles.delBtnTitle}> Delete</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderColor: 'green',
-                borderWidth: 1,
-                borderRadius: 5,
-                padding: 10,
-              }}
+              style={styles.saveBtnContainer}
               //
               onPress={() => {
                 updateUser(
@@ -547,7 +525,7 @@ const UserAccountDetailTab = ({userData}) => {
                 type="ionicon"
                 size={24}
                 color="green"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
               <Text style={{color: 'green'}}> Save</Text>
             </TouchableOpacity>

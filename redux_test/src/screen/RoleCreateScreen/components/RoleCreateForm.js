@@ -18,6 +18,7 @@ import {
 } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from 'react-redux';
+import {styles} from '../../../constants/styles';
 
 const RoleCreateForm = ({setForm, form, isSubmit}) => {
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -32,26 +33,20 @@ const RoleCreateForm = ({setForm, form, isSubmit}) => {
 
   return (
     <Provider>
-      <View style={{backgroundColor: 'white', flex: 1}}>
-        <View style={{padding: 10}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              marginBottom: 15,
-            }}>
+      <View style={styles.filterBody}>
+        <View style={styles.p10}>
+          <View style={styles.inputRow}>
             <Icon
               name="user-circle"
               size={24}
               color="gray"
               type="font-awesome"
-              style={{paddingLeft: 10, paddingRight: 10, paddingTop: 10}}
+              style={styles.createIconPadd}
             />
-            <View style={{width: '100%'}}>
+            <View style={styles.width100}>
               <TextInput
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: '#f5f6f7'}}
+                style={styles.textInputMobile}
                 label="Display name"
                 value={displayName}
                 onChangeText={displayName => {
@@ -62,30 +57,24 @@ const RoleCreateForm = ({setForm, form, isSubmit}) => {
               <HelperText
                 type="error"
                 visible={displayName == null && isSubmit}
-                style={{marginBottom: -30}}>
+                style={styles.mbn30}>
                 required
               </HelperText>
             </View>
           </View>
 
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              marginBottom: 15,
-            }}>
+          <View style={styles.inputRow}>
             <Icon
               name="flag"
               size={24}
               color="gray"
               type="material"
-              style={{paddingLeft: 10, paddingRight: 10, paddingTop: 10}}
+              style={styles.createIconPadd}
             />
-            <View style={{width: '100%'}}>
+            <View style={styles.width100}>
               <TextInput
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: '#f5f6f7'}}
+                style={styles.textInputMobile}
                 label="Code"
                 value={code}
                 onChangeText={code => {
@@ -97,28 +86,22 @@ const RoleCreateForm = ({setForm, form, isSubmit}) => {
               <HelperText
                 type="error"
                 visible={code == null && isSubmit}
-                style={{marginBottom: -30}}>
+                style={styles.mbn30}>
                 required
               </HelperText>
             </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              marginBottom: 15,
-            }}>
+          <View style={styles.inputRow}>
             <Icon
               name="pencil"
               size={24}
               color="gray"
               type="material-community"
-              style={{paddingLeft: 10, paddingRight: 10, paddingTop: 10}}
+              style={styles.createIconPadd}
             />
             <TextInput
               selectTextOnFocus={false}
-              style={{width: '85%', backgroundColor: '#f5f6f7'}}
+              style={styles.textInputMobile}
               label="Remarks"
               value={rmks}
               onChangeText={rmks => {
@@ -131,24 +114,18 @@ const RoleCreateForm = ({setForm, form, isSubmit}) => {
             onPress={() => {
               setMenu2(!menu2);
             }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
+            <View style={styles.inputRow}>
               <Icon
                 name="insert-chart"
                 size={24}
                 color="gray"
                 type="material"
-                style={{paddingLeft: 10, paddingRight: 10, paddingTop: 10}}
+                style={styles.createIconPadd}
               />
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: '85%', backgroundColor: '#f5f6f7'}}
+                style={styles.textInputMobile}
                 label="Status"
                 value={status}
                 onChangeText={status => setStatus(status)}
@@ -157,24 +134,7 @@ const RoleCreateForm = ({setForm, form, isSubmit}) => {
           </Pressable>
           <View style={{zIndex: 999}}>
             {menu2 && (
-              <View
-                style={{
-                  backgroundColor: 'white',
-                  position: 'absolute',
-                  zIndex: 999,
-                  width: '86%',
-                  left: 41,
-                  bottom: -40,
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 2,
-                  },
-                  shadowOpacity: 0.25,
-                  shadowRadius: 3.84,
-
-                  elevation: 5,
-                }}>
+              <View style={styles.dropDownContainer}>
                 <Menu.Item
                   onPress={() => {
                     setStatus('ACTIVE');

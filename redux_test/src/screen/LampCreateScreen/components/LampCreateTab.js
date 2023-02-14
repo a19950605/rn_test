@@ -19,6 +19,7 @@ import {
 } from 'react-native-paper';
 import {TouchableWithoutFeedback} from 'react-native';
 import {styles} from '../../../constants/styles';
+import {FormValidationError} from '../../../components/formValidationError';
 
 const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
   const {height, width} = useWindowDimensions();
@@ -89,8 +90,8 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
                 selectTextOnFocus={false}
                 style={
                   isLandscapeMode
-                    ? styles.textInputMobile
-                    : styles.textInputTablet
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
                 }
                 label={t('lamp.controllerId')}
                 value={controllerId}
@@ -125,16 +126,11 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
             )}
           </View>
           <View>
-            <HelperText
-              type="error"
-              visible={controllerId == '' && isSubmit}
-              style={
-                controllerId == '' && isSubmit
-                  ? styles.errorTxtShow
-                  : styles.errorTxtHide
-              }>
-              Controller ID is missing!
-            </HelperText>
+            <FormValidationError
+              value={controllerId}
+              isSubmit={isSubmit}
+              message={'Controller ID is missing!'}
+            />
           </View>
           <View style={styles.inputRow}>
             <Icon
@@ -142,7 +138,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
               size={24}
               color="black"
               type="feather"
-              style={{padding: 10}}
+              style={styles.p10}
             />
             <Pressable
               style={styles.width100}
@@ -160,10 +156,11 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
                   setMenu2(false);
                 }}
                 selectTextOnFocus={false}
-                style={{
-                  width: isLandscapeMode ? '95%' : '85%',
-                  backgroundColor: '#f5f6f7',
-                }}
+                style={
+                  isLandscapeMode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 label={t('lamp.deviceId')}
                 value={deviceId?.toString()}
                 onChangeText={deviceId => {
@@ -174,36 +171,15 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
             </Pressable>
           </View>
           <View>
-            <HelperText
-              type="error"
-              visible={deviceId == '' && isSubmit}
-              style={{
-                marginTop: deviceId == '' && isSubmit ? -15 : -30,
-                marginLeft: 30,
-              }}>
-              Device ID is missing
-            </HelperText>
+            <FormValidationError
+              value={deviceId}
+              isSubmit={isSubmit}
+              message={'Device ID is missing'}
+            />
           </View>
           <View>
             {menu4 && (
-              <View
-                style={{
-                  backgroundColor: 'white',
-                  position: 'absolute',
-                  zIndex: 999,
-                  width: '86%',
-                  left: 41,
-                  top: -10,
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 2,
-                  },
-                  shadowOpacity: 0.25,
-                  shadowRadius: 3.84,
-
-                  elevation: 5,
-                }}>
+              <View style={styles.dropDownContainer}>
                 <Menu.Item
                   onPress={() => {
                     setDeviceId(parseInt(1));
@@ -245,7 +221,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
               size={24}
               color="black"
               type="material"
-              style={{padding: 10}}
+              style={styles.p10}
             />
             <View style={styles.width100}>
               <TextInput
@@ -254,10 +230,11 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
                   setMenu2(false);
                 }}
                 selectTextOnFocus={false}
-                style={{
-                  width: isLandscapeMode ? '95%' : '85%',
-                  backgroundColor: '#f5f6f7',
-                }}
+                style={
+                  isLandscapeMode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 label={t('lamp.rfl')}
                 value={rfl}
                 onChangeText={rfl => {
@@ -268,15 +245,11 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
             </View>
           </View>
           <View>
-            <HelperText
-              type="error"
-              visible={rfl == '' && isSubmit}
-              style={{
-                marginTop: rfl == '' && isSubmit ? -15 : -30,
-                marginLeft: 30,
-              }}>
-              RFL is missing
-            </HelperText>
+            <FormValidationError
+              value={rfl}
+              isSubmit={isSubmit}
+              message={'RFL is missing'}
+            />
           </View>
           <View style={styles.inputRow}>
             <Icon
@@ -284,7 +257,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
               size={24}
               color="black"
               type="material"
-              style={{padding: 10}}
+              style={styles.p10}
             />
 
             <Pressable
@@ -299,10 +272,11 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{
-                  width: isLandscapeMode ? '95%' : '85%',
-                  backgroundColor: '#f5f6f7',
-                }}
+                style={
+                  isLandscapeMode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 label={t('lamp.relaychannelIdx')}
                 value={relayChannelIdx?.toString()}
                 onChangeText={relayChannelIdx => {
@@ -321,36 +295,14 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
               </View>
             </Pressable>
           </View>
-
-          <HelperText
-            type="error"
-            visible={relayChannelIdx == '' && isSubmit}
-            style={{
-              marginTop: relayChannelIdx == '' && isSubmit ? -15 : -30,
-              marginLeft: 30,
-            }}>
-            relayChannel Index is missing
-          </HelperText>
+          <FormValidationError
+            value={relayChannelIdx}
+            isSubmit={isSubmit}
+            message={'relayChannel Index is missing'}
+          />
           <View>
             {menu1 && (
-              <View
-                style={{
-                  backgroundColor: 'white',
-                  position: 'absolute',
-                  zIndex: 999,
-                  width: '86%',
-                  left: 41,
-                  top: -10,
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 2,
-                  },
-                  shadowOpacity: 0.25,
-                  shadowRadius: 3.84,
-
-                  elevation: 5,
-                }}>
+              <View style={styles.dropDownContainer}>
                 <Menu.Item
                   onPress={() => {
                     setRelayChannelIdx(0);
@@ -395,27 +347,22 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
               setMenu4(false);
               Keyboard.dismiss();
             }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
+            <View style={styles.inputRow}>
               <Icon
                 name="insert-chart"
                 size={24}
                 color="gray"
                 type="material"
-                style={{paddingLeft: 10, paddingRight: 10, paddingTop: 10}}
+                style={styles.createIconPadd}
               />
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{
-                  width: isLandscapeMode ? '95%' : '85%',
-                  backgroundColor: '#f5f6f7',
-                }}
+                style={
+                  isLandscapeMode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 label={t('lamp.status')}
                 value={status}
                 onChangeText={status => {
@@ -423,7 +370,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
                   setForm({...form, status: status});
                 }}
               />
-              <View style={{position: 'absolute', left: '90%', top: '30%'}}>
+              <View style={styles.inputArrowIcon}>
                 <Icon
                   name="angle-down"
                   size={24}

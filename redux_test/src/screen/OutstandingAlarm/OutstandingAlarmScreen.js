@@ -16,6 +16,7 @@ import TableTest2 from './components/TableTest2';
 import SortDropDown from '../../utils/sortFilter';
 import {sortData} from '../../utils/sortData';
 import {getDate} from '../../utils/getDate';
+import {styles} from '../../constants/styles';
 
 const OutstandingAlarmScreen = () => {
   const navigation = useNavigation();
@@ -85,25 +86,13 @@ const OutstandingAlarmScreen = () => {
         </View>
       ) : (
         <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: 10,
-            }}>
+          <View style={styles.spaceBetweenP10}>
             <TouchableOpacity
               onPress={() => {
                 setLoading(true);
               }}
-              style={{
-                borderColor: 'blue',
-                borderWidth: 1,
-                borderRadius: 2,
-                padding: 10,
-                flexDirection: 'row',
-              }}>
-              <Text style={{color: 'blue'}}>{getDate()}</Text>
+              style={styles.csvHeader}>
+              <Text style={styles.blue}>{getDate()}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -124,7 +113,7 @@ const OutstandingAlarmScreen = () => {
               />
             )}
           </View>
-          <View style={{marginBottom: 60, padding: isLandscapeMode ? 5 : 0}}>
+          <View style={isLandscapeMode ? styles.mb60p5 : styles.mb60}>
             {isLandscapeMode ? (
               <TableTest2 data={data} />
             ) : (

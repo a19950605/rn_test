@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import {Tab, Text, TabView} from '@rneui/themed';
 import {Checkbox} from 'react-native-paper';
+import {styles} from '../../../constants/styles';
 
 const RolePermission = props => {
   console.log('RoleDetailPermission');
@@ -22,7 +23,7 @@ const RolePermission = props => {
   }, [selectedId]);
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={styles.filterBody}>
       <Checkbox
         status={checked ? 'checked' : 'unchecked'}
         onPress={() => {
@@ -77,23 +78,18 @@ const RoleCheckItem = props => {
       : props.setSelectedId(props.selectedId.filter(s => s != props?.item?.id));
   }, [checked1]);
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 5,
-      }}>
+    <View style={styles.roleCheckedRow}>
       <View>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{fontWeight: 'bold'}}>Function ID: </Text>
+        <View style={styles.row}>
+          <Text style={styles.bold}>Function ID: </Text>
           <Text>{props?.item?.id || ''}</Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{fontWeight: 'bold'}}>Function: </Text>
+        <View style={styles.row}>
+          <Text style={styles.bold}>Function: </Text>
           <Text>{props?.item?.code}</Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{fontWeight: 'bold'}}>Permission: </Text>
+        <View style={styles.row}>
+          <Text style={styles.bold}>Permission: </Text>
           <Text>{props?.item?.displayName}</Text>
         </View>
       </View>

@@ -126,7 +126,7 @@ const LampScreen = () => {
           <View style={{flexDirection: 'row'}}>
             <CreateButton
               navigation={navigation}
-              navLoc={'Create Lamp'}
+              navLoc={'Create Monitoring'}
               dropDown1={data3}
             />
             <ReloadButton

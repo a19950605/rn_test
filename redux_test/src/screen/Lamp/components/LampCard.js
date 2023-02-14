@@ -15,11 +15,11 @@ const LampCard = props => {
 
   /*
               props.item.status == 'ACTIVE'
-                ? {color: 'green'}
+                ? styles.saveBtnTitle
                 : props.item.status == 'SPECIAL'
                 ? {color: 'purple'}
                 : props.item.status == 'DISABLED'
-                ? {color: 'red'}
+                ? styles.delBtnTitle
                 : {color: 'black'}
             }>
             {props.item.status == 'ACTIVE'
@@ -33,7 +33,7 @@ const LampCard = props => {
   */
   const [readinessStatus, setReadinessStatus] = useState('');
   const [readinessStr, setReadinessStr] = useState(t('lamp.active'));
-  const [readinessColor, setReadinessColor] = useState({color: 'green'});
+  const [readinessColor, setReadinessColor] = useState(styles.saveBtnTitle);
 
   useEffect(() => {
     setReadinessStatus(props?.item?.status);
@@ -42,7 +42,7 @@ const LampCard = props => {
   useEffect(() => {
     switch (readinessStatus) {
       case 'ACTIVE':
-        setReadinessColor({color: 'green'});
+        setReadinessColor(styles.saveBtnTitle);
         setReadinessStr(t('lamp.active'));
         break;
       case 'SPECIAL':
@@ -50,7 +50,7 @@ const LampCard = props => {
         setReadinessStr(t('lamp.isolated'));
         break;
       case 'DISABLED':
-        setReadinessColor({color: 'red'});
+        setReadinessColor(styles.delBtnTitle);
         setReadinessStr(t('lamp.maintenance'));
         break;
       default:

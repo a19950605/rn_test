@@ -3,6 +3,7 @@ import {Text, View, FlatList} from 'react-native';
 import {Tab, TabView} from '@rneui/themed';
 import {useSelector} from 'react-redux';
 import UserAccountDetailTab from './components/UserAccountDetailTab';
+import {styles} from '../../constants/styles';
 
 const UserAccountDetailScreen = props => {
   const [index, setIndex] = React.useState(0);
@@ -76,7 +77,7 @@ const UserAccountDetailScreen = props => {
       ) : (
         <>
           <Tab
-            style={{backgroundColor: 'white'}}
+            style={styles.whiteBackground}
             value={index}
             scrollable={true}
             onChange={e => setIndex(e)}
@@ -115,14 +116,13 @@ const UserAccountDetailScreen = props => {
             />
           </Tab>
           <TabView value={index} onChange={setIndex} animationType="spring">
-            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+            <TabView.Item style={styles.width100w}>
               <UserAccountDetailTab userData={userData} />
             </TabView.Item>
-            <TabView.Item
-              style={{backgroundColor: 'white', width: '100%', height: '100%'}}>
-              <View style={{backgroundColor: 'white', flex: 1, padding: 10}}>
+            <TabView.Item style={styles.wh100w}>
+              <View style={styles.lampCreateContainer}>
                 <Text>permission</Text>
-                <View style={{flex: 1, flexGrow: 1}}>
+                <View style={styles.flexGrow1}>
                   <FlatList
                     data={data1}
                     renderItem={props => <PermissionDetail {...props} />}

@@ -2,6 +2,7 @@ import {Icon, Overlay} from '@rneui/themed';
 import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
+import {styles} from '../constants/styles';
 
 export const ModalMessage = ({message, setShowModal, icon, color}) => {
   const [visible, setVisible] = useState(true);
@@ -12,33 +13,18 @@ export const ModalMessage = ({message, setShowModal, icon, color}) => {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}>
+    <View style={styles.flex_1}>
       <Overlay
         isVisible={visible}
         onBackdropPress={toggleOverlay}
-        overlayStyle={{
-          backgroundColor: 'black',
-          paddingVertical: 30,
-          paddingHorizontal: 50,
-        }}>
+        overlayStyle={styles.msgOverlay}>
         <Icon
           name={icon || 'alert'}
           size={48}
           color={color || red}
           type="octicon"
         />
-        <Text
-          style={{
-            color: 'white',
-            fontSize: 20,
-            fontWeight: 'bold',
-            marginBottom: 20,
-          }}>
-          {message || 'no passing message'}
-        </Text>
+        <Text style={styles.loadTxt}>{message || 'no passing message'}</Text>
       </Overlay>
     </View>
   );

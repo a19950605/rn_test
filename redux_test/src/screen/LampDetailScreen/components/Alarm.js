@@ -65,43 +65,4 @@ const Alarm = ({deviceId}) => {
   );
 };
 
-const HistoryItem = () => {
-  return (
-    <View style={{padding: 10, borderWidth: 0.5, borderColor: 'gray'}}>
-      <View style={{flexDirection: 'row'}}>
-        <View>
-          <Text>Command ID</Text>
-        </View>
-        <View>
-          <Text>483</Text>
-        </View>
-      </View>
-      <View style={{flexDirection: 'row'}}>
-        <View>
-          <Text>User</Text>
-        </View>
-        <View>
-          <Text>sysadmin</Text>
-        </View>
-      </View>
-      <View style={{flexDirection: 'row'}}>
-        <View>
-          <Text>Action</Text>
-        </View>
-        <View>
-          <Text>Off</Text>
-        </View>
-      </View>
-      <View style={{flexDirection: 'row'}}>
-        <View>
-          <Text>Datetime</Text>
-        </View>
-        <View>
-          <Text>2022-12-06 18:19:57</Text>
-        </View>
-      </View>
-    </View>
-  );
-};
-
 export default Alarm;

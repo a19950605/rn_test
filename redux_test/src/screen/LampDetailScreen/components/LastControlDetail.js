@@ -4,85 +4,65 @@ import {Input, Icon} from '@rneui/themed';
 
 import {View, StyleSheet, Button} from 'react-native';
 import {TextInput} from 'react-native-paper';
+import {styles} from '../../../constants/styles';
 
-const LastControlDetail = props => {
-  console.log(props?.data?.lastCmd);
+const LastControlDetail = ({data, islandscapemode}) => {
+  console.log(data?.lastCmd);
   return (
-    <View style={{padding: 10, backgroundColor: 'white', flex: 1}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          width: '100%',
-          alignItems: 'center',
-          marginBottom: 15,
-        }}>
+    <View style={styles.lampCreateContainer}>
+      <View style={styles.inputRow}>
         <Icon
           name="person"
           size={24}
           color="black"
           type="material"
-          style={{padding: 10}}
+          style={styles.p10}
         />
         <TextInput
           editable={false}
           selectTextOnFocus={false}
-          style={{
-            width: props?.islandscapemode ? '95%' : '85%',
-            backgroundColor: '#f5f6f7',
-          }}
+          style={
+            islandscapemode ? styles.textInputMobile : styles.textInputTablet
+          }
           label="Last Control By"
           value={''}
           onChangeText={text => setText(text)}
         />
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          width: '100%',
-          alignItems: 'center',
-          marginBottom: 15,
-        }}>
+      <View style={styles.inputRow}>
         <Icon
           name="power"
           size={24}
           color="black"
           type="material-community"
-          style={{padding: 10}}
+          style={styles.p10}
         />
         <TextInput
           editable={false}
           selectTextOnFocus={false}
-          style={{
-            width: props?.islandscapemode ? '95%' : '85%',
-            backgroundColor: '#f5f6f7',
-          }}
+          style={
+            islandscapemode ? styles.textInputMobile : styles.textInputTablet
+          }
           label="Last Control Action"
           value={''}
           onChangeText={text => setText(text)}
         />
       </View>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          width: '100%',
-          alignItems: 'center',
-          marginBottom: 15,
-        }}>
+      <View style={styles.inputRow}>
         <Icon
           name="calendar-range"
           size={24}
           color="black"
           type="material-community"
-          style={{padding: 10}}
+          style={styles.p10}
         />
         <TextInput
           editable={false}
           selectTextOnFocus={false}
-          style={{
-            width: props?.islandscapemode ? '95%' : '85%',
-            backgroundColor: '#f5f6f7',
-          }}
+          style={
+            islandscapemode ? styles.textInputMobile : styles.textInputTablet
+          }
           label="Last Control Datetime"
           value={''}
           onChangeText={text => setText(text)}

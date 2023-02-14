@@ -17,6 +17,7 @@ import {useIsFocused} from '@react-navigation/native';
 import CreateButton from '../../components/CreateButton';
 import {useFetchRoleData} from '../../hooks/ApiHook';
 import RoleManagementTable from './components/RoleManagementTable';
+import {styles} from '../../constants/styles';
 
 function RoleManagementScreen() {
   const isFocused = useIsFocused();
@@ -50,14 +51,8 @@ function RoleManagementScreen() {
 
   return (
     <>
-      <View style={{flex: 1, backgroundColor: 'white'}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: 5,
-          }}>
+      <View style={styles.container}>
+        <View style={styles.spaceBetweenP10}>
           <CreateButton navigation={navigation} navLoc={'RoleCreate'} />
           <TouchableOpacity
             onPress={() => {

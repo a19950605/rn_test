@@ -152,7 +152,7 @@ export function MainDrawer() {
                 type="material-community"
                 size={24}
                 color="gray"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
             ),
           }}
@@ -168,7 +168,7 @@ export function MainDrawer() {
                 type="material-community"
                 size={24}
                 color="gray"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
             ),
           }}
@@ -184,7 +184,7 @@ export function MainDrawer() {
                 type="material-community"
                 size={24}
                 color="gray"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
             ),
           }}
@@ -215,7 +215,7 @@ export function MainDrawer() {
                 type="feather"
                 size={24}
                 color="gray"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
             ),
           }}
@@ -231,7 +231,7 @@ export function MainDrawer() {
                 type="material-community"
                 size={24}
                 color="gray"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
             ),
           }}
@@ -247,7 +247,7 @@ export function MainDrawer() {
                 type="material-community"
                 size={24}
                 color="gray"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
             ),
           }}
@@ -265,7 +265,7 @@ export function MainDrawer() {
                 type="ionicon"
                 size={24}
                 color="gray"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
             ),
           }}
@@ -282,7 +282,7 @@ export function MainDrawer() {
                 type="ionicon"
                 size={24}
                 color="gray"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
             ),
           }}
@@ -358,7 +358,7 @@ function CustomDrawerContent(props) {
               type="material"
               size={24}
               color={open ? 'red' : 'gray'}
-              style={{justifyContent: 'center', paddingRight: 5}}
+              style={styles.btnIconPadding}
             />
           )}
         />
@@ -396,7 +396,7 @@ function CustomDrawerContent(props) {
               type="material"
               size={24}
               color={openSetting ? 'red' : 'gray'}
-              style={{justifyContent: 'center', paddingRight: 5}}
+              style={styles.btnIconPadding}
             />
           )}
         />
@@ -452,7 +452,7 @@ function CustomDrawerContent(props) {
               type="material-community"
               size={24}
               color="gray"
-              style={{justifyContent: 'center', paddingRight: 5}}
+              style={styles.btnIconPadding}
             />
           )}
         />

@@ -4,6 +4,7 @@ import {Input, Icon} from '@rneui/themed';
 import {TextInput} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import {useWindowDimensions, View} from 'react-native';
+import {styles} from '../../constants/styles';
 
 const OutstandingDetailScreen = props => {
   const [index, setIndex] = React.useState(0);
@@ -56,142 +57,130 @@ const OutstandingDetailScreen = props => {
       </Tab>
 
       <TabView value={index} onChange={setIndex} animationType="spring">
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
-          <View style={{padding: 10}}>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
+        <TabView.Item style={styles.width100w}>
+          <View style={styles.p10}>
+            <View style={styles.inputRow}>
               <Icon
                 name="heartbeat"
                 size={24}
                 color="black"
                 type="font-awesome"
-                style={{padding: 10}}
+                style={styles.p10}
               />
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: isLandscapeMode ? '95%' : '85%'}}
+                style={
+                  isLandscapeMode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 label="Alarm ID"
                 value={JSON.stringify(props.route.params.id)}
                 onChangeText={text => setText(text)}
               />
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
+            <View style={styles.inputRow}>
               <Icon
                 name="heartbeat"
                 size={24}
                 color="black"
                 type="font-awesome"
-                style={{padding: 10}}
+                style={styles.p10}
               />
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: isLandscapeMode ? '95%' : '85%'}}
+                style={
+                  isLandscapeMode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 label="Types"
                 value={props.route.params.alarmType}
                 onChangeText={text => setText(text)}
               />
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
+            <View style={styles.inputRow}>
               <Icon
                 name="heartbeat"
                 size={24}
                 color="black"
                 type="font-awesome"
-                style={{padding: 10}}
+                style={styles.p10}
               />
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: isLandscapeMode ? '95%' : '85%'}}
+                style={
+                  isLandscapeMode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 label="Controller ID"
                 value={JSON.stringify(props.route.params.controllerDeviceId)}
                 onChangeText={text => setText(text)}
               />
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
+            <View style={styles.inputRow}>
               <Icon
                 name="heartbeat"
                 size={24}
                 color="black"
                 type="font-awesome"
-                style={{padding: 10}}
+                style={styles.p10}
               />
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: isLandscapeMode ? '95%' : '85%'}}
+                style={
+                  isLandscapeMode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 label="RFL"
                 value={JSON.stringify(props.route.params.controllerDeviceId)}
                 onChangeText={text => setText(text)}
               />
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
+            <View style={styles.inputRow}>
               <Icon
                 name="heartbeat"
                 size={24}
                 color="black"
                 type="font-awesome"
-                style={{padding: 10}}
+                style={styles.p10}
               />
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: isLandscapeMode ? '95%' : '85%'}}
+                style={
+                  isLandscapeMode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 label="Status"
                 value={JSON.stringify(props.route.params.status)}
                 onChangeText={text => setText(text)}
               />
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: 15,
-              }}>
+            <View style={styles.inputRow}>
               <Icon
                 name="heartbeat"
                 size={24}
                 color="black"
                 type="font-awesome"
-                style={{padding: 10}}
+                style={styles.p10}
               />
 
               <TextInput
                 editable={false}
                 selectTextOnFocus={false}
-                style={{width: isLandscapeMode ? '95%' : '85%'}}
+                style={
+                  isLandscapeMode
+                    ? styles.textInputTablet
+                    : styles.textInputMobile
+                }
                 label="Triggered Time"
                 value={JSON.stringify(props.route.params.dtCreate)}
                 onChangeText={text => setText(text)}
@@ -199,7 +188,7 @@ const OutstandingDetailScreen = props => {
             </View>
           </View>
         </TabView.Item>
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+        <TabView.Item style={styles.width100w}>
           <AcknowledgementTab />
         </TabView.Item>
       </TabView>
@@ -211,14 +200,14 @@ const AcknowledgementTab = () => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
   return (
-    <View style={{flex: 1, padding: 10}}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+    <View style={styles.lampCreateContainer}>
+      <View style={styles.rowCenter}>
         <Icon
           name="alarm"
           size={26}
           color="red"
           type="material-community"
-          style={{padding: 10}}
+          style={styles.p10}
         />
         <View
           style={{

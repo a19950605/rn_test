@@ -27,6 +27,7 @@ import {color} from '@rneui/base';
 import {ActivityIndicator} from 'react-native-paper';
 import {Loading} from '../../components/Loading';
 import {ModalMessage} from '../../components/ModalMessage';
+import {styles} from '../../constants/styles';
 
 const LampDetailScreen = props => {
   console.log('monitoring tab1');
@@ -181,22 +182,11 @@ const LampDetailScreen = props => {
           setShowModal(true);
         }
       })
-      // .then(result => {
-      //   //  console.log(result);
-      //   // return result;
-      //   console.log('submit result');
-      //   console.log(result);
 
-      //   if (responseCode == 200) {
-      //     alert('delete success' + result?.id);
-      //     navigation.navigate('MonitoringTestSub');
-      //   } else {
-      //     alert('delete fail: ' + responseCode + '\n' + result?.errorMsg);
-      //   }
-      // })
       .catch(error => console.log('error1', error));
   };
   useEffect(() => {
+    //
     var requestOptions = {
       method: 'GET',
       headers: {
@@ -234,51 +224,26 @@ const LampDetailScreen = props => {
         redirect: 'follow',
       },
     };
-    // fetch(
-    //   `https://gis2.ectrak.com.hk:8900/api/data/device/img/${props.route.params.id}`,
-    //   requestOptions2,
-    // )
-    //   .then(response => {
-    //     console.log('img res');
-    //     console.log(response.url);
-
-    //     // console.log(response);
-
-    //     console.log(response);
-    //     console.log(response.headers);
-
-    //     return response.blob();
-    //   })
-    //   .then(result => {
-    //     console.log('res');
-    //     console.log(result);
-    //     // return result;
-    //     //   setData(result);
-    //     //image_picker6597993569716493407.jpg
-    //     // const imageObjectURL = URL.createObjectURL(result);
-    //     const imgtst = new File([result], 'test.png', {type: 'image/png'});
-    //     console.log(imgtst);
-    //     const imageObjectURL = URL.createObjectURL(imgtst);
-
-    //     console.log('imagetest');
-    //     console.log(imageObjectURL);
-    //     // setUri(result);
-    //   })
-    //   .catch(error => console.log('error14', error));
   }, []);
 
   useEffect(() => {
-    RNFetchBlob.fetch(
-      'GET',
-      'https://gis2.ectrak.com.hk:8900/api/data/device/img/' +
-        props.route.params.id,
-      {
-        // Accept: '*',
-        // 'Content-Type': 'application/json',
-        'X-Token': userToken,
-        redirect: 'follow',
-      },
-    )
+    //
+    RNFetchBlob.config({
+      fileCache: true,
+      // by adding this option, the temp files will have a file extension
+      appendExt: 'png',
+    })
+      .fetch(
+        'GET',
+        'https://gis2.ectrak.com.hk:8900/api/data/device/img/' +
+          props.route.params.id,
+        {
+          // Accept: '*',
+          // 'Content-Type': 'application/json',
+          'X-Token': userToken,
+          redirect: 'follow',
+        },
+      )
       .then(res => {
         let status = res.info().status;
 
@@ -288,11 +253,13 @@ const LampDetailScreen = props => {
 
           // let path = res.path();
           console.log('status blob 200');
+          console.log(res.path());
           let base64Str = res.base64();
           // the following conversions are done in js, it's SYNC
           let text = res.text();
+          setUri('file://' + res.path());
           // // let json = res.json();
-          // console.log('base64');
+          console.log('base64');
           // console.log(base64Str);
           // setUri(base64Str);
           // console.log('text');
@@ -312,7 +279,6 @@ const LampDetailScreen = props => {
         console.log(statusCode);
       });
   }, []);
-
   useEffect(() => {
     /*
     var config = {
@@ -356,7 +322,7 @@ const LampDetailScreen = props => {
             uppercase={false} // true/false | default=true | labels are uppercase
             // showTextLabel={false} // true/false | default=false (KEEP PROVIDING LABEL WE USE IT AS KEY INTERNALLY + SCREEN READERS)
             iconPosition="top" // leading, top | default=leading
-            style={{backgroundColor: 'white'}} // works the same as AppBar in react-native-paper
+            style={styles.bgWhite} // works the same as AppBar in react-native-paper
             // dark={false} // works the same as AppBar in react-native-paper
             // theme={{color: 'black'}} // works the same as AppBar in react-native-paper
             mode="scrollable" // fixed, scrollable | default=fixed
@@ -408,24 +374,9 @@ const LampDetailScreen = props => {
             </TabScreen>
           </Tabs>
 
-          <View
-            style={{
-              backgroundColor: 'white',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              padding: 20,
-            }}>
+          <View style={styles.saveDeleteButtonGroup}>
             <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderColor: 'red',
-                borderWidth: 1,
-                borderRadius: 5,
-                padding: 10,
-                marginRight: 5,
-              }}
+              style={styles.deleteBtnContainer}
               onPress={() => {
                 deleteConfirm(userToken, props?.route?.params?.id);
               }}>
@@ -434,19 +385,12 @@ const LampDetailScreen = props => {
                 type="ionicon"
                 size={24}
                 color="red"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
-              <Text style={{color: 'red'}}> Delete</Text>
+              <Text style={styles.delBtnTitle}> Delete</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderColor: 'green',
-                borderWidth: 1,
-                borderRadius: 5,
-                padding: 10,
-              }}
+              style={styles.saveBtnContainer}
               onPress={() => {
                 console.log('request body');
                 console.log(JSON.stringify(form));
@@ -480,9 +424,9 @@ const LampDetailScreen = props => {
                 type="ionicon"
                 size={24}
                 color="green"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
-              <Text style={{color: 'green'}}> Save</Text>
+              <Text style={styles.saveBtnTitle}> Save</Text>
             </TouchableOpacity>
           </View>
           <View>

@@ -5,6 +5,7 @@ import RoleCreateForm from './components/RoleCreateForm';
 import RolePermission from './components/RolePermssion';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {styles} from '../../constants/styles';
 
 const RoleCreateScreen = () => {
   const [index, setIndex] = useState(0);
@@ -65,7 +66,7 @@ const RoleCreateScreen = () => {
   return (
     <>
       <Tab
-        style={{backgroundColor: 'white', padding: 2}}
+        style={styles.rowTab}
         value={index}
         scrollable={true}
         onChange={e => setIndex(e)}
@@ -104,34 +105,19 @@ const RoleCreateScreen = () => {
         />
       </Tab>
       <TabView value={index} onChange={setIndex} animationType="spring">
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+        <TabView.Item style={styles.width100w}>
           <RoleCreateForm setForm={setForm} form={form} isSubmit={isSubmit} />
         </TabView.Item>
-        <TabView.Item
-          style={{backgroundColor: 'white', width: '100%', height: '100%'}}>
+        <TabView.Item style={styles.wh100w}>
           {/* <RoleDetailPermission
        
       /> */}
           <RolePermission listData={listData} setPermission={setPermission} />
         </TabView.Item>
       </TabView>
-      <View
-        style={{
-          backgroundColor: 'white',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          padding: 20,
-        }}>
+      <View style={styles.saveDeleteButtonGroup}>
         <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            borderColor: 'green',
-            borderWidth: 1,
-            borderRadius: 5,
-            padding: 10,
-          }}
+          style={styles.saveBtnContainer}
           onPress={() => {
             // alert('hello' + permission);
             setIsSubmit(true);
@@ -146,9 +132,9 @@ const RoleCreateScreen = () => {
             type="ionicon"
             size={24}
             color="green"
-            style={{justifyContent: 'center', paddingRight: 5}}
+            style={styles.btnIconPadding}
           />
-          <Text style={{color: 'green'}}> Save</Text>
+          <Text style={styles.saveBtnTitle}> Save</Text>
         </TouchableOpacity>
       </View>
     </>

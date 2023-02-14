@@ -27,7 +27,7 @@ const Login = () => {
   console.log(currentLanguage);
   return (
     <View style={isLandscapeMode ? styles.loginTablet : styles.loginMobile}>
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.row}>
         <Image
           source={{
             uri: 'https://static.wikia.nocookie.net/logopedia/images/1/16/120724090720-MTR-Corporation-logo.png',

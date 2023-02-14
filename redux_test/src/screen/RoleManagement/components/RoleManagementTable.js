@@ -5,6 +5,7 @@ import {Button, Icon} from '@rneui/themed';
 import {FlatList} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import RoleManagementTableItem from './RoleManagementTableItem';
+import {styles} from '../../../constants/styles';
 
 const optionsPerPage = [2, 3, 4];
 
@@ -25,10 +26,10 @@ const RoleManagementTable = ({
     setPage(0);
   }, [itemsPerPage]);
   return (
-    <DataTable style={{paddingHorizontal: 0}}>
-      <DataTable.Header style={{paddingHorizontal: 0}}>
+    <DataTable style={styles.ph0}>
+      <DataTable.Header style={styles.ph0}>
         <DataTable.Title
-          style={{flex: 1, justifyContent: 'center'}}
+          style={styles.tableCell1}
           sortDirection={
             filterField == 'id' ? (filterDesc ? 'ascending' : 'descending') : ''
           }
@@ -37,18 +38,10 @@ const RoleManagementTable = ({
             setFilterDesc(!filterDesc);
             setLoading(true);
           }}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            Role ID
-          </Text>
+          <Text style={styles.tableTitle}>Role ID</Text>
         </DataTable.Title>
         <DataTable.Title
-          style={{flex: 1, justifyContent: 'center'}}
+          style={styles.tableCell1}
           sortDirection={
             filterField == 'code'
               ? filterDesc
@@ -61,18 +54,10 @@ const RoleManagementTable = ({
             setFilterDesc(!filterDesc);
             setLoading(true);
           }}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            Code
-          </Text>
+          <Text style={styles.tableTitle}>Code</Text>
         </DataTable.Title>
         <DataTable.Title
-          style={{flex: 1, justifyContent: 'center'}}
+          style={styles.tableCell1}
           sortDirection={
             filterField == 'displayName'
               ? filterDesc
@@ -85,18 +70,10 @@ const RoleManagementTable = ({
             setFilterDesc(!filterDesc);
             setLoading(true);
           }}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            Display Name
-          </Text>
+          <Text style={styles.tableTitle}>Display Name</Text>
         </DataTable.Title>
         <DataTable.Title
-          style={{flex: 1, justifyContent: 'center'}}
+          style={styles.tableCell1}
           sortDirection={
             filterField == 'status'
               ? filterDesc
@@ -109,15 +86,7 @@ const RoleManagementTable = ({
             setFilterDesc(!filterDesc);
             setLoading(true);
           }}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            Status
-          </Text>
+          <Text style={styles.tableTitle}>Status</Text>
         </DataTable.Title>
         <DataTable.Title
           style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}}>

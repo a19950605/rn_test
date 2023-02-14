@@ -2,6 +2,7 @@ import {Overlay} from '@rneui/themed';
 import React from 'react';
 import {Text, View} from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
+import {styles} from '../constants/styles';
 
 export const Loading = () => {
   return (
@@ -9,22 +10,8 @@ export const Loading = () => {
       style={{
         flex: 1,
       }}>
-      <Overlay
-        isVisible={true}
-        overlayStyle={{
-          backgroundColor: 'black',
-          paddingVertical: 30,
-          paddingHorizontal: 40,
-        }}>
-        <Text
-          style={{
-            color: 'white',
-            fontSize: 20,
-            fontWeight: 'bold',
-            marginBottom: 20,
-          }}>
-          Loading
-        </Text>
+      <Overlay isVisible={true} overlayStyle={styles.loadBtnOverlay}>
+        <Text style={styles.loadTxt}>Loading</Text>
         <ActivityIndicator color="#ffffff" />
       </Overlay>
     </View>

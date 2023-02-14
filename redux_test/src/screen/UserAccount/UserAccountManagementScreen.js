@@ -16,6 +16,7 @@ import Modal from 'react-native-modal';
 import CreateButton from '../../components/CreateButton';
 import {useFetchUsersData} from '../../hooks/ApiHook';
 import UserAccountTable from './components/UserAccountTable';
+import {styles} from '../../constants/styles';
 
 const UserAccountManagementScreen = () => {
   const isFocused = useIsFocused();
@@ -95,16 +96,11 @@ const UserAccountManagementScreen = () => {
 
   return (
     <>
-      <View style={{flex: 1, padding: 5, backgroundColor: 'white'}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
+      <View style={styles.screenInit}>
+        <View style={styles.spaceBetween}>
           <CreateButton navigation={navigation} navLoc={'Create user'} />
 
-          <View style={{flexDirection: 'row'}}>
+          <View style={styles.row}>
             <TouchableOpacity
               style={{display: 'none'}}
               onPress={() => {
@@ -156,8 +152,7 @@ const UserAccountManagementScreen = () => {
           />
         )}
         <Modal isVisible={showModal}>
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <View style={styles.itemCenter}>
             <View
               style={{
                 flexDirection: 'column',
@@ -233,6 +228,8 @@ const UserAccountManagementScreen = () => {
     </>
   );
 };
+
+//should be replaced by new component
 const UserModal = ({users, isOpen, setOpen, setSelctedUserName}) => {
   return (
     <Modal isVisible={isOpen}>

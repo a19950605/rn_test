@@ -5,6 +5,7 @@ import {Button, Icon} from '@rneui/themed';
 import {FlatList} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import UserAccountTableItem from './UserAccountTableItem';
+import {styles} from '../../../constants/styles';
 
 const optionsPerPage = [2, 3, 4];
 
@@ -27,10 +28,10 @@ const UserAccountTable = ({
     {displayValue: 'Status', apiValue: 'status'},
   ];
   return (
-    <DataTable style={{paddingHorizontal: 0}}>
-      <DataTable.Header style={{paddingHorizontal: 0}}>
+    <DataTable style={styles.ph0}>
+      <DataTable.Header style={styles.ph0}>
         <DataTable.Title
-          style={{flex: 1, justifyContent: 'center'}}
+          style={styles.tableCell1}
           sortDirection={
             filterField == 'id' ? (filterDesc ? 'ascending' : 'descending') : ''
           }
@@ -39,18 +40,10 @@ const UserAccountTable = ({
             setFilterDesc(!filterDesc);
             setLoading(true);
           }}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            Account ID
-          </Text>
+          <Text style={styles.tableTitle}>Account ID</Text>
         </DataTable.Title>
         <DataTable.Title
-          style={{flex: 1, justifyContent: 'center'}}
+          style={styles.tableCell1}
           sortDirection={
             filterField == 'displayName'
               ? filterDesc
@@ -63,18 +56,10 @@ const UserAccountTable = ({
             setFilterDesc(!filterDesc);
             setLoading(true);
           }}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            Display name
-          </Text>
+          <Text style={styles.tableTitle}>Display name</Text>
         </DataTable.Title>
         <DataTable.Title
-          style={{flex: 1, justifyContent: 'center'}}
+          style={styles.tableCell1}
           sortDirection={
             filterField == 'username'
               ? filterDesc
@@ -87,29 +72,13 @@ const UserAccountTable = ({
             setFilterDesc(!filterDesc);
             setLoading(true);
           }}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            Username
-          </Text>
+          <Text style={styles.tableTitle}>Username</Text>
         </DataTable.Title>
-        <DataTable.Title style={{flex: 1, justifyContent: 'center'}}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-            }}>
-            Role
-          </Text>
+        <DataTable.Title style={styles.tableCell1}>
+          <Text style={styles.tableTitle}>Role</Text>
         </DataTable.Title>
         <DataTable.Title
-          style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}}
+          style={styles.tableArr}
           sortDirection={
             filterField == 'status'
               ? filterDesc
@@ -122,31 +91,10 @@ const UserAccountTable = ({
             setFilterDesc(!filterDesc);
             setLoading(true);
           }}>
-          <Text
-            style={{
-              flex: 1,
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-              flexShrink: 1,
-            }}>
-            Status
-          </Text>
+          <Text style={styles.tableBtn2}>Status</Text>
         </DataTable.Title>
-        <DataTable.Title
-          style={{flex: 1, justifyContent: 'center', flexDirection: 'row'}}>
-          <Text
-            style={{
-              flex: 1,
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 16,
-              textAlign: 'center',
-              flexShrink: 1,
-            }}>
-            Action
-          </Text>
+        <DataTable.Title style={styles.tableArr}>
+          <Text style={styles.tableBtn2}>Action</Text>
         </DataTable.Title>
       </DataTable.Header>
 

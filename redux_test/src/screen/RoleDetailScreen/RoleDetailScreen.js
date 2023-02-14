@@ -5,6 +5,7 @@ import RoleDetailPermission from './components/RoleDetailPermisson';
 import {useSelector} from 'react-redux';
 import RoleDetailForm from './components/RoleDetailForm';
 import {useNavigation} from '@react-navigation/native';
+import {styles} from '../../constants/styles';
 
 const RoleDetailScreen = props => {
   const navigation = useNavigation();
@@ -178,7 +179,7 @@ const RoleDetailScreen = props => {
       ) : (
         <>
           <Tab
-            style={{backgroundColor: 'white', padding: 10}}
+            style={styles.rowTab}
             value={index}
             scrollable={true}
             onChange={e => setIndex(e)}
@@ -217,11 +218,10 @@ const RoleDetailScreen = props => {
             />
           </Tab>
           <TabView value={index} onChange={setIndex} animationType="spring">
-            <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+            <TabView.Item style={styles.width100w}>
               <RoleDetailForm setForm={setForm} form={form} data={props} />
             </TabView.Item>
-            <TabView.Item
-              style={{backgroundColor: 'white', width: '100%', height: '100%'}}>
+            <TabView.Item style={styles.wh100w}>
               <RoleDetailPermission
                 setSelectedData={setSelectedData}
                 selectedData={selectedData}
@@ -230,24 +230,9 @@ const RoleDetailScreen = props => {
             </TabView.Item>
           </TabView>
 
-          <View
-            style={{
-              backgroundColor: 'white',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              padding: 20,
-            }}>
+          <View style={styles.saveDeleteButtonGroup}>
             <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderColor: 'red',
-                borderWidth: 1,
-                borderRadius: 5,
-                padding: 10,
-                marginRight: 5,
-              }}
+              style={styles.deleteBtnContainer}
               onPress={() => {
                 deleteConfirm(userToken);
               }}>
@@ -256,19 +241,12 @@ const RoleDetailScreen = props => {
                 type="ionicon"
                 size={24}
                 color="red"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
-              <Text style={{color: 'red'}}> Delete</Text>
+              <Text style={styles.delBtnTitle}> Delete</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderColor: 'green',
-                borderWidth: 1,
-                borderRadius: 5,
-                padding: 10,
-              }}
+              style={styles.saveBtnContainer}
               onPress={() => {
                 console.log('request body');
                 console.log(JSON.stringify(form));
@@ -286,9 +264,9 @@ const RoleDetailScreen = props => {
                 type="ionicon"
                 size={24}
                 color="green"
-                style={{justifyContent: 'center', paddingRight: 5}}
+                style={styles.btnIconPadding}
               />
-              <Text style={{color: 'green'}}> Save</Text>
+              <Text style={styles.saveBtnTitle}> Save</Text>
             </TouchableOpacity>
           </View>
         </>
