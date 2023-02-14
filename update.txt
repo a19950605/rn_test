@@ -1,0 +1,13 @@
+todo
+1.form validation
+2.code structure
+3.load data when login
+4.check the permission and show the permitted value
+
+dispatch
+
+mainly these 
+feteh
+create
+update
+detelete
