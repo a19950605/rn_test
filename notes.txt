@@ -3,7 +3,7 @@ ts( thur)
 
 
 datetimepicker
-1.FILE STRUCTURE(file struture) (at home)
+1.FILE STRUCTURE(file struture) (weekend)
 -API function, 
 -FILE NAME  lowercase
 3.create user/role
