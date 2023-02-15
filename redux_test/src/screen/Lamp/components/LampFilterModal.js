@@ -141,7 +141,7 @@ export const LampFilterModal = ({
             </View>
             <TouchableWithoutFeedback
               onPress={() => {
-                // setOpenDate(true);
+                setOpenDate(true);
               }}>
               <View style={styles.filterContent}>
                 <View>

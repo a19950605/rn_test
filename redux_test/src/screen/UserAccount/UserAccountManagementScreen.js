@@ -5,11 +5,12 @@ import {
   FlatList,
   TouchableOpacity,
   useWindowDimensions,
+  Alert,
 } from 'react-native';
 import {Icon, LinearProgress} from '@rneui/themed';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import UserAccountCard from './components/UserAccountCard';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import SortDropDown from '../../utils/sortFilter';
 import {sortData} from '../../utils/sortData';
 import Modal from 'react-native-modal';
@@ -17,12 +18,15 @@ import CreateButton from '../../components/CreateButton';
 import {useFetchUsersData} from '../../hooks/ApiHook';
 import UserAccountTable from './components/UserAccountTable';
 import {styles} from '../../constants/styles';
+import {dTst, fetchUsers} from '../../features/user/userSlice';
 
 const UserAccountManagementScreen = () => {
   const isFocused = useIsFocused();
 
   const navigation = useNavigation();
   const userToken = useSelector(state => state.login.userToken?.Token);
+  const userList = useSelector(state => state.user);
+
   // const [data, setData] = useState();
   const [selectedUserName, setSelctedUserName] = useState('All');
   const [selectedRole, setSelectedRole] = useState('');
@@ -39,6 +43,34 @@ const UserAccountManagementScreen = () => {
   const [userOption, setUserOption] = useState([]);
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
+  const dispatch = useDispatch();
+
+  const getUsers = userToken => {
+    try {
+      //  const users = await dispatch(fetchUsers(userToken));
+      dispatch(fetchUsers(userToken));
+      console.log('dispatch success');
+      console.log(userList);
+
+      alert('success');
+    } catch (err) {
+      alert('dispatch fail');
+
+      console.log(err.message);
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    console.log('testing dispatch');
+    getUsers(userToken);
+    dispatch(dTst());
+  }, []);
+  useEffect(() => {
+    alert('stateis updated');
+    console.log('state is updated');
+    console.log(userList);
+  }, [userList]);
 
   useEffect(() => {
     var requestOptions = {
@@ -118,7 +150,7 @@ const UserAccountManagementScreen = () => {
           </View>
           {showFilter && (
             <SortDropDown
-              close={setShowFilter}
+              closeFilter={setShowFilter}
               setFilterDesc={setFilterDesc}
               setFilterField={setFilterField}
               setLoading={setLoading}

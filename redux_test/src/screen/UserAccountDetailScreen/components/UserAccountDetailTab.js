@@ -12,6 +12,7 @@ import {
 import {TextInput, Menu, Provider} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {styles} from '../../../constants/styles';
 
 const UserAccountDetailTab = ({userData}) => {
   //user name
@@ -547,7 +548,8 @@ const updateUser = (token, form, navigation, id) => {
   formdata.append('password', form?.password);
   formdata.append('staffNo', form?.staffNo);
   formdata.append('roleIds', [form?.roleSubmit]);
-
+  console.log('update');
+  console.log(form?.role);
   var requestOptions = {
     method: 'PUT',
     headers: {

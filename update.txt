@@ -4,10 +4,20 @@ todo
 3.load data when login
 4.check the permission and show the permitted value
 
+--REDUX NOTES--
 dispatch
-
-mainly these 
 feteh
 create
 update
 detelete
+
+TODO TODAY
+10.change all state to redux
+11.custom hooks (after debug)
+12.ts (IF POSSIBLE)
+15.datetime picker on filter (library issues) get back later
+
+done
+17.moment 
+16.KeyboardAvoidingView(change to KeyboardAwareScrollView)(temp acceptable)
+14.dropdown as a component (done)

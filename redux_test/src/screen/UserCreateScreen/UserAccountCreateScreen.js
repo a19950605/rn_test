@@ -27,8 +27,30 @@ import {
 } from '../../constants/constants';
 import {styles} from '../../constants/styles';
 import {FormValidationError} from '../../components/formValidationError';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {DropDown} from '../../components/StatusDropDown';
 
 const UserAccountCreateScreen = () => {
+  /**
+   *  let form = {
+                      status,
+                      username,
+                      displayName,
+                      password,
+                      staffNo,
+                      rmks,
+                      roleSubmit,
+                    };
+   */
+  const [submitForm, setSubmitForm] = useState({
+    status: 'ACTIVE',
+    username: '',
+    displayName: '',
+    password: '',
+    staffNo: '',
+    rmks: '',
+    role: '',
+  });
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
   const [role, setRole] = useState();
@@ -36,7 +58,8 @@ const UserAccountCreateScreen = () => {
   const userToken = useSelector(state => state.login.userToken?.Token);
   const navigation = useNavigation();
   const [isSubmit, setIsSubmit] = useState(false);
-  const [option, setOption] = useState();
+  const [option, setOption] = useState([]);
+  const [roleOpt, setRoleOpt] = useState();
   const [status, setStatus] = useState('ACTIVE');
   const [username, setUsername] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -68,62 +91,23 @@ const UserAccountCreateScreen = () => {
       })
       .catch(error => console.log('error1', error));
   }, []);
+  useEffect(() => {
+    let rOpt = [];
 
-  const RoleDropDown = ({close, setRole, data}) => {
-    console.log('role dropdown');
-    console.log(data);
-    return (
-      <View style={styles.dropDownContainer}>
-        {data.map(d => {
-          return (
-            <Menu.Item
-              key={d.id}
-              onPress={() => {
-                setRole(`${d.displayName}(${d.code})`);
-                setRoleSubmit(d.id);
-                close(false);
-              }}
-              title={`${d.displayName}(${d.code})`}
-            />
-          );
-        })}
-      </View>
-    );
-  };
-  //status
-  const StatusDropDown = ({close, setStatus}) => {
-    const [visible, setVisible] = React.useState(false);
+    option.map(d => {
+      rOpt = [
+        ...rOpt,
+        {displayName: d.displayName + `(${d.code})`, formVal: d.id},
+      ];
+    });
+    roleOpt;
+    setRoleOpt(rOpt);
+  }, [option]);
 
-    return (
-      <View style={styles.dropDownContainer}>
-        <Menu.Item
-          onPress={() => {
-            setStatus('ACTIVE');
-            close(false);
-          }}
-          title="ACTIVE"
-        />
-        <Menu.Item
-          onPress={() => {
-            setStatus('DISABLE');
-            close(false);
-          }}
-          title="Disabled"
-        />
-      </View>
-    );
-  };
-
-  var formdata = new FormData();
-  formdata.append('status', status || '');
-  formdata.append('username', username || '');
-  formdata.append('displayName', displayName || '');
-  formdata.append('password', password || '');
-  formdata.append('staffNo', staffNo || '');
   return (
     <Provider>
-      <KeyboardAvoidingView style={{flex: 1}}>
-        <View style={styles.container}>
+      <KeyboardAwareScrollView style={styles.container}>
+        <View>
           <View style={styles.p10}>
             <View style={styles.inputRow}>
               <Icon
@@ -139,7 +123,11 @@ const UserAccountCreateScreen = () => {
                   style={styles.textInputMobile}
                   label="Username"
                   value={username}
-                  onChangeText={username => setUsername(username)}
+                  onChangeText={username => {
+                    setUsername(username);
+
+                    setSubmitForm({...submitForm, username: username});
+                  }}
                 />
               </View>
             </View>
@@ -164,7 +152,10 @@ const UserAccountCreateScreen = () => {
                   style={styles.textInputMobile}
                   label="Display name"
                   value={displayName}
-                  onChangeText={displayName => setDisplayName(displayName)}
+                  onChangeText={displayName => {
+                    setDisplayName(displayName);
+                    setSubmitForm({...submitForm, displayName: displayName});
+                  }}
                 />
               </View>
             </View>
@@ -183,7 +174,10 @@ const UserAccountCreateScreen = () => {
                   style={styles.textInputMobile}
                   label="Staff ID"
                   value={staffNo}
-                  onChangeText={staffNo => setStaffNo(staffNo)}
+                  onChangeText={staffNo => {
+                    setStaffNo(staffNo);
+                    setSubmitForm({...submitForm, staffNo: staffNo});
+                  }}
                 />
               </View>
             </View>
@@ -217,10 +211,18 @@ const UserAccountCreateScreen = () => {
             <FormValidationError value={roleSubmit} isSubmit={isSubmit} />
             <View>
               {menu1 && (
-                <RoleDropDown
+                // <RoleDropDown
+                //   close={setMenu1}
+                //   setRole={setRole}
+                //   data={option}
+                // />
+                <DropDown
                   close={setMenu1}
-                  setRole={setRole}
-                  data={option}
+                  setForm={setSubmitForm}
+                  form={submitForm}
+                  setDisplay={setRole}
+                  keyVal={'role'}
+                  options={roleOpt}
                 />
               )}
             </View>
@@ -239,7 +241,11 @@ const UserAccountCreateScreen = () => {
                   label="Password"
                   value={password}
                   secureTextEntry={true}
-                  onChangeText={password => setPassword(password)}
+                  onChangeText={password => {
+                    setPassword(password);
+
+                    setSubmitForm({...submitForm, password: password});
+                  }}
                 />
               </View>
             </View>
@@ -291,7 +297,10 @@ const UserAccountCreateScreen = () => {
                 style={styles.textInputMobile}
                 label="Remarks"
                 value={rmks}
-                onChangeText={rmks => setRmks(rmks)}
+                onChangeText={rmks => {
+                  setRmks(rmks);
+                  setSubmitForm({...submitForm, rmks: rmks});
+                }}
               />
             </View>
             <Pressable
@@ -317,9 +326,19 @@ const UserAccountCreateScreen = () => {
                 />
               </View>
             </Pressable>
-            <View style={{zIndex: 999}}>
+            <View style={{zIndex: 1111}}>
               {menu2 && (
-                <StatusDropDown close={setMenu2} setStatus={setStatus} />
+                <DropDown
+                  close={setMenu2}
+                  setForm={setSubmitForm}
+                  form={submitForm}
+                  setDisplay={setStatus}
+                  keyVal={'status'}
+                  options={[
+                    {displayName: 'Active', formVal: 'ACTiVE'},
+                    {displayName: 'Maintenance', formVal: 'DISABLED'},
+                  ]}
+                />
               )}
             </View>
             <View style={styles.saveDeleteButtonGroupLessPad}>
@@ -343,16 +362,7 @@ const UserAccountCreateScreen = () => {
                   ) {
                     alert('password not match');
                   } else {
-                    let form = {
-                      status,
-                      username,
-                      displayName,
-                      password,
-                      staffNo,
-                      rmks,
-                      roleSubmit,
-                    };
-                    useCreateUser({userToken, form, navigation});
+                    useCreateUser({userToken, form: submitForm, navigation});
                   }
                 }}>
                 <Icon
@@ -367,7 +377,7 @@ const UserAccountCreateScreen = () => {
             </View>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     </Provider>
   );
 };

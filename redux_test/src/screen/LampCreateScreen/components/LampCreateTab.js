@@ -20,6 +20,7 @@ import {
 import {TouchableWithoutFeedback} from 'react-native';
 import {styles} from '../../../constants/styles';
 import {FormValidationError} from '../../../components/formValidationError';
+import {DropDown} from '../../../components/StatusDropDown';
 
 const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
   const {height, width} = useWindowDimensions();
@@ -302,40 +303,19 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
           />
           <View>
             {menu1 && (
-              <View style={styles.dropDownContainer}>
-                <Menu.Item
-                  onPress={() => {
-                    setRelayChannelIdx(0);
-                    setForm({...form, relayChannelIdx: 0});
-                    setMenu1(false);
-                  }}
-                  title="0"
-                />
-                <Menu.Item
-                  onPress={() => {
-                    setRelayChannelIdx(1);
-                    setForm({...form, relayChannelIdx: 1});
-                    setMenu1(false);
-                  }}
-                  title="1"
-                />
-                <Menu.Item
-                  onPress={() => {
-                    setRelayChannelIdx(2);
-                    setForm({...form, relayChannelIdx: 2});
-                    setMenu1(false);
-                  }}
-                  title="2"
-                />
-                <Menu.Item
-                  onPress={() => {
-                    setRelayChannelIdx(3);
-                    setForm({...form, relayChannelIdx: 3});
-                    setMenu1(false);
-                  }}
-                  title="3"
-                />
-              </View>
+              <DropDown
+                close={setMenu1}
+                setForm={setForm}
+                form={form}
+                setDisplay={setRelayChannelIdx}
+                keyVal={'relayChannelIdx'}
+                options={[
+                  {displayName: '0', formVal: 0},
+                  {displayName: '1', formVal: 1},
+                  {displayName: '2', formVal: 2},
+                  {displayName: '3', formVal: 3},
+                ]}
+              />
             )}
           </View>
           <Pressable
@@ -381,7 +361,21 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
             </View>
           </Pressable>
 
-          <View>{menu2 && <StatusDropDown close={setMenu2} />}</View>
+          <View>
+            {menu2 && (
+              <DropDown
+                close={setMenu2}
+                setForm={setForm}
+                form={form}
+                setDisplay={setStatus}
+                keyVal={'status'}
+                options={[
+                  {displayName: 'Active', formVal: 'ACTiVE'},
+                  {displayName: 'Maintenance', formVal: 'DISABLED'},
+                ]}
+              />
+            )}
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </Provider>

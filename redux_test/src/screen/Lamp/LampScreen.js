@@ -10,6 +10,7 @@ import {
 
 import LampCard from './components/LampCard';
 import {useNavigation} from '@react-navigation/native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import {Icon, LinearProgress} from '@rneui/themed';
 import {useSelector, useDispatch} from 'react-redux';
@@ -29,6 +30,7 @@ import {color, styles} from '../../constants/styles';
 import {useTranslation} from 'react-i18next';
 import {DatePickerModal} from 'react-native-paper-dates';
 import {ReloadButton} from '../../components/ReloadButton';
+import moment from 'moment';
 
 const LampScreen = () => {
   const {height, width} = useWindowDimensions();
@@ -39,12 +41,13 @@ const LampScreen = () => {
   const [loadingController, setLoadingController] = useState();
 
   const dispatch = useDispatch();
+  const {t} = useTranslation();
+
   const [currentDate, setCurrentDate] = useState();
   const userToken = useSelector(state => state.login.userToken?.Token);
   const [filterDesc, setFilterDesc] = useState(false);
   const [filterField, setFilterField] = useState('rflid');
   const [showFilter, setShowFilter] = useState(false);
-  const {t} = useTranslation();
 
   const [filterRFL, setFilterRFL] = useState('All');
   const [filterRFLCode, setFilterRFLCode] = useState('');
@@ -56,22 +59,22 @@ const LampScreen = () => {
   const [showMainModal, setShowMainModal] = useState(false);
   const isFocused = useIsFocused();
   const [date, setDate] = React.useState(undefined);
-  const [openDate, setOpenDate] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const onDismissSingle = React.useCallback(() => {
-    setOpenDate(false);
-  }, [setOpenDate]);
+    setOpen(false);
+  }, [setOpen]);
 
   const onConfirmSingle = React.useCallback(
     params => {
-      setOpenDate(false);
+      setOpen(false);
       setDate(params.date);
     },
-    [setOpenDate, setDate],
+    [setOpen, setDate],
   );
   useEffect(() => {
     setInterval(function () {
-      setCurrentDate(getDate());
+      setCurrentDate(moment().format('YYYY-MM-DD HH:mm:ss'));
     }, 30000);
   }, []);
   const [data, error] = useFetchMonitorTest({
@@ -199,14 +202,15 @@ const LampScreen = () => {
             setFilterRFLCode={setFilterRFLCode}
             filterGroup={filterGroup}
             setFilterGroup={setFilterGroup}
-            setOpenDate={setOpenDate}
+            setOpenDate={setOpen}
             date={date}
           />
         )}
+
         <DatePickerModal
           locale="en"
           mode="single"
-          visible={openDate}
+          visible={open}
           onDismiss={onDismissSingle}
           date={date}
           onConfirm={onConfirmSingle}

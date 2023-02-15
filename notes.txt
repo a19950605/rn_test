@@ -26,7 +26,7 @@ datetimepicker
 16.KeyboardAvoidingView
 17.moment (later)       
 18.sorting function, (update to api do)
-
+19.check redundant code on js file
 done:
 7.STYLE CONSTANT <<< (done)
 9.helper text to component  (done)
@@ -36,6 +36,8 @@ done:
 2.Error Handling  (message and form validation(follow)
 5.USER ROLE CREATE
 (formvalidation on others part) (done) need update later 
+ (change other library)
+
 
 next tasks
 

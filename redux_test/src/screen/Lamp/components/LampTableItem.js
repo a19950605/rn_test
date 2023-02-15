@@ -3,7 +3,6 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import {styles} from '../../../constants/styles';
-import {convertDate} from '../../../utils/getDate';
 
 const LampTableItem = rowData => {
   console.log('current in table row');
@@ -19,7 +18,11 @@ const LampTableItem = rowData => {
       <DataTable.Cell style={styles.tableCell1}>-</DataTable.Cell>
       <DataTable.Cell style={styles.tableCell1}>-</DataTable.Cell>
       <DataTable.Cell style={styles.tableCell2}>
-        {convertDate(rowData?.item?.dtKeepalive) || '-'}
+        {props.item.dtKeepalive
+          ? moment(props.item.dtKeepalive)
+              .utcOffset(8)
+              .format('YYYY-MM-DD HH:mm')
+          : '--'}
       </DataTable.Cell>
       <DataTable.Cell style={styles.tableCell2}>
         {rowData?.item?.status}

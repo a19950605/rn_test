@@ -1,10 +1,10 @@
 import {Icon} from '@rneui/themed';
+import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import {CardButton} from '../../../components/CardButton';
 import {styles} from '../../../constants/styles';
-import {convertDate} from '../../../utils/getDate';
 import {StatusBubble} from './StatusBubble';
 //monitoring
 
@@ -13,27 +13,9 @@ const LampCard = props => {
   // console.log(props.item);
   const {t} = useTranslation();
 
-  /*
-              props.item.status == 'ACTIVE'
-                ? styles.saveBtnTitle
-                : props.item.status == 'SPECIAL'
-                ? {color: 'purple'}
-                : props.item.status == 'DISABLED'
-                ? styles.delBtnTitle
-                : {color: 'black'}
-            }>
-            {props.item.status == 'ACTIVE'
-              ? t('lamp.active')
-              : props.item.status == 'SPECIAL'
-              ? t('lamp.isolated')
-              : props.item.status == 'DISABLED'
-              ? t('lamp.maintenance')
-              : ''}
-
-  */
   const [readinessStatus, setReadinessStatus] = useState('');
   const [readinessStr, setReadinessStr] = useState(t('lamp.active'));
-  const [readinessColor, setReadinessColor] = useState(styles.saveBtnTitle);
+  const [readinessColor, setReadinessColor] = useState({color: 'green'});
 
   useEffect(() => {
     setReadinessStatus(props?.item?.status);
@@ -42,7 +24,7 @@ const LampCard = props => {
   useEffect(() => {
     switch (readinessStatus) {
       case 'ACTIVE':
-        setReadinessColor(styles.saveBtnTitle);
+        setReadinessColor({color: 'green'});
         setReadinessStr(t('lamp.active'));
         break;
       case 'SPECIAL':
@@ -78,7 +60,13 @@ const LampCard = props => {
         </View>
         <View style={styles.flexRow}>
           <Text style={styles.cardTitle}>{t('lamp.statusasof')}: </Text>
-          <Text>{convertDate(props.item.dtKeepalive) || '-'}</Text>
+          <Text>
+            {props.item.dtKeepalive
+              ? moment(props.item.dtKeepalive)
+                  .utcOffset(8)
+                  .format('YYYY-MM-DD HH:mm')
+              : '--'}
+          </Text>
         </View>
         <View style={styles.flexRow}>
           <Text style={styles.cardTitle}>{t('lamp.erflreadiness')}: </Text>
@@ -120,7 +108,6 @@ const LampCard = props => {
           </View>
         </View>
       </View>
-
       <View
         style={{
           flex: 2,

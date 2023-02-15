@@ -31,11 +31,6 @@ function EventLog() {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
 
-  let formdata = new FormData();
-  formdata.append('userName', '');
-  formdata.append('funcName', '');
-  formdata.append('fromTime', getDate());
-  formdata.append('toTime', getDate());
   const isFocused = useIsFocused();
 
   const [data, error] = useFetchEventLogData({

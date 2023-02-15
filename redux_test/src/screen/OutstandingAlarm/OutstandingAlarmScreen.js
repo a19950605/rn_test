@@ -17,7 +17,7 @@ import SortDropDown from '../../utils/sortFilter';
 import {sortData} from '../../utils/sortData';
 import {getDate} from '../../utils/getDate';
 import {styles} from '../../constants/styles';
-
+import moment from 'moment';
 const OutstandingAlarmScreen = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
@@ -92,7 +92,9 @@ const OutstandingAlarmScreen = () => {
                 setLoading(true);
               }}
               style={styles.csvHeader}>
-              <Text style={styles.blue}>{getDate()}</Text>
+              <Text style={styles.blue}>
+                {moment().format('YYYY-MM-DD HH:mm:ss')}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {

@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   mb60p5: {marginBottom: 60, padding: 5},
   mbn30: {marginBottom: -30},
   //eventlog
-  container: {flex: 1, backgroundColor: 'white'},
+  container: {flex: 1, backgroundColor: 'white', zIndex: 0},
   eventFlexEnd: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -320,11 +320,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   saveDeleteButtonGroupLessPad: {
-    backgroundColor: 'white',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    padding: 10,
+    paddingVertical: 50,
+    zIndex: 0,
+    paddingHorizontal: 30,
   },
   saveBtnContainer: {
     flexDirection: 'row',
@@ -351,7 +352,7 @@ const styles = StyleSheet.create({
   dropDownContainer: {
     backgroundColor: 'white',
     position: 'absolute',
-    zIndex: 999,
+    zIndex: 1111,
     width: '86%',
     left: 41,
     top: -10,

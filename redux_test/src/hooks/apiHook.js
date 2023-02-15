@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {appContextPaths, EndPoint, appDefDomain} from '../constants/constants';
 import {signout} from '../features/login/loginSlice';
-import {getDate, getToday} from '../utils/getDate';
 import {sortData} from '../utils/sortData';
-
+import moment from 'moment';
 const useFetchRoleData = ({
   userToken,
   loading,
@@ -104,8 +103,8 @@ const useFetchEventLogData = ({
   let formdata = new FormData();
   formdata.append('userName', '');
   formdata.append('funcName', '');
-  formdata.append('fromTime', getToday());
-  formdata.append('toTime', getToday());
+  formdata.append('fromTime', moment().format('YYYYMMDD'));
+  formdata.append('toTime', moment().format('YYYYMMDD'));
 
   useEffect(() => {
     var requestOptions = {
@@ -193,7 +192,7 @@ const useCreateUser = ({userToken, form, navigation}) => {
   formdata.append('password', form?.password || '');
   formdata.append('staffNo', form?.staffNo || '');
   formdata.append('rmks', form?.rmks || '');
-  formdata.append('roleIds', [form?.roleSubmit]);
+  formdata.append('roleIds', [form?.role]);
 
   // createUser({token, formdata})
   //   .unwrap()
@@ -291,7 +290,7 @@ const useFetchMonitorTest = ({
       })
       .then(result => {
         setData(sortData(result?.content, filterField, filterDesc));
-        setCurrentDate(getDate());
+        setCurrentDate(moment().format('YYYY-MM-DD HH:mm:ss'));
         setLoading(false);
         console.log('post list test');
       })
@@ -408,6 +407,27 @@ const createNewRecord = ({
 
     .catch(error => console.log('error1', error));
 };
+
+const useFetchUsersDataTest = async ({userToken}) => {
+  var requestOptions = {
+    method: 'GET',
+    headers: {
+      // Accept: '*',
+      // 'Content-Type': 'application/json',
+      'X-Token': userToken,
+    },
+  };
+  //`https://gis2.ectrak.com.hk:8900/api/system/user${appendStr}`,
+
+  let result = await fetch(
+    `${appContextPaths[appDefDomain]}${EndPoint.users}`,
+    requestOptions,
+  ).then(res => {
+    return res.json();
+  });
+
+  return result;
+};
 export {
   useFetchRoleData,
   useFetchUsersData,
@@ -417,4 +437,5 @@ export {
   useFetchMonitorTest,
   useFetchControllerList,
   createNewRecord,
+  useFetchUsersDataTest,
 };
