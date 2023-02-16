@@ -193,7 +193,8 @@ const useCreateUser = ({userToken, form, navigation}) => {
   formdata.append('staffNo', form?.staffNo || '');
   formdata.append('rmks', form?.rmks || '');
   formdata.append('roleIds', [form?.role]);
-
+  console.log('formdata');
+  console.log(formdata);
   // createUser({token, formdata})
   //   .unwrap()
   //   .then(() => {})
@@ -409,6 +410,7 @@ const createNewRecord = ({
 };
 
 const useFetchUsersDataTest = async ({userToken}) => {
+  let obj;
   var requestOptions = {
     method: 'GET',
     headers: {
@@ -419,14 +421,14 @@ const useFetchUsersDataTest = async ({userToken}) => {
   };
   //`https://gis2.ectrak.com.hk:8900/api/system/user${appendStr}`,
 
-  let result = await fetch(
+  const result = await fetch(
     `${appContextPaths[appDefDomain]}${EndPoint.users}`,
     requestOptions,
-  ).then(res => {
-    return res.json();
-  });
+  );
 
-  return result;
+  obj = await result.json();
+  console.log(obj);
+  return obj;
 };
 export {
   useFetchRoleData,

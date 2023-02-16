@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, FlatList} from 'react-native';
 import {Tab, TabView} from '@rneui/themed';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import UserAccountDetailTab from './components/UserAccountDetailTab';
 import {styles} from '../../constants/styles';
+import {fetchOneUser} from '../../features/user/userSlice';
 
 const UserAccountDetailScreen = props => {
   const [index, setIndex] = React.useState(0);
@@ -11,8 +12,23 @@ const UserAccountDetailScreen = props => {
   const [userData, setUserData] = useState();
   const [loading, setLoading] = useState(true);
   const userToken = useSelector(state => state.login.userToken?.Token);
-  // console.log('user account detail tabs');
-  // console.log(props?.route?.params?.id);
+
+  const dispatch = useDispatch();
+  const {user, isLoading, isError, isSuccess, errorr} = useSelector(
+    state => state.user,
+  );
+  const getOneUser = (userToken, id) => {
+    try {
+      //  const users = await dispatch(fetchUsers(userToken));
+      dispatch(fetchOneUser({userToken, id}));
+    } catch (err) {
+      alert('dispatch error');
+    }
+  };
+
+  useEffect(() => {
+    getOneUser(userToken, props?.route?.params?.id);
+  }, [props?.route?.params?.id]);
   useEffect(() => {
     var requestOptions = {
       method: 'GET',
@@ -117,7 +133,7 @@ const UserAccountDetailScreen = props => {
           </Tab>
           <TabView value={index} onChange={setIndex} animationType="spring">
             <TabView.Item style={styles.width100w}>
-              <UserAccountDetailTab userData={userData} />
+              <UserAccountDetailTab userData={user} />
             </TabView.Item>
             <TabView.Item style={styles.wh100w}>
               <View style={styles.lampCreateContainer}>

@@ -5,7 +5,6 @@ import {
   FlatList,
   TouchableOpacity,
   useWindowDimensions,
-  Alert,
 } from 'react-native';
 import {Icon, LinearProgress} from '@rneui/themed';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
@@ -18,14 +17,16 @@ import CreateButton from '../../components/CreateButton';
 import {useFetchUsersData} from '../../hooks/ApiHook';
 import UserAccountTable from './components/UserAccountTable';
 import {styles} from '../../constants/styles';
-import {dTst, fetchUsers} from '../../features/user/userSlice';
+import {fetchUsers} from '../../features/users/usersSlice';
 
 const UserAccountManagementScreen = () => {
   const isFocused = useIsFocused();
 
   const navigation = useNavigation();
   const userToken = useSelector(state => state.login.userToken?.Token);
-  const userList = useSelector(state => state.user);
+  const {users, isLoading, isError, isSuccess, errorr} = useSelector(
+    state => state.users,
+  );
 
   // const [data, setData] = useState();
   const [selectedUserName, setSelctedUserName] = useState('All');
@@ -48,29 +49,13 @@ const UserAccountManagementScreen = () => {
   const getUsers = userToken => {
     try {
       //  const users = await dispatch(fetchUsers(userToken));
-      dispatch(fetchUsers(userToken));
-      console.log('dispatch success');
-      console.log(userList);
-
-      alert('success');
-    } catch (err) {
-      alert('dispatch fail');
-
-      console.log(err.message);
-      console.log(err.message);
-    }
+      dispatch(fetchUsers({userToken, filterDesc, filterField}));
+    } catch (err) {}
   };
 
   useEffect(() => {
-    console.log('testing dispatch');
     getUsers(userToken);
-    dispatch(dTst());
-  }, []);
-  useEffect(() => {
-    alert('stateis updated');
-    console.log('state is updated');
-    console.log(userList);
-  }, [userList]);
+  }, [isFocused, filterDesc, filterField]);
 
   useEffect(() => {
     var requestOptions = {
@@ -160,7 +145,7 @@ const UserAccountManagementScreen = () => {
             />
           )}
         </View>
-        {loading ? (
+        {isLoading ? (
           <View>
             <LinearProgress color="red" />
           </View>
@@ -176,7 +161,7 @@ const UserAccountManagementScreen = () => {
           />
         ) : (
           <FlatList
-            data={data}
+            data={users}
             renderItem={props => (
               <UserAccountCard {...props} navigation={navigation} />
             )}

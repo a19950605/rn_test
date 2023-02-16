@@ -1,15 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import {FlatList, ScrollView} from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import {Icon, LinearProgress} from '@rneui/themed';
 import {useWindowDimensions} from 'react-native';
 import EventLogTable from './components/EventLogTable';
 
 import SortDropDown from '../../utils/sortFilter';
-import {sortData} from '../../utils/sortData';
 import EventLogCard from './components/EventLogCard';
-import {getDate} from '../../utils/getDate';
 import {useIsFocused} from '@react-navigation/native';
 import {useFetchEventLogData} from '../../hooks/ApiHook';
 import {color, styles} from '../../constants/styles';

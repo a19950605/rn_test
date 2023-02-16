@@ -19,7 +19,6 @@ const RoleDetailScreen = props => {
   const [selectedId, setSelectedId] = useState([]);
 
   const [index, setIndex] = useState(0);
-  const [responseCode, setResponseCode] = useState();
   const [form, setForm] = useState({
     code: '',
     displayName: '',
@@ -32,11 +31,6 @@ const RoleDetailScreen = props => {
   useEffect(() => {
     getOneRolePermission(props?.route?.params?.id, userToken); //checked option
     getRoleAsOptions(userToken);
-
-    /**
-     * [{"code": "SYSUSR_U", "displayName": "Modify", "icon": "fas fa-edit", "id": 4, "type": "AC"}, {"code": "SYSUSR_C", "displayName": "Create", "icon": "fas fa-plus-square", "id": 2, "type": "AC"}]
-     *
-     */
   }, []);
 
   const getOneRolePermission = (id, userToken) => {
@@ -152,21 +146,6 @@ const RoleDetailScreen = props => {
         } else {
           alert('delete fail: ' + response.status);
         }
-
-        return response.json();
-      })
-      .then(result => {
-        //  console.log(result);
-        // return result;
-        console.log('submit result');
-        // console.log(result);
-
-        //  if (responseCode == 200) {
-        //    alert('delete success' + result?.id);
-        //  navigation.navigate('RoleManagement');
-        //  } else {
-        //   alert('delete fail: ' + responseCode + '\n' + result?.errorMsg);
-        //  }
       })
       .catch(error => console.log('error1Z', error));
   };
@@ -288,13 +267,10 @@ const updateRole = (token, form, selectedData, navigation, id) => {
   var requestOptions = {
     method: 'PUT',
     headers: {
-      // Accept: '*',
-      // 'Content-Type': 'application/json',
       'X-Token': token,
     },
     body: formdata,
   };
-
   fetch(
     'https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission/' + id,
     requestOptions,

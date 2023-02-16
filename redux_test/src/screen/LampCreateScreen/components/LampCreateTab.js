@@ -1,22 +1,8 @@
 import React, {useState} from 'react';
 import {Input, Icon} from '@rneui/themed';
 
-import {
-  View,
-  StyleSheet,
-  Pressable,
-  Text,
-  useWindowDimensions,
-  Keyboard,
-} from 'react-native';
-import {
-  TextInput,
-  Button,
-  Menu,
-  Divider,
-  Provider,
-  HelperText,
-} from 'react-native-paper';
+import {View, Pressable, useWindowDimensions, Keyboard} from 'react-native';
+import {TextInput, Menu, Provider} from 'react-native-paper';
 import {TouchableWithoutFeedback} from 'react-native';
 import {styles} from '../../../constants/styles';
 import {FormValidationError} from '../../../components/formValidationError';
@@ -34,29 +20,6 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
   const [menu2, setMenu2] = useState(false);
   const [menu3, setMenu3] = useState(false);
   const [menu4, setMenu4] = useState(false);
-  const deviceIdList = [1, 2, 3, 4];
-  const StatusDropDown = ({close}) => {
-    return (
-      <View style={styles.lampStatus}>
-        <Menu.Item
-          onPress={() => {
-            setStatus('ACTIVE');
-            setForm({...form, status: status});
-            close(false);
-          }}
-          title="Active"
-        />
-        <Menu.Item
-          onPress={() => {
-            setStatus('DISABLED');
-            setForm({...form, status: status});
-            close(false);
-          }}
-          title="Maintenance"
-        />
-      </View>
-    );
-  };
 
   console.log('hello create tab');
   console.log(controllerList);

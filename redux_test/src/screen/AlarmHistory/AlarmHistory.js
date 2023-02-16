@@ -1,9 +1,7 @@
 import {Icon} from '@rneui/themed';
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
-// import { Feather } from "@expo/vector-icons";
-// import { Ionicons } from "@expo/vector-icons";
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {Text, View, FlatList} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import {
   appContextPaths,
@@ -11,6 +9,7 @@ import {
   EndPoint,
 } from '../../constants/constants';
 import {styles} from '../../constants/styles';
+import {requestOptions} from '../../utils/requestOptions';
 import OutstandingAlarmCard from '../OutstandingAlarm/components/OutstandingAlarmCard';
 
 const AlarmHistory = () => {
@@ -18,15 +17,10 @@ const AlarmHistory = () => {
   const userToken = useSelector(state => state.login.userToken?.Token);
 
   useEffect(() => {
-    var requestOptions = {
-      method: 'GET',
-      headers: {
-        // Accept: '*',
-        // 'Content-Type': 'application/json',
-        'X-Token': userToken,
-      },
-    };
-    fetch(`${appContextPaths[appDefDomain]}${EndPoint.alarm}`, requestOptions)
+    fetch(
+      `${appContextPaths[appDefDomain]}${EndPoint.alarm}`,
+      requestOptions({method: 'GET', userToken}),
+    )
       .then(response => {
         return response.json();
       })
@@ -38,11 +32,6 @@ const AlarmHistory = () => {
         // console.log(data);
       })
       .catch(error => console.log('error', error));
-
-    console.log('outStandand alarm121');
-    data.map(d => {
-      console.log(d.id, d.status);
-    });
   }, []);
 
   return (
@@ -67,10 +56,6 @@ const AlarmHistory = () => {
           renderItem={OutstandingAlarmCard}
           keyExtractor={item => item.id}
         />
-
-        {/* <OutstandingAlarmCard />
-        <OutstandingAlarmCard2 />
-      */}
       </View>
     </View>
   );

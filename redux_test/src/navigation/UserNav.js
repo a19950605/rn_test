@@ -1,5 +1,5 @@
-import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
 import UserAccountManagementScreen from '../screen/UserAccount/UserAccountManagementScreen';
 import UserAccountDetailScreen from '../screen/UserAccountDetailScreen/UserAccountDetailScreen';
 import UserAccountCreateScreen from '../screen/UserCreateScreen/UserAccountCreateScreen';

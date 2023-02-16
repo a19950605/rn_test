@@ -1,6 +1,5 @@
 todo
 1.form validation
-2.code structure
 3.load data when login
 4.check the permission and show the permitted value
 
@@ -12,7 +11,9 @@ update
 detelete
 
 TODO TODAY
-10.change all state to redux
+2.code structure (working on this)
+10.change all state to redux  (working on this)
+need to dispatch to update the state
 11.custom hooks (after debug)
 12.ts (IF POSSIBLE)
 15.datetime picker on filter (library issues) get back later

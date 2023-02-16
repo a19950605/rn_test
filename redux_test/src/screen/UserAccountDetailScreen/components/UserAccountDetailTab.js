@@ -38,27 +38,23 @@ const UserAccountDetailTab = ({userData}) => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
   console.log('user data');
-  console.log(userData?.detail);
-  console.log(userData?.detail?.roles);
-  // userData?.detail?.displayName;
-  // userData?.detail?.username;
-  // userData?.detail?.staffNo;
-  // userData?.detail?.rmks;
-  // userData?.detail?.status;
-  //userData?.detail?.roles
+  console.log(userData?.roles);
+  // userData?.displayName;
+  // userData?.username;
+  // userData?.staffNo;
+  // userData?.rmks;
+  // userData?.status;
+  //userData?.roles
   // console.log(userData);
 
   useEffect(() => {
-    setUsername(userData?.detail?.username);
-    setDisplayName(userData?.detail?.displayName);
-    setStaffNo(userData?.detail?.staffNo);
-    setRmks(userData?.detail?.rmks);
-    setStatus(userData?.detail?.status);
+    setUsername(userData?.username);
+    setDisplayName(userData?.displayName);
+    setStaffNo(userData?.staffNo);
+    setRmks(userData?.rmks);
+    setStatus(userData?.status);
     setRole(
-      userData?.detail?.roles[0]?.displayName +
-        '(' +
-        userData?.detail?.roles[0]?.code +
-        ')',
+      userData?.roles[0]?.displayName + '(' + userData?.roles[0]?.code + ')',
     );
   }, []);
   useEffect(() => {
@@ -153,7 +149,7 @@ const UserAccountDetailTab = ({userData}) => {
       },
     };
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/system/user/${userData?.detail?.id}`,
+      `https://gis2.ectrak.com.hk:8900/api/system/user/${userData?.id}`,
       requestOptions,
     )
       .then(response => {
@@ -517,7 +513,7 @@ const UserAccountDetailTab = ({userData}) => {
                     roleSubmit,
                   },
                   navigation,
-                  userData?.detail?.id,
+                  userData?.id,
                 );
                 //updateUser = (token, form, navigation, id)
               }}>

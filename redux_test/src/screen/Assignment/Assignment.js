@@ -17,49 +17,7 @@ const Assignment = () => {
   const userToken = useSelector(state => state.login.userToken?.Token);
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
-  //relay
-  //   const {
-  //     data: users,
-  //     isLoading,
-  //     isSuccess,
-  //     isError,
-  //     error,
-  //   } = useGetUsersQuery(userToken);
 
-  //   if (isLoading) {
-  //     console.log('redux event log loading');
-  //   } else if (isSuccess) {
-  //     // setData(eventLogs);
-  //     console.log('loading success123');
-  //     console.log(users);
-  //   } else if (isError) {
-  //     console.log('get event log error');
-  //     console.log(error);
-  //   }
-
-  useEffect(() => {
-    // var requestOptions = {
-    //   method: 'GET',
-    //   headers: {
-    //     // Accept: '*',
-    //     // 'Content-Type': 'application/json',
-    //     'X-Token': userToken,
-    //   },
-    // };
-    // fetch('https://gis2.ectrak.com.hk:8900/api/system/user', requestOptions)
-    //   .then(response => {
-    //     return response.json();
-    //   })
-    //   .then(result => {
-    //     //   console.log(result);
-    //     // return result;
-    //     setData(result?.content);
-    //   })
-    //   .catch(error => console.log('error1', error));
-  }, []);
-
-  //   console.log('data test');
-  //   console.log(data);
   return (
     <View style={{flex: 1, padding: 5, backgroundColor: 'white'}}>
       <View

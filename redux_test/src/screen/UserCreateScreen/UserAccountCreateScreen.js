@@ -17,7 +17,7 @@ import {
   Provider,
   HelperText,
 } from 'react-native-paper';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {useCreateUser} from '../../hooks/ApiHook';
 import {
@@ -29,6 +29,8 @@ import {styles} from '../../constants/styles';
 import {FormValidationError} from '../../components/formValidationError';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {DropDown} from '../../components/StatusDropDown';
+import {createUser} from '../../features/user/userSlice';
+import {formBuilder} from '../../utils/formBuilder';
 
 const UserAccountCreateScreen = () => {
   /**
@@ -56,6 +58,8 @@ const UserAccountCreateScreen = () => {
   const [role, setRole] = useState();
   const [roleSubmit, setRoleSubmit] = useState('');
   const userToken = useSelector(state => state.login.userToken?.Token);
+  const {createStatus} = useSelector(state => state.user);
+
   const navigation = useNavigation();
   const [isSubmit, setIsSubmit] = useState(false);
   const [option, setOption] = useState([]);
@@ -67,6 +71,7 @@ const UserAccountCreateScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [rmks, setRmks] = useState('');
   const [staffNo, setStaffNo] = useState('');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     var requestOptions = {
@@ -125,7 +130,6 @@ const UserAccountCreateScreen = () => {
                   value={username}
                   onChangeText={username => {
                     setUsername(username);
-
                     setSubmitForm({...submitForm, username: username});
                   }}
                 />
@@ -208,7 +212,7 @@ const UserAccountCreateScreen = () => {
                 </View>
               </Pressable>
             </View>
-            <FormValidationError value={roleSubmit} isSubmit={isSubmit} />
+            <FormValidationError value={role} isSubmit={isSubmit} />
             <View>
               {menu1 && (
                 // <RoleDropDown
@@ -362,7 +366,42 @@ const UserAccountCreateScreen = () => {
                   ) {
                     alert('password not match');
                   } else {
-                    useCreateUser({userToken, form: submitForm, navigation});
+                    // useCreateUser({userToken, form: submitForm, navigation});
+
+                    dispatch(
+                      createUser({
+                        userToken,
+                        data: formBuilder([
+                          {
+                            key: 'username',
+                            value: submitForm?.username || '',
+                          },
+                          {key: 'status', value: submitForm?.status || ''},
+
+                          {
+                            key: 'displayName',
+                            value: submitForm?.displayName || '',
+                          },
+                          {
+                            key: 'password',
+                            value: submitForm?.password || '',
+                          },
+                          {
+                            key: 'staffNo',
+                            value: submitForm?.staffNo || '',
+                          },
+                          {key: 'rmks', value: submitForm?.rmks || ''},
+                          {key: 'roleIds', value: [submitForm?.role]},
+                        ]),
+                      }),
+                    )
+                      .then(() => {
+                        alert('create fail');
+                        navigation.navigate('UserAccount');
+                      })
+                      .catch(e => {
+                        alert('create fail');
+                      });
                   }
                 }}>
                 <Icon

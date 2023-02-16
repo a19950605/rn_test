@@ -5,17 +5,9 @@ import {FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../../../constants/styles';
 
-const optionsPerPage = [2, 3, 4];
-
 const EventLogTable = ({data}) => {
   console.log('current in table');
-  const [page, setPage] = React.useState(0);
-  const [itemsPerPage, setItemsPerPage] = React.useState(optionsPerPage[0]);
   const navigation = useNavigation();
-
-  React.useEffect(() => {
-    setPage(0);
-  }, [itemsPerPage]);
   return (
     <DataTable>
       <DataTable.Header>
@@ -45,8 +37,6 @@ const EventLogTable = ({data}) => {
 };
 
 const TableRow = rowData => {
-  console.log('current in table row');
-  console.log(rowData);
   return (
     <DataTable.Row>
       <DataTable.Cell style={styles.tableCell1_5}>

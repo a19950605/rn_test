@@ -7,7 +7,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {signin} from '../../features/login/loginSlice';
 import {useTranslation} from 'react-i18next';
 import {styles} from '../../constants/styles';
-import {dTst, fetchUsers} from '../../features/user/userSlice';
+import {dTst, fetchUsers} from '../../features/users/usersSlice';
 
 const Login = () => {
   const dispatch = useDispatch();
