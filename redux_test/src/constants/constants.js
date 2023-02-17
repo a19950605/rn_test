@@ -53,7 +53,7 @@ const EndPoint = {
   relay: '/api/v2/relay',
   relays: '/api/v2/relay/search',
 
-  //  OPTION
+  //  OPTION //
   opLamps: '/api/v2/options/devices',
   opGpnames: '/api/v2/options/activeAssignmentGroupNames',
   opEtmsTns: '/api/v2/options/activeAssignmentETMSTNs',

@@ -17,8 +17,6 @@ const initialState = {
   filterField: '',
   filterDesc: '',
 };
-//handling sortig
-//fetch users
 export const fetchUsers = createAsyncThunk(
   'fetchUsers',
   async ({userToken, filterDesc, filterField}, {rejectWithValue}) => {
@@ -93,6 +91,3 @@ export const usersSlice = createSlice({
 export const {dTst} = usersSlice.actions;
 
 export default usersSlice.reducer;
-//typescript
-//datetime picker on filter (library issues) get back later
-//change all state to redux

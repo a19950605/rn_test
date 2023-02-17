@@ -20,7 +20,7 @@ import HistoryTab from './components/HistoryTab';
 import Alarm from './components/Alarm';
 import LampDetailTab from './components/LampDetailTab';
 import ImageDetailMon from './components/ImageDetailMon';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {color} from '@rneui/base';
@@ -28,6 +28,7 @@ import {ActivityIndicator} from 'react-native-paper';
 import {Loading} from '../../components/Loading';
 import {ModalMessage} from '../../components/ModalMessage';
 import {styles} from '../../constants/styles';
+import {getLampDetail} from '../../features/lamp/lampSlice';
 
 const LampDetailScreen = props => {
   console.log('monitoring tab1');
@@ -49,9 +50,11 @@ const LampDetailScreen = props => {
   const [color, setColor] = useState('red');
   const [icon, setIcon] = useState('alert');
   const [alertMessage, setAlertMessage] = useState('');
+  const dispatch = useDispatch();
 
   const [data, setData] = useState('');
   const userToken = useSelector(state => state.login.userToken?.Token);
+  const {device, isLoading} = useSelector(state => state.lamp);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({
     controllerId: '',
@@ -60,6 +63,21 @@ const LampDetailScreen = props => {
     relayChannelIdx: '',
     status: 'ACTIVE',
   });
+
+  const fetchDevice = (userToken, id) => {
+    dispatch(getLampDetail({userToken, id}))
+      .then(() => {
+        console.log('dispatch success');
+      })
+      .catch(e => {
+        console.log('dispatch failed');
+      });
+
+    //props.route.params.id
+  };
+  useEffect(() => {
+    fetchDevice(userToken, props.route.params.id);
+  }, []);
 
   const updateRecord = (token, form) => {
     console.log('update test');
@@ -186,7 +204,7 @@ const LampDetailScreen = props => {
       .catch(error => console.log('error1', error));
   };
   useEffect(() => {
-    //
+    //diu i no use
     var requestOptions = {
       method: 'GET',
       headers: {
@@ -304,16 +322,16 @@ const LampDetailScreen = props => {
 
   useEffect(() => {
     setForm({
-      controllerId: data?.device?.controllerCode,
-      deviceId: data?.device?.controllerDeviceId,
-      rfl: data?.device?.code,
-      relayChannelIdx: data?.device?.relayChannel?.channelIdx || '',
+      controllerId: device.controllerCode,
+      deviceId: device.controllerDeviceId,
+      rfl: device.code,
+      relayChannelIdx: device?.relayChannel?.channelIdx || '',
       status: 'ACTIVE',
     });
-  }, [data]);
+  }, [isLoading]);
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <>
@@ -332,7 +350,7 @@ const LampDetailScreen = props => {
           >
             <TabScreen label="Detail" icon="clipboard-text">
               <LampDetailTab
-                data={data}
+                data={device}
                 form={form}
                 setForm={setForm}
                 isSubmit={isSubmit}
@@ -340,14 +358,14 @@ const LampDetailScreen = props => {
               />
             </TabScreen>
             <TabScreen label="Status" icon="chart-box">
-              <StatusTab data={data} islandscapemode={islandscapemode} />
+              <StatusTab data={device} islandscapemode={islandscapemode} />
             </TabScreen>
             <TabScreen label="Assignment" icon="clipboard-text">
               <AssignmentDetail islandscapemode={islandscapemode} />
             </TabScreen>
             <TabScreen label="Last Control" icon="toggle-switch-off">
               <LastControlDetail
-                data={data}
+                data={device}
                 islandscapemode={islandscapemode}
               />
             </TabScreen>
@@ -369,7 +387,7 @@ const LampDetailScreen = props => {
             <TabScreen label="Alarm" icon="alert">
               <Alarm
                 islandscapemode={islandscapemode}
-                deviceId={data?.device?.code}
+                deviceId={device?.code}
               />
             </TabScreen>
           </Tabs>

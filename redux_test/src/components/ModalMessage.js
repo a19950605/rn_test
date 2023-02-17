@@ -1,7 +1,6 @@
 import {Icon, Overlay} from '@rneui/themed';
 import React, {useState} from 'react';
 import {Text, View} from 'react-native';
-import {ActivityIndicator} from 'react-native-paper';
 import {styles} from '../constants/styles';
 
 export const ModalMessage = ({message, setShowModal, icon, color}) => {

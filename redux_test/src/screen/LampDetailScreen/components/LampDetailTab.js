@@ -6,11 +6,12 @@ import {View, StyleSheet, Button, TouchableWithoutFeedback} from 'react-native';
 import {Menu, Provider, TextInput, HelperText} from 'react-native-paper';
 import {Pressable} from 'react-native';
 import {styles} from '../../../constants/styles';
+import {DropDown} from '../../../components/StatusDropDown';
 const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
   console.log('inside monitor tab');
   console.log(data);
   console.log('tab controller tab');
-  console.log(data?.device?.controllerCode);
+  console.log(data?.controllerCode);
   const [controllerId, setControllerId] = useState(''); // T002
   const [deviceId, setDeviceId] = useState(''); // Eg 1-4
   const [rfl, setRfl] = useState(''); // TE/ST/123
@@ -20,11 +21,11 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
   const [menu2, setMenu2] = useState(false);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    setControllerId(data?.device?.controllerCode || '');
-    setDeviceId(JSON.stringify(data?.device?.controllerDeviceId) || '');
-    setRfl(data?.device?.code);
-    setRelayChannelIdx(JSON.stringify(data?.device?.relayChannel?.channelIdx));
-    setStatus(data?.device?.status);
+    setControllerId(data?.controllerCode || '');
+    setDeviceId(JSON.stringify(data?.controllerDeviceId) || '');
+    setRfl(data?.code);
+    setRelayChannelIdx(JSON.stringify(data?.relayChannel?.channelIdx));
+    setStatus(data?.status);
     setLoading(false);
   }, []);
 
@@ -311,7 +312,22 @@ const LampDetailTab = ({setForm, form, data, islandscapemode, isSubmit}) => {
               </View>
             </Pressable>
 
-            <View>{menu2 && <StatusDropDown close={setMenu2} />}</View>
+            <View>
+              {menu2 && (
+                <DropDown
+                  close={setMenu2}
+                  setForm={setForm}
+                  form={form}
+                  setDisplay={setStatus}
+                  keyVal={'status'}
+                  options={[
+                    {displayName: 'Active', formVal: 'ACTiVE'},
+                    {displayName: 'Maintenance', formVal: 'DISABLED'},
+                    {displayName: 'Isolated', formVal: 'ISOLATED'},
+                  ]}
+                />
+              )}
+            </View>
           </View>
         )}
       </TouchableWithoutFeedback>

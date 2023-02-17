@@ -20,7 +20,6 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
   const [menu2, setMenu2] = useState(false);
   const [menu3, setMenu3] = useState(false);
   const [menu4, setMenu4] = useState(false);
-
   console.log('hello create tab');
   console.log(controllerList);
   return (
@@ -96,6 +95,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
               message={'Controller ID is missing!'}
             />
           </View>
+
           <View style={styles.inputRow}>
             <Icon
               name="hash"

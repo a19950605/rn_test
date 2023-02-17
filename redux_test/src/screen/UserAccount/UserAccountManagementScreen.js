@@ -52,7 +52,6 @@ const UserAccountManagementScreen = () => {
       dispatch(fetchUsers({userToken, filterDesc, filterField}));
     } catch (err) {}
   };
-
   useEffect(() => {
     getUsers(userToken);
   }, [isFocused, filterDesc, filterField]);

@@ -6,13 +6,15 @@ import {Icon} from '@rneui/themed';
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
 import LampCreateTab from './components/LampCreateTab';
 import ImageUploadTest from './components/ImageUploadTest';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {ModalMessage} from '../../components/ModalMessage';
 import {useTranslation} from 'react-i18next';
 import {useEffect} from 'react';
 import {createNewRecord} from '../../hooks/ApiHook';
 import {styles} from '../../constants/styles';
+import {formBuilder} from '../../utils/formBuilder';
+import {createLampDevice} from '../../features/lamp/lampSlice';
 const MonitoringCreateScreen = props => {
   const [imgX, setImgX] = useState(0);
   const [imgY, setImgY] = useState(0);
@@ -24,7 +26,9 @@ const MonitoringCreateScreen = props => {
   const [icon, setIcon] = useState('alert');
   const [isSubmit, setIsSubmit] = useState(false);
   const userToken = useSelector(state => state.login.userToken?.Token);
+  const {successId, error} = useSelector(state => state.lamp);
 
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [alertMessage, setAlertMessage] = useState('');
   const [controllerList, setControllerList] = useState('');
@@ -87,20 +91,67 @@ const MonitoringCreateScreen = props => {
               setAlertMessage('Missing required field!');
               setShowModal(true);
             } else {
-              createNewRecord({
-                token: userToken,
-                setAlertMessage,
-                setColor,
-                setIcon,
-                setShowModal,
-                navigation,
-                form,
-                uri,
-                lampX,
-                lampY,
-                imgX,
-                imgY,
-              });
+              /**
+               * if (response.status == 200) {
+        setAlertMessage('Create success' + `(id:${data?.id})`);
+        setIcon('check-circle');
+        setColor('green');
+        setShowModal(true);
+
+        navigation.navigate('MonitoringTestSub');
+      } else {
+        setIcon('alert');
+        setColor('red');
+        setAlertMessage(
+          'create fail: ' + response.status + '\n' + data?.errorMsg,
+        );
+               */
+              let tst = formBuilder(
+                {key: 'controllerCode', value: form.controllerId},
+                {key: 'code', value: form.rfl},
+                {key: 'controllerDeviceId', value: parseInt(form.deviceId)},
+                {key: 'lampPositionY', value: lampX},
+                {key: 'lampPositionX', value: lampY},
+                {key: 'imageW', value: imgX},
+                {key: 'imageH', value: imgY},
+                {key: 'relayChannelIdx', value: parseInt(form.relayChannelIdx)},
+                {
+                  key: 'xxoo',
+                  value: {
+                    uri: uri,
+                    type: 'image/jpeg',
+                    name: 'xxoo',
+                  },
+                },
+                {key: 'status', value: 'ACTIVE'},
+              );
+              dispatch(createLampDevice({userToken: userToken, data: tst}))
+                .then(() => {
+                  setAlertMessage('Create success' + `(id:${successId})`);
+                  setIcon('check-circle');
+                  setColor('green');
+                  setShowModal(true);
+                })
+                .catch(e => {
+                  setIcon('alert');
+                  setColor('red');
+                  setAlertMessage('create fail:');
+                  setShowModal(true);
+                });
+              // createNewRecord({
+              //   token: userToken,
+              //   setAlertMessage,
+              //   setColor,
+              //   setIcon,
+              //   setShowModal,
+              //   navigation,
+              //   form,
+              //   uri,
+              //   lampX,
+              //   lampY,
+              //   imgX,
+              //   imgY,
+              // });
             }
           }}>
           <Icon

@@ -31,6 +31,11 @@ import {useTranslation} from 'react-i18next';
 import {DatePickerModal} from 'react-native-paper-dates';
 import {ReloadButton} from '../../components/ReloadButton';
 import moment from 'moment';
+import {fetchActiveDevices} from '../../features/lamp/activeLampSlice';
+import {getControllers} from '../../features/controller/controllerSlice';
+import {getDevices} from '../../features/lamp/lampsSlice';
+import {formBuilder} from '../../utils/formBuilder';
+import {getConnStatus, getFilterStatus} from '../../utils/getStatus';
 
 const LampScreen = () => {
   const {height, width} = useWindowDimensions();
@@ -43,10 +48,15 @@ const LampScreen = () => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
 
-  const [currentDate, setCurrentDate] = useState();
+  const [currentDate, setCurrentDate] = useState(
+    moment().format('YYYY-MM-DD HH:mm:ss'),
+  );
   const userToken = useSelector(state => state.login.userToken?.Token);
+  const {activeDeviceList} = useSelector(state => state.activeLamps);
+  const {devices, isLoading, error} = useSelector(state => state.lamps);
+  const {controllerList} = useSelector(state => state.controllers);
   const [filterDesc, setFilterDesc] = useState(false);
-  const [filterField, setFilterField] = useState('rflid');
+  const [filterField, setFilterField] = useState('id');
   const [showFilter, setShowFilter] = useState(false);
 
   const [filterRFL, setFilterRFL] = useState('All');
@@ -77,33 +87,79 @@ const LampScreen = () => {
       setCurrentDate(moment().format('YYYY-MM-DD HH:mm:ss'));
     }, 30000);
   }, []);
-  const [data, error] = useFetchMonitorTest({
-    userToken,
-    loading,
-    isFocused,
-    setLoading,
-    filterField,
-    filterDesc,
-    setCurrentDate,
-    filterStatus,
-    filterCONNStatus,
-    filterRFLCode,
-  });
+  // const [data, error] = useFetchMonitorTest({
+  //   userToken,
+  //   loading,
+  //   isFocused,
+  //   setLoading,
+  //   filterField,
+  //   filterDesc,
+  //   setCurrentDate,
+  //   filterStatus,
+  //   filterCONNStatus,
+  //   filterRFLCode,
+  // });
 
-  const [data2, error2] = useFetchMonitorData({
-    userToken,
-    loading2,
-    isFocused,
-    setLoading2,
-    filterField,
-    filterDesc,
-    setCurrentDate,
-  });
-  const [data3, error3] = useFetchControllerList({
-    userToken,
-    loading,
-    isFocused,
-  });
+  useEffect(() => {
+    //fetchActiveDevices;
+    if (loading == true) {
+      getDevicesList(userToken);
+    }
+  }, [isFocused, filterField, filterDesc, loading]);
+
+  useEffect(() => {
+    //fetchActiveDevices
+    getFilterDevices(userToken);
+    getControllersList(userToken);
+  }, []);
+
+  const getDevicesList = userToken => {
+    try {
+      //  const users = await dispatch(fetchUsers(userToken));
+
+      let conn = getConnStatus(filterCONNStatus);
+      let status_f = getFilterStatus(filterStatus);
+      dispatch(
+        getDevices({
+          userToken,
+          filterDesc,
+          filterField,
+          formdata: formBuilder([
+            {
+              key: 'status',
+              value: getFilterStatus(filterStatus),
+            },
+            {key: 'connectionStatus', value: getConnStatus(filterCONNStatus)},
+            {key: 'deviceId', value: filterRFLCode},
+          ]),
+        }),
+      )
+        .then(() => {
+          // alert('fetch list success');
+          setLoading(false);
+        })
+        .catch(e => {
+          //  alert('fetch list failed');
+        });
+    } catch (err) {}
+  };
+
+  const getFilterDevices = userToken => {
+    dispatch(fetchActiveDevices(userToken))
+      .then(() => {})
+      .catch(e => {
+        console.log('fetch filter list failed');
+      });
+  };
+  const getControllersList = userToken => {
+    dispatch(getControllers(userToken))
+      .then(() => {
+        // alert('success cont');
+      })
+      .catch(e => {
+        //alert('failed cont');
+      });
+  };
 
   useEffect(() => {
     if (!isFocused) {
@@ -112,13 +168,12 @@ const LampScreen = () => {
   }, [isFocused]);
 
   const sortOption = [
-    {displayValue: 'RFL ID', apiValue: 'rflid'},
-    {displayValue: 'RFL', apiValue: 'rfl'},
+    {displayValue: 'RFL ID', apiValue: 'id'},
+    {displayValue: 'RFL', apiValue: 'code'},
     {displayValue: 'EPIC', apiValue: 'epic'},
     {displayValue: 'Group', apiValue: 'Group'},
     {displayValue: 'Status As Of', apiValue: 'statusasof'},
   ];
-
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -130,7 +185,7 @@ const LampScreen = () => {
             <CreateButton
               navigation={navigation}
               navLoc={'Create Monitoring'}
-              dropDown1={data3}
+              dropDown1={controllerList}
             />
             <ReloadButton
               setLoading={setLoading}
@@ -167,11 +222,11 @@ const LampScreen = () => {
 
         <View style={styles.p5}></View>
 
-        {loading ? (
+        {isLoading ? (
           <LinearProgress style={styles.mtNeg5} color="red" />
         ) : isLandscapeMode ? (
           <TableTest
-            data={data}
+            data={devices}
             navigation={navigation}
             filterDesc={filterDesc}
             filterField={filterField}
@@ -181,7 +236,7 @@ const LampScreen = () => {
           />
         ) : (
           <FlatList
-            data={data}
+            data={devices}
             renderItem={props => (
               <LampCard {...props} navigation={navigation} />
             )}
@@ -196,7 +251,7 @@ const LampScreen = () => {
             setFilterStatus={setFilterStatus}
             setFilterCONNStatus={setFilterCONNStatus}
             filterCONNStatus={filterCONNStatus}
-            rflDropDown={data2}
+            rflDropDown={activeDeviceList}
             filterRFL={filterRFL}
             setFilterRFL={setFilterRFL}
             setFilterRFLCode={setFilterRFLCode}
@@ -206,7 +261,6 @@ const LampScreen = () => {
             date={date}
           />
         )}
-
         <DatePickerModal
           locale="en"
           mode="single"
