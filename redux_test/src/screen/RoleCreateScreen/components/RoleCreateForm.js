@@ -151,6 +151,14 @@ const RoleCreateForm = ({
                   value={status}
                   onChangeText={status => setStatus(status)}
                 />
+                <View style={styles.inputArrowIcon}>
+                  <Icon
+                    name="angle-down"
+                    size={24}
+                    color="black"
+                    type="font-awesome"
+                  />
+                </View>
               </View>
             </Pressable>
             <View style={{zIndex: 999}}>

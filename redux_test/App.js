@@ -7,8 +7,9 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {MainDrawer} from './src/navigation/MainDrawer';
-import Login from './src/screen/Login/Login';
 import {getUserInfo} from './src/redux/features/userInfo/userInfoSlice';
+import Login from './src/screen/Login/Login';
+import {getUserFunc} from './src/redux/features/roleUserFunc/roleUserFuncSlice';
 
 export default function App() {
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -16,6 +17,7 @@ export default function App() {
   useEffect(() => {
     if (userToken != undefined) {
       dispatch(getUserInfo(userToken));
+      dispatch(getUserFunc(userToken));
     } else {
       console.log('dispatch userinfo faileld*****');
     }

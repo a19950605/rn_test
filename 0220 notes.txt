@@ -1,0 +1,36 @@
+this week tasks
+outstanding alarm,  (fix filter and search)(detail) 
+load config (update base on config)
+parent child app
+ -check  permission(set redux and load)(around one day)(tomorrow)
+-change all state to redux   
+-datetime picker on filter(update style and value) (maybe at home
+-form validation      (other parts)
+
+
+tuesday task
+-outstanding alarm -detail, filter, sorting,ack
+-detail icon, ,ack tab
+-role management permissions change to redux
+-detail data correctness     ***
+
+
+
+
+must***
+-device create and edit/ map lib
+-icon for menu and dropdown (done)
+-outstanding alarm
+-app call app
+
+-setting,relay,assignment
+
+today back
+
+done
+-create device   (test again later)
+-0 show require (fixed)
+-image missing   (fixed)
+-dropdown with icon (done)
+-detail alarm (scroll down and load)(done) (need update tablet view)
+

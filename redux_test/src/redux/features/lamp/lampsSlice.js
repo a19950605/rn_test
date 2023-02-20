@@ -6,7 +6,6 @@ import {
 } from '../../../constants/constants';
 import {requestOptions} from '../../../utils/requestOptions';
 import {sortData} from '../../../utils/sortData';
-import {sortData2} from '../../../utils/sortData2';
 
 const initialState = {
   devices: [],
@@ -63,7 +62,7 @@ export const lampsSlice = createSlice({
         console.log(action);
         console.log(action.payload);
         state.isLoading = false;
-        state.devices = sortData2(
+        state.devices = sortData(
           action.payload.devices.content,
           action.payload.filterField,
           action.payload.filterDesc,

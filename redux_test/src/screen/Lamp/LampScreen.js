@@ -104,9 +104,7 @@ const LampScreen = () => {
 
   useEffect(() => {
     //fetchActiveDevices;
-    if (loading == true) {
-      getDevicesList(userToken);
-    }
+    getDevicesList(userToken);
   }, [isFocused, filterField, filterDesc, loading]);
 
   useEffect(() => {

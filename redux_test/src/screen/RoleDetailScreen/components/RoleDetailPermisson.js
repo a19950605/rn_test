@@ -46,7 +46,7 @@ const RoleDetailPermission = props => {
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+      <View style={styles.roleCheckAll}>
         <Checkbox
           status={checked ? 'checked' : 'unchecked'}
           onPress={() => {
@@ -112,15 +112,15 @@ const RoleCheckItem = ({item, selectedId, setSelectedId, checked}) => {
     <View style={styles.roleCheckedRow}>
       <View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontWeight: 'bold'}}>Function ID</Text>
+          <Text style={{fontWeight: 'bold'}}>Function ID: </Text>
           <Text>{item?.id || ''}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontWeight: 'bold'}}>Function </Text>
+          <Text style={{fontWeight: 'bold'}}>Function: </Text>
           <Text>{item?.shortDisplayName || ''}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontWeight: 'bold'}}>Permission</Text>
+          <Text style={{fontWeight: 'bold'}}>Permission: </Text>
           <Text>{item?.displayName || ''}</Text>
         </View>
       </View>

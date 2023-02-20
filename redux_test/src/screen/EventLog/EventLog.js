@@ -9,8 +9,8 @@ import EventLogTable from './components/EventLogTable';
 import SortDropDown from '../../components/sortFilter';
 import EventLogCard from './components/EventLogCard';
 import {useIsFocused} from '@react-navigation/native';
-import {useFetchEventLogData} from '../../hooks/ApiHook';
 import {color, styles} from '../../constants/styles';
+import {useFetchEventLogData} from '../../hooks/ApiHook';
 
 function EventLog() {
   const userToken = useSelector(state => state.login.userToken?.Token);

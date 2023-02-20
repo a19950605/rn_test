@@ -24,7 +24,7 @@ const RolePermission = props => {
 
   return (
     <View style={styles.filterBody}>
-      <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+      <View style={styles.roleCheckAll}>
         <Checkbox
           status={checked ? 'checked' : 'unchecked'}
           onPress={() => {

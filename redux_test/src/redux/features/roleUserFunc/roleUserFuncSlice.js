@@ -13,7 +13,7 @@ const initialState = {
   error: '',
 };
 export const getUserFunc = createAsyncThunk(
-  'getUserInfo',
+  'getUserFunc',
   async (userToken, {rejectWithValue}) => {
     try {
       const response = await fetch(
@@ -28,7 +28,7 @@ export const getUserFunc = createAsyncThunk(
   },
 );
 export const roleUserFuncSlice = createSlice({
-  name: 'userInfo',
+  name: 'roleUserFunc',
   initialState,
   reducers: {},
   extraReducers: builder => {
@@ -41,15 +41,13 @@ export const roleUserFuncSlice = createSlice({
       })
       .addCase(getUserFunc.fulfilled, (state, action) => {
         // Add user to the state array
-        console.log('fulfill userinfo****************************************');
-        // console.log(action);
+        console.log(
+          'fulfill user permission****************************************',
+        );
         console.log(action.payload);
-        // state.userInfo = action.payload;
         let temp_arr = [];
 
         action.payload?.func?.map(per => {
-          let temp_arr = [];
-
           let temp_inner = per.permissions;
           // temp_inner.map(temp_m => ({
           //   ...temp_m,

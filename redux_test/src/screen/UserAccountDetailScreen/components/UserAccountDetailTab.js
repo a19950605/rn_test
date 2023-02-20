@@ -316,6 +316,14 @@ const UserAccountDetailTab = ({userData}) => {
                 value={role}
                 onChangeText={role => setRole(role)}
               />
+              <View style={styles.inputArrowIconV2}>
+                <Icon
+                  name="angle-down"
+                  size={24}
+                  color="black"
+                  type="font-awesome"
+                />
+              </View>
             </Pressable>
           </View>
           <View>
@@ -447,6 +455,14 @@ const UserAccountDetailTab = ({userData}) => {
                 value={status}
                 onChangeText={status => setStatus(status)}
               />
+              <View style={styles.inputArrowIcon}>
+                <Icon
+                  name="angle-down"
+                  size={24}
+                  color="black"
+                  type="font-awesome"
+                />
+              </View>
             </View>
           </Pressable>
 

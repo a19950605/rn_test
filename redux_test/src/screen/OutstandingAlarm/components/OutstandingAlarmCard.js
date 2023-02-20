@@ -3,6 +3,7 @@ import {Text, View, StyleSheet, Button} from 'react-native';
 //monitoring
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {styles} from '../../../constants/styles';
+import moment from 'moment';
 
 const OutstandingAlarmCard = props => {
   //green card
@@ -45,13 +46,19 @@ const OutstandingAlarmCard = props => {
         </View>
         <View style={styles.row}>
           <Text style={{color: titleColor, fontWeight: 'bold'}}>RFL: </Text>
-          <Text>{props?.item?.code || ''}</Text>
+          <Text>{props?.item['device.code'] || ''}</Text>
         </View>
         <View style={styles.row}>
           <Text style={{color: titleColor, fontWeight: 'bold'}}>
             Triggered Datetime:
           </Text>
-          <Text>{props.item.dtCreate || ''}</Text>
+          <Text>
+            {props.item.dtCreate
+              ? moment(props.item.dtCreate)
+                  .utcOffset(8)
+                  .format('YYYY-MM-DD HH:mm')
+              : '--'}
+          </Text>
         </View>
         <View style={styles.row}>
           <Text style={{color: titleColor, fontWeight: 'bold'}}>Status: </Text>

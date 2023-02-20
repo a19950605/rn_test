@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import React, {useEffect, useState} from 'react';
@@ -54,6 +54,15 @@ const OutstandingAlarmScreen = () => {
   //   console.log('get event log error');
   //   console.log(error);
   // }
+  const isFocused = useIsFocused();
+  const [page, setPage] = useState(0);
+  const [isLastPage, setIsLastPage] = useState(false);
+  const [totalPages, setTotalPages] = useState('');
+  const [isReload, setIsReload] = useState(false);
+
+  // useEffect(() => {
+  //   setLoading(true);
+  // }, [isFocused]);
   useEffect(() => {
     var requestOptions = {
       method: 'GET',
@@ -63,21 +72,55 @@ const OutstandingAlarmScreen = () => {
         'X-Token': userToken,
       },
     };
-    fetch('https://gis2.ectrak.com.hk:8900/api/v2/alarms', requestOptions)
+    fetch(
+      `https://gis2.ectrak.com.hk:8900/api/v2/alarm/search?deviceId=&sort=id,desc&page=${page}`,
+      requestOptions,
+    )
       .then(response => {
         return response.json();
       })
       .then(result => {
         //  console.log(result);
         // return result;
-        setData(sortData(result, filterField, filterDesc));
-
+        setData(result?.content);
+        setTotalPages(result?.totalPages);
+        setIsLastPage(result?.last);
         setLoading(false);
       })
       .catch(error => console.log('error1', error));
-  }, [loading]);
-
-  // console.log('outStandand alarm');
+  }, []);
+  //isFocused,loading
+  useEffect(() => {
+    var requestOptions = {
+      method: 'GET',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+    };
+    if (isLastPage == true || page == totalPages || isReload == false) {
+      setIsReload(false);
+      return;
+    } else {
+      fetch(
+        `https://gis2.ectrak.com.hk:8900/api/v2/alarm/search?deviceId=&sort=id,desc&page=${page}`,
+        requestOptions,
+      )
+        .then(response => {
+          return response.json();
+        })
+        .then(result => {
+          //  console.log(result);
+          // return result;
+          if (result?.content != undefined) {
+            setData(prevArray => [...prevArray, ...result?.content]);
+          }
+          setIsReload(false);
+        })
+        .catch(error => console.log('error1', error));
+    }
+  }, [isReload]);
   return (
     <>
       {loading ? (
@@ -115,6 +158,12 @@ const OutstandingAlarmScreen = () => {
               />
             )}
           </View>
+          <View>
+            <Text>
+              {totalPages || ''}
+              {page || ''}
+            </Text>
+          </View>
           <View style={isLandscapeMode ? styles.mb60p5 : styles.mb60}>
             {isLandscapeMode ? (
               <TableTest2 data={data} />
@@ -124,12 +173,20 @@ const OutstandingAlarmScreen = () => {
                 renderItem={props => (
                   <OutstandingAlarmCard {...props} navigation={navigation} />
                 )}
-                keyExtractor={item => item.id}
+                // keyExtractor={item => item.id}
+                onEndReached={() => {
+                  alert('end react');
+                  if (totalPages > page) {
+                    setPage(page + 1);
+                    setIsReload(true);
+                  }
+                }}
               />
             )}
             {/* <OutstandingAlarmCard />
         <OutstandingAlarmCard2 />
       */}
+            <View style={{marginBottom: -70}}></View>
           </View>
         </View>
       )}

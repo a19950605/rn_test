@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const FormValidator = ({
   input,
   lengthChk,
@@ -11,7 +9,7 @@ export const FormValidator = ({
   //length,others,space
 
   //null check
-  if (input == '') {
+  if (input == '' && input != '0') {
     setValue('Required!');
     setIsError(true);
     return '';

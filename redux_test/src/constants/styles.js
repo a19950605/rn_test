@@ -31,6 +31,13 @@ const styles = StyleSheet.create({
   primaryColor: {
     color: 'green',
   },
+  sideMenuProfileIcon: {
+    resizeMode: 'center',
+    width: 40,
+    height: 40,
+    borderRadius: 100 / 2,
+    alignItems: 'flex-start',
+  },
   bgWhite: {backgroundColor: 'white'},
   flex_1: {flex: 1},
   spaceBetween: {
@@ -400,9 +407,16 @@ const styles = StyleSheet.create({
   roleCheckedRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 5,
+    padding: 10,
     borderColor: 'gray',
     borderWidth: 0.2,
+  },
+  roleCheckAll: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingRight: 10,
+    paddingTop: 20,
+    paddingBottom: 10,
   },
   //row item list
   rowListBorder: {

@@ -12,6 +12,7 @@ import {
   appDefDomain,
   EndPoint,
 } from '../../constants/constants';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 const Login = () => {
   const dispatch = useDispatch();
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -32,88 +33,93 @@ const Login = () => {
   return (
     <>
       {
-        <View style={isLandscapeMode ? styles.loginTablet : styles.loginMobile}>
-          <View style={styles.row}>
-            <Image
-              source={{
-                uri: 'https://static.wikia.nocookie.net/logopedia/images/1/16/120724090720-MTR-Corporation-logo.png',
-              }}
-              style={styles.loginImage}
-            />
-            <Text style={styles.font50}> eRFL</Text>
-          </View>
-
+        <KeyboardAwareScrollView>
           <View
-            style={
-              isLandscapeMode ? styles.loginFormTablet : styles.loginFormMobile
-            }>
-            <View style={styles.loginInputContainer}>
-              <TextInput
-                theme={{colors: {primary: 'darkred'}}}
-                style={
-                  isLandscapeMode ? styles.loginInputT : styles.loginInputM
-                }
-                label="username/用戶名"
-                value={username}
-                onChangeText={text => setUsername(text)}
-              />
-            </View>
-
-            <View style={styles.loginInputContainer}>
-              <TextInput
-                theme={{colors: {primary: 'darkred'}}}
-                style={
-                  isLandscapeMode ? styles.loginInputT : styles.loginInputM
-                }
-                label="password/密碼"
-                value={pw}
-                secureTextEntry={true}
-                onChangeText={pw => setPw(pw)}
-              />
-            </View>
-            <View style={styles.justifyContentCenter}>
-              <Button
-                style={{
-                  backgroundColor:
-                    pw != '' && username != '' ? 'black' : 'gray',
-                  width: isLandscapeMode ? '85%' : '65%',
-                  marginTop: 5,
+            style={isLandscapeMode ? styles.loginTablet : styles.loginMobile}>
+            <View style={styles.row}>
+              <Image
+                source={{
+                  uri: 'https://static.wikia.nocookie.net/logopedia/images/1/16/120724090720-MTR-Corporation-logo.png',
                 }}
-                disabled={pw == '' || username == ''}
-                mode="contained"
-                type="containedd"
-                onPress={() => {
-                  //login
-                  //username missing
-                  //password missing
-                  //
-                  // if (loginValidation()) {
-                  // } else {
-                  // }
+                style={styles.loginImage}
+              />
+              <Text style={styles.font50}> eRFL</Text>
+            </View>
 
-                  auth(username, pw)
-                    .then(res => {
-                      console.log('json');
-                      console.log(res);
-                      setToken1(JSON.parse(res));
-                      if (!token1) {
-                        console.log('hl');
-                        //alert('Login failed');
-                      }
-                      dispatch(signin(JSON.parse(res)));
+            <View
+              style={
+                isLandscapeMode
+                  ? styles.loginFormTablet
+                  : styles.loginFormMobile
+              }>
+              <View style={styles.loginInputContainer}>
+                <TextInput
+                  theme={{colors: {primary: 'darkred'}}}
+                  style={
+                    isLandscapeMode ? styles.loginInputT : styles.loginInputM
+                  }
+                  label="username/用戶名"
+                  value={username}
+                  onChangeText={text => setUsername(text)}
+                />
+              </View>
 
-                      // console.log(token1);
-                      // props.tokenRecord(JSON.parse(res));
-                    })
-                    .catch(e => {
-                      alert('login fail: ' + e);
-                    });
-                }}>
-                <Text>Login 登入</Text>
-              </Button>
+              <View style={styles.loginInputContainer}>
+                <TextInput
+                  theme={{colors: {primary: 'darkred'}}}
+                  style={
+                    isLandscapeMode ? styles.loginInputT : styles.loginInputM
+                  }
+                  label="password/密碼"
+                  value={pw}
+                  secureTextEntry={true}
+                  onChangeText={pw => setPw(pw)}
+                />
+              </View>
+              <View style={styles.justifyContentCenter}>
+                <Button
+                  style={{
+                    backgroundColor:
+                      pw != '' && username != '' ? 'black' : 'gray',
+                    width: isLandscapeMode ? '85%' : '65%',
+                    marginTop: 5,
+                  }}
+                  disabled={pw == '' || username == ''}
+                  mode="contained"
+                  type="containedd"
+                  onPress={() => {
+                    //login
+                    //username missing
+                    //password missing
+                    //
+                    // if (loginValidation()) {
+                    // } else {
+                    // }
+
+                    auth(username, pw)
+                      .then(res => {
+                        console.log('json');
+                        console.log(res);
+                        setToken1(JSON.parse(res));
+                        if (!token1) {
+                          console.log('hl');
+                          //alert('Login failed');
+                        }
+                        dispatch(signin(JSON.parse(res)));
+
+                        // console.log(token1);
+                        // props.tokenRecord(JSON.parse(res));
+                      })
+                      .catch(e => {
+                        alert('login fail: ' + e);
+                      });
+                  }}>
+                  <Text>Login 登入</Text>
+                </Button>
+              </View>
             </View>
           </View>
-        </View>
+        </KeyboardAwareScrollView>
       }
     </>
   );

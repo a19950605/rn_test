@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {TextInput, Button, Menu, Divider, Provider} from 'react-native-paper';
 import {useSelector} from 'react-redux';
+import {styles} from '../../../constants/styles';
 
 const RoleDetailForm = ({setForm, form, data}) => {
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -155,6 +156,14 @@ const RoleDetailForm = ({setForm, form, data}) => {
                 value={status}
                 onChangeText={status => setStatus(status)}
               />
+              <View style={styles.inputArrowIcon}>
+                <Icon
+                  name="angle-down"
+                  size={24}
+                  color="black"
+                  type="font-awesome"
+                />
+              </View>
             </View>
           </Pressable>
           <View style={{zIndex: 999}}>

@@ -261,8 +261,7 @@ const LampDetailScreen = props => {
     })
       .fetch(
         'GET',
-        `${appContextPaths[appDefDomain]}${EndPoint.lampImg}/${props.route.params.id}` +
-          props.route.params.id,
+        `${appContextPaths[appDefDomain]}${EndPoint.lampImg}/${props.route.params.id}`,
         {
           // Accept: '*',
           // 'Content-Type': 'application/json',
@@ -393,10 +392,7 @@ const LampDetailScreen = props => {
             </TabScreen>
 
             <TabScreen label="Alarm" icon="alert">
-              <Alarm
-                islandscapemode={islandscapemode}
-                deviceId={device?.code}
-              />
+              <Alarm islandscapemode={islandscapemode} deviceId={device?.id} />
             </TabScreen>
           </Tabs>
 

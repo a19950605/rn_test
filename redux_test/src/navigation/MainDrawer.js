@@ -36,6 +36,7 @@ import Assignment from '../screen/Assignment/Assignment';
 import EventLog from '../screen/EventLog/EventLog';
 import RoleNav from './RoleNav';
 import AlarmNav from './AlarmNav';
+import {styles} from '../constants/styles';
 
 const Drawer = createDrawerNavigator();
 
@@ -103,6 +104,7 @@ export function MainDrawer() {
             headerStyle: {
               backgroundColor: '#000000', //Set Header color
             },
+
             headerLeft: () => (
               <TouchableOpacity
                 onPress={() => {
@@ -136,6 +138,9 @@ export function MainDrawer() {
             drawerActiveBackgroundColor: 'white',
             drawerInactiveTintColor: 'black',
             drawerInactiveBackgroundColor: 'white',
+            drawerStyle: {
+              width: '80%',
+            },
           };
         }}
         style={{
@@ -372,13 +377,25 @@ function CustomDrawerContent(props) {
           labelStyle={{color: open ? 'red' : '#000000'}}
           onPress={() => setOpen(!open)}
           icon={({focused, color, size}) => (
-            <Icon
-              name="access-alarm"
-              type="material"
-              size={24}
-              color={open ? 'red' : 'gray'}
-              style={styles.btnIconPadding}
-            />
+            <>
+              <Icon
+                name="access-alarm"
+                type="material"
+                size={24}
+                color={open ? 'red' : 'gray'}
+                style={styles.btnIconPadding}
+              />
+              <View
+                style={{position: 'absolute', right: 10, alignItems: 'center'}}>
+                <Icon
+                  name={open ? 'angle-up' : 'angle-down'}
+                  type="font-awesome"
+                  size={24}
+                  color={open ? 'red' : 'gray'}
+                  style={{}}
+                />
+              </View>
+            </>
           )}
         />
         {open && (
@@ -403,20 +420,32 @@ function CustomDrawerContent(props) {
             }}
           />
         )}
-
         <DrawerItem
           label="Setting"
           style={{backgroundColor: '#ffffff'}}
           labelStyle={{color: openSetting ? 'red' : '#000000'}}
           onPress={() => setOpenSetting(!openSetting)}
           icon={({focused, color, size}) => (
-            <Icon
-              name="settings"
-              type="material"
-              size={24}
-              color={openSetting ? 'red' : 'gray'}
-              style={styles.btnIconPadding}
-            />
+            <>
+              <Icon
+                name="settings"
+                type="material"
+                size={24}
+                color={openSetting ? 'red' : 'gray'}
+                style={styles.btnIconPadding}
+              />
+
+              <View
+                style={{position: 'absolute', right: 10, alignItems: 'center'}}>
+                <Icon
+                  name={openSetting ? 'angle-up' : 'angle-down'}
+                  type="font-awesome"
+                  size={24}
+                  color={openSetting ? 'red' : 'gray'}
+                  style={{}}
+                />
+              </View>
+            </>
           )}
         />
         {openSetting && (
@@ -479,22 +508,3 @@ function CustomDrawerContent(props) {
     </SafeAreaView>
   );
 }
-const styles = StyleSheet.create({
-  sideMenuProfileIcon: {
-    resizeMode: 'center',
-    width: 40,
-    height: 40,
-    borderRadius: 100 / 2,
-    alignItems: 'flex-start',
-  },
-  iconStyle: {
-    width: 15,
-    height: 15,
-    marginHorizontal: 5,
-  },
-  customItem: {
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});

@@ -87,7 +87,7 @@ const RoleDetailScreen = props => {
       },
     };
     fetch(
-      `${appContextPaths[appDefDomain]}${EndPoint.userFuncPermissions}`,
+      `${appContextPaths[appDefDomain]}${EndPoint.myfuncs}`,
 
       requestOptions,
     )

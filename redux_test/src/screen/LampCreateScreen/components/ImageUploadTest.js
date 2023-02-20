@@ -144,6 +144,17 @@ const ImageUploadTest = ({
             }}
           />
         </ReactNativeZoomableView>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.buttonStyle}
+          onPress={() => chooseFile('photo')}>
+          <Icon
+            name="image"
+            type="material-community"
+            size={40}
+            color="white"
+          />
+        </TouchableOpacity>
       </View>
       <View style={styles.container}>
         {/* <Image
@@ -156,18 +167,10 @@ const ImageUploadTest = ({
         <Text style={styles.textStyle}>{filePath[0]?.uri}</Text>
 
           /> */}
-
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={styles.buttonStyle}
-          onPress={() => chooseFile('photo')}>
-          <Text style={styles.textStyle}>Choose Image</Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -187,10 +190,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonStyle: {
+    position: 'absolute',
+    top: '2%',
+    right: '0%',
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: 'lightblue',
+    borderRadius: 50,
     padding: 5,
-    width: 250,
   },
   imageStyle: {
     width: 200,

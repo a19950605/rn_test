@@ -12,6 +12,10 @@ import {
 
 const Alarm = ({deviceId}) => {
   const [data, setData] = useState();
+  const [page, setPage] = useState(0);
+  const [isLastPage, setIsLastPage] = useState(false);
+  const [totalPages, setTotalPages] = useState('');
+  const [isReload, setIsReload] = useState(false);
   const userToken = useSelector(state => state.login.userToken?.Token);
   console.log('arlarm deviceid');
   console.log(deviceId);
@@ -28,7 +32,7 @@ const Alarm = ({deviceId}) => {
       },
     };
     fetch(
-      `${appContextPaths[appDefDomain]}${EndPoint.alarms}?deviceId=`,
+      `${appContextPaths[appDefDomain]}${EndPoint.alarms}?deviceId=${deviceId}&page=${page}`,
 
       requestOptions,
     )
@@ -38,12 +42,52 @@ const Alarm = ({deviceId}) => {
       .then(result => {
         //  console.log(result);
         // return result;
-        console.log('result123');
+        console.log('result alarms*******************************');
         console.log(result);
+        // setData(prevArray => [...prevArray, res]);
         setData(result?.content);
+
+        setTotalPages(result?.totalPages);
+        setIsLastPage(result?.last);
       })
       .catch(error => console.log('error16', error));
   }, []);
+  useEffect(() => {
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+        // Accept: '*',
+        // 'Content-Type': 'application/json',
+        'X-Token': userToken,
+      },
+    };
+    if (isLastPage == true || page == totalPages) {
+      setIsReload(false);
+      return;
+    } else if (isReload == true) {
+      fetch(
+        `${appContextPaths[appDefDomain]}${EndPoint.alarms}?deviceId=${deviceId}&page=${page}`,
+
+        requestOptions,
+      )
+        .then(response => {
+          return response.json();
+        })
+        .then(result => {
+          //  console.log(result);
+          // return result;
+
+          // setData(oldArray => [...oldArray, result?.content]);
+          //  setData([...data, result?.content]);
+          if (result?.content != undefined) {
+            setData(prevArray => [...prevArray, ...result?.content]);
+          }
+          setIsLastPage(result?.last);
+          setIsReload(false);
+        })
+        .catch(error => console.log('error19', error));
+    }
+  }, [isReload]);
   return (
     <View style={{flex: 1, padding: 10, backgroundColor: 'white'}}>
       <View
@@ -52,7 +96,10 @@ const Alarm = ({deviceId}) => {
           justifyContent: 'space-between',
         }}>
         <View>
-          <Text>Outstandingn alarm</Text>
+          <Text>
+            Outstandingn alarm{totalPages || ''}
+            {page || ''}
+          </Text>
         </View>
         <View>
           <Text>filter</Text>
@@ -64,7 +111,14 @@ const Alarm = ({deviceId}) => {
         <FlatList
           data={data}
           renderItem={props => <OutstandingAlarmMonCard {...props} />}
-          keyExtractor={item => item.id}
+          //  keyExtractor={item}
+          onEndReached={() => {
+            alert('end react');
+            if (totalPages > page) {
+              setPage(page + 1);
+              setIsReload(true);
+            }
+          }}
         />
       </View>
     </View>

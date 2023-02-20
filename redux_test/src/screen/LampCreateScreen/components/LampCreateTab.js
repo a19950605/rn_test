@@ -77,6 +77,14 @@ const LampCreateTab = ({
                   setForm({...form, controllerId: controllerId});
                 }}
               />
+              <View style={styles.inputArrowIconV2}>
+                <Icon
+                  name="angle-down"
+                  size={24}
+                  color="black"
+                  type="font-awesome"
+                />
+              </View>
             </Pressable>
           </View>
           <View>
@@ -141,6 +149,14 @@ const LampCreateTab = ({
                   setForm({...form, deviceId: deviceId});
                 }}
               />
+              <View style={styles.inputArrowIconV2}>
+                <Icon
+                  name="angle-down"
+                  size={24}
+                  color="black"
+                  type="font-awesome"
+                />
+              </View>
             </Pressable>
           </View>
           <View>
@@ -169,7 +185,7 @@ const LampCreateTab = ({
                   onPress={() => {
                     setDeviceId(3);
                     setForm({...form, deviceId: parseInt(3)});
-                    setMenu1(false);
+                    setMenu4(false);
                   }}
                   title="3"
                 />
@@ -337,7 +353,7 @@ const LampCreateTab = ({
                 setDisplay={setStatus}
                 keyVal={'status'}
                 options={[
-                  {displayName: 'Active', formVal: 'ACTiVE'},
+                  {displayName: 'Active', formVal: 'ACTIVE'},
                   {displayName: 'Maintenance', formVal: 'DISABLED'},
                 ]}
               />

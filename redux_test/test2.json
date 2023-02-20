@@ -1,0 +1,246 @@
+{
+  "cate": [
+    {
+      "id": 1,
+      "displayName": "System",
+      "icon": "fas fa-folder-open",
+      "lv": 0,
+      "sort": 4,
+      "funcCateId": 0
+    },
+    {
+      "id": 2,
+      "displayName": "General",
+      "icon": "fas fa-folder-open",
+      "lv": 0,
+      "sort": 2,
+      "funcCateId": 0
+    },
+    {
+      "id": 3,
+      "displayName": "Reports",
+      "icon": "fas fa-folder-open",
+      "lv": 0,
+      "sort": 3,
+      "funcCateId": 0
+    },
+    {
+      "id": 4,
+      "displayName": "eMap",
+      "icon": "fas fa-folder-open",
+      "lv": 0,
+      "sort": 1,
+      "funcCateId": 0
+    },
+    {
+      "id": 5,
+      "displayName": "Tools",
+      "icon": "fas fa-toolbox",
+      "lv": 1,
+      "sort": 2,
+      "funcCateId": 1
+    },
+    {
+      "id": 6,
+      "displayName": "Users",
+      "icon": "fas fa-address-book",
+      "lv": 1,
+      "sort": 1,
+      "funcCateId": 1
+    },
+    {
+      "id": 7,
+      "displayName": "Catalog",
+      "icon": "fas fa-tag",
+      "lv": 1,
+      "sort": 1,
+      "funcCateId": 2
+    },
+    {
+      "id": 8,
+      "displayName": "Administration",
+      "icon": "fas fa-university",
+      "lv": 0,
+      "sort": 1,
+      "funcCateId": 0
+    },
+    {
+      "id": 9,
+      "displayName": "Security",
+      "icon": "fas fa-folder-open",
+      "lv": 0,
+      "sort": 1,
+      "funcCateId": 0
+    },
+    {
+      "id": 11,
+      "displayName": "RFL",
+      "icon": "fas fa-folder-open",
+      "lv": 0,
+      "sort": 1,
+      "funcCateId": 0
+    },
+    {
+      "id": 12,
+      "displayName": "App Setting",
+      "icon": "fas fa-folder-open",
+      "lv": 0,
+      "sort": 99,
+      "funcCateId": 0
+    }
+  ],
+  "func": [
+    {
+      "permissions": [
+        {
+          "id": 3,
+          "type": "AC",
+          "displayName": "View",
+          "code": "SYSUSR_R"
+        }
+      ],
+      "id": 3,
+      "sort": 94,
+      "url": "/system/user",
+      "longDisplayName": "System > Portal Users",
+      "icon": "fas fa-users",
+      "code": "ROLE_SYSUSR",
+      "shortDisplayName": "Portal Users",
+      "funcCateId": 1,
+      "status": "ACTIVE"
+    },
+    {
+      "permissions": [
+        {
+          "id": 7,
+          "type": "AC",
+          "displayName": "View",
+          "code": "ROLEPERM_R"
+        }
+      ],
+      "id": 4,
+      "sort": 93,
+      "url": "/system/user/rolePermission",
+      "longDisplayName": "System > Users > Role and Permission",
+      "icon": "fas fa-key",
+      "code": "ROLE_ROLEPERM",
+      "shortDisplayName": "Role and Permission",
+      "funcCateId": 1,
+      "status": "ACTIVE"
+    },
+    {
+      "permissions": [
+        {
+          "id": 36,
+          "type": "AC",
+          "displayName": "View",
+          "code": "RFL_MONITOR_R"
+        }
+      ],
+      "id": 15,
+      "sort": 2,
+      "url": "/rfl/monitoring",
+      "longDisplayName": "eRFL Monitoring",
+      "icon": "fas fa-desktop",
+      "code": "ROLE_RFL_MONITORING",
+      "shortDisplayName": "eRFL Monitoring",
+      "funcCateId": 11,
+      "status": "ACTIVE"
+    },
+    {
+      "permissions": [
+        {
+          "id": 44,
+          "type": "AC",
+          "displayName": "Delete (Cancel by owner)",
+          "code": "RFL_ASSIGNMENT_DBO"
+        },
+        {
+          "id": 40,
+          "type": "AC",
+          "displayName": "Create",
+          "code": "RFL_ASSIGNMENT_C"
+        },
+        {
+          "id": 41,
+          "type": "AC",
+          "displayName": "View",
+          "code": "RFL_ASSIGNMENT_R"
+        },
+
+        {
+          "id": 42,
+          "type": "AC",
+          "displayName": "Modify (Complete)",
+          "code": "RFL_ASSIGNMENT_U"
+        }
+      ],
+      "id": 16,
+      "sort": 3,
+      "url": "/rfl/assignment",
+      "longDisplayName": "eRFL Assignment",
+      "icon": "fas fa-desktop",
+      "code": "ROLE_RFL_ASSIGNMENT",
+      "shortDisplayName": "eRFL Assignment",
+      "funcCateId": 11,
+      "status": "ACTIVE"
+    },
+    {
+      "permissions": [
+        {
+          "id": 47,
+          "type": "AC",
+          "displayName": "View",
+          "code": "RFL_ALARM_R"
+        }
+      ],
+      "id": 17,
+      "sort": 4,
+      "url": "/rfl/assignment",
+      "longDisplayName": "eRFL Fault Alarm",
+      "icon": "far fa-bell",
+      "code": "ROLE_RFL_ALARM",
+      "shortDisplayName": "eRFL Fault Alarm",
+      "funcCateId": 11,
+      "status": "ACTIVE"
+    },
+    {
+      "permissions": [
+        {
+          "id": 52,
+          "type": "AC",
+          "displayName": "View",
+          "code": "APP_SETTING_R"
+        }
+      ],
+      "id": 18,
+      "sort": 5,
+      "url": "/app/setting",
+      "longDisplayName": "App Setting",
+      "icon": "fas fa-desktop",
+      "code": "ROLE_APP_SETTING",
+      "shortDisplayName": "App Setting",
+      "funcCateId": 12,
+      "status": "ACTIVE"
+    },
+    {
+      "permissions": [
+        {
+          "id": 54,
+          "type": "AC",
+          "displayName": "View",
+          "code": "EVENT_LOG_R"
+        }
+      ],
+      "id": 19,
+      "sort": 6,
+      "url": "/app/log",
+      "longDisplayName": "Event Log",
+      "icon": "fas fa-desktop",
+      "code": "ROLE_EVENT_LOG",
+      "shortDisplayName": "eRFL Event Log",
+      "funcCateId": 11,
+      "status": "ACTIVE"
+    }
+  ]
+}

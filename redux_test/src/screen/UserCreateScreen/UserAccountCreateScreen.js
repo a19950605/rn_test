@@ -37,17 +37,6 @@ import {resetErrorMsg} from '../../utils/resetErrorMsg';
 import {ModalMessage} from '../../components/ModalMessage';
 
 const UserAccountCreateScreen = () => {
-  /**
-   *  let form = {
-                      status,
-                      username,
-                      displayName,
-                      password,
-                      staffNo,
-                      rmks,
-                      roleSubmit,
-                    };
-   */
   const [submitForm, setSubmitForm] = useState({
     status: 'ACTIVE',
     username: '',
@@ -245,6 +234,14 @@ const UserAccountCreateScreen = () => {
                     underlineColor={roleError && 'red'}
                     onChangeText={''}
                   />
+                  <View style={styles.inputArrowIconV2}>
+                    <Icon
+                      name="angle-down"
+                      size={24}
+                      color="black"
+                      type="font-awesome"
+                    />
+                  </View>
                 </View>
               </Pressable>
             </View>
@@ -377,6 +374,14 @@ const UserAccountCreateScreen = () => {
                   label="Status"
                   value={status}
                   onChangeText={''}
+                />
+              </View>
+              <View style={styles.inputArrowIcon}>
+                <Icon
+                  name="angle-down"
+                  size={24}
+                  color="black"
+                  type="font-awesome"
                 />
               </View>
             </Pressable>
