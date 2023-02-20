@@ -11,6 +11,7 @@ import {Icon} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {useGetUsersQuery} from '../features/api/userApiSlice';
+import MyComponent from './components/MyComponent';
 
 const Assignment = () => {
   const navigation = useNavigation();
@@ -50,13 +51,7 @@ const Assignment = () => {
             <Text style={{color: 'blue'}}>Add</Text>
           </View>
         </TouchableOpacity>
-        <Icon
-          name="filter"
-          size={24}
-          color="black"
-          type="ionicon"
-          style={{padding: 10}}
-        />
+        <MyComponent />
       </View>
     </View>
   );

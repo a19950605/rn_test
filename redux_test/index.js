@@ -8,7 +8,7 @@ import React from 'react';
 import {name as appName} from './app.json';
 import 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
-import {store} from './src/store';
+import {store} from './src/redux/store';
 import './src/localization/i18n';
 import 'intl-pluralrules';
 

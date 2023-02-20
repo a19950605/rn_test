@@ -130,8 +130,10 @@ const ImageUploadTest = ({
             padding: 10,
           }}>
           <MarkerImage
-            image={!uri ? require('../../../assets/white.jpg') : {uri: uri}}
-            markerImage={require('../../../assets/location-pin-icon-on-transparent-pin-vector-20942049.jpg')}
+            image={
+              !uri ? require('../../../assets/images/white.jpg') : {uri: uri}
+            }
+            markerImage={require('../../../assets/images/location-pin-icon-on-transparent-pin-vector-20942049.jpg')}
             markerSize={50}
             onChange={data => {
               console.log(data);

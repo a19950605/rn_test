@@ -4,7 +4,13 @@ import {Tab, TabView} from '@rneui/themed';
 import {useDispatch, useSelector} from 'react-redux';
 import UserAccountDetailTab from './components/UserAccountDetailTab';
 import {styles} from '../../constants/styles';
-import {fetchOneUser} from '../../features/user/userSlice';
+import {fetchOneUser} from '../../redux/features/user/userSlice';
+import {Tabs, TabScreen} from 'react-native-paper-tabs';
+import {
+  appContextPaths,
+  appDefDomain,
+  EndPoint,
+} from '../../constants/constants';
 
 const UserAccountDetailScreen = props => {
   const [index, setIndex] = React.useState(0);
@@ -40,7 +46,8 @@ const UserAccountDetailScreen = props => {
     };
     //api/userFuncPermissions
     fetch(
-      'https://gis2.ectrak.com.hk:8900/api/userFuncPermissions',
+      `${appContextPaths[appDefDomain]}${EndPoint.userFuncPermissions}`,
+
       requestOptions,
     )
       .then(response => {
@@ -67,7 +74,7 @@ const UserAccountDetailScreen = props => {
       },
     };
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/system/user/${id}`,
+      `${appContextPaths[appDefDomain]}${EndPoint.user}/${id}`,
       requestOptions,
     )
       .then(response => {
@@ -92,50 +99,15 @@ const UserAccountDetailScreen = props => {
         </View>
       ) : (
         <>
-          <Tab
+          <Tabs
             style={styles.whiteBackground}
-            value={index}
-            scrollable={true}
-            onChange={e => setIndex(e)}
-            containerStyle={{
-              backgroundColor: 'white',
-              color: 'black',
-            }}
-            indicatorStyle={{
-              backgroundColor: 'red',
-              height: 3,
-            }}
-            variant="default">
-            <Tab.Item
-              title="Details"
-              icon={active => ({
-                name: 'clipboard-text',
-                type: 'material-community',
-                color: active ? '#7a2210' : 'black',
-              })}
-              titleStyle={active => ({
-                color: active ? '#7a2210' : 'black',
-                fontSize: 12,
-              })}
-            />
-            <Tab.Item
-              title="Permission"
-              titleStyle={active => ({
-                color: active ? '#7a2210' : 'black',
-                fontSize: 12,
-              })}
-              icon={active => ({
-                name: 'shield-checkmark',
-                type: 'ionicon',
-                color: active ? '#7a2210' : 'black',
-              })}
-            />
-          </Tab>
-          <TabView value={index} onChange={setIndex} animationType="spring">
-            <TabView.Item style={styles.width100w}>
+            iconPosition="top"
+            uppercase={false} // true/false | default=true | labels are uppercase
+          >
+            <TabScreen label="Details" icon="clipboard-text">
               <UserAccountDetailTab userData={user} />
-            </TabView.Item>
-            <TabView.Item style={styles.wh100w}>
+            </TabScreen>
+            <TabScreen label="Permission" icon="map">
               <View style={styles.lampCreateContainer}>
                 <Text>permission</Text>
                 <View style={styles.flexGrow1}>
@@ -148,8 +120,8 @@ const UserAccountDetailScreen = props => {
                   <Text>1</Text>
                 </View>
               </View>
-            </TabView.Item>
-          </TabView>
+            </TabScreen>
+          </Tabs>
         </>
       )}
     </>

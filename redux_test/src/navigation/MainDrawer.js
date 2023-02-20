@@ -8,6 +8,7 @@ import {
   Platform,
   StatusBar,
   TouchableOpacity,
+  Text,
 } from 'react-native';
 import {
   getFocusedRouteNameFromRoute,
@@ -23,10 +24,10 @@ import {
 import SysParams from '../screen/SystemParams/SysParams';
 import PasswordSetting from '../screen/SettingScreen/PasswordSetting';
 import AlarmHistory from '../screen/AlarmHistory/AlarmHistory';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {signout} from '../features/login/loginSlice';
+import {signout} from '../redux/features/login/loginSlice';
 import {Icon} from '@rneui/themed';
 import {UserNav} from './UserNav';
 import {LampNav} from './LampNav';
@@ -40,6 +41,7 @@ const Drawer = createDrawerNavigator();
 
 export function MainDrawer() {
   const navigation = useNavigation();
+
   console.log('init');
   //auth("wilson2022","R4QB10DD");
   //  listEventLog({username:'wilson2022',funcName:'Userloginlog',fromTime:'20221212',toTime:'20221212'},"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdnJJZCI6IjIiLCJqdGkiOiIxNjcwODM1ODY4NzE4In0.lqGUbA9zVGVCnH3CB_v_cYR06OuM8A0Z-kVmBAEnwdZP25pDJNPa9mI0DBNBMsAysEKTyS_bX3kHY1OI2HfaBA"
@@ -70,7 +72,7 @@ export function MainDrawer() {
               isDetail = true;
               break;
             case 'Create Monitoring':
-              headerTitle = 'Create Monitoring';
+              headerTitle = 'Create Device';
               isDetail = true;
               break;
             case 'UserAccountDetail':
@@ -315,15 +317,32 @@ function CustomDrawerContent(props) {
   };
   const [open, setOpen] = useState(false);
   const [openSetting, setOpenSetting] = useState(false);
+  const userInfo = useSelector(state => state.userInfo.userInfo);
+
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{backgroundColor: 'black', padding: 10}}>
+      <View
+        style={{
+          backgroundColor: 'black',
+          padding: 10,
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}>
         <Image
           source={{
             uri: 'https://static.wikia.nocookie.net/logopedia/images/1/16/120724090720-MTR-Corporation-logo.png',
           }}
           style={styles.sideMenuProfileIcon}
         />
+        <Text
+          style={{
+            color: 'white',
+            marginLeft: 2,
+            fontSize: 16,
+            fontWeight: 'bold',
+          }}>
+          {userInfo?.displayName || ''}
+        </Text>
       </View>
       <DrawerContentScrollView
         {...props}

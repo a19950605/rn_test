@@ -1,15 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import {Icon, Tab, TabView} from '@rneui/themed';
+import {Tabs, TabScreen} from 'react-native-paper-tabs';
+
 import RoleCreateForm from './components/RoleCreateForm';
 import RolePermission from './components/RolePermssion';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../../constants/styles';
+import {useTranslation} from 'react-i18next';
+import {resetErrorMsg} from '../../utils/resetErrorMsg';
+import {FormValidator} from '../../utils/formValidator';
+import {
+  appContextPaths,
+  appDefDomain,
+  EndPoint,
+} from '../../constants/constants';
 
 const RoleCreateScreen = () => {
   const [index, setIndex] = useState(0);
   const [isSubmit, setIsSubmit] = useState(false);
+  const {t} = useTranslation();
 
   const [form, setForm] = useState({
     code: '',
@@ -17,6 +28,9 @@ const RoleCreateScreen = () => {
     rmks: '',
     status: 'ACTIVE',
   });
+  const [isError, setIsError] = useState('');
+  const [codeError, setCodeError] = useState('');
+  const [displayNameError, setDisplayNameError] = useState('');
 
   //permission,status,code,rmks,displayName
   const [listData, setListData] = useState([]);
@@ -35,7 +49,8 @@ const RoleCreateScreen = () => {
       },
     };
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/userFuncPermissions`,
+      `${appContextPaths[appDefDomain]}${EndPoint.userFuncPermissions}`,
+
       requestOptions,
     )
       .then(response => {
@@ -65,62 +80,45 @@ const RoleCreateScreen = () => {
 
   return (
     <>
-      <Tab
-        style={styles.rowTab}
-        value={index}
-        scrollable={true}
-        onChange={e => setIndex(e)}
-        containerStyle={{
-          backgroundColor: 'white',
-          color: 'black',
-        }}
-        indicatorStyle={{
-          backgroundColor: 'red',
-          height: 3,
-        }}
-        variant="default">
-        <Tab.Item
-          title="Details"
-          titleStyle={active => ({
-            color: active ? '#7a2210' : 'black',
-            fontSize: 12,
-          })}
-          icon={active => ({
-            name: 'clipboard-text',
-            type: 'material-community',
-            color: active ? '#7a2210' : 'black',
-          })}
-        />
-        <Tab.Item
-          title="Permission"
-          titleStyle={active => ({
-            color: active ? '#7a2210' : 'black',
-            fontSize: 12,
-          })}
-          icon={active => ({
-            name: 'shield-check',
-            type: 'material-community',
-            color: active ? '#7a2210' : 'black',
-          })}
-        />
-      </Tab>
-      <TabView value={index} onChange={setIndex} animationType="spring">
-        <TabView.Item style={styles.width100w}>
-          <RoleCreateForm setForm={setForm} form={form} isSubmit={isSubmit} />
-        </TabView.Item>
-        <TabView.Item style={styles.wh100w}>
-          {/* <RoleDetailPermission
-       
-      /> */}
+      <Tabs
+        style={styles.whiteBackground}
+        iconPosition="top"
+        uppercase={false} // true/false | default=true | labels are uppercase
+      >
+        <TabScreen label={t('lamp.details')} icon="clipboard-text">
+          <RoleCreateForm
+            setForm={setForm}
+            form={form}
+            isSubmit={isSubmit}
+            codeError={codeError}
+            displayNameError={displayNameError}
+          />
+        </TabScreen>
+        <TabScreen label="permissions" icon="map">
           <RolePermission listData={listData} setPermission={setPermission} />
-        </TabView.Item>
-      </TabView>
+        </TabScreen>
+      </Tabs>
+
       <View style={styles.saveDeleteButtonGroup}>
         <TouchableOpacity
           style={styles.saveBtnContainer}
           onPress={() => {
             // alert('hello' + permission);
             setIsSubmit(true);
+            setIsError(false);
+            resetErrorMsg({
+              errorSetter: [setCodeError, setDisplayNameError],
+            });
+            FormValidator({
+              input: form.code,
+              setValue: setCodeError,
+              setIsError,
+            });
+            FormValidator({
+              input: form.displayName,
+              setValue: setDisplayNameError,
+              setIsError,
+            });
             if (!form.status || !form.code || !form.displayName) {
               alert('fill all required field');
             } else {
@@ -161,10 +159,7 @@ const createRole = (token, form, permission, navigation) => {
     body: formdata,
   };
 
-  fetch(
-    'https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission',
-    requestOptions,
-  )
+  fetch(`${appContextPaths[appDefDomain]}${EndPoint.role}`, requestOptions)
     .then(response => {
       if (response.status == 200) {
         alert('create success');

@@ -6,7 +6,7 @@ import {Icon, LinearProgress} from '@rneui/themed';
 import {useWindowDimensions} from 'react-native';
 import EventLogTable from './components/EventLogTable';
 
-import SortDropDown from '../../utils/sortFilter';
+import SortDropDown from '../../components/sortFilter';
 import EventLogCard from './components/EventLogCard';
 import {useIsFocused} from '@react-navigation/native';
 import {useFetchEventLogData} from '../../hooks/ApiHook';

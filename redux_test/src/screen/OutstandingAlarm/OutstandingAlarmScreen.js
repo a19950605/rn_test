@@ -13,7 +13,7 @@ import {useSelector} from 'react-redux';
 import {Icon} from '@rneui/themed';
 import {useWindowDimensions} from 'react-native';
 import TableTest2 from './components/TableTest2';
-import SortDropDown from '../../utils/sortFilter';
+import SortDropDown from '../../components/sortFilter';
 import {sortData} from '../../utils/sortData';
 import {getDate} from '../../utils/getDate';
 import {styles} from '../../constants/styles';

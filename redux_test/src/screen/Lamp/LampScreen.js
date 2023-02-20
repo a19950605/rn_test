@@ -24,16 +24,16 @@ import {
   useFetchMonitorData,
   useFetchMonitorTest,
 } from '../../hooks/ApiHook';
-import SortDropDown from '../../utils/sortFilter';
+import SortDropDown from '../../components/sortFilter';
 import {LampFilterModal} from './components/LampFilterModal';
 import {color, styles} from '../../constants/styles';
 import {useTranslation} from 'react-i18next';
 import {DatePickerModal} from 'react-native-paper-dates';
 import {ReloadButton} from '../../components/ReloadButton';
 import moment from 'moment';
-import {fetchActiveDevices} from '../../features/lamp/activeLampSlice';
-import {getControllers} from '../../features/controller/controllerSlice';
-import {getDevices} from '../../features/lamp/lampsSlice';
+import {fetchActiveDevices} from '../../redux/features/lamp/activeLampSlice';
+import {getControllers} from '../../redux/features/controller/controllerSlice';
+import {getDevices} from '../../redux/features/lamp/lampsSlice';
 import {formBuilder} from '../../utils/formBuilder';
 import {getConnStatus, getFilterStatus} from '../../utils/getStatus';
 
@@ -44,7 +44,6 @@ const LampScreen = () => {
   const [loading, setLoading] = useState(true);
   const [loading2, setLoading2] = useState(true);
   const [loadingController, setLoadingController] = useState();
-
   const dispatch = useDispatch();
   const {t} = useTranslation();
 
@@ -68,8 +67,11 @@ const LampScreen = () => {
   const [filterStatus, setFilterStatus] = useState('ACTIVE');
   const [showMainModal, setShowMainModal] = useState(false);
   const isFocused = useIsFocused();
-  const [date, setDate] = React.useState(undefined);
   const [open, setOpen] = React.useState(false);
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState('Empty');
 
   const onDismissSingle = React.useCallback(() => {
     setOpen(false);
@@ -261,14 +263,14 @@ const LampScreen = () => {
             date={date}
           />
         )}
-        <DatePickerModal
-          locale="en"
-          mode="single"
-          visible={open}
-          onDismiss={onDismissSingle}
-          date={date}
-          onConfirm={onConfirmSingle}
-        />
+        {open && (
+          <DateTimePicker
+            value={date}
+            // mode={mode}
+            display="default"
+            // onChange={onChangeDate}
+          />
+        )}
       </View>
     </TouchableWithoutFeedback>
   );

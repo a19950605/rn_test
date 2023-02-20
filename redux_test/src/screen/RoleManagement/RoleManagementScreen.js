@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   FlatList,
   useWindowDimensions,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import RoleListItem from './components/RoleListItem';
 import {useNavigation} from '@react-navigation/native';
 import {Icon, LinearProgress} from '@rneui/themed';
 import {useSelector} from 'react-redux';
-import SortDropDown from '../../utils/sortFilter';
+import SortDropDown from '../../components/sortFilter';
 import {sortData} from '../../utils/sortData';
 import {useIsFocused} from '@react-navigation/native';
 import CreateButton from '../../components/CreateButton';
@@ -48,54 +49,63 @@ function RoleManagementScreen() {
     {displayValue: 'Display Name', apiValue: 'displayName'},
     {displayValue: 'Status', apiValue: 'status'},
   ];
-
+  useEffect(() => {
+    if (!isFocused) {
+      setShowFilter(false);
+    }
+  }, [isFocused]);
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.spaceBetweenP10}>
-          <CreateButton navigation={navigation} navLoc={'RoleCreate'} />
-          <TouchableOpacity
-            onPress={() => {
-              setShowFilter(!showFilter);
-            }}>
-            <Icon name="filter" size={24} color="black" type="ionicon" />
-          </TouchableOpacity>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          setShowFilter(false);
+        }}>
+        <View style={styles.container}>
+          <View style={styles.spaceBetweenP10}>
+            <CreateButton navigation={navigation} navLoc={'RoleCreate'} />
+            <TouchableOpacity
+              onPress={() => {
+                setShowFilter(!showFilter);
+              }}>
+              <Icon name="filter" size={24} color="black" type="ionicon" />
+            </TouchableOpacity>
 
-          {showFilter && (
-            <SortDropDown
-              close={setShowFilter}
+            {showFilter && (
+              <SortDropDown
+                close={setShowFilter}
+                setFilterDesc={setFilterDesc}
+                setFilterField={setFilterField}
+                setLoading={setLoading}
+                sortOption={sortOption}
+                filterDesc={filterDesc}
+                filterField={filterField}
+              />
+            )}
+          </View>
+          {loading ? (
+            <View>
+              <LinearProgress color="red" />
+            </View>
+          ) : isLandscapeMode ? (
+            <RoleManagementTable
+              data={data}
+              navigation={navigation}
+              filterDesc={filterDesc}
+              filterField={filterField}
               setFilterDesc={setFilterDesc}
               setFilterField={setFilterField}
               setLoading={setLoading}
-              sortOption={sortOption}
-              filterDesc={filterDesc}
-              filterField={filterField}
+            />
+          ) : (
+            <FlatList
+              data={data}
+              renderItem={props => (
+                <RoleListItem {...props} navigation={navigation} />
+              )}
             />
           )}
         </View>
-        {loading ? (
-          <View>
-            <LinearProgress color="red" />
-          </View>
-        ) : isLandscapeMode ? (
-          <RoleManagementTable
-            data={data}
-            navigation={navigation}
-            filterDesc={filterDesc}
-            filterField={filterField}
-            setFilterDesc={setFilterDesc}
-            setFilterField={setFilterField}
-            setLoading={setLoading}
-          />
-        ) : (
-          <FlatList
-            data={data}
-            renderItem={props => (
-              <RoleListItem {...props} navigation={navigation} />
-            )}
-          />
-        )}
-      </View>
+      </TouchableWithoutFeedback>
     </>
   );
 }

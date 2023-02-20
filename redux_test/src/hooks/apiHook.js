@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {appContextPaths, EndPoint, appDefDomain} from '../constants/constants';
-import {signout} from '../features/login/loginSlice';
+import {signout} from '../redux/features/login/loginSlice';
 import {sortData} from '../utils/sortData';
 import moment from 'moment';
 const useFetchRoleData = ({
@@ -397,9 +397,9 @@ const createNewRecord = ({
       } else {
         setIcon('alert');
         setColor('red');
-        setAlertMessage(
-          'create fail: ' + response.status + '\n' + data?.errorMsg,
-        );
+        console.log('alert test');
+        console.log(data);
+        setAlertMessage(data?.funcDesc);
         setShowModal(true);
       }
 

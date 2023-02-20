@@ -14,7 +14,9 @@ import {useEffect} from 'react';
 import {createNewRecord} from '../../hooks/ApiHook';
 import {styles} from '../../constants/styles';
 import {formBuilder} from '../../utils/formBuilder';
-import {createLampDevice} from '../../features/lamp/lampSlice';
+import {createLampDevice} from '../../redux/features/lamp/lampSlice';
+import {resetErrorMsg} from '../../utils/resetErrorMsg';
+import {FormValidator} from '../../utils/formValidator';
 const MonitoringCreateScreen = props => {
   const [imgX, setImgX] = useState(0);
   const [imgY, setImgY] = useState(0);
@@ -39,8 +41,15 @@ const MonitoringCreateScreen = props => {
     relayChannelIdx: '',
     status: 'ACTIVE',
   });
+  const [controllerIdError, setControllerIdError] = useState('');
+  const [deviceIdError, setDeviceIdError] = useState('');
+  const [rflError, setRflError] = useState('');
+  const [relayChannelIdxError, setRelayChannelIdxError] = useState('');
+  const [isError, setIsError] = useState(false);
 
   //api/v2/options/rolesAsOptions
+
+  //controllerIdError,deviceIdError,rflError,relayChannelIdxError
   const {t} = useTranslation();
 
   useEffect(() => {
@@ -60,6 +69,10 @@ const MonitoringCreateScreen = props => {
             isSubmit={isSubmit}
             t={t}
             controllerList={controllerList}
+            controllerIdError={controllerIdError}
+            deviceIdError={deviceIdError}
+            rflError={rflError}
+            relayChannelIdxError={relayChannelIdxError}
           />
         </TabScreen>
         <TabScreen label={t('lamp.location')} icon="map">
@@ -81,14 +94,41 @@ const MonitoringCreateScreen = props => {
             console.log('request body');
             console.log(JSON.stringify(form));
             setIsSubmit(true);
-            if (
-              uri == '' ||
-              form.deviceId == '' ||
-              form.controllerId == '' ||
-              form.rfl == '' ||
-              (form.relayChannelIdx == '' && form.relayChannelIdx != 0)
-            ) {
+            setIsError(false);
+            resetErrorMsg({
+              errorSetter: [
+                setDeviceIdError,
+                setControllerIdError,
+                setRflError,
+                setRelayChannelIdxError,
+              ],
+            });
+            setIsSubmit(true);
+            FormValidator({
+              input: form.controllerId,
+              setValue: setControllerIdError,
+              setIsError,
+            });
+            FormValidator({
+              input: form.deviceId,
+              setValue: setDeviceIdError,
+              setIsError,
+            });
+            FormValidator({
+              input: form.rfl,
+              setValue: setRflError,
+              setIsError,
+            });
+            FormValidator({
+              input: form.relayChannelIdx,
+              setValue: setRelayChannelIdxError,
+              setIsError,
+            });
+            if (isError) {
               setAlertMessage('Missing required field!');
+              setShowModal(true);
+            } else if (uri == '') {
+              setAlertMessage('Missing image');
               setShowModal(true);
             } else {
               /**
@@ -106,52 +146,69 @@ const MonitoringCreateScreen = props => {
           'create fail: ' + response.status + '\n' + data?.errorMsg,
         );
                */
-              let tst = formBuilder(
-                {key: 'controllerCode', value: form.controllerId},
-                {key: 'code', value: form.rfl},
-                {key: 'controllerDeviceId', value: parseInt(form.deviceId)},
-                {key: 'lampPositionY', value: lampX},
-                {key: 'lampPositionX', value: lampY},
-                {key: 'imageW', value: imgX},
-                {key: 'imageH', value: imgY},
-                {key: 'relayChannelIdx', value: parseInt(form.relayChannelIdx)},
-                {
-                  key: 'xxoo',
-                  value: {
-                    uri: uri,
-                    type: 'image/jpeg',
-                    name: 'xxoo',
-                  },
-                },
-                {key: 'status', value: 'ACTIVE'},
-              );
-              dispatch(createLampDevice({userToken: userToken, data: tst}))
-                .then(() => {
-                  setAlertMessage('Create success' + `(id:${successId})`);
-                  setIcon('check-circle');
-                  setColor('green');
-                  setShowModal(true);
-                })
-                .catch(e => {
-                  setIcon('alert');
-                  setColor('red');
-                  setAlertMessage('create fail:');
-                  setShowModal(true);
-                });
-              // createNewRecord({
-              //   token: userToken,
-              //   setAlertMessage,
-              //   setColor,
-              //   setIcon,
-              //   setShowModal,
-              //   navigation,
-              //   form,
-              //   uri,
-              //   lampX,
-              //   lampY,
-              //   imgX,
-              //   imgY,
-              // });
+
+              // dispatch(
+              //   createLampDevice({
+              //     userToken: userToken,
+              //     data: formBuilder(
+              //       {key: 'controllerCode', value: form.controllerId},
+              //       {key: 'code', value: form.rfl},
+              //       {key: 'controllerDeviceId', value: parseInt(form.deviceId)},
+              //       {key: 'lampPositionY', value: lampX},
+              //       {key: 'lampPositionX', value: lampY},
+              //       {key: 'imageW', value: imgX},
+              //       {key: 'imageH', value: imgY},
+              //       {
+              //         key: 'relayChannelIdx',
+              //         value: parseInt(form.relayChannelIdx),
+              //       },
+              //       {
+              //         key: 'xxoo',
+              //         value: {
+              //           uri: uri,
+              //           type: 'image/jpeg',
+              //           name: 'xxoo',
+              //         },
+              //       },
+              //       {key: 'status', value: 'ACTIVE'},
+              //     ),
+              //   }),
+              // )
+              //   .unwrap()
+              //   .then(originalPromiseResult => {
+              //     // handle result here
+
+              //     console.log(originalPromiseResult);
+              //     setAlertMessage('Create success' + `(id:${successId})`);
+              //     setIcon('check-circle');
+              //     setColor('green');
+              //     setShowModal(true);
+
+              //     navigation.navigate('MonitoringTestSub');
+              //   })
+              //   .catch(rejectedValueOrSerializedError => {
+              //     // handle error here
+              //     setIcon('alert');
+              //     setColor('red');
+              //     setAlertMessage('create fail:');
+              //     setShowModal(true);
+              //     //   alert('create fail');
+              //   });
+
+              createNewRecord({
+                token: userToken,
+                setAlertMessage,
+                setColor,
+                setIcon,
+                setShowModal,
+                navigation,
+                form,
+                uri,
+                lampX,
+                lampY,
+                imgX,
+                imgY,
+              });
             }
           }}>
           <Icon

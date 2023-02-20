@@ -4,6 +4,11 @@ import {Input, Icon} from '@rneui/themed';
 import {TextInput} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  appContextPaths,
+  appDefDomain,
+  EndPoint,
+} from '../../constants/constants';
 
 const PasswordSetting = () => {
   const [text, setText] = React.useState('');
@@ -37,7 +42,7 @@ const PasswordSetting = () => {
       };
       // Alert.alert('hello' + cPw + pw1 + pw2);
       fetch(
-        'https://gis2.ectrak.com.hk:8900/api/changePassword',
+        `${appContextPaths[appDefDomain]}${EndPoint.userChangePwd}`,
         requestOptions,
       )
         .then(response => {

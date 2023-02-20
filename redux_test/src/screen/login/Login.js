@@ -4,11 +4,14 @@ import {View, Text, Image, useWindowDimensions} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
-import {signin} from '../../features/login/loginSlice';
+import {signin} from '../../redux/features/login/loginSlice';
 import {useTranslation} from 'react-i18next';
 import {styles} from '../../constants/styles';
-import {dTst, fetchUsers} from '../../features/users/usersSlice';
-
+import {
+  appContextPaths,
+  appDefDomain,
+  EndPoint,
+} from '../../constants/constants';
 const Login = () => {
   const dispatch = useDispatch();
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -127,7 +130,10 @@ const auth = (username, password) => {
     redirect: 'follow',
   };
 
-  return fetch('https://gis2.ectrak.com.hk:8900/api/auth', requestOptions)
+  return fetch(
+    `${appContextPaths[appDefDomain]}${EndPoint.auth}`,
+    requestOptions,
+  )
     .then(response => {
       return response.json();
     })

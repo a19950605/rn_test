@@ -8,7 +8,17 @@ import {styles} from '../../../constants/styles';
 import {FormValidationError} from '../../../components/formValidationError';
 import {DropDown} from '../../../components/StatusDropDown';
 
-const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
+const LampCreateTab = ({
+  setForm,
+  form,
+  isSubmit,
+  t,
+  controllerList,
+  controllerIdError,
+  deviceIdError,
+  rflError,
+  relayChannelIdxError,
+}) => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
   const [controllerId, setControllerId] = useState(''); // T002
@@ -90,9 +100,8 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
           </View>
           <View>
             <FormValidationError
-              value={controllerId}
+              value={controllerIdError}
               isSubmit={isSubmit}
-              message={'Controller ID is missing!'}
             />
           </View>
 
@@ -135,11 +144,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
             </Pressable>
           </View>
           <View>
-            <FormValidationError
-              value={deviceId}
-              isSubmit={isSubmit}
-              message={'Device ID is missing'}
-            />
+            <FormValidationError value={deviceIdError} isSubmit={isSubmit} />
           </View>
           <View>
             {menu4 && (
@@ -210,7 +215,7 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
           </View>
           <View>
             <FormValidationError
-              value={rfl}
+              value={rflError}
               isSubmit={isSubmit}
               message={'RFL is missing'}
             />
@@ -260,9 +265,8 @@ const LampCreateTab = ({setForm, form, isSubmit, t, controllerList}) => {
             </Pressable>
           </View>
           <FormValidationError
-            value={relayChannelIdx}
+            value={relayChannelIdxError}
             isSubmit={isSubmit}
-            message={'relayChannel Index is missing'}
           />
           <View>
             {menu1 && (

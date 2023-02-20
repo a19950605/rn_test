@@ -24,25 +24,27 @@ const RolePermission = props => {
 
   return (
     <View style={styles.filterBody}>
-      <Checkbox
-        status={checked ? 'checked' : 'unchecked'}
-        onPress={() => {
-          if (props?.listData?.length == selectedId.length) {
-            //  setChecked(false);
-            setSelectedId([]);
-          } else {
-            //  setChecked(true);
+      <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+        <Checkbox
+          status={checked ? 'checked' : 'unchecked'}
+          onPress={() => {
+            if (props?.listData?.length == selectedId.length) {
+              //  setChecked(false);
+              setSelectedId([]);
+            } else {
+              //  setChecked(true);
 
-            let selectedArr = [];
-            props?.listData.map(d => {
-              selectedArr.push(d.id);
-            });
-            // console.log('selected arr');
-            // console.log(selectedArr);
-            setSelectedId(selectedArr);
-          }
-        }}
-      />
+              let selectedArr = [];
+              props?.listData.map(d => {
+                selectedArr.push(d.id);
+              });
+              // console.log('selected arr');
+              // console.log(selectedArr);
+              setSelectedId(selectedArr);
+            }
+          }}
+        />
+      </View>
       <FlatList
         data={props?.listData}
         renderItem={props => (

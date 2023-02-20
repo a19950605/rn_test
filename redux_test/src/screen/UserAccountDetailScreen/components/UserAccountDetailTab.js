@@ -13,6 +13,11 @@ import {TextInput, Menu, Provider} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../../../constants/styles';
+import {
+  appContextPaths,
+  appDefDomain,
+  EndPoint,
+} from '../../../constants/constants';
 
 const UserAccountDetailTab = ({userData}) => {
   //user name
@@ -67,7 +72,8 @@ const UserAccountDetailTab = ({userData}) => {
       },
     };
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/v2/options/rolesAsOptions`,
+      `${appContextPaths[appDefDomain]}${EndPoint.opRoles}`,
+
       requestOptions,
     )
       .then(response => {
@@ -149,7 +155,7 @@ const UserAccountDetailTab = ({userData}) => {
       },
     };
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/system/user/${userData?.id}`,
+      `${appContextPaths[appDefDomain]}${EndPoint.user}/${userData?.id}`,
       requestOptions,
     )
       .then(response => {
@@ -556,7 +562,7 @@ const updateUser = (token, form, navigation, id) => {
     body: formdata,
   };
 
-  fetch('https://gis2.ectrak.com.hk:8900/api/system/user/' + id, requestOptions)
+  fetch(`${appContextPaths[appDefDomain]}${EndPoint.user}` + id, requestOptions)
     .then(response => {
       if (response.status == 200) {
         alert('update success');

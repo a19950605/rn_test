@@ -145,7 +145,7 @@ export const LampFilterModal = ({
               }}>
               <View style={styles.filterContent}>
                 <View>
-                  <Text style={styles.filterContentText}>{date}</Text>
+                  <Text style={styles.filterContentText}>{'select Date'}</Text>
                 </View>
                 <Icon
                   name="close"

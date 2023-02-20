@@ -6,6 +6,12 @@ import {useSelector} from 'react-redux';
 import RoleDetailForm from './components/RoleDetailForm';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../../constants/styles';
+import {Tabs, TabScreen} from 'react-native-paper-tabs';
+import {
+  appContextPaths,
+  appDefDomain,
+  EndPoint,
+} from '../../constants/constants';
 
 const RoleDetailScreen = props => {
   const navigation = useNavigation();
@@ -43,7 +49,7 @@ const RoleDetailScreen = props => {
       },
     };
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission/${id}`,
+      `${appContextPaths[appDefDomain]}${EndPoint.role}/${id}`,
       requestOptions,
     )
       .then(response => {
@@ -81,7 +87,8 @@ const RoleDetailScreen = props => {
       },
     };
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/userFuncPermissions`,
+      `${appContextPaths[appDefDomain]}${EndPoint.userFuncPermissions}`,
+
       requestOptions,
     )
       .then(response => {
@@ -92,10 +99,19 @@ const RoleDetailScreen = props => {
         //console.log(result.func[0].permissions); //5,4,2,3
         //console.log(result.func[1].permissions); //9,7,8,6
         //  console.log(result.func[2].permissions);
-        console.log(result.func[8].permissions);
         let temp_arr = [];
+
         result?.func?.map(per => {
-          temp_arr = temp_arr.concat(per.permissions);
+          let temp_inner = per.permissions;
+
+          // temp_inner.map(temp_m => ({
+          //   ...temp_m,
+          //   shortDisplayName: 'per.shortDisplayName',
+          // }));
+          for (const element of temp_inner) {
+            element.shortDisplayName = per.shortDisplayName;
+          }
+          temp_arr = temp_arr.concat(temp_inner);
         });
         // console.log('temp_arr');
         // console.log(temp_arr);
@@ -136,7 +152,7 @@ const RoleDetailScreen = props => {
       },
     };
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission/${props.route.params.id}`,
+      `${appContextPaths[appDefDomain]}${EndPoint.role}/${props.route.params.id}`,
       requestOptions,
     )
       .then(response => {
@@ -157,58 +173,22 @@ const RoleDetailScreen = props => {
         </View>
       ) : (
         <>
-          <Tab
-            style={styles.rowTab}
-            value={index}
-            scrollable={true}
-            onChange={e => setIndex(e)}
-            containerStyle={{
-              backgroundColor: 'white',
-              color: 'black',
-            }}
-            indicatorStyle={{
-              backgroundColor: 'red',
-              height: 3,
-            }}
-            variant="default">
-            <Tab.Item
-              title="Details"
-              titleStyle={active => ({
-                color: active ? '#7a2210' : 'black',
-                fontSize: 12,
-              })}
-              icon={active => ({
-                name: 'clipboard-text',
-                type: 'material-community',
-                color: active ? '#7a2210' : 'black',
-              })}
-            />
-            <Tab.Item
-              title="Permission"
-              titleStyle={active => ({
-                color: active ? '#7a2210' : 'black',
-                fontSize: 12,
-              })}
-              icon={active => ({
-                name: 'shield-check',
-                type: 'material-community',
-                color: active ? '#7a2210' : 'black',
-              })}
-            />
-          </Tab>
-          <TabView value={index} onChange={setIndex} animationType="spring">
-            <TabView.Item style={styles.width100w}>
+          <Tabs
+            style={styles.whiteBackground}
+            iconPosition="top"
+            uppercase={false} // true/false | default=true | labels are uppercase
+          >
+            <TabScreen label="Details" icon="clipboard-text">
               <RoleDetailForm setForm={setForm} form={form} data={props} />
-            </TabView.Item>
-            <TabView.Item style={styles.wh100w}>
+            </TabScreen>
+            <TabScreen label="permissions" icon="map">
               <RoleDetailPermission
                 setSelectedData={setSelectedData}
                 selectedData={selectedData}
                 listData={listData}
               />
-            </TabView.Item>
-          </TabView>
-
+            </TabScreen>
+          </Tabs>
           <View style={styles.saveDeleteButtonGroup}>
             <TouchableOpacity
               style={styles.deleteBtnContainer}
@@ -272,7 +252,7 @@ const updateRole = (token, form, selectedData, navigation, id) => {
     body: formdata,
   };
   fetch(
-    'https://gis2.ectrak.com.hk:8900/api/system/user/rolePermission/' + id,
+    `${appContextPaths[appDefDomain]}${EndPoint.role}/` + id,
     requestOptions,
   )
     .then(response => {

@@ -8,6 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import {
+  appContextPaths,
+  appDefDomain,
+  EndPoint,
+} from '../../constants/constants';
 
 const SysParams = () => {
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -21,7 +26,10 @@ const SysParams = () => {
         'X-Token': userToken,
       },
     };
-    fetch('https://gis2.ectrak.com.hk:8900/api/data/alarms/csv', requestOptions)
+    fetch(
+      `${appContextPaths[appDefDomain]}${EndPoint.alarmsCsv}`,
+      requestOptions,
+    )
       .then(response => {
         return response.json();
       })

@@ -1,17 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 
 //import Moment from 'react-moment';
 //import 'moment-timezone';
 
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {MainDrawer} from './src/navigation/MainDrawer';
-import Login from './src/screen/login/Login';
+import Login from './src/screen/Login/Login';
+import {getUserInfo} from './src/redux/features/userInfo/userInfoSlice';
 
 export default function App() {
   const userToken = useSelector(state => state.login.userToken?.Token);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (userToken != undefined) {
+      dispatch(getUserInfo(userToken));
+    } else {
+      console.log('dispatch userinfo faileld*****');
+    }
+  }, [userToken]);
   return (
     <NavigationContainer>
       {userToken ? <MainDrawer /> : <Login />}

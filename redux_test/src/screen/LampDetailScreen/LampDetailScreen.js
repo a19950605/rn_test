@@ -28,7 +28,12 @@ import {ActivityIndicator} from 'react-native-paper';
 import {Loading} from '../../components/Loading';
 import {ModalMessage} from '../../components/ModalMessage';
 import {styles} from '../../constants/styles';
-import {getLampDetail} from '../../features/lamp/lampSlice';
+import {getLampDetail} from '../../redux/features/lamp/lampSlice';
+import {
+  appContextPaths,
+  appDefDomain,
+  EndPoint,
+} from '../../constants/constants';
 
 const LampDetailScreen = props => {
   console.log('monitoring tab1');
@@ -110,7 +115,7 @@ const LampDetailScreen = props => {
       body: formdata,
     };
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/v2/device/${props.route.params.id}`,
+      `${appContextPaths[appDefDomain]}${EndPoint.lamp}/${props.route.params.id}`,
       requestOptions,
     )
       .then(async response => {
@@ -180,7 +185,10 @@ const LampDetailScreen = props => {
     console.log('deleterecord');
     console.log(token);
     console.log(id);
-    fetch(`https://gis2.ectrak.com.hk:8900/api/v2/device/${id}`, requestOptions)
+    fetch(
+      `${appContextPaths[appDefDomain]}${EndPoint.lamp}/${props.route.params.id}`,
+      requestOptions,
+    )
       .then(async response => {
         let data = await response.json();
         console.log(data);
@@ -216,7 +224,7 @@ const LampDetailScreen = props => {
     // https://gis2.ectrak.com.hk:8900/api/data/device/img/37
     //hardcode the id at this moment
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/v2/device/${props.route.params.id}`,
+      `${appContextPaths[appDefDomain]}${EndPoint.lamp}/${props.route.params.id}`,
       requestOptions,
     )
       .then(response => {
@@ -253,7 +261,7 @@ const LampDetailScreen = props => {
     })
       .fetch(
         'GET',
-        'https://gis2.ectrak.com.hk:8900/api/data/device/img/' +
+        `${appContextPaths[appDefDomain]}${EndPoint.lampImg}/${props.route.params.id}` +
           props.route.params.id,
         {
           // Accept: '*',

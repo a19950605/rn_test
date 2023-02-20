@@ -8,6 +8,7 @@ import {
   Text,
   Pressable,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {
   TextInput,
@@ -29,8 +30,11 @@ import {styles} from '../../constants/styles';
 import {FormValidationError} from '../../components/formValidationError';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {DropDown} from '../../components/StatusDropDown';
-import {createUser} from '../../features/user/userSlice';
+import {createUser} from '../../redux/features/user/userSlice';
 import {formBuilder} from '../../utils/formBuilder';
+import {FormValidator} from '../../utils/formValidator';
+import {resetErrorMsg} from '../../utils/resetErrorMsg';
+import {ModalMessage} from '../../components/ModalMessage';
 
 const UserAccountCreateScreen = () => {
   /**
@@ -55,7 +59,7 @@ const UserAccountCreateScreen = () => {
   });
   const [menu1, setMenu1] = useState(false);
   const [menu2, setMenu2] = useState(false);
-  const [role, setRole] = useState();
+  const [role, setRole] = useState('');
   const [roleSubmit, setRoleSubmit] = useState('');
   const userToken = useSelector(state => state.login.userToken?.Token);
   const {createStatus} = useSelector(state => state.user);
@@ -71,6 +75,17 @@ const UserAccountCreateScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [rmks, setRmks] = useState('');
   const [staffNo, setStaffNo] = useState('');
+  const [usernameError, setUserNameError] = useState('');
+  const [displayNameError, setDisplayNameError] = useState('');
+  const [staffIdError, setStaffIdError] = useState('');
+  const [roleError, setRoleError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [isError, setIsError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [color, setColor] = useState('red');
+  const [icon, setIcon] = useState('alert');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -82,9 +97,6 @@ const UserAccountCreateScreen = () => {
         'X-Token': userToken,
       },
     };
-    //拆出黎
-    //appContextPaths[appDefDomain]
-    //opRoles
     fetch(`${appContextPaths[appDefDomain]}${EndPoint.opRoles}`, requestOptions)
       .then(response => {
         return response.json();
@@ -109,10 +121,18 @@ const UserAccountCreateScreen = () => {
     setRoleOpt(rOpt);
   }, [option]);
 
+  useEffect(() => {
+    if (isSubmit == true) {
+    }
+  }, [isSubmit]);
   return (
     <Provider>
       <KeyboardAwareScrollView style={styles.container}>
-        <View>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setMenu1(false);
+            setMenu2(false);
+          }}>
           <View style={styles.p10}>
             <View style={styles.inputRow}>
               <Icon
@@ -124,10 +144,15 @@ const UserAccountCreateScreen = () => {
               />
               <View style={styles.width100}>
                 <TextInput
+                  onFocus={() => {
+                    setMenu1(false);
+                    setMenu2(false);
+                  }}
                   selectTextOnFocus={false}
                   style={styles.textInputMobile}
                   label="Username"
                   value={username}
+                  underlineColor={usernameError && 'red'}
                   onChangeText={username => {
                     setUsername(username);
                     setSubmitForm({...submitForm, username: username});
@@ -137,7 +162,7 @@ const UserAccountCreateScreen = () => {
             </View>
 
             <FormValidationError
-              value={username}
+              value={usernameError}
               isSubmit={isSubmit}
               lengthChk={true}
               length={6}
@@ -152,10 +177,15 @@ const UserAccountCreateScreen = () => {
               />
               <View style={styles.width100}>
                 <TextInput
+                  onFocus={() => {
+                    setMenu1(false);
+                    setMenu2(false);
+                  }}
                   selectTextOnFocus={false}
                   style={styles.textInputMobile}
                   label="Display name"
                   value={displayName}
+                  underlineColor={displayNameError && 'red'}
                   onChangeText={displayName => {
                     setDisplayName(displayName);
                     setSubmitForm({...submitForm, displayName: displayName});
@@ -163,7 +193,7 @@ const UserAccountCreateScreen = () => {
                 />
               </View>
             </View>
-            <FormValidationError value={displayName} isSubmit={isSubmit} />
+            <FormValidationError value={displayNameError} isSubmit={isSubmit} />
             <View style={styles.inputRow}>
               <Icon
                 name="hash"
@@ -174,18 +204,23 @@ const UserAccountCreateScreen = () => {
               />
               <View style={styles.width100}>
                 <TextInput
+                  onFocus={() => {
+                    setMenu1(false);
+                    setMenu2(false);
+                  }}
                   selectTextOnFocus={false}
                   style={styles.textInputMobile}
                   label="Staff ID"
                   value={staffNo}
+                  underlineColor={staffIdError && 'red'}
                   onChangeText={staffNo => {
-                    setStaffNo(staffNo);
+                    setStaffNo(staffNo.replace(/[^0-9]/g, ''));
                     setSubmitForm({...submitForm, staffNo: staffNo});
                   }}
                 />
               </View>
             </View>
-            <FormValidationError value={staffNo} isSubmit={isSubmit} />
+            <FormValidationError value={staffIdError} isSubmit={isSubmit} />
             <View style={styles.inputRow}>
               <Icon
                 name="shield-account-variant"
@@ -207,12 +242,13 @@ const UserAccountCreateScreen = () => {
                     style={styles.textInputMobile}
                     label="Role"
                     value={role}
+                    underlineColor={roleError && 'red'}
                     onChangeText={''}
                   />
                 </View>
               </Pressable>
             </View>
-            <FormValidationError value={role} isSubmit={isSubmit} />
+            <FormValidationError value={roleError} isSubmit={isSubmit} />
             <View>
               {menu1 && (
                 // <RoleDropDown
@@ -240,11 +276,16 @@ const UserAccountCreateScreen = () => {
               />
               <View style={styles.width100}>
                 <TextInput
+                  onFocus={() => {
+                    setMenu1(false);
+                    setMenu2(false);
+                  }}
                   selectTextOnFocus={false}
                   style={styles.textInputMobile}
                   label="Password"
                   value={password}
                   secureTextEntry={true}
+                  underlineColor={passwordError && 'red'}
                   onChangeText={password => {
                     setPassword(password);
 
@@ -254,7 +295,7 @@ const UserAccountCreateScreen = () => {
               </View>
             </View>
             <FormValidationError
-              value={password}
+              value={passwordError}
               isSubmit={isSubmit}
               lengthChk={true}
               length={8}
@@ -269,11 +310,16 @@ const UserAccountCreateScreen = () => {
               />
               <View style={styles.width100}>
                 <TextInput
+                  onFocus={() => {
+                    setMenu1(false);
+                    setMenu2(false);
+                  }}
                   selectTextOnFocus={false}
                   style={styles.textInputMobile}
                   label="Password Confirmation"
                   value={confirmPassword}
                   secureTextEntry={true}
+                  underlineColor={confirmPasswordError && 'red'}
                   onChangeText={confirmPassword =>
                     setConfirmPassword(confirmPassword)
                   }
@@ -281,7 +327,7 @@ const UserAccountCreateScreen = () => {
               </View>
             </View>
             <FormValidationError
-              value={confirmPassword}
+              value={confirmPasswordError}
               isSubmit={isSubmit}
               lengthChk={true}
               length={8}
@@ -297,6 +343,10 @@ const UserAccountCreateScreen = () => {
                 style={styles.p10}
               />
               <TextInput
+                onFocus={() => {
+                  setMenu1(false);
+                  setMenu2(false);
+                }}
                 selectTextOnFocus={false}
                 style={styles.textInputMobile}
                 label="Remarks"
@@ -350,58 +400,125 @@ const UserAccountCreateScreen = () => {
                 style={styles.saveBtnContainer}
                 onPress={() => {
                   //  alert('hello');
+                  setIsSubmit(false);
+                  setIsError(false);
+                  resetErrorMsg({
+                    errorSetter: [
+                      setUserNameError,
+                      setDisplayNameError,
+                      setStaffIdError,
+                      setRoleError,
+                      setPasswordError,
+                      setConfirmPasswordError,
+                    ],
+                  });
+                  FormValidator({
+                    input: username,
+                    lengthChk: true,
+                    length: 8,
+                    setValue: setUserNameError,
+                    setIsError,
+                  });
+                  FormValidator({
+                    input: displayName,
+                    setValue: setDisplayNameError,
+                    setIsError,
+                  });
+                  FormValidator({
+                    input: staffNo,
+                    setValue: setStaffIdError,
+                    setIsError,
+                  });
+                  FormValidator({
+                    input: role,
+                    setValue: setRoleError,
+                    setIsError,
+                  });
+                  FormValidator({
+                    input: password,
+                    lengthChk: true,
+                    length: 8,
+                    setValue: setPasswordError,
+                    setIsError,
+                  });
+                  FormValidator({
+                    input: confirmPassword,
+                    lengthChk: true,
+                    length: 8,
+                    pw: password,
+                    setValue: setConfirmPasswordError,
+                    setIsError,
+                  });
                   setIsSubmit(true);
+                  if (isSubmit == true) {
+                    if (
+                      isError == true ||
+                      usernameError != '' ||
+                      displayNameError != '' ||
+                      roleError != '' ||
+                      passwordError != '' ||
+                      confirmPasswordError != ''
+                    ) {
+                      console.log('error');
+                      //alert('error happened');
+                    } else {
+                      // useCreateUser({userToken, form: submitForm, navigation});
 
-                  if (
-                    !status ||
-                    !username ||
-                    !displayName ||
-                    !password ||
-                    !staffNo
-                  ) {
-                    alert('fill missing fields ');
-                  } else if (
-                    password != confirmPassword &&
-                    password.length >= 8
-                  ) {
-                    alert('password not match');
-                  } else {
-                    // useCreateUser({userToken, form: submitForm, navigation});
+                      dispatch(
+                        createUser({
+                          userToken,
+                          data: formBuilder([
+                            {
+                              key: 'username',
+                              value: submitForm?.username || '',
+                            },
+                            {key: 'status', value: submitForm?.status || ''},
 
-                    dispatch(
-                      createUser({
-                        userToken,
-                        data: formBuilder([
-                          {
-                            key: 'username',
-                            value: submitForm?.username || '',
-                          },
-                          {key: 'status', value: submitForm?.status || ''},
+                            {
+                              key: 'displayName',
+                              value: submitForm?.displayName || '',
+                            },
+                            {
+                              key: 'password',
+                              value: submitForm?.password || '',
+                            },
+                            {
+                              key: 'staffNo',
+                              value: submitForm?.staffNo || '',
+                            },
+                            {key: 'rmks', value: submitForm?.rmks || ''},
+                            {key: 'roleIds', value: [submitForm?.role]},
+                          ]),
+                        }),
+                      )
+                        .unwrap()
+                        .then(originalPromiseResult => {
+                          // handle result here
 
-                          {
-                            key: 'displayName',
-                            value: submitForm?.displayName || '',
-                          },
-                          {
-                            key: 'password',
-                            value: submitForm?.password || '',
-                          },
-                          {
-                            key: 'staffNo',
-                            value: submitForm?.staffNo || '',
-                          },
-                          {key: 'rmks', value: submitForm?.rmks || ''},
-                          {key: 'roleIds', value: [submitForm?.role]},
-                        ]),
-                      }),
-                    )
-                      .then(() => {
-                        alert('create fail');
-                        navigation.navigate('UserAccount');
-                      })
-                      .catch(e => {
-                        alert('create fail');
-                      });
+                          console.log(originalPromiseResult);
+                          console.log('create success');
+                          console.log(originalPromiseResult);
+                          setAlertMessage('Create success' + `(id:`);
+                          setIcon('check-circle');
+                          setColor('green');
+                          setShowModal(true);
+                          navigation.navigate('UserAccount');
+                        })
+                        .catch(rejectedValueOrSerializedError => {
+                          // handle error here
+                          console.log('createfailed ');
+
+                          console.log(rejectedValueOrSerializedError?.error);
+                          console.log('createfailed ');
+                          setIcon('alert');
+                          setColor('red');
+                          console.log('alert test');
+                          setAlertMessage(
+                            rejectedValueOrSerializedError?.error || '',
+                          );
+                          setShowModal(true);
+                        });
+                    }
                   }
                 }}>
                 <Icon
@@ -414,8 +531,18 @@ const UserAccountCreateScreen = () => {
                 <Text style={styles.saveBtnTitle}> Save</Text>
               </TouchableOpacity>
             </View>
+            <View>
+              {showModal && (
+                <ModalMessage
+                  message={alertMessage}
+                  setShowModal={setShowModal}
+                  color={color}
+                  icon={icon}
+                />
+              )}
+            </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </KeyboardAwareScrollView>
     </Provider>
   );

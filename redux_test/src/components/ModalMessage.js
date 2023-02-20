@@ -20,7 +20,7 @@ export const ModalMessage = ({message, setShowModal, icon, color}) => {
         <Icon
           name={icon || 'alert'}
           size={48}
-          color={color || red}
+          color={color || 'red'}
           type="octicon"
         />
         <Text style={styles.loadTxt}>{message || 'no passing message'}</Text>

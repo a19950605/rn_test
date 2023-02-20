@@ -10,9 +10,6 @@ const color = StyleSheet.create({
   primaryColor: {
     color: 'green',
   },
-  primaryColor: {
-    color: '#fd9c12',
-  },
   gray: {
     color: 'gray',
   },
@@ -33,9 +30,6 @@ const styles = StyleSheet.create({
   },
   primaryColor: {
     color: 'green',
-  },
-  primaryColor: {
-    color: '#fd9c12',
   },
   bgWhite: {backgroundColor: 'white'},
   flex_1: {flex: 1},
@@ -407,6 +401,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 5,
+    borderColor: 'gray',
+    borderWidth: 0.2,
   },
   //row item list
   rowListBorder: {

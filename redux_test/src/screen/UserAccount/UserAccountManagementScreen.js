@@ -5,19 +5,25 @@ import {
   FlatList,
   TouchableOpacity,
   useWindowDimensions,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {Icon, LinearProgress} from '@rneui/themed';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import UserAccountCard from './components/UserAccountCard';
 import {useDispatch, useSelector} from 'react-redux';
-import SortDropDown from '../../utils/sortFilter';
+import SortDropDown from '../../components/sortFilter';
 import {sortData} from '../../utils/sortData';
 import Modal from 'react-native-modal';
 import CreateButton from '../../components/CreateButton';
 import {useFetchUsersData} from '../../hooks/ApiHook';
 import UserAccountTable from './components/UserAccountTable';
 import {styles} from '../../constants/styles';
-import {fetchUsers} from '../../features/users/usersSlice';
+import {fetchUsers} from '../../redux/features/users/usersSlice';
+import {
+  appContextPaths,
+  appDefDomain,
+  EndPoint,
+} from '../../constants/constants';
 
 const UserAccountManagementScreen = () => {
   const isFocused = useIsFocused();
@@ -57,6 +63,12 @@ const UserAccountManagementScreen = () => {
   }, [isFocused, filterDesc, filterField]);
 
   useEffect(() => {
+    if (!isFocused) {
+      setShowFilter(false);
+    }
+  }, [isFocused]);
+
+  useEffect(() => {
     var requestOptions = {
       method: 'GET',
       headers: {
@@ -65,10 +77,7 @@ const UserAccountManagementScreen = () => {
         'X-Token': userToken,
       },
     };
-    fetch(
-      `https://gis2.ectrak.com.hk:8900/api/v2/options/rolesAsOptions`,
-      requestOptions,
-    )
+    fetch(`${appContextPaths[appDefDomain]}${EndPoint.opRoles}`, requestOptions)
       .then(response => {
         return response.json();
       })
@@ -80,7 +89,7 @@ const UserAccountManagementScreen = () => {
       .catch(error => console.log('error1', error));
 
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/v2/options/usernameAsOptions`,
+      `${appContextPaths[appDefDomain]}${EndPoint.opUsernames}`,
       requestOptions,
     )
       .then(response => {
@@ -112,135 +121,59 @@ const UserAccountManagementScreen = () => {
 
   return (
     <>
-      <View style={styles.screenInit}>
-        <View style={styles.spaceBetween}>
-          <CreateButton navigation={navigation} navLoc={'Create user'} />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          setShowFilter(false);
+        }}>
+        <View style={styles.screenInit}>
+          <View style={styles.spaceBetween}>
+            <CreateButton navigation={navigation} navLoc={'Create user'} />
 
-          <View style={styles.row}>
-            <TouchableOpacity
-              style={{display: 'none'}}
-              onPress={() => {
-                setShowModal(true);
-              }}>
-              <Icon name="search" size={24} color="black" type="ionicon" />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                setShowFilter(!showFilter);
-              }}>
-              <Icon name="filter" size={24} color="black" type="ionicon" />
-            </TouchableOpacity>
+            <View style={styles.row}>
+              <TouchableOpacity
+                onPress={() => {
+                  setShowFilter(!showFilter);
+                }}>
+                <Icon name="filter" size={24} color="black" type="ionicon" />
+              </TouchableOpacity>
+            </View>
+            {showFilter && (
+              <SortDropDown
+                closeFilter={setShowFilter}
+                setFilterDesc={setFilterDesc}
+                setFilterField={setFilterField}
+                setLoading={setLoading}
+                sortOption={sortOption}
+                filterDesc={filterDesc}
+                filterField={filterField}
+              />
+            )}
           </View>
-          {showFilter && (
-            <SortDropDown
-              closeFilter={setShowFilter}
+          {isLoading ? (
+            <View>
+              <LinearProgress color="red" />
+            </View>
+          ) : isLandscapeMode ? (
+            <UserAccountTable
+              data={data}
               setFilterDesc={setFilterDesc}
               setFilterField={setFilterField}
-              setLoading={setLoading}
-              sortOption={sortOption}
               filterDesc={filterDesc}
               filterField={filterField}
+              setLoading={setLoading}
+              navigation={navigation}
+            />
+          ) : (
+            <FlatList
+              data={users}
+              renderItem={props => (
+                <UserAccountCard {...props} navigation={navigation} />
+              )}
+              keyExtractor={item => item.id}
             />
           )}
         </View>
-        {isLoading ? (
-          <View>
-            <LinearProgress color="red" />
-          </View>
-        ) : isLandscapeMode ? (
-          <UserAccountTable
-            data={data}
-            setFilterDesc={setFilterDesc}
-            setFilterField={setFilterField}
-            filterDesc={filterDesc}
-            filterField={filterField}
-            setLoading={setLoading}
-            navigation={navigation}
-          />
-        ) : (
-          <FlatList
-            data={users}
-            renderItem={props => (
-              <UserAccountCard {...props} navigation={navigation} />
-            )}
-            keyExtractor={item => item.id}
-          />
-        )}
-        <Modal isVisible={showModal}>
-          <View style={styles.itemCenter}>
-            <View
-              style={{
-                flexDirection: 'column',
-                width: '90%',
-                marginTop: 20,
-                padding: 20,
-                backgroundColor: 'white',
-              }}>
-              <View style={{alignItems: 'flex-end'}}>
-                <TouchableOpacity
-                  onPress={() => {
-                    setShowModal(false);
-                  }}>
-                  <Text>close</Text>
-                </TouchableOpacity>
-              </View>
-              <View>
-                <Text>username</Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    setShowUserModal(true);
-                  }}>
-                  <Text>{selectedUserName || 'ALL'}</Text>
-                </TouchableOpacity>
-              </View>
-              <View>
-                <Text>Role</Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    setShowRoleModal(true);
-                  }}>
-                  <Text>{selectedRoleName}</Text>
-                </TouchableOpacity>
-              </View>
-              <View>
-                <Text>Status</Text>
-                <Text>All</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
-                }}>
-                <TouchableOpacity style={{marginRight: 5}}>
-                  <Text style={{color: 'blue'}}>Reset</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => {
-                    setLoading(true);
-                    setShowModal(false);
-                  }}>
-                  <Text style={{color: 'green'}}>Filter</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
-        <UserModal
-          users={userOption}
-          isOpen={showUserModal}
-          setOpen={setShowUserModal}
-          setSelctedUserName={setSelctedUserName}
-        />
-        <RoleModal
-          roles={roleOption}
-          isOpen={showRoleModal}
-          setOpen={setShowRoleModal}
-          setSelectedRole={setSelectedRole}
-          setSelectedRoleName={setSelectedRoleName}
-        />
-      </View>
+      </TouchableWithoutFeedback>
     </>
   );
 };

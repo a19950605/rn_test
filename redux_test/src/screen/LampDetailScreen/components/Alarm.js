@@ -4,6 +4,11 @@ import {FlatList} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OutstandingAlarmMonCard from '../../OutstandingAlarm/components/OutstandingAlarmMonCard';
 import {useSelector} from 'react-redux';
+import {
+  appContextPaths,
+  appDefDomain,
+  EndPoint,
+} from '../../../constants/constants';
 
 const Alarm = ({deviceId}) => {
   const [data, setData] = useState();
@@ -23,7 +28,8 @@ const Alarm = ({deviceId}) => {
       },
     };
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/v2/alarm/search?deviceId=`,
+      `${appContextPaths[appDefDomain]}${EndPoint.alarms}?deviceId=`,
+
       requestOptions,
     )
       .then(response => {
