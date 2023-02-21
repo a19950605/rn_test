@@ -8,7 +8,7 @@ import lampsReducer from './features/lamp/lampsSlice';
 import lampReducer from './features/lamp/lampSlice';
 import userInfoReducer from './features/userInfo/userInfoSlice';
 import roleUserFuncReducer from './features/roleUserFunc/roleUserFuncSlice';
-
+import roleFuncReducer from './features/roleFunc/roleFuncSlice';
 // import {alarmApiSlice} from './features/api/alarmApiSlice';
 // import {userApiSlice} from './features/api/userApiSlice';
 export const store = configureStore({
@@ -22,6 +22,7 @@ export const store = configureStore({
     lamp: lampReducer,
     userInfo: userInfoReducer,
     roleUserFunc: roleUserFuncReducer,
+    roleFunc: roleFuncReducer,
 
     //
     //lamps:

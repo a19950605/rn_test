@@ -113,7 +113,6 @@ const Alarm = ({deviceId}) => {
           renderItem={props => <OutstandingAlarmMonCard {...props} />}
           //  keyExtractor={item}
           onEndReached={() => {
-            alert('end react');
             if (totalPages > page) {
               setPage(page + 1);
               setIsReload(true);

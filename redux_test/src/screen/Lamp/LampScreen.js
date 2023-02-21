@@ -54,6 +54,9 @@ const LampScreen = () => {
   const {activeDeviceList} = useSelector(state => state.activeLamps);
   const {devices, isLoading, error} = useSelector(state => state.lamps);
   const {controllerList} = useSelector(state => state.controllers);
+  const {userFunc} = useSelector(state => state.roleUserFunc);
+  const {roleFunc} = useSelector(state => state.roleFunc);
+
   const [filterDesc, setFilterDesc] = useState(false);
   const [filterField, setFilterField] = useState('id');
   const [showFilter, setShowFilter] = useState(false);
@@ -89,18 +92,6 @@ const LampScreen = () => {
       setCurrentDate(moment().format('YYYY-MM-DD HH:mm:ss'));
     }, 30000);
   }, []);
-  // const [data, error] = useFetchMonitorTest({
-  //   userToken,
-  //   loading,
-  //   isFocused,
-  //   setLoading,
-  //   filterField,
-  //   filterDesc,
-  //   setCurrentDate,
-  //   filterStatus,
-  //   filterCONNStatus,
-  //   filterRFLCode,
-  // });
 
   useEffect(() => {
     //fetchActiveDevices;
@@ -167,6 +158,14 @@ const LampScreen = () => {
     }
   }, [isFocused]);
 
+  useEffect(() => {
+    console.log('logging userFunc***********************');
+    console.log(userFunc);
+  }, [userFunc]);
+  useEffect(() => {
+    console.log('logging roleFunc***********************');
+    console.log(roleFunc);
+  }, [roleFunc]);
   const sortOption = [
     {displayValue: 'RFL ID', apiValue: 'id'},
     {displayValue: 'RFL', apiValue: 'code'},
@@ -182,11 +181,13 @@ const LampScreen = () => {
       <View style={styles.screenInit}>
         <View style={styles.spaceBetween}>
           <View style={{flexDirection: 'row'}}>
-            <CreateButton
-              navigation={navigation}
-              navLoc={'Create Monitoring'}
-              dropDown1={controllerList}
-            />
+            {userFunc?.find(o => o.code === 'RFL_MONITOR_C') && (
+              <CreateButton
+                navigation={navigation}
+                navLoc={'Create Monitoring'}
+                dropDown1={controllerList}
+              />
+            )}
             <ReloadButton
               setLoading={setLoading}
               loading={loading}

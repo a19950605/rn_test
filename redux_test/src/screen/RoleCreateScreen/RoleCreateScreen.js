@@ -37,46 +37,8 @@ const RoleCreateScreen = () => {
   const [permission, setPermission] = useState([]);
 
   const userToken = useSelector(state => state.login.userToken?.Token);
+  const {roleFunc} = useSelector(state => state.roleFunc);
   const navigation = useNavigation();
-
-  const getRoleAsOptions = () => {
-    var requestOptions = {
-      method: 'GET',
-      headers: {
-        // Accept: '*',
-        // 'Content-Type': 'application/json',
-        'X-Token': userToken,
-      },
-    };
-    fetch(
-      `${appContextPaths[appDefDomain]}${EndPoint.myfuncs}`,
-
-      requestOptions,
-    )
-      .then(response => {
-        return response.json();
-      })
-      .then(result => {
-        console.log('get role as option');
-        //console.log(result.func[0].permissions); //5,4,2,3
-        //console.log(result.func[1].permissions); //9,7,8,6
-        //  console.log(result.func[2].permissions);
-        console.log(result.func[8].permissions);
-        let temp_arr = [];
-        result?.func?.map(per => {
-          temp_arr = temp_arr.concat(per.permissions);
-        });
-        // console.log('temp_arr');
-        // console.log(temp_arr);
-        // console.log(temp_arr.length);
-        // return result;
-        setListData(temp_arr);
-      })
-      .catch(error => console.log('error1', error));
-  };
-  useEffect(() => {
-    getRoleAsOptions();
-  }, []);
 
   return (
     <>
@@ -95,7 +57,7 @@ const RoleCreateScreen = () => {
           />
         </TabScreen>
         <TabScreen label="permissions" icon="map">
-          <RolePermission listData={listData} setPermission={setPermission} />
+          <RolePermission listData={roleFunc} setPermission={setPermission} />
         </TabScreen>
       </Tabs>
 

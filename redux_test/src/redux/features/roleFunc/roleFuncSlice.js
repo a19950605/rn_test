@@ -8,16 +8,16 @@ import {
 import {requestOptions} from '../../../utils/requestOptions';
 
 const initialState = {
-  userFunc: [],
+  roleFunc: [],
   isLoading: false,
   error: '',
 };
-export const getUserFunc = createAsyncThunk(
-  'getUserFunc',
+export const getRoleFunc = createAsyncThunk(
+  'getRoleFunc',
   async (userToken, {rejectWithValue}) => {
     try {
       const response = await fetch(
-        `${appContextPaths[appDefDomain]}${EndPoint.myfuncs}`,
+        `${appContextPaths[appDefDomain]}${EndPoint.funcs}`,
         requestOptions({method: 'GET', userToken}),
       );
       let obj = await response.json();
@@ -27,22 +27,22 @@ export const getUserFunc = createAsyncThunk(
     }
   },
 );
-export const roleUserFuncSlice = createSlice({
-  name: 'roleUserFunc',
+export const roleFuncSlice = createSlice({
+  name: 'roleFunc',
   initialState,
   reducers: {},
   extraReducers: builder => {
     // Add reducers for additional action types here, and handle loading state as needed
     builder
-      .addCase(getUserFunc.pending, (state, action) => {
+      .addCase(getRoleFunc.pending, (state, action) => {
         if (state.isLoading == false) {
           state.isLoading = true;
         }
       })
-      .addCase(getUserFunc.fulfilled, (state, action) => {
+      .addCase(getRoleFunc.fulfilled, (state, action) => {
         // Add user to the state array
         console.log(
-          'fulfill user permission****************************************',
+          'fulfill role permission****************************************',
         );
         // console.log(action.payload);
         let temp_arr = [];
@@ -58,17 +58,17 @@ export const roleUserFuncSlice = createSlice({
           }
           temp_arr = temp_arr.concat(temp_inner);
         });
-        state.userFunc = temp_arr;
+        state.roleFunc = temp_arr;
         state.isLoading = false;
         console.log(temp_arr);
       })
-      .addCase(getUserFunc.rejected, (state, action) => {
-        console.log('failed userinfo****************************************');
+      .addCase(getRoleFunc.rejected, (state, action) => {
+        console.log('failed role func****************************************');
         state.isLoading = false;
-        state.userFunc = [];
+        state.roleFunc = [];
         state.error = action.error;
       });
   },
 });
 
-export default roleUserFuncSlice.reducer;
+export default roleFuncSlice.reducer;

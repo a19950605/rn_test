@@ -10,6 +10,7 @@ import {MainDrawer} from './src/navigation/MainDrawer';
 import {getUserInfo} from './src/redux/features/userInfo/userInfoSlice';
 import Login from './src/screen/Login/Login';
 import {getUserFunc} from './src/redux/features/roleUserFunc/roleUserFuncSlice';
+import {getRoleFunc} from './src/redux/features/roleFunc/roleFuncSlice';
 
 export default function App() {
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -18,6 +19,7 @@ export default function App() {
     if (userToken != undefined) {
       dispatch(getUserInfo(userToken));
       dispatch(getUserFunc(userToken));
+      dispatch(getRoleFunc(userToken));
     } else {
       console.log('dispatch userinfo faileld*****');
     }

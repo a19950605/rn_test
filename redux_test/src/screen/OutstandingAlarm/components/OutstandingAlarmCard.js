@@ -4,6 +4,7 @@ import {Text, View, StyleSheet, Button} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {styles} from '../../../constants/styles';
 import moment from 'moment';
+import {useSelector} from 'react-redux';
 
 const OutstandingAlarmCard = props => {
   //green card
@@ -12,6 +13,8 @@ const OutstandingAlarmCard = props => {
   const [buttonColor, setButtonColor] = useState('lightgreen');
   const [titleColor, setTitleColor] = useState('white');
   const [isAck, setIsAck] = useState(false);
+  const {userFunc} = useSelector(state => state.roleUserFunc);
+
   useEffect(() => {
     props.item.status == 'ACTIVE'
       ? (setBodyStyle('red'), setButtonColor('pink'), setTitleColor('white'))
@@ -90,16 +93,17 @@ const OutstandingAlarmCard = props => {
             <Text style={{textAlign: 'center', color: 'blue'}}>Details</Text>
           </TouchableOpacity>
         </View>
-        {props.item.status != 'ACKNOWLEDGED' && (
-          <View style={{backgroundColor: buttonColor, flex: 1, padding: 10}}>
-            <TouchableOpacity
-              onPress={() => {
-                alert(props.item.id);
-              }}>
-              <Text style={{textAlign: 'center', color: 'blue'}}>ACK</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        {props.item.status != 'ACKNOWLEDGED' &&
+          userFunc?.find(o => o.code === 'RFL_ALARM_U') != undefined && (
+            <View style={{backgroundColor: buttonColor, flex: 1, padding: 10}}>
+              <TouchableOpacity
+                onPress={() => {
+                  alert(props.item.id);
+                }}>
+                <Text style={{textAlign: 'center', color: 'blue'}}>ACK</Text>
+              </TouchableOpacity>
+            </View>
+          )}
       </View>
     </View>
   );

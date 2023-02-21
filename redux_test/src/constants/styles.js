@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   },
   //lamp screen component
   //card
-  rowCenter: {flexDirection: 'row', alignItems: 'center'},
+  rowCenter: {flexDirection: 'row', alignItems: 'center', marginBottom: 15},
   bubbleContainer: {
     backgroundColor: '#f7f7f7',
     borderRadius: 100,

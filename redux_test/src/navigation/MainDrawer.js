@@ -42,11 +42,14 @@ const Drawer = createDrawerNavigator();
 
 export function MainDrawer() {
   const navigation = useNavigation();
+  const {userFunc} = useSelector(state => state.roleUserFunc);
 
   console.log('init');
   //auth("wilson2022","R4QB10DD");
   //  listEventLog({username:'wilson2022',funcName:'Userloginlog',fromTime:'20221212',toTime:'20221212'},"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdnJJZCI6IjIiLCJqdGkiOiIxNjcwODM1ODY4NzE4In0.lqGUbA9zVGVCnH3CB_v_cYR06OuM8A0Z-kVmBAEnwdZP25pDJNPa9mI0DBNBMsAysEKTyS_bX3kHY1OI2HfaBA"
   //  )
+  //let obj = arr.find(o => o.code === 'RFL_MONITOR_C');
+
   return (
     <>
       {/* style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}*/}
@@ -65,7 +68,7 @@ export function MainDrawer() {
               isDetail = false;
               break;
             case 'OutstandingDetailTab':
-              headerTitle = 'Detail.';
+              headerTitle = 'Outstanding Alarm Details -';
               isDetail = true;
               break;
             case 'MonitoringDetail':
@@ -164,39 +167,44 @@ export function MainDrawer() {
             ),
           }}
         />
-        <Drawer.Screen
-          name="eRFL Assignment"
-          component={Assignment}
-          options={{
-            title: 'eRFL Assignment',
-            drawerIcon: ({focused, size}) => (
-              <Icon
-                name="clipboard-text"
-                type="material-community"
-                size={24}
-                color="gray"
-                style={styles.btnIconPadding}
-              />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="Event Log"
-          component={EventLog}
-          options={{
-            title: 'Event Log',
-            drawerIcon: ({focused, size}) => (
-              <Icon
-                name="calendar-text"
-                type="material-community"
-                size={24}
-                color="gray"
-                style={styles.btnIconPadding}
-              />
-            ),
-          }}
-        />
 
+        {userFunc?.find(o => o.code === 'RFL_ASSIGNMENT_R') != undefined && (
+          <Drawer.Screen
+            name="eRFL Assignment"
+            component={Assignment}
+            options={{
+              title: 'eRFL Assignment',
+              drawerIcon: ({focused, size}) => (
+                <Icon
+                  name="clipboard-text"
+                  type="material-community"
+                  size={24}
+                  color="gray"
+                  style={styles.btnIconPadding}
+                />
+              ),
+            }}
+          />
+        )}
+        {userFunc &&
+          userFunc?.find(o => o.code === 'EVENT_LOG_R') != undefined && (
+            <Drawer.Screen
+              name="Event Log"
+              component={EventLog}
+              options={{
+                title: 'Event Log',
+                drawerIcon: ({focused, size}) => (
+                  <Icon
+                    name="calendar-text"
+                    type="material-community"
+                    size={24}
+                    color="gray"
+                    style={styles.btnIconPadding}
+                  />
+                ),
+              }}
+            />
+          )}
         <Drawer.Screen
           name="Outstanding Alarm"
           component={AlarmNav}
@@ -204,6 +212,7 @@ export function MainDrawer() {
             drawerItemStyle: {display: 'none'},
           }}
         />
+
         <Drawer.Screen
           name="Alarm History"
           component={AlarmHistory}
@@ -211,54 +220,60 @@ export function MainDrawer() {
             drawerItemStyle: {display: 'none'},
           }}
         />
-        <Drawer.Screen
-          name="User Account Management"
-          component={UserNav}
-          options={{
-            title: 'User Account Management',
-            drawerIcon: ({focused, size}) => (
-              <Icon
-                name="users"
-                type="feather"
-                size={24}
-                color="gray"
-                style={styles.btnIconPadding}
-              />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="Role management"
-          component={RoleNav}
-          options={{
-            title: 'Role management',
-            drawerIcon: ({focused, size}) => (
-              <Icon
-                name="shield-check"
-                type="material-community"
-                size={24}
-                color="gray"
-                style={styles.btnIconPadding}
-              />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="Relay"
-          component={Relay}
-          options={{
-            title: 'Relay',
-            drawerIcon: ({focused, size}) => (
-              <Icon
-                name="electric-switch"
-                type="material-community"
-                size={24}
-                color="gray"
-                style={styles.btnIconPadding}
-              />
-            ),
-          }}
-        />
+        {userFunc?.find(o => o.code === 'SYSUSR_R') != undefined && (
+          <Drawer.Screen
+            name="User Account Management"
+            component={UserNav}
+            options={{
+              title: 'User Account Management',
+              drawerIcon: ({focused, size}) => (
+                <Icon
+                  name="users"
+                  type="feather"
+                  size={24}
+                  color="gray"
+                  style={styles.btnIconPadding}
+                />
+              ),
+            }}
+          />
+        )}
+        {userFunc?.find(o => o.code === 'ROLEPERM_R') != undefined && (
+          <Drawer.Screen
+            name="Role management"
+            component={RoleNav}
+            options={{
+              title: 'Role management',
+              drawerIcon: ({focused, size}) => (
+                <Icon
+                  name="shield-check"
+                  type="material-community"
+                  size={24}
+                  color="gray"
+                  style={styles.btnIconPadding}
+                />
+              ),
+            }}
+          />
+        )}
+        {userFunc?.find(o => o.code === 'RFL_RELAY_R') != undefined && (
+          <Drawer.Screen
+            name="Relay"
+            component={Relay}
+            options={{
+              title: 'Relay',
+              drawerIcon: ({focused, size}) => (
+                <Icon
+                  name="electric-switch"
+                  type="material-community"
+                  size={24}
+                  color="gray"
+                  style={styles.btnIconPadding}
+                />
+              ),
+            }}
+          />
+        )}
         <Drawer.Screen
           name="Change Password"
           component={PasswordSetting}
@@ -323,6 +338,7 @@ function CustomDrawerContent(props) {
   const [open, setOpen] = useState(false);
   const [openSetting, setOpenSetting] = useState(false);
   const userInfo = useSelector(state => state.userInfo.userInfo);
+  const {userFunc} = useSelector(state => state.roleUserFunc);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -370,34 +386,40 @@ function CustomDrawerContent(props) {
             label="Toggle drawer"
             onPress={() => props.navigation.toggleDrawer()}
           /> */}
-
-        <DrawerItem
-          label="False alarm"
-          style={{backgroundColor: '#ffffff'}}
-          labelStyle={{color: open ? 'red' : '#000000'}}
-          onPress={() => setOpen(!open)}
-          icon={({focused, color, size}) => (
-            <>
-              <Icon
-                name="access-alarm"
-                type="material"
-                size={24}
-                color={open ? 'red' : 'gray'}
-                style={styles.btnIconPadding}
-              />
-              <View
-                style={{position: 'absolute', right: 10, alignItems: 'center'}}>
-                <Icon
-                  name={open ? 'angle-up' : 'angle-down'}
-                  type="font-awesome"
-                  size={24}
-                  color={open ? 'red' : 'gray'}
-                  style={{}}
-                />
-              </View>
-            </>
+        {userFunc &&
+          userFunc?.find(o => o.code === 'RFL_ALARM_R') != undefined && (
+            <DrawerItem
+              label="False alarm"
+              style={{backgroundColor: '#ffffff'}}
+              labelStyle={{color: open ? 'red' : '#000000'}}
+              onPress={() => setOpen(!open)}
+              icon={({focused, color, size}) => (
+                <>
+                  <Icon
+                    name="access-alarm"
+                    type="material"
+                    size={24}
+                    color={open ? 'red' : 'gray'}
+                    style={styles.btnIconPadding}
+                  />
+                  <View
+                    style={{
+                      position: 'absolute',
+                      right: 10,
+                      alignItems: 'center',
+                    }}>
+                    <Icon
+                      name={open ? 'angle-up' : 'angle-down'}
+                      type="font-awesome"
+                      size={24}
+                      color={open ? 'red' : 'gray'}
+                      style={{}}
+                    />
+                  </View>
+                </>
+              )}
+            />
           )}
-        />
         {open && (
           <DrawerItem
             style={{backgroundColor: '#ffffff', marginLeft: 70}}
@@ -420,34 +442,40 @@ function CustomDrawerContent(props) {
             }}
           />
         )}
-        <DrawerItem
-          label="Setting"
-          style={{backgroundColor: '#ffffff'}}
-          labelStyle={{color: openSetting ? 'red' : '#000000'}}
-          onPress={() => setOpenSetting(!openSetting)}
-          icon={({focused, color, size}) => (
-            <>
-              <Icon
-                name="settings"
-                type="material"
-                size={24}
-                color={openSetting ? 'red' : 'gray'}
-                style={styles.btnIconPadding}
-              />
-
-              <View
-                style={{position: 'absolute', right: 10, alignItems: 'center'}}>
+        {userFunc?.find(o => o.code === 'APP_SETTING_R') != undefined && (
+          <DrawerItem
+            label="Setting"
+            style={{backgroundColor: '#ffffff'}}
+            labelStyle={{color: openSetting ? 'red' : '#000000'}}
+            onPress={() => setOpenSetting(!openSetting)}
+            icon={({focused, color, size}) => (
+              <>
                 <Icon
-                  name={openSetting ? 'angle-up' : 'angle-down'}
-                  type="font-awesome"
+                  name="settings"
+                  type="material"
                   size={24}
                   color={openSetting ? 'red' : 'gray'}
-                  style={{}}
+                  style={styles.btnIconPadding}
                 />
-              </View>
-            </>
-          )}
-        />
+
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: 10,
+                    alignItems: 'center',
+                  }}>
+                  <Icon
+                    name={openSetting ? 'angle-up' : 'angle-down'}
+                    type="font-awesome"
+                    size={24}
+                    color={openSetting ? 'red' : 'gray'}
+                    style={{}}
+                  />
+                </View>
+              </>
+            )}
+          />
+        )}
         {openSetting && (
           <DrawerItem
             style={{backgroundColor: '#ffffff', marginLeft: 70}}

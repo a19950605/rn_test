@@ -14,7 +14,7 @@ const RoleDetailPermission = props => {
   const [checked, setChecked] = React.useState(false);
   const [allChecked, setAllChecked] = useState(false);
   const [selectedId, setSelectedId] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     console.log('setting looping p');
     props?.selectedData?.map(p => {
@@ -27,6 +27,7 @@ const RoleDetailPermission = props => {
     console.log('selectedid');
     console.log(selectedId);
     console.log(props?.selectedData);
+    setIsLoading(false);
   }, []);
   //props?.selectedData
   useEffect(() => {
@@ -46,42 +47,50 @@ const RoleDetailPermission = props => {
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View style={styles.roleCheckAll}>
-        <Checkbox
-          status={checked ? 'checked' : 'unchecked'}
-          onPress={() => {
-            console.log('testing check0');
-            if (props?.listData?.length == selectedId.length) {
-              console.log('checkpoint1');
-              //  setChecked(false);
-              setSelectedId([]);
-            } else {
-              //  setChecked(true);
-              console.log('checkpoint2');
-              let selectedArr = [];
-              props?.listData.map(d => {
-                selectedArr.push(d.id);
-              });
-              console.log('selected arr');
-              console.log(selectedArr.length);
-              console.log(props?.listData?.length);
-              console.log(selectedArr);
-              setSelectedId(selectedArr);
-            }
-          }}
-        />
-      </View>
-      <FlatList
-        data={props?.listData}
-        renderItem={props => (
-          <RoleCheckItem
-            {...props}
-            setSelectedId={setSelectedId}
-            selectedId={selectedId}
-            checked={checked}
+      {isLoading ? (
+        <View>
+          <Text>Loading</Text>
+        </View>
+      ) : (
+        <>
+          <View style={styles.roleCheckAll}>
+            <Checkbox
+              status={checked ? 'checked' : 'unchecked'}
+              onPress={() => {
+                console.log('testing check0');
+                if (props?.listData?.length == selectedId.length) {
+                  console.log('checkpoint1');
+                  //  setChecked(false);
+                  setSelectedId([]);
+                } else {
+                  //  setChecked(true);
+                  console.log('checkpoint2');
+                  let selectedArr = [];
+                  props?.listData.map(d => {
+                    selectedArr.push(d.id);
+                  });
+                  console.log('selected arr');
+                  console.log(selectedArr.length);
+                  console.log(props?.listData?.length);
+                  console.log(selectedArr);
+                  setSelectedId(selectedArr);
+                }
+              }}
+            />
+          </View>
+          <FlatList
+            data={props?.listData}
+            renderItem={props => (
+              <RoleCheckItem
+                {...props}
+                setSelectedId={setSelectedId}
+                selectedId={selectedId}
+                checked={checked}
+              />
+            )}
           />
-        )}
-      />
+        </>
+      )}
     </View>
   );
 };
@@ -89,9 +98,17 @@ const RoleDetailPermission = props => {
 const RoleCheckItem = ({item, selectedId, setSelectedId, checked}) => {
   const [checked1, setChecked1] = React.useState(false);
   //   props.selectedId.includes(props?.item?.id)
-  //     ? setChecked1(true)
+  //     ? setChecked1(true) sekai ju
   //     : setChecked1(false);
 
+  useEffect(() => {
+    console.log('role check item');
+    console.log(item);
+    console.log(selectedId);
+    console.log(item.id);
+    console.log(selectedId.includes(item.id));
+    selectedId.includes(item.id) ? setChecked1(true) : setChecked1(false);
+  }, []);
   useEffect(() => {
     if (selectedId.includes(item.id)) {
       setChecked1(true);
@@ -108,6 +125,7 @@ const RoleCheckItem = ({item, selectedId, setSelectedId, checked}) => {
     console.log('GET SELECTED ID');
     console.log(selectedId);
   }, [checked1]);
+
   return (
     <View style={styles.roleCheckedRow}>
       <View>

@@ -30,6 +30,7 @@ function RoleManagementScreen() {
   const [filterField, setFilterField] = useState('id');
   // const [data, setData] = useState();
   const userToken = useSelector(state => state.login.userToken?.Token);
+  const {userFunc} = useSelector(state => state.roleUserFunc);
 
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
@@ -62,7 +63,9 @@ function RoleManagementScreen() {
         }}>
         <View style={styles.container}>
           <View style={styles.spaceBetweenP10}>
-            <CreateButton navigation={navigation} navLoc={'RoleCreate'} />
+            {userFunc?.find(o => o.code === 'ROLEPERM_C') != undefined && (
+              <CreateButton navigation={navigation} navLoc={'RoleCreate'} />
+            )}
             <TouchableOpacity
               onPress={() => {
                 setShowFilter(!showFilter);

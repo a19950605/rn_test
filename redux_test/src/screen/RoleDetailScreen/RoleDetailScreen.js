@@ -7,6 +7,7 @@ import RoleDetailForm from './components/RoleDetailForm';
 import {useNavigation} from '@react-navigation/native';
 import {styles} from '../../constants/styles';
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
+
 import {
   appContextPaths,
   appDefDomain,
@@ -34,9 +35,10 @@ const RoleDetailScreen = props => {
 
   const userToken = useSelector(state => state.login.userToken?.Token);
 
+  const {userFunc} = useSelector(state => state.roleUserFunc);
+  const {roleFunc} = useSelector(state => state.roleFunc);
   useEffect(() => {
     getOneRolePermission(props?.route?.params?.id, userToken); //checked option
-    getRoleAsOptions(userToken);
   }, []);
 
   const getOneRolePermission = (id, userToken) => {
@@ -77,51 +79,6 @@ const RoleDetailScreen = props => {
 
   //api/v2/options/rolesAsOptions
 
-  const getRoleAsOptions = userToken => {
-    var requestOptions = {
-      method: 'GET',
-      headers: {
-        // Accept: '*',
-        // 'Content-Type': 'application/json',
-        'X-Token': userToken,
-      },
-    };
-    fetch(
-      `${appContextPaths[appDefDomain]}${EndPoint.myfuncs}`,
-
-      requestOptions,
-    )
-      .then(response => {
-        return response.json();
-      })
-      .then(result => {
-        console.log('get role as option');
-        //console.log(result.func[0].permissions); //5,4,2,3
-        //console.log(result.func[1].permissions); //9,7,8,6
-        //  console.log(result.func[2].permissions);
-        let temp_arr = [];
-
-        result?.func?.map(per => {
-          let temp_inner = per.permissions;
-
-          // temp_inner.map(temp_m => ({
-          //   ...temp_m,
-          //   shortDisplayName: 'per.shortDisplayName',
-          // }));
-          for (const element of temp_inner) {
-            element.shortDisplayName = per.shortDisplayName;
-          }
-          temp_arr = temp_arr.concat(temp_inner);
-        });
-        // console.log('temp_arr');
-        // console.log(temp_arr);
-        // console.log(temp_arr.length);
-        // return result;
-        setListData(temp_arr);
-        setLoading(false);
-      })
-      .catch(error => console.log('error1', error));
-  };
   const deleteConfirm = token => {
     return Alert.alert(
       'Delete',
@@ -185,48 +142,52 @@ const RoleDetailScreen = props => {
               <RoleDetailPermission
                 setSelectedData={setSelectedData}
                 selectedData={selectedData}
-                listData={listData}
+                listData={roleFunc}
               />
             </TabScreen>
           </Tabs>
           <View style={styles.saveDeleteButtonGroup}>
-            <TouchableOpacity
-              style={styles.deleteBtnContainer}
-              onPress={() => {
-                deleteConfirm(userToken);
-              }}>
-              <Icon
-                name="md-save-sharp"
-                type="ionicon"
-                size={24}
-                color="red"
-                style={styles.btnIconPadding}
-              />
-              <Text style={styles.delBtnTitle}> Delete</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.saveBtnContainer}
-              onPress={() => {
-                console.log('request body');
-                console.log(JSON.stringify(form));
-                console.log(selectedData);
-                updateRole(
-                  userToken,
-                  form,
-                  selectedData,
-                  navigation,
-                  props?.route?.params?.id,
-                );
-              }}>
-              <Icon
-                name="md-save-sharp"
-                type="ionicon"
-                size={24}
-                color="green"
-                style={styles.btnIconPadding}
-              />
-              <Text style={styles.saveBtnTitle}> Save</Text>
-            </TouchableOpacity>
+            {userFunc?.find(o => o.code === 'ROLEPERM_D') != undefined && (
+              <TouchableOpacity
+                style={styles.deleteBtnContainer}
+                onPress={() => {
+                  deleteConfirm(userToken);
+                }}>
+                <Icon
+                  name="md-save-sharp"
+                  type="ionicon"
+                  size={24}
+                  color="red"
+                  style={styles.btnIconPadding}
+                />
+                <Text style={styles.delBtnTitle}> Delete</Text>
+              </TouchableOpacity>
+            )}
+            {userFunc?.find(o => o.code === 'ROLEPERM_U') != undefined && (
+              <TouchableOpacity
+                style={styles.saveBtnContainer}
+                onPress={() => {
+                  console.log('request body');
+                  console.log(JSON.stringify(form));
+                  console.log(selectedData);
+                  updateRole(
+                    userToken,
+                    form,
+                    selectedData,
+                    navigation,
+                    props?.route?.params?.id,
+                  );
+                }}>
+                <Icon
+                  name="md-save-sharp"
+                  type="ionicon"
+                  size={24}
+                  color="green"
+                  style={styles.btnIconPadding}
+                />
+                <Text style={styles.saveBtnTitle}> Save</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </>
       )}

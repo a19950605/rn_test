@@ -33,6 +33,7 @@ const UserAccountManagementScreen = () => {
   const {users, isLoading, isError, isSuccess, errorr} = useSelector(
     state => state.users,
   );
+  const {userFunc} = useSelector(state => state.roleUserFunc);
 
   // const [data, setData] = useState();
   const [selectedUserName, setSelctedUserName] = useState('All');
@@ -127,8 +128,9 @@ const UserAccountManagementScreen = () => {
         }}>
         <View style={styles.screenInit}>
           <View style={styles.spaceBetween}>
-            <CreateButton navigation={navigation} navLoc={'Create user'} />
-
+            {userFunc?.find(o => o.code === 'SYSUSR_C') != undefined && (
+              <CreateButton navigation={navigation} navLoc={'Create user'} />
+            )}
             <View style={styles.row}>
               <TouchableOpacity
                 onPress={() => {

@@ -59,6 +59,8 @@ const LampDetailScreen = props => {
 
   const [data, setData] = useState('');
   const userToken = useSelector(state => state.login.userToken?.Token);
+  const {userFunc} = useSelector(state => state.roleUserFunc);
+
   const {device, isLoading} = useSelector(state => state.lamp);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({
@@ -397,59 +399,63 @@ const LampDetailScreen = props => {
           </Tabs>
 
           <View style={styles.saveDeleteButtonGroup}>
-            <TouchableOpacity
-              style={styles.deleteBtnContainer}
-              onPress={() => {
-                deleteConfirm(userToken, props?.route?.params?.id);
-              }}>
-              <Icon
-                name="md-save-sharp"
-                type="ionicon"
-                size={24}
-                color="red"
-                style={styles.btnIconPadding}
-              />
-              <Text style={styles.delBtnTitle}> Delete</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.saveBtnContainer}
-              onPress={() => {
-                console.log('request body');
-                console.log(JSON.stringify(form));
-                setIsSubmit(true);
-                if (
-                  uri == '' ||
-                  form.deviceId == '' ||
-                  form.controllerId == '' ||
-                  form.rfl == '' ||
-                  form.relayChannelIdx == '' ||
-                  form.status == ''
-                ) {
-                  console.log('formdata');
-                  console.log({uri, ...form});
-                  setAlertMessage('Missing required field!');
-                  setShowModal('true');
-                  //+ uri + JSON.stringify(form),
-                } else {
-                  updateRecord(userToken, {
-                    uri,
-                    imgX,
-                    imgY,
-                    lampX,
-                    lampY,
-                    ...form,
-                  });
-                }
-              }}>
-              <Icon
-                name="md-save-sharp"
-                type="ionicon"
-                size={24}
-                color="green"
-                style={styles.btnIconPadding}
-              />
-              <Text style={styles.saveBtnTitle}> Save</Text>
-            </TouchableOpacity>
+            {userFunc?.find(o => o.code === 'RFL_MONITOR_D') != undefined && (
+              <TouchableOpacity
+                style={styles.deleteBtnContainer}
+                onPress={() => {
+                  deleteConfirm(userToken, props?.route?.params?.id);
+                }}>
+                <Icon
+                  name="md-save-sharp"
+                  type="ionicon"
+                  size={24}
+                  color="red"
+                  style={styles.btnIconPadding}
+                />
+                <Text style={styles.delBtnTitle}> Delete</Text>
+              </TouchableOpacity>
+            )}
+            {userFunc?.find(o => o.code === 'RFL_MONITOR_U') != undefined && (
+              <TouchableOpacity
+                style={styles.saveBtnContainer}
+                onPress={() => {
+                  console.log('request body');
+                  console.log(JSON.stringify(form));
+                  setIsSubmit(true);
+                  if (
+                    uri == '' ||
+                    form.deviceId == '' ||
+                    form.controllerId == '' ||
+                    form.rfl == '' ||
+                    form.relayChannelIdx == '' ||
+                    form.status == ''
+                  ) {
+                    console.log('formdata');
+                    console.log({uri, ...form});
+                    setAlertMessage('Missing required field!');
+                    setShowModal('true');
+                    //+ uri + JSON.stringify(form),
+                  } else {
+                    updateRecord(userToken, {
+                      uri,
+                      imgX,
+                      imgY,
+                      lampX,
+                      lampY,
+                      ...form,
+                    });
+                  }
+                }}>
+                <Icon
+                  name="md-save-sharp"
+                  type="ionicon"
+                  size={24}
+                  color="green"
+                  style={styles.btnIconPadding}
+                />
+                <Text style={styles.saveBtnTitle}> Save</Text>
+              </TouchableOpacity>
+            )}
           </View>
           <View>
             {showModal && (

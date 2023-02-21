@@ -18,13 +18,14 @@ import {sortData} from '../../utils/sortData';
 import {getDate} from '../../utils/getDate';
 import {styles} from '../../constants/styles';
 import moment from 'moment';
+import {OutStandingAlarmModal} from './components/OutstandAlarmModal';
 const OutstandingAlarmScreen = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showFilter, setShowFilter] = useState(false);
-  const [filterDesc, setFilterDesc] = useState(false);
-  const [filterField, setFilterField] = useState('username');
+  const [filterDesc, setFilterDesc] = useState(true);
+  const [filterField, setFilterField] = useState('id');
   const {height, width} = useWindowDimensions();
   const userToken = useSelector(state => state.login.userToken?.Token);
 
@@ -59,11 +60,15 @@ const OutstandingAlarmScreen = () => {
   const [isLastPage, setIsLastPage] = useState(false);
   const [totalPages, setTotalPages] = useState('');
   const [isReload, setIsReload] = useState(false);
-
+  const [filterStatus, setFilterStatus] = useState('');
+  const [filterAlarmType, setFilterAlarmType] = useState('');
+  const [showMainModal, setShowMainModal] = useState(false);
   // useEffect(() => {
   //   setLoading(true);
   // }, [isFocused]);
   useEffect(() => {
+    setPage(0);
+    setData('');
     var requestOptions = {
       method: 'GET',
       headers: {
@@ -71,9 +76,11 @@ const OutstandingAlarmScreen = () => {
         // 'Content-Type': 'application/json',
         'X-Token': userToken,
       },
-    };
+    }; //
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/v2/alarm/search?deviceId=&sort=id,desc&page=${page}`,
+      `https://gis2.ectrak.com.hk:8900/api/v2/alarm/search?deviceId=&status=${filterStatus}&alarmType=${filterAlarmType}&sort=${filterField},${
+        filterDesc == true ? 'desc' : 'asc'
+      }&page=${page}`,
       requestOptions,
     )
       .then(response => {
@@ -88,7 +95,7 @@ const OutstandingAlarmScreen = () => {
         setLoading(false);
       })
       .catch(error => console.log('error1', error));
-  }, []);
+  }, [loading, isFocused]);
   //isFocused,loading
   useEffect(() => {
     var requestOptions = {
@@ -104,7 +111,9 @@ const OutstandingAlarmScreen = () => {
       return;
     } else {
       fetch(
-        `https://gis2.ectrak.com.hk:8900/api/v2/alarm/search?deviceId=&sort=id,desc&page=${page}`,
+        `https://gis2.ectrak.com.hk:8900/api/v2/alarm/search?deviceId=&status=${filterStatus}&alarmType=${filterAlarmType}&sort=${filterField},${
+          filterDesc == true ? 'desc' : 'asc'
+        }&page=${page}`,
         requestOptions,
       )
         .then(response => {
@@ -139,16 +148,24 @@ const OutstandingAlarmScreen = () => {
                 {moment().format('YYYY-MM-DD HH:mm:ss')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setShowFilter(!showFilter);
-              }}>
-              <Icon name="filter" size={24} color="black" type="ionicon" />
-            </TouchableOpacity>
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={() => {
+                  setShowMainModal(true);
+                }}>
+                <Icon name="search" size={24} color="black" type="ionicon" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setShowFilter(!showFilter);
+                }}>
+                <Icon name="filter" size={24} color="black" type="ionicon" />
+              </TouchableOpacity>
+            </View>
 
             {showFilter && (
               <SortDropDown
-                close={setShowFilter}
+                closeFilter={setShowFilter}
                 setFilterDesc={setFilterDesc}
                 setFilterField={setFilterField}
                 setLoading={setLoading}
@@ -157,12 +174,6 @@ const OutstandingAlarmScreen = () => {
                 filterField={filterField}
               />
             )}
-          </View>
-          <View>
-            <Text>
-              {totalPages || ''}
-              {page || ''}
-            </Text>
           </View>
           <View style={isLandscapeMode ? styles.mb60p5 : styles.mb60}>
             {isLandscapeMode ? (
@@ -186,8 +197,16 @@ const OutstandingAlarmScreen = () => {
             {/* <OutstandingAlarmCard />
         <OutstandingAlarmCard2 />
       */}
-            <View style={{marginBottom: -70}}></View>
+            <View style={{marginBottom: -40}}></View>
           </View>
+          <OutStandingAlarmModal
+            showMainModal={showMainModal}
+            setShowMainModal={setShowMainModal}
+            filterStatus={filterStatus}
+            setFilterStatus={setFilterStatus}
+            filterAlarmType={filterAlarmType}
+            setFilterAlarmType={setFilterAlarmType}
+          />
         </View>
       )}
     </>

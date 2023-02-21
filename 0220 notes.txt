@@ -1,31 +1,41 @@
 this week tasks
+
+search online master
+
+-UTEXAS (***)
+-IELTS
+
 outstanding alarm,  (fix filter and search)(detail) 
 load config (update base on config)
 parent child app
- -check  permission(set redux and load)(around one day)(tomorrow)
 -change all state to redux   
 -datetime picker on filter(update style and value) (maybe at home
 -form validation      (other parts)
 
 
-tuesday task
--outstanding alarm -detail, filter, sorting,ack
--detail icon, ,ack tab
--role management permissions change to redux
--detail data correctness     ***
+tuesday task (至少要完成呢堆先搞其他)
+-outstanding alarm , filter, sorting,ack(最後做,)
+(DONE)-detail -detail icon, ,ack tab
+-role management permissions change to redux  (done)
+ -check  permission(set redux and load)(around one day)(tomorrow)
 
+
+wednesday
+--detail data correctness     ***
+-ui ux experience
+-other parts
+-code structure(e.g. crud button to component ) use one global state only
 
 
 
 must***
 -device create and edit/ map lib
 -icon for menu and dropdown (done)
--outstanding alarm
+-outstanding alarm   
 -app call app
-
 -setting,relay,assignment
+-permission
 
-today back
 
 done
 -create device   (test again later)
@@ -33,4 +43,43 @@ done
 -image missing   (fixed)
 -dropdown with icon (done)
 -detail alarm (scroll down and load)(done) (need update tablet view)
+-permission access(need update tablet table)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mapping:
+USER ACCOUNT MANAGEMENT
+SYSUSR_C _R _U _D        (CREATE VIEW MODIFIED DELETE)
+ROLE MANAGEMENT
+ROLEPERM_C _R _U _D
+ERFL MONITORING
+RFL_MONITOR_R_C _D _U
+RFL_MONITOR_CONTROL (MODIFY(CONTROL=ERFL MONITORING CONTROL
+
+RFL_ASSIGNMENT_R
+RFL_ASSIGNMENT_DBO (cancel by owner    44
+RFL_ALARM_C _R _U(ACK) 
+APP_SETTING__R _U  (SYSTEM SETTING)
+EVENT_LOG_R
+
+RELAY_C _R _U _D 
+
+  const {userFunc} = useSelector(state => state.roleUserFunc);
+userFunc?.find(o => o.code === 'RFL_ASSIGNMENT_R')
+
+
+RELAY

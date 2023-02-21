@@ -38,6 +38,8 @@ const UserAccountDetailTab = ({userData}) => {
   const [rmks, setRmks] = useState();
   const [status, setStatus] = useState();
   const userToken = useSelector(state => state.login.userToken?.Token);
+  const {userFunc} = useSelector(state => state.roleUserFunc);
+
   const navigation = useNavigation();
   const [option, setOption] = useState();
   const {height, width} = useWindowDimensions();
@@ -504,50 +506,54 @@ const UserAccountDetailTab = ({userData}) => {
             )}
           </View>
           <View style={styles.saveDeleteButtonGroup}>
-            <TouchableOpacity
-              style={styles.deleteBtnContainer}
-              onPress={() => {
-                deleteConfirm(userToken);
-              }}>
-              <Icon
-                name="md-save-sharp"
-                type="ionicon"
-                size={24}
-                color="red"
-                style={styles.btnIconPadding}
-              />
-              <Text style={styles.delBtnTitle}> Delete</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.saveBtnContainer}
-              //
-              onPress={() => {
-                updateUser(
-                  userToken,
-                  {
-                    status,
-                    username,
-                    displayName,
-                    role,
-                    password,
-                    staffNo,
-                    rmks,
-                    roleSubmit,
-                  },
-                  navigation,
-                  userData?.id,
-                );
-                //updateUser = (token, form, navigation, id)
-              }}>
-              <Icon
-                name="md-save-sharp"
-                type="ionicon"
-                size={24}
-                color="green"
-                style={styles.btnIconPadding}
-              />
-              <Text style={{color: 'green'}}> Save</Text>
-            </TouchableOpacity>
+            {userFunc?.find(o => o.code === 'SYSUSR_D') != undefined && (
+              <TouchableOpacity
+                style={styles.deleteBtnContainer}
+                onPress={() => {
+                  deleteConfirm(userToken);
+                }}>
+                <Icon
+                  name="md-save-sharp"
+                  type="ionicon"
+                  size={24}
+                  color="red"
+                  style={styles.btnIconPadding}
+                />
+                <Text style={styles.delBtnTitle}> Delete</Text>
+              </TouchableOpacity>
+            )}
+            {userFunc?.find(o => o.code === 'SYSUSR_U') != undefined && (
+              <TouchableOpacity
+                style={styles.saveBtnContainer}
+                //
+                onPress={() => {
+                  updateUser(
+                    userToken,
+                    {
+                      status,
+                      username,
+                      displayName,
+                      role,
+                      password,
+                      staffNo,
+                      rmks,
+                      roleSubmit,
+                    },
+                    navigation,
+                    userData?.id,
+                  );
+                  //updateUser = (token, form, navigation, id)
+                }}>
+                <Icon
+                  name="md-save-sharp"
+                  type="ionicon"
+                  size={24}
+                  color="green"
+                  style={styles.btnIconPadding}
+                />
+                <Text style={{color: 'green'}}> Save</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>

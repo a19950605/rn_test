@@ -3,6 +3,7 @@ import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
+import {useSelector} from 'react-redux';
 import {CardButton} from '../../../components/CardButton';
 import {styles} from '../../../constants/styles';
 import {StatusBubble} from './StatusBubble';
@@ -12,6 +13,7 @@ const LampCard = props => {
   // console.log('component load');
   // console.log(props.item);
   const {t} = useTranslation();
+  const {userFunc} = useSelector(state => state.roleUserFunc);
 
   const [readinessStatus, setReadinessStatus] = useState('');
   const [readinessStr, setReadinessStr] = useState(t('lamp.active'));
@@ -126,16 +128,18 @@ const LampCard = props => {
           t={t}
           isDetail={true}
         />
-        {props.item.status == 'ACTIVE' && (
-          <CardButton
-            navLoc={''}
-            navigation={props.navigation}
-            data={props.item || {}}
-            text={'lamp.control'}
-            t={t}
-            isDetail={false}
-          />
-        )}
+        {props.item.status == 'ACTIVE' &&
+          userFunc?.find(o => o.code === 'RFL_MONITOR_CONTROL') !=
+            undefined && (
+            <CardButton
+              navLoc={''}
+              navigation={props.navigation}
+              data={props.item || {}}
+              text={'lamp.control'}
+              t={t}
+              isDetail={false}
+            />
+          )}
       </View>
     </View>
   );
