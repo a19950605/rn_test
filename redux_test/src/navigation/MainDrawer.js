@@ -21,7 +21,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import SysParams from '../screen/SystemParams/SysParams';
+import {SysParams} from '../screen/SystemParams/SysParams';
 import PasswordSetting from '../screen/SettingScreen/PasswordSetting';
 import AlarmHistory from '../screen/AlarmHistory/AlarmHistory';
 import {useDispatch, useSelector} from 'react-redux';
@@ -37,6 +37,9 @@ import EventLog from '../screen/EventLog/EventLog';
 import RoleNav from './RoleNav';
 import AlarmNav from './AlarmNav';
 import {styles} from '../constants/styles';
+import {Syscheck} from '../screen/SysCheck/Syscheck';
+import LanguageScreen from '../screen/Language/LanguageScreen';
+import {permissionCheck} from '../utils/permissionCheck';
 
 const Drawer = createDrawerNavigator();
 
@@ -168,7 +171,8 @@ export function MainDrawer() {
           }}
         />
 
-        {userFunc?.find(o => o.code === 'RFL_ASSIGNMENT_R') != undefined && (
+        {permissionCheck({permissionCode: 'RFL_ASSIGNMENT_R', userFunc}) !=
+          undefined && (
           <Drawer.Screen
             name="eRFL Assignment"
             component={Assignment}
@@ -187,7 +191,7 @@ export function MainDrawer() {
           />
         )}
         {userFunc &&
-          userFunc?.find(o => o.code === 'EVENT_LOG_R') != undefined && (
+          permissionCheck({permissionCode: 'EVENT_LOG_R', userFunc}) && (
             <Drawer.Screen
               name="Event Log"
               component={EventLog}
@@ -293,6 +297,24 @@ export function MainDrawer() {
           }}
         />
         <Drawer.Screen
+          name="Language"
+          component={LanguageScreen}
+          options={{
+            drawerItemStyle: {display: 'none'},
+
+            title: 'Language',
+            drawerIcon: ({focused, size}) => (
+              <Icon
+                name="md-save-sharp"
+                type="ionicon"
+                size={24}
+                color="gray"
+                style={styles.btnIconPadding}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
           name="System Parameters"
           component={SysParams}
           options={{
@@ -309,6 +331,24 @@ export function MainDrawer() {
             ),
           }}
         />
+        <Drawer.Screen
+          name="System Check"
+          component={Syscheck}
+          options={{
+            drawerItemStyle: {display: 'none'},
+            title: 'System Check',
+            drawerIcon: ({focused, size}) => (
+              <Icon
+                name="md-save-sharp"
+                type="ionicon"
+                size={24}
+                color="gray"
+                style={styles.btnIconPadding}
+              />
+            ),
+          }}
+        />
+
         {/* <Drawer.Screen name="Table View" component={TableView} /> */}
         {/* <Drawer.Screen name="Form" component={Form} /> */}
       </Drawer.Navigator>
@@ -493,6 +533,7 @@ function CustomDrawerContent(props) {
             labelStyle={{color: '#000000'}}
             label="Language"
             onPress={() => {
+              props.navigation.navigate('Language');
               setOpenSetting(false);
             }}
           />
@@ -503,6 +544,7 @@ function CustomDrawerContent(props) {
             labelStyle={{color: '#000000'}}
             label="System Check"
             onPress={() => {
+              props.navigation.navigate('System Check');
               setOpenSetting(false);
             }}
           />
@@ -513,6 +555,7 @@ function CustomDrawerContent(props) {
             labelStyle={{color: '#000000'}}
             label="System Parameters"
             onPress={() => {
+              props.navigation.navigate('System Parameters');
               setOpenSetting(false);
             }}
           />

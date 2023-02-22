@@ -52,12 +52,26 @@ const useFetchUsersData = ({
   setLoading,
   filterField,
   filterDesc,
+  isReload,
+  setIsReload,
+  isLastPage,
+  setIsLastPage,
+  setTotalPages,
+  totalPages,
+  page,
 }) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [error, setError] = useState(false);
   console.log('hello fetch');
-  console.log;
+
   useEffect(() => {
+    if (
+      isLastPage == true ||
+      page == totalPages ||
+      (isReload == false && loading == false)
+    ) {
+      return;
+    }
     var requestOptions = {
       method: 'GET',
       headers: {
@@ -68,23 +82,44 @@ const useFetchUsersData = ({
     };
     //`https://gis2.ectrak.com.hk:8900/api/system/user${appendStr}`,
 
-    fetch(`${appContextPaths[appDefDomain]}${EndPoint.users}`, requestOptions)
+    //
+    fetch(
+      `${appContextPaths[appDefDomain]}${EndPoint.users}?sort=${filterField},${
+        filterDesc == true ? 'desc' : 'asc'
+      }`,
+      requestOptions,
+    )
       .then(response => {
         return response.json();
       })
       .then(result => {
         // return result;
         // setData(result);
-        console.log('role management');
+        console.log('user account management');
+        console.log();
         // console.log(result);
-        setData(sortData(result?.content, filterField, filterDesc));
-        setLoading(false);
+        if (isReload == true) {
+          setData(prevArray => [...prevArray, ...result?.content]);
+          // setData(result?.content);
+        } else {
+          setData(result?.content);
+          // TypeError: Invalid attempt to destructure non-iterable instance.
+        }
+        console.log('totalpage************');
+        console.log(result?.totalPages);
+        console.log('last******************');
+        console.log(result?.last);
+
+        setTotalPages(result?.totalPages);
+        setIsLastPage(result?.last);
+        if (loading == true) setLoading(false);
+        if (isReload == true) setIsReload(false);
       })
       .catch(error => {
         setError(true);
         console.log('error1', error);
       });
-  }, [loading, isFocused]);
+  }, [loading, isFocused, isReload]);
 
   return [data, error];
 };

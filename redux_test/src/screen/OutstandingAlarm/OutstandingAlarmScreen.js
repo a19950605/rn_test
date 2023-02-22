@@ -78,7 +78,9 @@ const OutstandingAlarmScreen = () => {
       },
     }; //
     fetch(
-      `https://gis2.ectrak.com.hk:8900/api/v2/alarm/search?deviceId=&status=${filterStatus}&alarmType=${filterAlarmType}&sort=${filterField},${
+      `https://gis2.ectrak.com.hk:8900/api/v2/alarm/search?deviceId=&status=${filterStatus?.toUpperCase()}&alarmType=${filterAlarmType
+        ?.toUpperCase()
+        .replace(' ', '_')}&sort=${filterField},${
         filterDesc == true ? 'desc' : 'asc'
       }&page=${page}`,
       requestOptions,
@@ -111,7 +113,9 @@ const OutstandingAlarmScreen = () => {
       return;
     } else {
       fetch(
-        `https://gis2.ectrak.com.hk:8900/api/v2/alarm/search?deviceId=&status=${filterStatus}&alarmType=${filterAlarmType}&sort=${filterField},${
+        `https://gis2.ectrak.com.hk:8900/api/v2/alarm/search?deviceId=&status=${filterStatus?.toUpperCase()}&alarmType=${filterAlarmType
+          ?.toUpperCase()
+          .replace(' ', '_')}&sort=${filterField},${
           filterDesc == true ? 'desc' : 'asc'
         }&page=${page}`,
         requestOptions,
@@ -203,6 +207,7 @@ const OutstandingAlarmScreen = () => {
             showMainModal={showMainModal}
             setShowMainModal={setShowMainModal}
             filterStatus={filterStatus}
+            setLoading={setLoading}
             setFilterStatus={setFilterStatus}
             filterAlarmType={filterAlarmType}
             setFilterAlarmType={setFilterAlarmType}

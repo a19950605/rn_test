@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OutstandingAlarmMonCard from '../../OutstandingAlarm/components/OutstandingAlarmMonCard';
@@ -9,6 +9,8 @@ import {
   appDefDomain,
   EndPoint,
 } from '../../../constants/constants';
+import {Icon} from '@rneui/themed';
+import SortDropDown from '../../../components/sortFilter';
 
 const Alarm = ({deviceId}) => {
   const [data, setData] = useState();
@@ -16,13 +18,27 @@ const Alarm = ({deviceId}) => {
   const [isLastPage, setIsLastPage] = useState(false);
   const [totalPages, setTotalPages] = useState('');
   const [isReload, setIsReload] = useState(false);
+
+  const [loading, setLoading] = useState(true);
+  const [showFilter, setShowFilter] = useState(false);
+  const [filterDesc, setFilterDesc] = useState(true);
+  const [filterField, setFilterField] = useState('id');
   const userToken = useSelector(state => state.login.userToken?.Token);
+
+  const sortOption = [
+    {displayValue: 'Alarm ID', apiValue: 'id'},
+    {displayValue: 'Type', apiValue: 'alarmType'},
+    {displayValue: 'Triggered Datetime', apiValue: 'dtCreate'},
+    {displayValue: 'Status', apiValue: 'status'},
+  ];
   console.log('arlarm deviceid');
   console.log(deviceId);
   //KT/R1/002
   var formdata = new FormData();
   formdata.append('deviceId', deviceId);
   useEffect(() => {
+    setPage(0);
+    setData('');
     var requestOptions = {
       method: 'POST',
       headers: {
@@ -32,7 +48,11 @@ const Alarm = ({deviceId}) => {
       },
     };
     fetch(
-      `${appContextPaths[appDefDomain]}${EndPoint.alarms}?deviceId=${deviceId}&page=${page}`,
+      `${appContextPaths[appDefDomain]}${
+        EndPoint.alarms
+      }?deviceId=${deviceId}&page=${page}&sort=${filterField},${
+        filterDesc == true ? 'desc' : 'asc'
+      }`,
 
       requestOptions,
     )
@@ -49,9 +69,10 @@ const Alarm = ({deviceId}) => {
 
         setTotalPages(result?.totalPages);
         setIsLastPage(result?.last);
+        setLoading(false);
       })
       .catch(error => console.log('error16', error));
-  }, []);
+  }, [loading]);
   useEffect(() => {
     var requestOptions = {
       method: 'POST',
@@ -66,7 +87,11 @@ const Alarm = ({deviceId}) => {
       return;
     } else if (isReload == true) {
       fetch(
-        `${appContextPaths[appDefDomain]}${EndPoint.alarms}?deviceId=${deviceId}&page=${page}`,
+        `${appContextPaths[appDefDomain]}${
+          EndPoint.alarms
+        }?deviceId=${deviceId}&page=${page}&sort=${filterField},${
+          filterDesc == true ? 'desc' : 'asc'
+        }`,
 
         requestOptions,
       )
@@ -101,10 +126,24 @@ const Alarm = ({deviceId}) => {
             {page || ''}
           </Text>
         </View>
-        <View>
-          <Text>filter</Text>
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            setShowFilter(!showFilter);
+          }}>
+          <Icon name="filter" size={24} color="black" type="ionicon" />
+        </TouchableOpacity>
       </View>
+      {showFilter && (
+        <SortDropDown
+          closeFilter={setShowFilter}
+          setFilterDesc={setFilterDesc}
+          setFilterField={setFilterField}
+          setLoading={setLoading}
+          sortOption={sortOption}
+          filterDesc={filterDesc}
+          filterField={filterField}
+        />
+      )}
       {/** History list */}
 
       <View style={{marginTop: 10}}>

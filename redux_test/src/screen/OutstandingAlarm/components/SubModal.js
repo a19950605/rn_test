@@ -67,13 +67,13 @@ export const SubModal = ({
                     mode == 'rfl' &&
                       setFilterCode != undefined &&
                       setFilterCode('');
-                    setFilter('All');
+                    setFilter('');
                   }}
                   style={styles.radioTouch}>
                   <RadioButton
                     value="first"
                     color={'red'}
-                    status={filterVal == 'All' ? 'checked' : 'unchecked'}
+                    status={filterVal == '' ? 'checked' : 'unchecked'}
                     onPress={() => {}}
                   />
                   <Text style={styles.optionsText}>{'All'}</Text>
@@ -97,7 +97,12 @@ export const SubModal = ({
                     <RadioButton
                       value="first"
                       color={'red'}
-                      status={filterVal == o.code ? 'checked' : 'unchecked'}
+                      status={
+                        filterVal == o.code ||
+                        (o.code == 'All' && filterVal == '')
+                          ? 'checked'
+                          : 'unchecked'
+                      }
                       onPress={() => {
                         mode == 'rfl' &&
                           setFilterCode != undefined &&

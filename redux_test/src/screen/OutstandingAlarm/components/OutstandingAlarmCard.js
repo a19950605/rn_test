@@ -59,7 +59,7 @@ const OutstandingAlarmCard = props => {
             {props.item.dtCreate
               ? moment(props.item.dtCreate)
                   .utcOffset(8)
-                  .format('YYYY-MM-DD HH:mm')
+                  .format('YYYY-MM-DD HH:mm:ss')
               : '--'}
           </Text>
         </View>

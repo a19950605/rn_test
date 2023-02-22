@@ -6,6 +6,7 @@ import {Text, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import {CardButton} from '../../../components/CardButton';
 import {styles} from '../../../constants/styles';
+import {permissionCheck} from '../../../utils/permissionCheck';
 import {StatusBubble} from './StatusBubble';
 //monitoring
 
@@ -129,8 +130,10 @@ const LampCard = props => {
           isDetail={true}
         />
         {props.item.status == 'ACTIVE' &&
-          userFunc?.find(o => o.code === 'RFL_MONITOR_CONTROL') !=
-            undefined && (
+          permissionCheck({
+            permissionCode: 'RFL_MONITOR_CONTROL',
+            userFunc,
+          }) && (
             <CardButton
               navLoc={''}
               navigation={props.navigation}

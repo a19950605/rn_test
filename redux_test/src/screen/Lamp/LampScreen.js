@@ -36,6 +36,7 @@ import {getControllers} from '../../redux/features/controller/controllerSlice';
 import {getDevices} from '../../redux/features/lamp/lampsSlice';
 import {formBuilder} from '../../utils/formBuilder';
 import {getConnStatus, getFilterStatus} from '../../utils/getStatus';
+import {permissionCheck} from '../../utils/permissionCheck';
 
 const LampScreen = () => {
   const {height, width} = useWindowDimensions();
@@ -181,7 +182,7 @@ const LampScreen = () => {
       <View style={styles.screenInit}>
         <View style={styles.spaceBetween}>
           <View style={{flexDirection: 'row'}}>
-            {userFunc?.find(o => o.code === 'RFL_MONITOR_C') && (
+            {permissionCheck({permissionCode: 'RFL_MONITOR_C', userFunc}) && (
               <CreateButton
                 navigation={navigation}
                 navLoc={'Create Monitoring'}

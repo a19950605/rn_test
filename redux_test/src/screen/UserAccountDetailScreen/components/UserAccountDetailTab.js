@@ -18,6 +18,7 @@ import {
   appDefDomain,
   EndPoint,
 } from '../../../constants/constants';
+import {permissionCheck} from '../../../utils/permissionCheck';
 
 const UserAccountDetailTab = ({userData}) => {
   //user name
@@ -506,7 +507,7 @@ const UserAccountDetailTab = ({userData}) => {
             )}
           </View>
           <View style={styles.saveDeleteButtonGroup}>
-            {userFunc?.find(o => o.code === 'SYSUSR_D') != undefined && (
+            {permissionCheck({permissionCode: 'SYSUSR_D', userFunc}) && (
               <TouchableOpacity
                 style={styles.deleteBtnContainer}
                 onPress={() => {
@@ -522,7 +523,7 @@ const UserAccountDetailTab = ({userData}) => {
                 <Text style={styles.delBtnTitle}> Delete</Text>
               </TouchableOpacity>
             )}
-            {userFunc?.find(o => o.code === 'SYSUSR_U') != undefined && (
+            {permissionCheck({permissionCode: 'SYSUSR_U', userFunc}) && (
               <TouchableOpacity
                 style={styles.saveBtnContainer}
                 //

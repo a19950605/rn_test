@@ -15,17 +15,24 @@ const initialState = {
   error: '',
   filterField: '',
   filterDesc: '',
+  isLastPage: false,
+  isFirstPage: true,
+  totalPages: 0,
 };
 export const fetchUsers = createAsyncThunk(
   'fetchUsers',
-  async ({userToken, filterDesc, filterField}, {rejectWithValue}) => {
+  async ({userToken, filterDesc, filterField, page}, {rejectWithValue}) => {
     try {
       const response = await fetch(
-        `${appContextPaths[appDefDomain]}${EndPoint.users}`,
+        `${appContextPaths[appDefDomain]}${
+          EndPoint.users
+        }?page=${page}&sort=${filterField},${
+          filterDesc == true ? 'desc' : 'asc'
+        }`,
         requestOptions({method: 'GET', userToken}),
       );
       let obj = await response.json();
-      return {users: obj, filterDesc, filterField};
+      return obj;
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -51,11 +58,7 @@ export const fetchOneUser = createAsyncThunk(
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {
-    dTst: (state, action) => {
-      state.isLoading = true;
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     // Add reducers for additional action types here, and handle loading state as needed
     builder
@@ -66,19 +69,33 @@ export const usersSlice = createSlice({
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         // Add user to the state array
-        console.log('fulfill case****************************************');
+        console.log(
+          'fulfill fetch users****************************************',
+        );
         console.log(action);
         console.log(action.payload);
         state.isError = false;
         state.isLoading = false;
         state.isSucess = true;
-        state.users = sortData(
-          action.payload.users.content,
-          action.payload.filterField,
-          action.payload.filterDesc,
-        );
+        state.totalPages = action.payload.totalPages;
+        //  // state.isLastPage = state.payload.last;
+        state.isLastPage = action.payload.last;
+
+        console.log('before fetch user array**************************');
+        console.log(state.users);
+        if (action.payload.first == true) {
+          state.users = action.payload.content;
+        } else if (action.payload.first != true) {
+          state.users = [...state.users, ...action.payload.content];
+        }
+
+        console.log('updated fetch user array**************************');
+        console.log(state.users);
       })
       .addCase(fetchUsers.rejected, (state, action) => {
+        console.log(
+          'failed fetch users****************************************',
+        );
         if (state.isLoading == true) {
           state.isLoading = false;
           state.error = action.error;

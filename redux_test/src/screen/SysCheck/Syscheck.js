@@ -4,9 +4,9 @@ import {View, Text, TouchableOpacity, useWindowDimensions} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import {color, styles} from '../../constants/styles';
-import {SysParamsCard} from './components/SysParamsCard';
+import {SyscheckCard} from './components/SyscheckCard';
 
-export const SysParams = () => {
+export const Syscheck = () => {
   const {height, width} = useWindowDimensions();
   const isLandscapeMode = width > height ? true : false;
   const userToken = useSelector(state => state.login.userToken?.Token);
@@ -17,10 +17,9 @@ export const SysParams = () => {
   const [filterField, setFilterField] = useState('name');
   const sortOption = [
     {displayValue: 'Name', apiValue: 'name'},
-    {displayValue: 'Value', apiValue: 'value'},
+    {displayValue: 'Type', apiValue: 'name'},
   ];
   const [data, setData] = useState('');
-
   useEffect(() => {
     var requestOptions = {
       method: 'GET',
@@ -40,7 +39,7 @@ export const SysParams = () => {
       .then(result => {
         //  console.log(result);
         // return result;
-        setData(result?.SYSTEM_PARAMETERS);
+        setData(result?.TASK_STATUS);
         setLoading(false);
       })
       .catch(error => console.log('error1', error));
@@ -83,17 +82,36 @@ export const SysParams = () => {
         isLandscapeMode ? (
           <FlatList
             data={data}
-            renderItem={props => <SysParamsCard {...props} />}
+            renderItem={props => <SyscheckCard {...props} />}
           />
         ) : (
           <FlatList
             data={data}
-            renderItem={props => <SysParamsCard {...props} />}
+            renderItem={props => <SyscheckCard {...props} />}
           />
         )
       ) : (
         <LinearProgress style={styles.mtNeg5} color="red" />
       )}
+    </View>
+  );
+};
+
+const SystemCheckCard = () => {
+  return (
+    <View style={{padding: 5}}>
+      <View style={{flexDirection: 'row'}}>
+        <Text style={{fontWeight: 'bold'}}>Name</Text>
+        <Text>Last Completed Assignment</Text>
+      </View>
+      <View style={{flexDirection: 'row'}}>
+        <Text style={{fontWeight: 'bold'}}>Type</Text>
+        <Text>Task status</Text>
+      </View>
+      <View style={{flexDirection: 'row'}}>
+        <Text style={{fontWeight: 'bold'}}>Value</Text>
+        <Text>2022-12-06</Text>
+      </View>
     </View>
   );
 };

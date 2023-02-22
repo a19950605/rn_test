@@ -51,14 +51,6 @@ export const OutStandingAlarmModal = ({
             <Text style={styles.filterTitle}>Filters</Text>
           </View>
           <View style={styles.pV10}>
-            <View
-              style={{
-                borderBottomColor: 'rgba(0,0,0,0.2)',
-                borderBottomWidth: 1,
-                marginBottom: 15,
-              }}
-            />
-
             <View>
               <Text style={styles.filterItemTitle}>Type</Text>
             </View>
@@ -69,7 +61,7 @@ export const OutStandingAlarmModal = ({
               <View style={styles.filterContent}>
                 <View>
                   <Text style={styles.filterContentText}>
-                    {filterAlarmType}
+                    {filterAlarmType || 'All'}
                   </Text>
                 </View>
                 <Icon
@@ -92,7 +84,9 @@ export const OutStandingAlarmModal = ({
               }}>
               <View style={styles.filterContent}>
                 <View>
-                  <Text style={styles.filterContentText}>{filterStatus}</Text>
+                  <Text style={styles.filterContentText}>
+                    {filterStatus || 'All'}
+                  </Text>
                 </View>
                 <Icon
                   name="sort-down"
@@ -141,10 +135,10 @@ export const OutStandingAlarmModal = ({
         setFilter={setFilterStatus}
         options={[
           {code: 'All', stateVal: ''},
-          {code: 'ACTIVE', stateVal: 'ACTIVE'},
+          {code: 'Active', stateVal: 'ACTIVE'},
 
-          {code: 'Isolated', stateVal: 'SPECIAL'},
-          {code: 'Maintenance', stateVal: 'DISABLED'},
+          {code: 'Acknowledged', stateVal: 'ACKNOWLEDGED'},
+          {code: 'Resumed', stateVal: 'RESUMED'},
         ]}
         setFilterCode={undefined}
         filterVal={filterStatus}
@@ -158,9 +152,13 @@ export const OutStandingAlarmModal = ({
         options={[
           {code: 'All', stateVal: ''},
 
+          {code: 'Connection Lost', stateVal: 'CONNECTION_LOST'},
+          {code: 'On Battery', stateVal: 'ON_BATTERY'},
+          {code: 'UPS Alarm', stateVal: 'UPS_ALARM'},
+
           {code: 'Normal', stateVal: 'NORMAL'},
-          {code: 'Connection Lost', stateVal: 'CONNLOST'},
-          {code: 'Unknown', stateVal: 'UNKNOWN'},
+          {code: 'State Machine Offline', stateVal: 'STATE_MACHINE_OFFLINE'},
+          {code: 'Lamp Fault', stateVal: 'LAMP_FAULT'},
         ]}
         setFilterCode={undefined}
         filterVal={filterAlarmType}

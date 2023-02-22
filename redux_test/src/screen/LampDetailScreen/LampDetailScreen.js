@@ -86,6 +86,14 @@ const LampDetailScreen = props => {
     fetchDevice(userToken, props.route.params.id);
   }, []);
 
+  useEffect(() => {
+    //
+    console.log('device************************************');
+    console.log(device);
+    console.log('device2************************************');
+    console.log(props?.route?.params);
+  }, [device]);
+
   const updateRecord = (token, form) => {
     console.log('update test');
     console.log(form);

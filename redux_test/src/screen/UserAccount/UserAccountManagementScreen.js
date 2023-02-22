@@ -24,16 +24,16 @@ import {
   appDefDomain,
   EndPoint,
 } from '../../constants/constants';
+import {permissionCheck} from '../../utils/permissionCheck';
 
 const UserAccountManagementScreen = () => {
   const isFocused = useIsFocused();
 
   const navigation = useNavigation();
   const userToken = useSelector(state => state.login.userToken?.Token);
-  const {users, isLoading, isError, isSuccess, errorr} = useSelector(
-    state => state.users,
-  );
-  const {userFunc} = useSelector(state => state.roleUserFunc);
+  const {users, isLoading, isError, isSuccess, errorr, totalPages} =
+    useSelector(state => state.users);
+  const {userFunc, isLastPage} = useSelector(state => state.roleUserFunc);
 
   // const [data, setData] = useState();
   const [selectedUserName, setSelctedUserName] = useState('All');
@@ -46,6 +46,9 @@ const UserAccountManagementScreen = () => {
   const [showModal, setShowModal] = useState(false);
   const [showUserModal, setShowUserModal] = useState(false);
   const [showRoleModal, setShowRoleModal] = useState(false);
+  //scroll and reload
+  const [page, setPage] = useState(0);
+  const [isReload, setIsReload] = useState(false);
 
   const [roleOption, setRoleOption] = useState([]);
   const [userOption, setUserOption] = useState([]);
@@ -56,17 +59,32 @@ const UserAccountManagementScreen = () => {
   const getUsers = userToken => {
     try {
       //  const users = await dispatch(fetchUsers(userToken));
-      dispatch(fetchUsers({userToken, filterDesc, filterField}));
+
+      dispatch(fetchUsers({userToken, filterDesc, filterField, page}))
+        .unwrap()
+        .then(originalPromiseResult => {
+          // handle result here
+          setIsReload(false);
+          setLoading(false);
+        })
+        .catch(rejectedValueOrSerializedError => {
+          // handle error here          setIsReload(false);
+          setIsReload(false);
+          setLoading(false);
+        });
     } catch (err) {}
   };
+
   useEffect(() => {
-    getUsers(userToken);
-  }, [isFocused, filterDesc, filterField]);
+    if (isLastPage != true || page < totalPages) getUsers(userToken);
+  }, [isFocused, isReload]);
 
   useEffect(() => {
     if (!isFocused) {
       setShowFilter(false);
     }
+    setPage(0);
+    setIsReload(true);
   }, [isFocused]);
 
   useEffect(() => {
@@ -104,14 +122,21 @@ const UserAccountManagementScreen = () => {
       .catch(error => console.log('error1', error));
   }, []);
 
-  const [data, error] = useFetchUsersData({
-    userToken,
-    loading,
-    isFocused,
-    setLoading,
-    filterField,
-    filterDesc,
-  });
+  // const [data, error] = useFetchUsersData({
+  //   userToken,
+  //   loading,
+  //   isFocused,
+  //   setLoading,
+  //   filterField,
+  //   filterDesc,
+  //   isReload,
+  //   setIsReload,
+  //   isLastPage,
+  //   setIsLastPage,
+  //   setTotalPages,
+  //   totalPages,
+  //   page,
+  // });
   const sortOption = [
     {displayValue: 'Account ID', apiValue: 'id'},
     {displayValue: 'Display Name', apiValue: 'displayName'},
@@ -128,7 +153,7 @@ const UserAccountManagementScreen = () => {
         }}>
         <View style={styles.screenInit}>
           <View style={styles.spaceBetween}>
-            {userFunc?.find(o => o.code === 'SYSUSR_C') != undefined && (
+            {permissionCheck({permissionCode: 'SYSUSR_C', userFunc}) && (
               <CreateButton navigation={navigation} navLoc={'Create user'} />
             )}
             <View style={styles.row}>
@@ -151,7 +176,7 @@ const UserAccountManagementScreen = () => {
               />
             )}
           </View>
-          {isLoading ? (
+          {isLoading && users == [] ? (
             <View>
               <LinearProgress color="red" />
             </View>
@@ -166,112 +191,31 @@ const UserAccountManagementScreen = () => {
               navigation={navigation}
             />
           ) : (
-            <FlatList
-              data={users}
-              renderItem={props => (
-                <UserAccountCard {...props} navigation={navigation} />
+            <>
+              {isLoading && (
+                <View>
+                  <LinearProgress color="red" />
+                </View>
               )}
-              keyExtractor={item => item.id}
-            />
+              <FlatList
+                data={users}
+                renderItem={props => (
+                  <UserAccountCard {...props} navigation={navigation} />
+                )}
+                keyExtractor={item => item.id}
+                onEndReached={() => {
+                  alert('end react');
+                  if (totalPages - 1 > page) {
+                    setPage(page + 1);
+                    setIsReload(true);
+                  }
+                }}
+              />
+            </>
           )}
         </View>
       </TouchableWithoutFeedback>
     </>
-  );
-};
-
-//should be replaced by new component
-const UserModal = ({users, isOpen, setOpen, setSelctedUserName}) => {
-  return (
-    <Modal isVisible={isOpen}>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <View
-          style={{
-            flexDirection: 'column',
-            width: '90%',
-            marginTop: 20,
-            padding: 20,
-            backgroundColor: 'white',
-          }}>
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity
-              style={{alignItems: 'flex-end'}}
-              onPress={() => {
-                setOpen(false);
-              }}>
-              <Text>close</Text>
-            </TouchableOpacity>
-            <View style={{flexDirection: 'column'}}>
-              <TouchableOpacity
-                onPress={() => {
-                  setSelctedUserName('');
-                }}>
-                <Text>All</Text>
-              </TouchableOpacity>
-              {users.map(user => {
-                return (
-                  <TouchableOpacity
-                    key={user.username}
-                    onPress={() => {
-                      setSelctedUserName(user.username);
-                    }}>
-                    <Text>{user.username}</Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-          </View>
-        </View>
-      </View>
-    </Modal>
-  );
-};
-const RoleModal = ({
-  roles,
-  isOpen,
-  setOpen,
-  setSelectedRole,
-  setSelectedRoleName,
-}) => {
-  return (
-    <Modal isVisible={isOpen}>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <View
-          style={{
-            flexDirection: 'column',
-            width: '90%',
-            marginTop: 20,
-            padding: 20,
-            backgroundColor: 'white',
-          }}>
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity
-              style={{alignItems: 'flex-end'}}
-              onPress={() => {
-                setOpen(false);
-              }}>
-              <Text>close</Text>
-            </TouchableOpacity>
-            <View style={{flexDirection: 'column'}}>
-              {roles.map(role => {
-                return (
-                  <TouchableOpacity
-                    key={role.id}
-                    onPress={() => {
-                      setSelectedRole(role.id);
-                      setSelectedRoleName(
-                        role.displayName + '(' + role.code + ')',
-                      );
-                    }}>
-                    <Text>{role.displayName + '(' + role.code + ')'}</Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-          </View>
-        </View>
-      </View>
-    </Modal>
   );
 };
 

@@ -10,20 +10,20 @@ import {
   FlatList,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import {getUserFunc} from '../../redux/features/roleUserFunc/roleUserFuncSlice';
 
 const SystemCheck = () => {
   const [data, setData] = useEffect([1, 2, 3]);
   return (
     <View style={{flex: 1}}>
       <Text>11</Text>
-      <FlatList
+      {/* <FlatList
         data={data}
         renderItem={props => <SystemCheckCard {...props} />}
-      />
+      /> */}
     </View>
   );
 };
-
 const SystemCheckCard = () => {
   return (
     <View style={{padding: 5}}>

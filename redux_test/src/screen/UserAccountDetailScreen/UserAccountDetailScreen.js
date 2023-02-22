@@ -15,6 +15,7 @@ import {
 const UserAccountDetailScreen = props => {
   const [index, setIndex] = React.useState(0);
   const [data1, setData1] = useState();
+
   const [userData, setUserData] = useState();
   const [loading, setLoading] = useState(true);
   const userToken = useSelector(state => state.login.userToken?.Token);

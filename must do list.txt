@@ -1,0 +1,17 @@
+must do list
+
+-create device
+-update device
+-form arrow / form arrow
+-outstanding alarm
+-permission check
+-redux update??
+-other parts
+
+
+may do list 
+-load sys config ->action based on it
+-unified the error pop up
+-update the confirm pop up
+
+

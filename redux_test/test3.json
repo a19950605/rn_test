@@ -1,0 +1,27 @@
+{
+  "activeAlarms": [{"alarmType": "CONNECTION_LOST"}],
+  "activeAssignment": null,
+  "batteryStatus": "NORMAL",
+  "code": "KT/R1/002",
+  "connectionStatus": "NORMAL",
+  "controllerCode": "C001",
+  "controllerDeviceId": 2,
+  "currCurrent": 0,
+  "currVoltage": 24.1,
+  "dtKeepalive": "2022-12-13T15:29:03.857+08:00",
+  "dtPrevLampStatus": "2022-12-13T15:29:03.857+08:00",
+  "id": 2,
+  "imageH": 1322,
+  "imageW": 2000,
+  "lampPositionX": 1025,
+  "lampPositionY": 883,
+  "lampStatus": "OFF",
+  "prevLampStatus": "OFF",
+  "relayChannel": {
+    "channelIdx": 1,
+    "channelStatus": "ERROR",
+    "id": 2,
+    "relayDtKeepalive": "2022-12-08T07:51:34.950+08:00"
+  },
+  "status": "DISABLED"
+}
